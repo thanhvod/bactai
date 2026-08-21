@@ -1,0 +1,31 @@
+# Dev infra (08-kien-truc.md mục 6)
+# Lưu ý: máy host đang có PostgreSQL chạy sẵn ở 5432 → map ra 5433 để tránh đụng.
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: bta-postgres
+    environment:
+      POSTGRES_USER: bta
+      POSTGRES_PASSWORD: bta
+      POSTGRES_DB: bta
+    ports:
+      - '5433:5432'
+    volumes:
+      - bta_pgdata:/var/lib/postgresql/data
+
+  minio:
+    image: minio/minio
+    container_name: bta-minio
+    command: server /data --console-address ':9401'
+    environment:
+      MINIO_ROOT_USER: bta
+      MINIO_ROOT_PASSWORD: bta-secret
+    ports:
+      - '9400:9000'
+      - '9401:9401'
+    volumes:
+      - bta_minio:/data
+
+volumes:
+  bta_pgdata:
+  bta_minio:

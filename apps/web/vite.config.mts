@@ -1,10 +1,11 @@
 /// <reference types='vitest' />
+import { resolve } from 'node:path';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig(() => ({
   root: import.meta.dirname,
-  cacheDir: '../../node_modules/.vite/apps/merchant-web',
+  cacheDir: '../../node_modules/.vite/apps/web',
   server: {
     port: 2002,
     host: 'localhost',
@@ -14,10 +15,12 @@ export default defineConfig(() => ({
     host: 'localhost',
   },
   plugins: [react()],
-  // Uncomment this if you are using workers.
-  // worker: {
-  //  plugins: [],
-  // },
+  resolve: {
+    alias: {
+      // `@/*` là alias nội bộ của nguồn @bta/shadcn (giống app-claude) — app KHÔNG dùng `@` cho src của mình
+      '@': resolve(import.meta.dirname, '../../packages/shadcn/src'),
+    },
+  },
   build: {
     outDir: './dist',
     emptyOutDir: true,

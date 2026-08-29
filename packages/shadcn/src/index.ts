@@ -22,6 +22,17 @@ export * from './components/ui/separator';
 export * from './components/ui/sheet';
 export * from './components/animate-ui/components/radix/alert-dialog';
 export * from './components/ui/sidebar';
+export * from './components/ui/table';
+export {
+  Dialog,
+  DialogTrigger,
+  DialogClose,
+  DialogContent,
+  DialogHeader,
+  DialogFooter,
+  DialogTitle,
+  DialogDescription,
+} from './components/animate-ui/components/radix/dialog';
 export * from './components/ui/skeleton';
 export * from './components/ui/slider';
 export * from './components/ui/switch';

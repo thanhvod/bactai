@@ -15,7 +15,8 @@ code/
 │   ├── web/             # React + Vite — Web Merchant (modular theo domain, sẵn sàng tách micro-FE)
 │   └── driver-app/      # Flutter — App Tài xế, clean architecture
 ├── packages/
-│   ├── shadcn/            # @bta/shadcn — clone từ app-claude (Radix/Tailwind + Toast...)
+│   ├── shadcn/            # @bta/shadcn — hệ UI chính (Radix/Tailwind), clone từ app-claude
+│   ├── ui/                # @bta/ui — wrap MUI, clone từ app-claude (bổ sung 2026-08-23)
 │   ├── flutter-component/ # clone từ app-claude
 │   ├── flutter-ui/        # clone từ app-claude
 │   ├── graphql/           # @bta/graphql — Apollo Client + queries/mutations + codegen hooks
@@ -27,7 +28,7 @@ code/
 └── docs/
 ```
 
-**Không clone `packages/ui` (MUI)** — hệ UI web là shadcn duy nhất (D-005).
+Hệ UI chính là **shadcn** (layout, sidebar, form); `@bta/ui` (wrap MUI) được clone bổ sung 2026-08-23 theo yêu cầu chủ dự án, dùng khi cần component có sẵn (D-005 cập nhật).
 
 **Port dev (tránh đụng app-claude 1001–1004 khi chạy song song):** `api` → **2001**, `web` → **2002**.
 
@@ -67,7 +68,7 @@ Chốt: **modular trước, tách runtime sau** — 1 app host, chưa module fed
 |---|---|---|
 | ORM | **Prisma** | Schema tại `@bta/db`, theo [07-data-model.md](07-data-model.md) |
 | Validation | **zod** trong `@bta/shared` | Một nguồn schema cho API pipe + form web |
-| Auth | **JWT access + refresh** | Nhân viên: email+mật khẩu; tài xế: SĐT+mật khẩu merchant cấp. Token chứa merchant_id + loại principal |
+| Auth | **Firebase Auth** (D-006) | Web merchant: Google login duy nhất; API verify Firebase ID token, mapping user↔merchant+role ở backend. Đăng nhập app tài xế chưa chốt |
 | Phân quyền | RBAC: **admin (giám đốc) / operation / kế toán** | Duyệt bảng lương chỉ admin |
 | Upload ảnh | **S3-compatible** (dev: MinIO docker; prod: S3/R2) | Presigned URL |
 | Xuất PDF | HTML template → **Playwright/Chromium** trên API | Bảng kê công nợ, tái dùng cho báo cáo |

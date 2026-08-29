@@ -33,11 +33,17 @@
 - **Quyết định:**
   - **Tool monorepo:** Nx (giống repo tham khảo `/Users/vod/Documents/WES/app-claude`).
   - **ORM:** Prisma.
-  - **UI web:** **shadcn** (Radix/Tailwind) — không dùng MUI, không clone `packages/ui` của app-claude.
-  - **Clone từ app-claude:** `packages/shadcn`, `packages/flutter-component`, `packages/flutter-ui`.
+  - **UI web:** **shadcn** (Radix/Tailwind) là hệ chính — layout/sidebar/form dùng shadcn.
+  - **Clone từ app-claude:** `packages/shadcn`, `packages/flutter-component`, `packages/flutter-ui`; *(bổ sung 2026-08-23)* thêm `packages/ui` (`@bta/ui` — wrap MUI) theo yêu cầu chủ dự án để dùng khi cần, đảo lại quyết định "không clone ui" ban đầu.
   - **Scope package:** `@bta/*`.
   - **Micro front-end:** phase 1 modular theo domain (libs trong monorepo), khi cần mới nâng module federation.
 - **Chi tiết:** [08-kien-truc.md](08-kien-truc.md).
+
+## D-006 — Đăng nhập Web Merchant: Google qua Firebase Auth *(2026-08-23)*
+
+- **Quyết định:** Trang `/login` của web merchant chỉ có **1 phương thức duy nhất: Google login** (Firebase Authentication, project `bac-tai-app`). Không có form email/mật khẩu.
+- **Hệ quả:** API sẽ xác thực bằng **Firebase ID token** từ client (thay cho JWT tự phát email/mật khẩu ở đề xuất cũ); mapping user Firebase ↔ nhân viên merchant + role xử lý ở backend. Đăng nhập app tài xế (SĐT/mật khẩu hay cũng Firebase?) — **chưa chốt**.
+- Firebase web config đặt tại `apps/web/.env` (`VITE_FIREBASE_*`, có `.env.example` mẫu — config này là public key, không phải secret).
 
 ## D-004 — Nguồn kiến thức nghiệp vụ
 

@@ -11,7 +11,8 @@ apps/
   driver-app/      # Flutter — App Tài xế, clean architecture (data/domain/presentation + Bloc)
 
 packages/
-  shadcn/            # @bta/shadcn — hệ UI web duy nhất (Radix/Tailwind). KHÔNG dùng MUI
+  shadcn/            # @bta/shadcn — hệ UI web chính (Radix/Tailwind): layout, sidebar, form
+  ui/                # @bta/ui — wrap MUI (clone từ app-claude), dùng khi cần component có sẵn
   flutter-ui/        # design system Flutter (package: flutter_ui)
   flutter-component/ # component Flutter cấp cao (package: flutter_component)
   db/                # @bta/db — Prisma schema + migrations + seed (theo docs/07)

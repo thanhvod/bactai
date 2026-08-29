@@ -141,7 +141,8 @@ model User {
   merchantId   String
   merchant     Merchant @relation(fields: [merchantId], references: [id])
   email        String   @unique // đăng nhập toàn nền tảng
-  passwordHash String
+  firebaseUid  String?  @unique // web merchant đăng nhập Google qua Firebase (D-006)
+  passwordHash String? // dự phòng đăng nhập mật khẩu; Google login thì null
   fullName     String
   phone        String?
   role         UserRole

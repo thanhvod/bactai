@@ -1,4 +1,4 @@
-import { Logger, ValidationPipe } from '@nestjs/common';
+import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
 
@@ -9,7 +9,9 @@ import { AppModule } from './app/app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
+  // KHÔNG dùng ValidationPipe({ whitelist }) toàn cục: GraphQL InputType không có
+  // class-validator decorator nên whitelist sẽ strip sạch field. Validation nghiệp vụ
+  // nằm trong resolver/service (zod sẽ bổ sung sau).
   app.enableCors();
   const port = process.env.PORT || 2001;
   await app.listen(port);

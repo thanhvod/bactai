@@ -2,7 +2,543 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input AddonInput {
+  amount: BigInt!
+  catalogItemId: ID
+  name: String!
+}
+
+input AllocationInput {
+  amount: BigInt!
+  orderId: ID!
+}
+
+"""Số nguyên lớn (tiền VND), serialize về JS number"""
+scalar BigInt
+
+input CargoLineInput {
+  cargoTypeId: ID
+  name: String!
+  notes: String
+  properties: [String!]
+  quantity: Float
+  unit: String
+  volumeM3: Float
+  weightKg: Float
+}
+
+type CargoLineType {
+  cargoTypeId: String
+  id: ID!
+  name: String!
+  notes: String
+  properties: [String!]!
+  quantity: Float
+  unit: String
+  volumeM3: Float
+  weightKg: Float
+}
+
+type CatalogItemType {
+  id: ID!
+  isActive: Boolean!
+  kind: CatalogKind!
+  name: String!
+  sortOrder: Float!
+}
+
+enum CatalogKind {
+  ADDON_SERVICE
+  CARGO_TYPE
+  DEDUCTION_REASON
+  EXPENSE_CATEGORY
+  INCOME_CATEGORY
+  PAUSE_REASON
+}
+
+input CreateOrderInput {
+  addons: [AddonInput!]
+  cargoLines: [CargoLineInput!]
+  customerId: ID!
+  dueDate: DateTime
+  notes: String
+  price: BigInt!
+  stops: [StopInput!]!
+}
+
+type CurrentUserInfo {
+  email: String!
+  fullName: String!
+  id: String!
+  merchant: MerchantInfo!
+  role: UserRole!
+}
+
+input CustomerInput {
+  address: String
+  email: String
+  name: String!
+  notes: String
+  phone: String
+  taxCode: String
+}
+
+type CustomerType {
+  address: String
+  createdAt: DateTime!
+  creditBalance: BigInt!
+  email: String
+  id: ID!
+  isActive: Boolean!
+  name: String!
+  notes: String
+  phone: String
+  taxCode: String
+  totalDebt: BigInt!
+}
+
+type DashboardStats {
+  activeTrips: [TripType!]!
+  ordersAwaitingDispatch: Int!
+  ordersInProgress: Int!
+  overdueOrders: Int!
+  overdueReceivable: BigInt!
+  runningTrips: Int!
+  totalReceivable: BigInt!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type DispatchWarning {
+  kind: String!
+  orderCode: String!
+  plannedEndAt: DateTime
+  plannedStartAt: DateTime
+  target: String!
+  tripId: String!
+}
+
+input DriverInput {
+  baseSalary: BigInt
+  fullName: String!
+  licenseNo: String
+  notes: String
+
+  """Mật khẩu đăng nhập app tài xế"""
+  password: String
+  phone: String!
+}
+
+type DriverType {
+  baseSalary: BigInt!
+  companyOwesDriver: BigInt!
+  driverOwesCompany: BigInt!
+  fullName: String!
+  id: ID!
+  isActive: Boolean!
+  licenseNo: String
+  notes: String
+  phone: String!
+  tripCount: Int!
+}
+
+input ExpenseInput {
+  amount: BigInt!
+  categoryId: ID!
+  driverId: ID
+  expenseDate: DateTime!
+  isDriverAdvance: Boolean
+  markPaid: Boolean
+  notes: String
+  orderId: ID
+  paidBy: PaidBy
+  reimbursable: Boolean
+  supplierId: ID
+  tripId: ID
+  vehicleId: ID
+}
+
+enum ExpensePaymentStatus {
+  PAID
+  UNPAID
+}
+
+type ExpenseType {
+  amount: BigInt!
+  categoryId: String!
+  categoryName: String!
+  driverId: String
+  driverName: String
+  expenseDate: DateTime!
+  id: ID!
+  isDriverAdvance: Boolean!
+  notes: String
+  orderCode: String
+  orderId: String
+  paidBy: PaidBy!
+  paymentStatus: ExpensePaymentStatus!
+  reimbursable: Boolean!
+  supplierId: String
+  supplierName: String
+  tripId: String
+  vehicleId: String
+  vehiclePlate: String
+}
+
+type MerchantInfo {
+  address: String
+  email: String
+  id: String!
+  name: String!
+  phone: String
+  scheduleWarnHours: Float!
+  taxCode: String
+}
+
+type Mutation {
+  addPayrollDeduction(amount: BigInt!, note: String, payrollLineId: ID!, reasonId: ID): PayrollGql!
+  allocatePayment(allocations: [AllocationInput!]!, paymentInId: ID!): PaymentInType!
+  createCatalogItem(kind: CatalogKind!, name: String!): CatalogItemType!
+  createCustomer(input: CustomerInput!): CustomerType!
+  createDriver(input: DriverInput!): DriverType!
+  createExpense(input: ExpenseInput!): ExpenseType!
+  createOrder(input: CreateOrderInput!): OrderType!
+  createPaymentIn(input: PaymentInInput!): PaymentInType!
+  createPayroll(periodEnd: DateTime!, periodStart: DateTime!): PayrollGql!
+  createSupplier(input: SupplierInput!): SupplierType!
+  createTrip(driverId: ID!, notes: String, orderId: ID!, plannedEndAt: DateTime, plannedStartAt: DateTime, vehicleId: ID!): TripType!
+  createVehicle(input: VehicleInput!): VehicleType!
+  deactivateCustomer(id: ID!): CustomerType!
+  deactivateDriver(id: ID!): DriverType!
+  deactivateSupplier(id: ID!): SupplierType!
+  deactivateVehicle(id: ID!): VehicleType!
+  markExpensePaid(id: ID!): ExpenseType!
+  registerMerchant(merchantName: String!, phone: String): CurrentUserInfo!
+  setTripBonus(driverBonus: BigInt!, id: ID!): TripType!
+  updateCatalogItem(id: ID!, isActive: Boolean, name: String): CatalogItemType!
+  updateCustomer(id: ID!, input: CustomerInput!): CustomerType!
+  updateDriver(id: ID!, input: DriverInput!): DriverType!
+  updateMerchant(input: UpdateMerchantInput!): MerchantInfo!
+  updateOrder(dueDate: DateTime, id: ID!, notes: String, price: BigInt): OrderType!
+  updateOrderStatus(id: ID!, reason: String, status: OrderStatus!): OrderType!
+  updatePayrollStatus(id: ID!, status: PayrollStatus!): PayrollGql!
+  updateSupplier(id: ID!, input: SupplierInput!): SupplierType!
+  updateTripStatus(id: ID!, pauseNote: String, pauseReasonId: ID, reason: String, status: TripStatus!): TripType!
+  updateVehicle(id: ID!, input: VehicleInput!): VehicleType!
+}
+
+type OrderAddonType {
+  amount: BigInt!
+  id: ID!
+  name: String!
+}
+
+type OrderAllocationType {
+  amount: BigInt!
+  id: ID!
+  method: String
+  receivedDate: DateTime!
+}
+
+type OrderExpenseType {
+  amount: BigInt!
+  categoryName: String!
+  id: ID!
+  paidByDriver: Boolean!
+  paymentStatus: String!
+  tripId: String
+}
+
+enum OrderStatus {
+  ASSIGNED
+  CANCELLED
+  COMPLETED
+  CONFIRMED
+  DRAFT
+  IN_PROGRESS
+  PENDING_CONFIRM
+}
+
+type OrderStopType {
+  address: String!
+  codCollected: BigInt
+  codExpected: BigInt!
+  contactName: String
+  contactPhone: String
+  id: ID!
+  notes: String
+  sequence: Int!
+  status: StopStatus!
+  type: StopType!
+}
+
+type OrderType {
+  addons: [OrderAddonType!]!
+  allocations: [OrderAllocationType!]!
+  cargoLines: [CargoLineType!]!
+  code: String!
+  createdAt: DateTime!
+  customerId: String!
+  customerName: String!
+  dueDate: DateTime
+  expenses: [OrderExpenseType!]!
+  history: [StatusHistoryType!]!
+  id: ID!
+  notes: String
+  overdueDays: Int!
+  paidAmount: BigInt!
+  price: BigInt!
+  profit: BigInt!
+  status: OrderStatus!
+  stops: [OrderStopType!]!
+  totalAmount: BigInt!
+  tripCount: Int!
+  trips: [TripType!]!
+}
+
+enum PaidBy {
+  COMPANY
+  DRIVER
+}
+
+input PaymentInInput {
+  allocations: [AllocationInput!]
+  amount: BigInt!
+  customerId: ID
+  driverId: ID
+  kind: PaymentInKind!
+  method: String
+  notes: String
+  receivedDate: DateTime!
+}
+
+enum PaymentInKind {
+  CUSTOMER_PAYMENT
+  DRIVER_COD_REMIT
+  OTHER
+}
+
+type PaymentInType {
+  allocatedAmount: BigInt!
+  amount: BigInt!
+  customerId: String
+  customerName: String
+  driverId: String
+  driverName: String
+  id: ID!
+  kind: PaymentInKind!
+  method: String
+  notes: String
+  receivedDate: DateTime!
+}
+
+type PayrollGql {
+  approvedByName: String
+  createdAt: DateTime!
+  createdByName: String
+  id: ID!
+  lines: [PayrollLineGql!]!
+  notes: String
+  periodEnd: DateTime!
+  periodStart: DateTime!
+  status: PayrollStatus!
+}
+
+type PayrollItemGql {
+  amount: BigInt!
+  id: ID!
+  note: String
+  orderCode: String
+  reasonName: String
+  tripId: String
+  type: PayrollItemType!
+}
+
+enum PayrollItemType {
+  ADVANCE
+  BONUS
+  DEDUCTION
+}
+
+type PayrollLineGql {
+  baseSalary: BigInt!
+  driverId: String!
+  driverName: String!
+  id: ID!
+  items: [PayrollItemGql!]!
+  netAmount: BigInt!
+  totalAdvance: BigInt!
+  totalBonus: BigInt!
+  totalDeduction: BigInt!
+}
+
+enum PayrollStatus {
+  APPROVED
+  DRAFT
+  PAID
+  PENDING_APPROVAL
+}
+
+type PnlByPeriod {
+  collected: BigInt!
+  expense: BigInt!
+  orderCount: Int!
+  profit: BigInt!
+  revenue: BigInt!
+  tripCount: Int!
+}
+
 type Query {
+  catalogItems(includeInactive: Boolean! = false, kind: CatalogKind): [CatalogItemType!]!
+  customers(search: String): [CustomerType!]!
+  dashboard: DashboardStats!
+  dispatchWarnings(driverId: ID!, excludeTripId: ID, plannedEndAt: DateTime, plannedStartAt: DateTime!, vehicleId: ID!): [DispatchWarning!]!
+  drivers: [DriverType!]!
+  expenses(driverId: ID, orderId: ID, supplierId: ID, unpaidOnly: Boolean, vehicleId: ID): [ExpenseType!]!
+
   """Health check"""
   health: String!
+  me: CurrentUserInfo
+  myMerchant: MerchantInfo!
+  order(id: ID!): OrderType!
+  orders(search: String, status: OrderStatus): [OrderType!]!
+  paymentsIn(customerId: ID): [PaymentInType!]!
+  payrolls: [PayrollGql!]!
+  pnl(from: DateTime!, to: DateTime!): PnlByPeriod!
+  receivables(customerId: ID, overdueOnly: Boolean): [ReceivableRow!]!
+  suppliers: [SupplierType!]!
+  trips(status: TripStatus): [TripType!]!
+  vehicles: [VehicleType!]!
+}
+
+type ReceivableRow {
+  customerId: String!
+  customerName: String!
+  dueDate: DateTime
+  orderCode: String!
+  orderDate: DateTime!
+  orderId: ID!
+  overdueDays: Int!
+  paidAmount: BigInt!
+  remaining: BigInt!
+  route: String!
+  totalAmount: BigInt!
+}
+
+type StatusHistoryType {
+  byUserName: String
+  createdAt: DateTime!
+  entityId: String!
+  entityType: String!
+  fromStatus: String
+  id: ID!
+  reason: String
+  toStatus: String!
+}
+
+input StopInput {
+  address: String!
+  codExpected: BigInt
+  contactName: String
+  contactPhone: String
+  notes: String
+  type: StopType!
+}
+
+enum StopStatus {
+  ARRIVED
+  COMPLETED
+  PENDING
+  SKIPPED
+}
+
+enum StopType {
+  DROPOFF
+  PICKUP
+}
+
+input SupplierInput {
+  address: String
+  category: String
+  name: String!
+  notes: String
+  phone: String
+  taxCode: String
+}
+
+type SupplierType {
+  address: String
+  category: String
+  id: ID!
+  isActive: Boolean!
+  name: String!
+  notes: String
+  phone: String
+  taxCode: String
+  totalUnpaid: BigInt!
+}
+
+enum TripStatus {
+  CANCELLED
+  COMPLETED
+  DELIVERING
+  IN_TRANSIT
+  PAUSED
+  PICKING_UP
+  SCHEDULED
+  TO_PICKUP
+}
+
+type TripType {
+  driverBonus: BigInt!
+  driverId: String!
+  driverName: String
+  id: ID!
+  notes: String
+  orderCode: String
+  orderId: String!
+  pauseNote: String
+  pauseReasonId: String
+  pauseReasonName: String
+  plannedEndAt: DateTime
+  plannedStartAt: DateTime
+  status: TripStatus!
+  vehicleId: String!
+  vehiclePlate: String
+}
+
+input UpdateMerchantInput {
+  address: String
+  email: String
+  name: String
+  phone: String
+  scheduleWarnHours: Float
+  taxCode: String
+}
+
+enum UserRole {
+  ACCOUNTANT
+  ADMIN
+  OPERATION
+}
+
+input VehicleInput {
+  loadCapacityKg: Int
+  notes: String
+  plateNumber: String!
+  type: String
+}
+
+type VehicleType {
+  id: ID!
+  isActive: Boolean!
+  loadCapacityKg: Int
+  notes: String
+  plateNumber: String!
+  totalExpense: BigInt!
+  tripCount: Int!
+  type: String
 }

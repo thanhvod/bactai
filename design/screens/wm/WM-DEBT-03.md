@@ -7,7 +7,7 @@
 | Route | `/finance/debt-statements` |
 | Pattern | `list` |
 | Roles | admin, accountant |
-| Kích thước mockup | 1440×860 |
+| Kích thước mockup | 1440×960 |
 | Mockup | [../../mockups/WM-DEBT-03.html](../../mockups/WM-DEBT-03.html) · canvas artboard `WM-DEBT-03.dc.html` |
 
 ## Mục đích

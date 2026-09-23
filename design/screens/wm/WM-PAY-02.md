@@ -7,7 +7,7 @@
 | Route | `/finance/payments/:paymentId` |
 | Pattern | `detail` |
 | Roles | admin, accountant, operation |
-| Kích thước mockup | 1440×1140 |
+| Kích thước mockup | 1440×1200 |
 | Mockup | [../../mockups/WM-PAY-02.html](../../mockups/WM-PAY-02.html) · canvas artboard `WM-PAY-02.dc.html` |
 
 ## Mục đích

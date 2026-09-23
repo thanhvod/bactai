@@ -274,12 +274,12 @@ def pay_03():
     for o, cus, trip, stop, at, days, actual, remitted, held in COD_ITEMS:
         cod_rows.append([col(code(o, to="WM-ORD-07", trigger="Mở tài chính đơn"), subtle(cus, 11), gap=0),
                          col(code(trip, to="WM-TRIP-01", trigger="Mở chuyến"), a(stop, "WM-STOP-01", "Mở điểm dừng", 11, 400), gap=0),
-                         col(num(at, 12), badge(f"Giữ {days} ngày", "danger" if days > 2 else "warning"), gap=2),
+                         col(num(at[:5] + " " + at[-5:], 12), badge(f"Giữ {days} ngày", "danger" if days > 2 else "warning"), gap=2),
                          col(num(money(actual)), subtle(f"đã nộp {money(remitted)}", 11), gap=0, extra="align-items: flex-end;"),
-                         num(money(held), weight=600), money_input(held, "130px", h=32, fs=13)])
+                         num(money(held), weight=600), money_input(held, "120px", h=32, fs=13)])
     cod = _section(3, "Khoản COD được nộp", col(
         table([("Đơn · Khách", "left"), ("Chuyến · Điểm trả", "left"), ("Thu lúc · Giữ", "left"), ("COD thực thu", "right"),
-               ("Còn giữ", "right"), ("Nộp lần này", "right", "140px")], cod_rows, selected=[0, 1], checkbox_col=True, compact=False,
+               ("Còn giữ", "right"), ("Nộp lần này", "right", "130px")], cod_rows, selected=[0, 1], checkbox_col=True, compact=False,
               total_row=["2 khoản", "", "", money(7_500_000), money(5_500_000), money(5_500_000)]),
         subtle("Nộp một phần được — phần còn lại tiếp tục tính COD đang giữ và tuổi giữ tiền.", 12), gap=8),
         right=a("Chọn thêm từ COD đang giữ", "WM-COD-01", "Mở danh sách COD tài xế đang giữ"))
@@ -306,7 +306,7 @@ def pay_03():
         panel("Loại Khách trả", col(muted("Chọn khách → nhập số tiền → lưu. Sau khi lưu mở chi tiết phiếu để phân bổ vào đơn; "
                                           "phần chưa phân bổ vào số dư khách.", 12),
                                     a("Phân bổ phiếu có sẵn", "WM-PAY-04", "Mở phân bổ payment"), gap=6)),
-        gap=16, extra="width: 320px; flex-shrink: 0;")
+        gap=16, extra="width: 300px; flex-shrink: 0;")
     content = col(
         page_header("Tạo phiếu thu", "Ghi nhận tiền vào: khách trả, tài xế nộp COD hoặc thu khác",
                     row(btn("Hủy", "secondary", to="WM-PAY-01", trigger="Hủy tạo phiếu thu"),
@@ -728,8 +728,8 @@ def adv_01():
         st_b = {"Chờ đối soát": badge("Chờ đối soát", "warning"), "Chuyến đang chạy": status("Đang vận chuyển", "trip"),
                 "Đã đối soát": badge("Đã đối soát", "success")}[stt]
         tone = T["warning"] if "nộp" in res else (T["info"] if "hoàn" in res else T["text-muted"])
-        rows.append([col(row(code(trip, to="WM-TRIP-01", trigger="Mở chuyến"), muted("·", 11), code(order, 12, "WM-ORD-07", "Mở tài chính đơn"), gap=4),
-                         subtle(drv, 11), gap=0),
+        rows.append([col(code(trip, to="WM-TRIP-01", trigger="Mở chuyến"),
+                         row(code(order, 11, "WM-ORD-07", "Mở tài chính đơn"), subtle("· " + drv, 11), gap=4), gap=0),
                      col(num(money(adv)), code(pc, 11, "WM-EXP-02", "Mở phiếu chi tạm ứng") if pc.startswith("PC-202609") else subtle(pc, 11), gap=0,
                          extra="align-items: flex-end;"),
                      num(money(cost)),
@@ -762,7 +762,7 @@ def adv_01():
             + btn("Điều chỉnh", "secondary", "pencil", to="WM-SHELL-08", trigger="Điều chỉnh đối soát (sensitive, cần lý do)")
             + btn("Xác nhận & tạo phiếu thu", "primary", "check", to="WM-PAY-03", trigger="Xác nhận đối soát → phiếu thu hoàn tạm ứng"))
     use("Drawer")
-    side = (f'<aside aria-label="Đối soát tạm ứng" style="width: 440px; flex-shrink: 0; background: {T["surface"]}; border: 1px solid {T["border"]}; '
+    side = (f'<aside aria-label="Đối soát tạm ứng" style="width: 420px; flex-shrink: 0; background: {T["surface"]}; border: 1px solid {T["border"]}; '
             f'border-radius: 8px; display: flex; flex-direction: column;">'
             f'<div style="display: flex; align-items: flex-start; gap: 8px; padding: 14px 20px; border-bottom: 1px solid {T["border"]};">'
             f'{col(h("md", "Đối soát tạm ứng"), muted("CX-202609-0005 · sau chuyến", 13), gap=2)}{spacer()}{icon_btn("x", "Đóng", to="WM-ADV-01", trigger="Đóng")}</div>'
@@ -777,7 +777,7 @@ def adv_01():
               kpi("Tài xế còn phải nộp", money(920_000), "Tạm tính, chưa gồm chuyến đang chạy", "warning", "arrow-down"),
               kpi("Công ty phải hoàn", money(0), "Không có", None, "arrow-up")),
         row(left, side, gap=16, align="flex-start"), gap=16)
-    return wm_shell("finance", content, h=1000, child="WM-ADV-01")
+    return wm_shell("finance", content, h=1130, child="WM-ADV-01")
 
 
 # ---------------------------------------------------------------- registry
@@ -913,7 +913,7 @@ register(
            notes=["COD held = Σ stop.cod_actual − Σ payment_in DRIVER_COD_REMITTANCE.",
                   "Cảnh báo theo cài đặt merchant: 5.000.000 đ hoặc 2 ngày (WM-SET-01).",
                   "Seed: Trần Minh Lái thu 7.500.000, đã nộp 2.000.000, còn giữ 5.500.000."]),
-    Screen(id="WM-ADV-01", name="Tạm ứng chuyến & đối soát", route="/finance/trip-advances", render=adv_01, pattern="list", h=1000, roles=ROLES_FIN, **C,
+    Screen(id="WM-ADV-01", name="Tạm ứng chuyến & đối soát", route="/finance/trip-advances", render=adv_01, pattern="list", h=1130, roles=ROLES_FIN, **C,
            purpose="Theo dõi tạm ứng theo chuyến, chi phí thực tế, tài xế còn nộp/được hoàn; đối soát sau chuyến.",
            api=["tripAdvances(filter)", "expenses(filter: {tripId})", "reconcileTripAdvance(input: {tripId, resolution, reason?})"],
            data=["trip", "order", "driver", "advanceExpense", "advanceAmount", "actualCost", "difference", "resolution", "status"],

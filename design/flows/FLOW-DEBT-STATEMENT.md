@@ -19,9 +19,9 @@ flowchart LR
 
 | # | Actor | Màn hình | Route | Hành động |
 |---:|---|---|---|---|
-| 1 | Accountant | API | `` | Lọc khách/kỳ |
-| 2 | Accountant | API | `` | Tạo bảng kê |
-| 3 | System | API | `` | Xem trước dòng bảng kê |
-| 4 | Accountant | API | `` | Chốt → snapshot + PDF |
+| 1 | Accountant | [WM-DEBT-01](../screens/wm/WM-DEBT-01.md) Công nợ khách tổng hợp | `/finance/customer-debt` | Lọc khách/kỳ |
+| 2 | Accountant | [WM-DEBT-03](../screens/wm/WM-DEBT-03.md) Danh sách bảng kê công nợ | `/finance/debt-statements` | Tạo bảng kê |
+| 3 | System | [WM-DEBT-04](../screens/wm/WM-DEBT-04.md) Chi tiết bảng kê công nợ | `/finance/debt-statements/:statementId` | Xem trước dòng bảng kê |
+| 4 | Accountant | [WM-DEBT-04](../screens/wm/WM-DEBT-04.md) Chi tiết bảng kê công nợ | `/finance/debt-statements/:statementId` | Chốt → snapshot + PDF |
 | 5 | Accountant | API | `` | Tải/chia sẻ PDF |
 | 6 | Customer | API | `` | Khách tải bảng kê đã gửi (phase 3) |

@@ -77,7 +77,7 @@ Phân bổ thủ công một phiếu thu vào nhiều đơn còn nợ của cùn
 
 ## Components (design system)
 
-`Button`, `PageHeader`, `Breadcrumb`, `SummaryStrip`, `StatusBadge`, `DueIndicator`, `MoneyInput`, `TextField`, `Switch`, `DataTable`, `WarningPanel`, `AppShell`, `Sidebar`, `Logo`, `Topbar`, `QuickSearch`, `NotificationBell`, `IconButton`
+`Button`, `PageHeader`, `Breadcrumb`, `SummaryStrip`, `StatusBadge`, `MoneyInput`, `TextField`, `Switch`, `DataTable`, `WarningPanel`, `AppShell`, `Sidebar`, `Logo`, `Topbar`, `QuickSearch`, `NotificationBell`, `IconButton`
 
 ## API (GraphQL)
 

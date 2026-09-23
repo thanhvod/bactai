@@ -7,7 +7,7 @@
 | Route | `/finance/trip-advances` |
 | Pattern | `list` |
 | Roles | admin, accountant, operation |
-| Kích thước mockup | 1440×1000 |
+| Kích thước mockup | 1440×1130 |
 | Mockup | [../../mockups/WM-ADV-01.html](../../mockups/WM-ADV-01.html) · canvas artboard `WM-ADV-01.dc.html` |
 
 ## Mục đích

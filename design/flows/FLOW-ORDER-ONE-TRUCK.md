@@ -27,4 +27,4 @@ flowchart LR
 | 4 | Operation | API | `` | Tạo chuyến: chọn xe, tài xế, giờ; mặc định gán mọi điểm |
 | 5 | System | API | `` | Cảnh báo trùng/gần trùng lịch (mềm) → override kèm lý do |
 | 6 | System | API | `` | Chuyến xuất hiện trên bảng điều phối |
-| 7 | Driver | [DA-HOME-01](../screens/da/DA-HOME-01.md) Trang chủ công việc | `DriverHomeRoute` | Tài xế thấy chuyến được giao |
+| 7 | Driver | API | `` | Tài xế thấy chuyến được giao |

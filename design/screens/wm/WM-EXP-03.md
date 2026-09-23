@@ -7,7 +7,7 @@
 | Route | `/finance/expenses/new` |
 | Pattern | `form` |
 | Roles | admin, accountant, operation |
-| Kích thước mockup | 1440×1240 |
+| Kích thước mockup | 1440×1320 |
 | Mockup | [../../mockups/WM-EXP-03.html](../../mockups/WM-EXP-03.html) · canvas artboard `WM-EXP-03.dc.html` |
 
 ## Mục đích

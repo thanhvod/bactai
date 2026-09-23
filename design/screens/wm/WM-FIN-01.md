@@ -7,7 +7,7 @@
 | Route | `/finance` |
 | Pattern | `list` |
 | Roles | admin, accountant, operation |
-| Kích thước mockup | 1440×1100 |
+| Kích thước mockup | 1440×1210 |
 | Mockup | [../../mockups/WM-FIN-01.html](../../mockups/WM-FIN-01.html) · canvas artboard `WM-FIN-01.dc.html` |
 
 ## Mục đích

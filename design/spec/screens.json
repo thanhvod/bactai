@@ -1,1302 +1,1168 @@
 [
   {
-    "id": "DA-AUTH-01",
-    "name": "Splash/kiểm tra phiên",
-    "platform": "da",
-    "platformName": "App Tài xế",
+    "id": "WM-FIN-01",
+    "name": "Sổ thu chi",
+    "platform": "wm",
+    "platformName": "Web Merchant",
     "phase": 1,
-    "module": "Đăng nhập",
-    "route": "DriverSplashRoute",
-    "pattern": "auth",
-    "purpose": "Khởi động app: kiểm tra phiên đăng nhập, số mục offline chờ đồng bộ; tự chuyển Home hoặc Login.",
-    "roles": [
-      "driver"
-    ],
-    "api": [
-      "driverMe"
-    ],
-    "data": [
-      "session.token",
-      "driver.name",
-      "merchant.name",
-      "syncQueue.pendingCount"
-    ],
-    "actions": [
-      {
-        "label": "Tự động → DA-HOME-01",
-        "guard": "phiên hợp lệ, driver active"
-      },
-      {
-        "label": "Tự động → DA-AUTH-02",
-        "guard": "chưa đăng nhập / hết hạn / driver inactive"
-      }
-    ],
-    "states": {
-      "loading": "Logo + progress, tối đa ~3 giây rồi điều hướng",
-      "offline": "Có token cache → vào Home với dữ liệu cache; không token → Login",
-      "error": "Token bị thu hồi → Login với thông báo 'Phiên đã hết hạn'"
-    },
-    "notes": [
-      "Không hiện status bar giả; Flutter splash native + màn Flutter kiểm tra phiên.",
-      "Nếu còn mục chờ đồng bộ thì giữ nguyên hàng đợi, không xóa khi phiên hết hạn."
-    ],
-    "overlayOf": null,
-    "components": [
-      "Logo"
-    ],
-    "size": {
-      "w": 390,
-      "h": 844
-    },
-    "mockup": "design/mockups/DA-AUTH-01.html",
-    "spec": "design/screens/da/DA-AUTH-01.md"
-  },
-  {
-    "id": "DA-AUTH-02",
-    "name": "Đăng nhập tài xế",
-    "platform": "da",
-    "platformName": "App Tài xế",
-    "phase": 1,
-    "module": "Đăng nhập",
-    "route": "DriverLoginRoute",
-    "pattern": "auth",
-    "purpose": "Tài xế đăng nhập bằng tài khoản do nhà xe cấp (SĐT + mật khẩu hoặc OTP).",
-    "roles": [
-      "driver"
-    ],
-    "api": [
-      "driverLogin(phone, password) | requestDriverOtp(phone) + verifyDriverOtp(phone, code) — chờ chốt auth",
-      "driverMe"
-    ],
-    "data": [
-      "phone",
-      "password | otp",
-      "rememberDevice"
-    ],
-    "actions": [
-      {
-        "label": "Đăng nhập",
-        "guard": "driver account active"
-      },
-      {
-        "label": "Quên mật khẩu",
-        "guard": "public"
-      }
-    ],
-    "states": {
-      "validation": "SĐT sai định dạng → lỗi inline dưới field",
-      "error": "Sai mật khẩu / tài khoản bị khóa → Banner danger, không nói rõ trường nào sai",
-      "loading": "Nút Đăng nhập loading, disable form",
-      "offline": "Banner 'Cần có mạng để đăng nhập lần đầu'"
-    },
-    "notes": [
-      "PENDING DECISION: phương thức đăng nhập tài xế (mật khẩu hay OTP) chưa chốt — 04-handoff-readiness-review 'Cần chốt driver auth'. UI giữ tab Mật khẩu | Mã OTP; bỏ tab không dùng khi chốt.",
-      "Web Merchant dùng Google login (D-006) — không áp dụng cho tài xế.",
-      "Tài khoản tạo/reset từ WM-DRV-02 (createOrResetDriverAccount)."
-    ],
-    "overlayOf": null,
-    "components": [
-      "Logo",
-      "SegmentedControl",
-      "TextField",
-      "FormField",
-      "Checkbox",
-      "Banner",
-      "PrimaryBottomAction",
-      "Button"
-    ],
-    "size": {
-      "w": 390,
-      "h": 844
-    },
-    "mockup": "design/mockups/DA-AUTH-02.html",
-    "spec": "design/screens/da/DA-AUTH-02.md"
-  },
-  {
-    "id": "DA-AUTH-03",
-    "name": "Quên mật khẩu",
-    "platform": "da",
-    "platformName": "App Tài xế",
-    "phase": 1,
-    "module": "Đăng nhập",
-    "route": "DriverForgotPasswordRoute",
-    "pattern": "auth",
-    "purpose": "Khôi phục mật khẩu qua SĐT + mã xác thực; hoặc nhờ nhà xe đặt lại.",
-    "roles": [
-      "driver"
-    ],
-    "api": [
-      "requestDriverPasswordReset(phone)",
-      "verifyDriverOtp(phone, code)",
-      "resetDriverPassword(token, newPassword) — chờ chốt auth"
-    ],
-    "data": [
-      "phone",
-      "otp",
-      "newPassword",
-      "resendCountdown"
-    ],
-    "actions": [
-      {
-        "label": "Xác nhận & đặt lại mật khẩu",
-        "guard": "public, OTP hợp lệ"
-      },
-      {
-        "label": "Quay lại đăng nhập",
-        "guard": "public"
-      }
-    ],
-    "states": {
-      "error": "Mã sai/hết hạn → lỗi inline dưới ô mã",
-      "loading": "Nút primary loading"
-    },
-    "notes": [
-      "Stepper 3 bước: SĐT → mã → mật khẩu mới. Nếu chốt OTP-only thì màn này không cần (chỉ còn 'liên hệ nhà xe').",
-      "OTP input 6 ô, tự nhảy ô, dán được."
-    ],
-    "overlayOf": null,
-    "components": [
-      "Stepper",
-      "FormField",
-      "TextField",
-      "Banner",
-      "MobileHeader",
-      "PrimaryBottomAction",
-      "Button"
-    ],
-    "size": {
-      "w": 390,
-      "h": 844
-    },
-    "mockup": "design/mockups/DA-AUTH-03.html",
-    "spec": "design/screens/da/DA-AUTH-03.md"
-  },
-  {
-    "id": "DA-HOME-01",
-    "name": "Trang chủ công việc",
-    "platform": "da",
-    "platformName": "App Tài xế",
-    "phase": 1,
-    "module": "Hôm nay & lịch chuyến",
-    "route": "DriverHomeRoute",
-    "pattern": "mobile",
-    "purpose": "Mở app là biết nên làm gì: chuyến đang chạy/tiếp theo, trạng thái đồng bộ, cảnh báo COD, chuyến hôm nay.",
-    "roles": [
-      "driver"
-    ],
-    "api": [
-      "driverMe",
-      "driverJobs(filter: {date: today})",
-      "local: syncQueue.count"
-    ],
-    "data": [
-      "activeTrip{code, status, route, vehicle, plannedWindow, nextStop, codExpected, openIncident}",
-      "todayTrips[]",
-      "codReminder",
-      "syncStatus",
-      "unreadNotifications"
-    ],
-    "actions": [
-      {
-        "label": "Mở chuyến đang chạy",
-        "guard": "own trip"
-      },
-      {
-        "label": "Xem tất cả chuyến",
-        "guard": "driver"
-      },
-      {
-        "label": "Mở hàng đợi đồng bộ",
-        "guard": "driver"
-      }
-    ],
-    "states": {
-      "empty": "Không có chuyến hôm nay → EmptyState 'Hôm nay chưa có chuyến' + chuyến sắp tới gần nhất",
-      "loading": "Skeleton TripCard",
-      "offline": "Hiển thị dữ liệu cache gần nhất + OfflineBanner; thao tác ghi vào hàng đợi (DA-SYNC-01).",
-      "error": "Banner danger + Thử lại"
-    },
-    "notes": [
-      "Primary: có chuyến đang chạy → 'Mở chuyến đang chạy'; chỉ có chuyến sắp tới → 'Xem chuyến'.",
-      "Không có nút nhận việc (phase 1: điều phối giao là tài xế nhận).",
-      "Pull-to-refresh."
-    ],
-    "overlayOf": null,
-    "components": [
-      "StatusBadge",
-      "MoneyText",
-      "Button",
-      "TripCard",
-      "SyncStatus",
-      "IconButton",
-      "MobileHeader",
-      "BottomNav"
-    ],
-    "size": {
-      "w": 390,
-      "h": 844
-    },
-    "mockup": "design/mockups/DA-HOME-01.html",
-    "spec": "design/screens/da/DA-HOME-01.md"
-  },
-  {
-    "id": "DA-JOB-01",
-    "name": "Danh sách chuyến",
-    "platform": "da",
-    "platformName": "App Tài xế",
-    "phase": 1,
-    "module": "Hôm nay & lịch chuyến",
-    "route": "DriverJobListRoute",
+    "module": "Thu chi & Công nợ",
+    "route": "/finance",
     "pattern": "list",
-    "purpose": "Danh sách chuyến được giao theo ngày/trạng thái, filter đơn giản.",
+    "purpose": "Sổ chung mọi phiếu thu/phiếu chi: loại, đối tượng, trạng thái, số tiền phiếu và dòng tiền vào/ra thực tế; điểm vào tạo phiếu.",
     "roles": [
-      "driver"
+      "admin",
+      "accountant",
+      "operation"
     ],
     "api": [
-      "driverJobs(filter: {bucket: TODAY|UPCOMING|RUNNING|DONE})"
+      "payments(filter, sort, first, after)",
+      "expenses(filter, sort, first, after)"
     ],
     "data": [
       "code",
-      "routeSummary",
-      "plannedWindow",
-      "status",
-      "vehicle.plate",
-      "codExpected",
-      "pendingSyncCount"
-    ],
-    "actions": [
-      {
-        "label": "Mở chuyến",
-        "guard": "own trip"
-      },
-      {
-        "label": "Xem lịch",
-        "guard": "driver"
-      }
-    ],
-    "states": {
-      "empty": "EmptyState theo filter, ví dụ 'Không có chuyến sắp tới'",
-      "loading": "Skeleton TripCard ×3",
-      "offline": "Hiển thị dữ liệu cache gần nhất + OfflineBanner; thao tác ghi vào hàng đợi (DA-SYNC-01)."
-    },
-    "notes": [
-      "Filter: Hôm nay · Sắp tới · Đang chạy · Hoàn thành (SegmentedControl 48dp). Không filter phức tạp.",
-      "Không có nút 'nhận việc'.",
-      "Badge sync khi chuyến có mục chờ gửi."
-    ],
-    "overlayOf": null,
-    "components": [
-      "StatusBadge",
-      "MoneyText",
-      "TripCard",
-      "SegmentedControl",
-      "IconButton",
-      "Button",
-      "MobileHeader",
-      "BottomNav"
-    ],
-    "size": {
-      "w": 390,
-      "h": 844
-    },
-    "mockup": "design/mockups/DA-JOB-01.html",
-    "spec": "design/screens/da/DA-JOB-01.md"
-  },
-  {
-    "id": "DA-JOB-02",
-    "name": "Lịch chuyến",
-    "platform": "da",
-    "platformName": "App Tài xế",
-    "phase": 1,
-    "module": "Hôm nay & lịch chuyến",
-    "route": "DriverJobCalendarRoute",
-    "pattern": "mobile",
-    "purpose": "Xem công việc theo lịch tháng/tuần; chọn ngày → danh sách chuyến ngày đó.",
-    "roles": [
-      "driver"
-    ],
-    "api": [
-      "driverJobs(filter: {from, to})"
-    ],
-    "data": [
-      "daysWithTrips{date, statuses[]}",
-      "selectedDay.trips[]"
-    ],
-    "actions": [
-      {
-        "label": "Chọn ngày",
-        "guard": "driver"
-      },
-      {
-        "label": "Mở chuyến",
-        "guard": "own trip"
-      }
-    ],
-    "states": {
-      "empty": "Ngày không có chuyến → 'Không có chuyến ngày này'",
-      "loading": "Calendar skeleton"
-    },
-    "notes": [
-      "Chấm màu theo trạng thái chuyến trong ngày (accent đang chạy, neutral sắp tới, success hoàn thành, danger hủy).",
-      "Ô ngày 48dp; mặc định chọn hôm nay."
-    ],
-    "overlayOf": null,
-    "components": [
-      "Calendar",
-      "IconButton",
-      "Button",
-      "SegmentedControl",
-      "TripCard",
-      "StatusBadge",
-      "MobileHeader",
-      "BottomNav"
-    ],
-    "size": {
-      "w": 390,
-      "h": 844
-    },
-    "mockup": "design/mockups/DA-JOB-02.html",
-    "spec": "design/screens/da/DA-JOB-02.md"
-  },
-  {
-    "id": "DA-TRIP-01",
-    "name": "Chi tiết chuyến",
-    "platform": "da",
-    "platformName": "App Tài xế",
-    "phase": 1,
-    "module": "Chuyến & điểm dừng",
-    "route": "DriverTripDetailRoute(tripId)",
-    "pattern": "detail",
-    "purpose": "Xem chuyến: điểm lấy/trả, hàng, ghi chú, COD, chứng từ, sự cố; hành động chính theo trạng thái.",
-    "roles": [
-      "driver"
-    ],
-    "api": [
-      "driverTrip(id)"
-    ],
-    "data": [
-      "code",
-      "status",
-      "order.code",
-      "route",
-      "vehicle.plate",
-      "plannedWindow",
-      "stops[]",
-      "cargoLines[]",
-      "notes",
-      "codExpected",
-      "attachments.count",
-      "incidents[]",
-      "gps.lastSentAt"
-    ],
-    "actions": [
-      {
-        "label": "Primary theo trạng thái",
-        "guard": "trip.status own: Đã lên lịch→Bắt đầu đi lấy; Đang đến điểm lấy→Đã đến điểm lấy; Đang lấy hàng→Bắt đầu vận chuyển; Đang vận chuyển→Đến điểm trả; Đang trả hàng→Hoàn thành điểm/chuyến; Tạm dừng→Tiếp tục chuyến"
-      },
-      {
-        "label": "Tạm dừng",
-        "guard": "Pause own trip with reason"
-      },
-      {
-        "label": "Báo sự cố",
-        "guard": "Report incident own trip"
-      },
-      {
-        "label": "Nhập COD / Upload chứng từ",
-        "guard": "own stop"
-      }
-    ],
-    "states": {
-      "loading": "Skeleton header + sections",
-      "offline": "Mở được chuyến đã cache; thao tác vào hàng đợi",
-      "error": "Chuyến không thuộc tài xế → 'Bạn không có quyền xem chuyến này' + về Home",
-      "readonly": "Chuyến Hoàn thành/Đã hủy (mở từ lịch sử) → ẩn PrimaryBottomAction, chỉ xem"
-    },
-    "notes": [
-      "Header: mã, trạng thái, tuyến, xe, giờ dự kiến. Sections: Điểm lấy/trả (StopCard) · Hàng hóa/ghi chú · COD · Chứng từ/POD · Sự cố.",
-      "Tạm dừng (trạng thái) ≠ Sự cố (bản ghi riêng) — 2 nút tách biệt.",
-      "Tài xế không xem/cập nhật chuyến của tài xế khác."
-    ],
-    "overlayOf": null,
-    "components": [
-      "EntityHeader",
-      "StatusBadge",
-      "StopCard",
-      "MoneyText",
-      "Button",
-      "PrimaryBottomAction",
-      "IconButton",
-      "MobileHeader"
-    ],
-    "size": {
-      "w": 390,
-      "h": 844
-    },
-    "mockup": "design/mockups/DA-TRIP-01.html",
-    "spec": "design/screens/da/DA-TRIP-01.md"
-  },
-  {
-    "id": "DA-STOP-01",
-    "name": "Danh sách điểm dừng",
-    "platform": "da",
-    "platformName": "App Tài xế",
-    "phase": 1,
-    "module": "Chuyến & điểm dừng",
-    "route": "DriverStopListRoute(tripId)",
-    "pattern": "list",
-    "purpose": "Stops theo thứ tự với loại lấy/trả, địa chỉ, liên hệ, COD, trạng thái; gọi/chỉ đường nhanh.",
-    "roles": [
-      "driver"
-    ],
-    "api": [
-      "driverTrip(id){stops}"
-    ],
-    "data": [
-      "sequence",
+      "date",
+      "direction(IN|OUT)",
       "type",
-      "location.name",
-      "location.address",
-      "contact.name",
-      "contact.phone",
-      "plannedAt",
-      "arrivedAt",
-      "completedAt",
-      "codExpected",
+      "counterpart",
+      "linkedEntities",
+      "status",
+      "amount",
+      "cashIn",
+      "cashOut",
+      "createdBy"
+    ],
+    "actions": [
+      {
+        "label": "Tạo phiếu thu (menu: khách trả / tài xế nộp COD / thu khác)",
+        "guard": "payment.create"
+      },
+      {
+        "label": "Tạo phiếu chi (menu: chi phí/NCC / tạm ứng chuyến)",
+        "guard": "expense.create"
+      },
+      {
+        "label": "Xuất Excel",
+        "guard": "finance.view"
+      }
+    ],
+    "states": {
+      "loading": "Skeleton KPI + DataTable skeleton rows",
+      "empty": "EmptyState 'Chưa có phiếu thu/chi trong kỳ' + nút Tạo phiếu",
+      "error": "Banner danger 'Không tải được sổ thu chi' + Thử lại",
+      "forbidden": "Operation chỉ xem một phần (08-permission ⚠️)"
+    },
+    "notes": [
+      "Tiền vào/Tiền ra = dòng tiền thực; phiếu chi Chưa trả, tài xế chi trước hoặc chi từ tạm ứng hiện '—' ở cột Tiền ra.",
+      "Phiếu thu Tài xế nộp COD hiển thị nhãn 'Thu hồi — không phải doanh thu'. Doanh thu chỉ lấy từ đơn (link báo cáo WM-RPT-02).",
+      "Menu 'Tạo phiếu' truyền ?type=CUSTOMER_PAYMENT|DRIVER_COD_REMITTANCE|OTHER sang /finance/payments/new.",
+      "Có thể gộp 2 query ở BFF; sort theo ngày giảm dần; cột tiền tabular-nums, căn phải."
+    ],
+    "overlayOf": null,
+    "components": [
+      "StatusBadge",
+      "Menu",
+      "Popover",
+      "Button",
+      "PageHeader",
+      "KpiCard",
+      "FilterBar",
+      "TextField",
+      "FilterChip",
+      "Banner",
+      "Pagination",
+      "IconButton",
+      "DataTable",
+      "AppShell",
+      "Sidebar",
+      "Logo",
+      "Topbar",
+      "QuickSearch",
+      "NotificationBell"
+    ],
+    "size": {
+      "w": 1440,
+      "h": 1210
+    },
+    "mockup": "design/mockups/WM-FIN-01.html",
+    "spec": "design/screens/wm/WM-FIN-01.md"
+  },
+  {
+    "id": "WM-PAY-01",
+    "name": "Danh sách phiếu thu",
+    "platform": "wm",
+    "platformName": "Web Merchant",
+    "phase": 1,
+    "module": "Thu chi & Công nợ",
+    "route": "/finance/payments",
+    "pattern": "list",
+    "purpose": "Danh sách phiếu thu theo loại (khách trả / tài xế nộp COD / thu khác) với số đã phân bổ và còn treo.",
+    "roles": [
+      "admin",
+      "accountant",
+      "operation"
+    ],
+    "api": [
+      "payments(filter: {type, method, dateRange, hasUnallocated}, sort, first, after)"
+    ],
+    "data": [
+      "code",
+      "receivedAt",
+      "type",
+      "payer(customer|driver|text)",
+      "method",
+      "amount",
+      "allocatedAmount",
+      "unallocatedAmount",
       "status"
     ],
     "actions": [
       {
-        "label": "Mở điểm dừng",
-        "guard": "own trip"
+        "label": "Tạo phiếu thu",
+        "guard": "payment.create (operation ⚠️)"
       },
       {
-        "label": "Gọi",
-        "guard": "tel: contact.phone"
+        "label": "Phân bổ",
+        "guard": "payment.allocate — admin/kế toán"
       },
       {
-        "label": "Chỉ đường",
-        "guard": "mở app bản đồ theo lat/lng"
+        "label": "Xuất Excel",
+        "guard": "finance.view"
       }
     ],
     "states": {
-      "offline": "Hiển thị dữ liệu cache gần nhất + OfflineBanner; thao tác ghi vào hàng đợi (DA-SYNC-01)."
+      "loading": "Skeleton",
+      "empty": "EmptyState 'Chưa có phiếu thu' + Tạo phiếu thu",
+      "error": "Banner danger + Thử lại"
     },
     "notes": [
-      "Stop status: Chưa đến · Đã đến · Hoàn thành · Bỏ qua.",
-      "Gọi/Chỉ đường dùng url_launcher (tel:/geo:)."
+      "Còn treo = amount − allocated (chỉ loại Khách trả) = số dư khách.",
+      "Loại Tài xế nộp COD: cột phân bổ '—', trạng thái 'Đã đối trừ COD'.",
+      "Chip 'Còn treo' = filter.hasUnallocated=true."
     ],
     "overlayOf": null,
     "components": [
-      "StopCard",
-      "StatusBadge",
-      "Button",
-      "MoneyText",
-      "MobileHeader",
-      "PrimaryBottomAction"
-    ],
-    "size": {
-      "w": 390,
-      "h": 844
-    },
-    "mockup": "design/mockups/DA-STOP-01.html",
-    "spec": "design/screens/da/DA-STOP-01.md"
-  },
-  {
-    "id": "DA-STOP-02",
-    "name": "Chi tiết điểm dừng",
-    "platform": "da",
-    "platformName": "App Tài xế",
-    "phase": 1,
-    "module": "Chuyến & điểm dừng",
-    "route": "DriverStopDetailRoute(stopId)",
-    "pattern": "detail",
-    "purpose": "Tại điểm: địa chỉ lớn, liên hệ, COD, POD, giờ thực tế; đánh dấu đã đến/hoàn thành/bỏ qua.",
-    "roles": [
-      "driver"
-    ],
-    "api": [
-      "driverTrip(id){stop}",
-      "driverUpdateStopStatus(input: {stopId, status, reason?, idempotencyKey})"
-    ],
-    "data": [
-      "type",
-      "sequence",
-      "location",
-      "contact",
-      "cargoSummary",
-      "codExpected",
-      "codActual",
-      "podCount",
-      "plannedAt",
-      "arrivedAt"
-    ],
-    "actions": [
-      {
-        "label": "Đã đến",
-        "guard": "Update own stop status"
-      },
-      {
-        "label": "Hoàn thành điểm",
-        "guard": "Update own stop status; điểm trả cần ≥1 POD, COD đã nhập nếu có COD dự kiến"
-      },
-      {
-        "label": "Bỏ qua điểm",
-        "guard": "reason required (ReasonBottomSheet)"
-      },
-      {
-        "label": "Nhập COD",
-        "guard": "Enter COD own stop"
-      },
-      {
-        "label": "Chụp POD",
-        "guard": "Upload POD own trip"
-      },
-      {
-        "label": "Gọi / Chỉ đường",
-        "guard": "driver"
-      }
-    ],
-    "states": {
-      "offline": "Hiển thị dữ liệu cache gần nhất + OfflineBanner; thao tác ghi vào hàng đợi (DA-SYNC-01).",
-      "validation": "Hoàn thành khi thiếu POD/COD → inline danger 'Cần chụp POD trước khi hoàn thành'"
-    },
-    "notes": [
-      "Mockup ở thời điểm đã đến điểm trả (13:05), chưa nhập COD/POD.",
-      "Địa chỉ 17px, COD 24px — đọc được ngoài trời."
-    ],
-    "overlayOf": null,
-    "components": [
-      "StatusBadge",
-      "Button",
-      "MoneyText",
-      "MobileHeader",
-      "PrimaryBottomAction"
-    ],
-    "size": {
-      "w": 390,
-      "h": 844
-    },
-    "mockup": "design/mockups/DA-STOP-02.html",
-    "spec": "design/screens/da/DA-STOP-02.md"
-  },
-  {
-    "id": "DA-STATUS-01",
-    "name": "Cập nhật trạng thái chuyến",
-    "platform": "da",
-    "platformName": "App Tài xế",
-    "phase": 1,
-    "module": "Trạng thái · POD · COD · Sự cố",
-    "route": "DriverStatusUpdateRoute(tripId)",
-    "pattern": "dialog",
-    "purpose": "Bottom sheet chọn trạng thái hợp lệ tiếp theo, ghi chú, lưu giờ thực tế.",
-    "roles": [
-      "driver"
-    ],
-    "api": [
-      "driverUpdateTripStatus(input: {tripId, status, note?, reason?, idempotencyKey})"
-    ],
-    "data": [
-      "currentStatus",
-      "allowedNextStatuses[]",
-      "note",
-      "actualAt",
-      "lastLocation"
-    ],
-    "actions": [
-      {
-        "label": "Xác nhận",
-        "guard": "Update own trip status"
-      },
-      {
-        "label": "Chọn Tạm dừng",
-        "guard": "→ DA-STATUS-02 (reason required)"
-      }
-    ],
-    "states": {
-      "offline": "Lưu vào hàng đợi với idempotencyKey + actualAt tại máy; UI cập nhật lạc quan, badge 'chờ gửi'",
-      "error": "Server từ chối (trạng thái đã đổi từ web) → Banner danger + tải lại chuyến"
-    },
-    "notes": [
-      "Chỉ hiện trạng thái hợp lệ tiếp theo; không cho lùi trạng thái (đổi ngược = operation, sensitive).",
-      "Mỗi lần đổi tạo status_history (actor = driver)."
-    ],
-    "overlayOf": "DA-TRIP-01",
-    "components": [
-      "RadioGroup",
-      "Textarea",
-      "FormField",
-      "Button",
-      "BottomSheet",
-      "EntityHeader",
-      "StatusBadge",
-      "StopCard",
-      "MoneyText",
-      "PrimaryBottomAction",
+      "Menu",
       "IconButton",
-      "MobileHeader"
-    ],
-    "size": {
-      "w": 390,
-      "h": 844
-    },
-    "mockup": "design/mockups/DA-STATUS-01.html",
-    "spec": "design/screens/da/DA-STATUS-01.md"
-  },
-  {
-    "id": "DA-STATUS-02",
-    "name": "Tạm dừng chuyến",
-    "platform": "da",
-    "platformName": "App Tài xế",
-    "phase": 1,
-    "module": "Trạng thái · POD · COD · Sự cố",
-    "route": "DriverPauseTripRoute(tripId)",
-    "pattern": "dialog",
-    "purpose": "ReasonBottomSheet: đặt chuyến Tạm dừng với lý do từ danh mục, ghi chú, ảnh tùy chọn.",
-    "roles": [
-      "driver"
-    ],
-    "api": [
-      "catalogItems(type: PAUSE_REASON)",
-      "driverUpdateTripStatus(input: {status: PAUSED, reason, note, attachments?})"
-    ],
-    "data": [
-      "reasonCode",
-      "note",
-      "photo?",
-      "previousStatus"
-    ],
-    "actions": [
-      {
-        "label": "Xác nhận tạm dừng",
-        "guard": "Pause own trip with reason — reason required"
-      },
-      {
-        "label": "Báo sự cố",
-        "guard": "chuyển sang DA-INC-01"
-      }
-    ],
-    "states": {
-      "validation": "Chưa chọn lý do → nút Xác nhận disabled",
-      "offline": "Vào hàng đợi"
-    },
-    "notes": [
-      "Lý do: giờ cấm tải, nghỉ đêm, chờ phà, hư xe, kẹt xe, chờ bốc xếp.",
-      "Tạm dừng là trạng thái trip, KHÔNG tạo incident. Tiếp tục → quay về previousStatus (Đang vận chuyển)."
-    ],
-    "overlayOf": "DA-TRIP-01",
-    "components": [
-      "ReasonBottomSheet",
-      "Banner",
+      "Button",
+      "StatusBadge",
+      "PageHeader",
+      "Breadcrumb",
+      "KpiCard",
+      "FilterBar",
+      "TextField",
       "FilterChip",
-      "FormField",
-      "Textarea",
-      "Button",
-      "BottomSheet",
-      "EntityHeader",
-      "StatusBadge",
-      "StopCard",
-      "MoneyText",
-      "PrimaryBottomAction",
-      "IconButton",
-      "MobileHeader"
+      "Pagination",
+      "DataTable",
+      "AppShell",
+      "Sidebar",
+      "Logo",
+      "Topbar",
+      "QuickSearch",
+      "NotificationBell"
     ],
     "size": {
-      "w": 390,
-      "h": 844
+      "w": 1440,
+      "h": 900
     },
-    "mockup": "design/mockups/DA-STATUS-02.html",
-    "spec": "design/screens/da/DA-STATUS-02.md"
+    "mockup": "design/mockups/WM-PAY-01.html",
+    "spec": "design/screens/wm/WM-PAY-01.md"
   },
   {
-    "id": "DA-POD-01",
-    "name": "Chụp POD",
-    "platform": "da",
-    "platformName": "App Tài xế",
+    "id": "WM-PAY-02",
+    "name": "Chi tiết phiếu thu",
+    "platform": "wm",
+    "platformName": "Web Merchant",
     "phase": 1,
-    "module": "Trạng thái · POD · COD · Sự cố",
-    "route": "DriverPodCaptureRoute(stopId)",
-    "pattern": "mobile",
-    "purpose": "Chụp/chọn nhiều ảnh POD, xem trạng thái upload, retry; gắn đúng điểm trả.",
+    "module": "Thu chi & Công nợ",
+    "route": "/finance/payments/:paymentId",
+    "pattern": "detail",
+    "purpose": "Thông tin thu, người nộp, phân bổ vào đơn, số dư khách phát sinh, chứng từ và audit.",
     "roles": [
-      "driver"
+      "admin",
+      "accountant",
+      "operation"
     ],
     "api": [
-      "POST /uploads/presign",
-      "POST /uploads/confirm (category: POD, entity: ORDER_STOP)"
+      "payment(id){allocations, attachments, customer{creditBalance}}",
+      "activityLogs(entityType: PAYMENT_IN, entityId)"
     ],
     "data": [
-      "stopId",
-      "category",
-      "photos[{localPath, status: uploaded|uploading|failed|queued, progress}]"
-    ],
-    "actions": [
-      {
-        "label": "Chụp / Thư viện",
-        "guard": "Upload POD own trip"
-      },
-      {
-        "label": "Thử lại",
-        "guard": "driver"
-      },
-      {
-        "label": "Xong",
-        "guard": "gắn ảnh vào stop"
-      }
-    ],
-    "states": {
-      "offline": "Ảnh lưu local, trạng thái 'Chờ mạng', tự upload khi có kết nối",
-      "error": "Thumbnail viền danger + Thử lại",
-      "permission": "Chưa cấp quyền camera → màn giải thích + mở cài đặt"
-    },
-    "notes": [
-      "Nén ảnh trước khi upload (≤ 10 MB).",
-      "POD không được gắn nhầm stop: stopId cố định từ route."
-    ],
-    "overlayOf": null,
-    "components": [
-      "PodCapture",
-      "Button",
-      "AttachmentCapture",
-      "SegmentedControl",
-      "Banner",
-      "MobileHeader",
-      "PrimaryBottomAction"
-    ],
-    "size": {
-      "w": 390,
-      "h": 844
-    },
-    "mockup": "design/mockups/DA-POD-01.html",
-    "spec": "design/screens/da/DA-POD-01.md"
-  },
-  {
-    "id": "DA-COD-01",
-    "name": "Nhập COD thực thu",
-    "platform": "da",
-    "platformName": "App Tài xế",
-    "phase": 1,
-    "module": "Trạng thái · POD · COD · Sự cố",
-    "route": "DriverCodInputRoute(stopId)",
-    "pattern": "form",
-    "purpose": "Ghi COD thực thu tại điểm; xác nhận khi khác dự kiến; sửa sau khi lưu phải có lý do (audit).",
-    "roles": [
-      "driver"
-    ],
-    "api": [
-      "driverSubmitCod(input: {stopId, amount, note, reason?, attachments?})"
-    ],
-    "data": [
-      "codExpected",
-      "codActual",
-      "note",
-      "diffReason",
-      "receiptPhoto?",
-      "previousAmount (edit)"
-    ],
-    "actions": [
-      {
-        "label": "Lưu COD",
-        "guard": "Enter COD actual for own stop"
-      },
-      {
-        "label": "Xác nhận lưu COD khác dự kiến",
-        "guard": "reason required"
-      },
-      {
-        "label": "Sửa COD đã lưu",
-        "guard": "⚠️ reason required; backend may restrict by time/status"
-      }
-    ],
-    "states": {
-      "confirm": "Thực thu ≠ dự kiến → bottom sheet so sánh + lý do bắt buộc (mockup)",
-      "edit": "Sửa sau khi lưu: hiện diff Số cũ → Số mới (AuditDiff) + lý do bắt buộc, gửi audit",
-      "offline": "Vào hàng đợi; COD đang giữ cập nhật khi đồng bộ",
-      "validation": "Số âm/rỗng → lỗi inline"
-    },
-    "notes": [
-      "MoneyInput số nguyên VND, bàn phím số, font 28px.",
-      "COD thực thu tăng 'COD đang giữ' của tài xế; nộp lại cho kế toán KHÔNG phải doanh thu.",
-      "Sửa COD 12.000.000 → 11.500.000 không có lý do bị reject (DRV-ACT-003)."
-    ],
-    "overlayOf": null,
-    "components": [
-      "MoneyText",
-      "StatusBadge",
-      "MoneyInput",
-      "FormField",
-      "Button",
-      "Textarea",
-      "BottomSheet",
-      "MobileHeader",
-      "PrimaryBottomAction"
-    ],
-    "size": {
-      "w": 390,
-      "h": 844
-    },
-    "mockup": "design/mockups/DA-COD-01.html",
-    "spec": "design/screens/da/DA-COD-01.md"
-  },
-  {
-    "id": "DA-INC-01",
-    "name": "Báo sự cố",
-    "platform": "da",
-    "platformName": "App Tài xế",
-    "phase": 1,
-    "module": "Trạng thái · POD · COD · Sự cố",
-    "route": "DriverIncidentReportRoute(tripId)",
-    "pattern": "form",
-    "purpose": "Gửi sự cố (loại, mức độ, mô tả, ảnh) cho operation; lưu offline được.",
-    "roles": [
-      "driver"
-    ],
-    "api": [
-      "catalogItems(type: INCIDENT_TYPE)",
-      "driverReportIncident(input: {tripId, orderId, type, severity, description, attachmentIds})",
-      "POST /uploads/presign"
-    ],
-    "data": [
+      "code",
       "type",
-      "severity: LOW|MEDIUM|HIGH",
-      "description",
+      "payer",
+      "amount",
+      "receivedAt",
+      "method",
+      "bankAccount",
+      "transferNote",
+      "allocations[]",
+      "unallocatedAmount",
+      "creditLedger[]",
+      "attachments[]",
+      "audit[]"
+    ],
+    "actions": [
+      {
+        "label": "Phân bổ vào đơn",
+        "guard": "payment.allocate"
+      },
+      {
+        "label": "Sửa",
+        "guard": "payment.update — sensitive, lý do bắt buộc (WM-SHELL-08)"
+      },
+      {
+        "label": "Hủy phiếu",
+        "guard": "payment.cancel — sensitive, lý do bắt buộc (WM-SHELL-08)"
+      },
+      {
+        "label": "In phiếu thu",
+        "guard": "finance.view"
+      }
+    ],
+    "states": {
+      "loading": "Skeleton header + panels",
+      "error": "Không tìm thấy phiếu / không có quyền → EmptyState + quay lại danh sách",
+      "cancelled": "Banner danger 'Phiếu đã hủy' + lý do; ẩn hành động"
+    },
+    "notes": [
+      "Seed PT-202609-0002: 3.000.000 đ chưa phân bổ → số dư khách Bao bì Hưng Lợi.",
+      "Hủy phiếu đã phân bổ: gỡ allocation, còn nợ đơn tăng lại; ghi audit before/after.",
+      "Với phiếu Tài xế nộp COD: thay khối 'Phân bổ vào đơn' bằng 'Khoản COD đã đối trừ'."
+    ],
+    "overlayOf": null,
+    "components": [
+      "Button",
+      "StatusBadge",
+      "EntityHeader",
+      "Breadcrumb",
+      "SummaryStrip",
+      "DescriptionList",
+      "Banner",
+      "EmptyState",
+      "DataTable",
+      "PartnerCard",
+      "AttachmentList",
+      "IconButton",
+      "Timeline",
+      "Tabs",
+      "AppShell",
+      "Sidebar",
+      "Logo",
+      "Topbar",
+      "QuickSearch",
+      "NotificationBell"
+    ],
+    "size": {
+      "w": 1440,
+      "h": 1200
+    },
+    "mockup": "design/mockups/WM-PAY-02.html",
+    "spec": "design/screens/wm/WM-PAY-02.md"
+  },
+  {
+    "id": "WM-PAY-03",
+    "name": "Tạo phiếu thu",
+    "platform": "wm",
+    "platformName": "Web Merchant",
+    "phase": 1,
+    "module": "Thu chi & Công nợ",
+    "route": "/finance/payments/new",
+    "pattern": "form",
+    "purpose": "Ghi nhận tiền vào: khách trả, tài xế nộp COD (chọn khoản COD cần đối trừ) hoặc thu khác.",
+    "roles": [
+      "admin",
+      "accountant",
+      "operation"
+    ],
+    "api": [
+      "customers",
+      "drivers",
+      "driverCodHeld(filter: {driverId})",
+      "createPaymentIn(input)"
+    ],
+    "data": [
+      "type(CUSTOMER_PAYMENT|DRIVER_COD_REMITTANCE|OTHER)",
+      "customerId|driverId|payerName",
+      "amount",
+      "receivedAt",
+      "method",
+      "receivedBy",
+      "note",
+      "codItems[{stopId, amount}]",
       "attachments[]"
     ],
     "actions": [
       {
-        "label": "Gửi sự cố",
-        "guard": "Report incident for own trip"
+        "label": "Lưu phiếu thu",
+        "guard": "payment.create; DRIVER_COD_REMITTANCE cần quyền Record driver COD remittance (admin/kế toán)"
       },
       {
-        "label": "Đính kèm chứng từ khác",
-        "guard": "→ DA-ATT-01"
+        "label": "Lưu & tạo tiếp",
+        "guard": "payment.create"
       }
     ],
     "states": {
-      "validation": "Thiếu loại/mô tả → lỗi inline",
-      "offline": "Sự cố + ảnh vào hàng đợi, tự gửi khi có mạng"
+      "validation": "Số tiền > 0; COD: tổng 'Nộp lần này' = số tiền, mỗi dòng ≤ còn giữ (lỗi inline danger)",
+      "prefill": "Từ WM-COD-01: type=DRIVER_COD_REMITTANCE, driverId, các khoản đã chọn; từ WM-DEBT-01/WM-CUS-05: type=CUSTOMER_PAYMENT, customerId"
     },
     "notes": [
-      "Sự cố là bản ghi riêng (incidents) — không đổi trạng thái chuyến. Muốn dừng xe → DA-STATUS-02.",
-      "Operation thấy trên WM-DISPATCH-05 / WM-INC-01."
+      "Mockup ở trạng thái loại = Tài xế nộp COD (từ WM-COD-01).",
+      "Loại Khách trả: EntityPicker khách, không có bảng COD; sau lưu → WM-PAY-02 để phân bổ (WM-PAY-04), phần chưa phân bổ vào số dư khách.",
+      "Panel 'Sau khi lưu' luôn nói rõ: COD nộp lại không đổi doanh thu, không đổi công nợ khách.",
+      "react-hook-form + zod; MoneyInput số nguyên VND."
     ],
     "overlayOf": null,
     "components": [
-      "FilterChip",
-      "Select",
+      "RadioGroup",
+      "EntityPicker",
       "FormField",
+      "StatusBadge",
+      "MoneyInput",
+      "DataTable",
+      "Checkbox",
+      "DateField",
+      "SegmentedControl",
+      "Select",
       "Textarea",
-      "AttachmentCapture",
+      "AttachmentUploader",
+      "AttachmentList",
+      "IconButton",
+      "Button",
       "Banner",
-      "MobileHeader",
-      "PrimaryBottomAction",
-      "Button"
+      "PageHeader",
+      "Breadcrumb",
+      "AppShell",
+      "Sidebar",
+      "Logo",
+      "Topbar",
+      "QuickSearch",
+      "NotificationBell"
     ],
     "size": {
-      "w": 390,
-      "h": 844
+      "w": 1440,
+      "h": 1340
     },
-    "mockup": "design/mockups/DA-INC-01.html",
-    "spec": "design/screens/da/DA-INC-01.md"
+    "mockup": "design/mockups/WM-PAY-03.html",
+    "spec": "design/screens/wm/WM-PAY-03.md"
   },
   {
-    "id": "DA-ATT-01",
-    "name": "Upload chứng từ",
-    "platform": "da",
-    "platformName": "App Tài xế",
+    "id": "WM-PAY-04",
+    "name": "Phân bổ payment",
+    "platform": "wm",
+    "platformName": "Web Merchant",
     "phase": 1,
-    "module": "Trạng thái · POD · COD · Sự cố",
-    "route": "DriverAttachmentUploadRoute(entity)",
+    "module": "Thu chi & Công nợ",
+    "route": "/finance/payments/:paymentId/allocate",
     "pattern": "form",
-    "purpose": "Gửi thêm chứng từ (phiếu giao, biên nhận, hóa đơn phí, ảnh sự cố) gắn vào chuyến/điểm/sự cố.",
+    "purpose": "Phân bổ thủ công một phiếu thu vào nhiều đơn còn nợ của cùng khách; phần còn lại thành số dư khách.",
     "roles": [
-      "driver"
+      "admin",
+      "accountant"
     ],
     "api": [
-      "POST /uploads/presign",
-      "POST /uploads/confirm (entityType, entityId, category)"
+      "payment(id)",
+      "customerDebt(filter: {customerId, openOnly})",
+      "allocatePayment(input: {paymentId, lines[{orderId, amount}]})"
     ],
     "data": [
-      "entity{type, id, label}",
-      "category",
-      "files[{name, size, status, progress}]"
+      "payment.amount",
+      "payment.allocatedAmount",
+      "remaining",
+      "orders[{code, status, orderDate, dueDate, total, paid, remaining}]",
+      "lines[{orderId, amount}]",
+      "creditPreview"
     ],
     "actions": [
       {
-        "label": "Chụp ảnh / Thư viện / PDF",
-        "guard": "Upload chứng từ for own trip"
+        "label": "Xác nhận phân bổ",
+        "guard": "payment.allocate — admin/kế toán"
       },
       {
-        "label": "Thử lại",
-        "guard": "driver"
+        "label": "Tự điền theo hạn cũ nhất",
+        "guard": "client-side"
       },
       {
-        "label": "Lưu chứng từ",
-        "guard": "driver"
+        "label": "Hủy",
+        "guard": "—"
       }
     ],
     "states": {
-      "offline": "File vào hàng đợi",
-      "error": "Dòng lỗi + Thử lại"
+      "validation": "Tổng phân bổ > còn lại của phiếu → lỗi inline, chặn lưu; dòng > còn nợ đơn → lỗi inline",
+      "warning": "WarningPanel: khách có nhiều đơn quá hạn (gợi ý phân bổ đơn cũ); đơn đã đủ tiền bị khóa ô nhập",
+      "empty": "Khách không có đơn còn nợ → EmptyState 'Toàn bộ tiền sẽ vào số dư khách'"
     },
     "notes": [
-      "Loại chứng từ: POD, Phiếu giao hàng, Biên nhận, Hóa đơn phí, Ảnh sự cố, Khác.",
-      "JPG/PNG/PDF ≤ 10 MB."
+      "Allocation không vượt khách/merchant (backend reject TENANT_SCOPE_VIOLATION/BUSINESS_RULE_VIOLATION).",
+      "Số dư khách = tổng phiếu thu − tổng phân bổ; preview cập nhật khi nhập.",
+      "Sau lưu quay về WM-PAY-02; WM-CUS-05 và WM-ORD-07 phản ánh ngay."
     ],
     "overlayOf": null,
     "components": [
-      "Select",
-      "FormField",
+      "Button",
+      "PageHeader",
+      "Breadcrumb",
+      "SummaryStrip",
+      "StatusBadge",
+      "MoneyInput",
+      "TextField",
+      "Switch",
+      "DataTable",
+      "WarningPanel",
+      "AppShell",
+      "Sidebar",
+      "Logo",
+      "Topbar",
+      "QuickSearch",
+      "NotificationBell",
+      "IconButton"
+    ],
+    "size": {
+      "w": 1440,
+      "h": 960
+    },
+    "mockup": "design/mockups/WM-PAY-04.html",
+    "spec": "design/screens/wm/WM-PAY-04.md"
+  },
+  {
+    "id": "WM-EXP-01",
+    "name": "Danh sách phiếu chi",
+    "platform": "wm",
+    "platformName": "Web Merchant",
+    "phase": 1,
+    "module": "Thu chi & Công nợ",
+    "route": "/finance/expenses",
+    "pattern": "list",
+    "purpose": "Danh sách khoản chi: loại, đối tượng gắn (NCC/đơn/chuyến/xe/tài xế), ai chi, số tiền, đã trả/chưa trả.",
+    "roles": [
+      "admin",
+      "accountant",
+      "operation"
+    ],
+    "api": [
+      "expenses(filter: {category, supplierId, status, payer, dateRange}, sort, first, after)"
+    ],
+    "data": [
+      "code",
+      "date",
+      "category",
+      "subCategory",
+      "supplier",
+      "order",
+      "trip",
+      "vehicle",
+      "driver",
+      "paidBy",
+      "amount",
+      "status"
+    ],
+    "actions": [
+      {
+        "label": "Tạo phiếu chi",
+        "guard": "expense.create"
+      },
+      {
+        "label": "Xuất Excel",
+        "guard": "finance.view"
+      }
+    ],
+    "states": {
+      "loading": "Skeleton",
+      "empty": "EmptyState 'Chưa có phiếu chi' + Tạo phiếu chi",
+      "error": "Banner danger + Thử lại"
+    },
+    "notes": [
+      "KPI chi phí ghi nhận không gồm tạm ứng chuyến (tạm ứng chỉ thành chi phí khi đối soát).",
+      "Chip 'Hoàn tài xế' = paidBy=DRIVER & status=UNPAID; 'Có NCC' = supplierId != null."
+    ],
+    "overlayOf": null,
+    "components": [
+      "StatusBadge",
+      "Menu",
+      "IconButton",
+      "Button",
+      "PageHeader",
+      "Breadcrumb",
+      "KpiCard",
+      "FilterBar",
+      "TextField",
       "FilterChip",
+      "Pagination",
+      "DataTable",
+      "AppShell",
+      "Sidebar",
+      "Logo",
+      "Topbar",
+      "QuickSearch",
+      "NotificationBell"
+    ],
+    "size": {
+      "w": 1440,
+      "h": 1060
+    },
+    "mockup": "design/mockups/WM-EXP-01.html",
+    "spec": "design/screens/wm/WM-EXP-01.md"
+  },
+  {
+    "id": "WM-EXP-02",
+    "name": "Chi tiết phiếu chi",
+    "platform": "wm",
+    "platformName": "Web Merchant",
+    "phase": 1,
+    "module": "Thu chi & Công nợ",
+    "route": "/finance/expenses/:expenseId",
+    "pattern": "detail",
+    "purpose": "Thông tin chi, đối tượng gắn, ai chi trước, hoàn tài xế, chứng từ, audit; đánh dấu đã trả.",
+    "roles": [
+      "admin",
+      "accountant",
+      "operation"
+    ],
+    "api": [
+      "expense(id){links, attachments}",
+      "markExpensePaid(id, input)",
+      "updateExpense(id, input, reason)",
+      "cancelExpense(id, reason)",
+      "activityLogs(entityType: EXPENSE, entityId)"
+    ],
+    "data": [
+      "code",
+      "category",
+      "subCategory",
+      "amount",
+      "date",
+      "paidBy",
+      "reimburseDriver",
+      "status",
+      "order",
+      "trip",
+      "vehicle",
+      "driver",
+      "supplier",
+      "attachments[]",
+      "audit[]"
+    ],
+    "actions": [
+      {
+        "label": "Đánh dấu đã trả",
+        "guard": "expense.markPaid — admin/kế toán"
+      },
+      {
+        "label": "Sửa",
+        "guard": "expense.update — sensitive, lý do (operation ⚠️)"
+      },
+      {
+        "label": "Hủy phiếu",
+        "guard": "expense.cancel — sensitive, lý do"
+      }
+    ],
+    "states": {
+      "loading": "Skeleton",
+      "error": "Không tìm thấy / không có quyền",
+      "paid": "Ẩn form hoàn tiền, hiện 'Đã trả 23/09/2026 · hình thức · người chi'"
+    },
+    "notes": [
+      "Seed PC-202609-0001: phí cầu đường 800.000 đ, tài xế chi trước → công ty nợ tài xế (WM-DRV-05).",
+      "Đánh dấu đã trả giảm công nợ tài xế/NCC; không đổi lãi/lỗ đơn (chi phí đã ghi nhận khi tạo)."
+    ],
+    "overlayOf": null,
+    "components": [
       "Button",
       "StatusBadge",
-      "MobileHeader",
-      "PrimaryBottomAction"
+      "EntityHeader",
+      "Breadcrumb",
+      "SummaryStrip",
+      "DescriptionList",
+      "DataTable",
+      "Banner",
+      "DateField",
+      "FormField",
+      "SegmentedControl",
+      "Select",
+      "PartnerCard",
+      "AttachmentList",
+      "IconButton",
+      "Timeline",
+      "Tabs",
+      "AppShell",
+      "Sidebar",
+      "Logo",
+      "Topbar",
+      "QuickSearch",
+      "NotificationBell"
     ],
     "size": {
-      "w": 390,
-      "h": 844
+      "w": 1440,
+      "h": 1180
     },
-    "mockup": "design/mockups/DA-ATT-01.html",
-    "spec": "design/screens/da/DA-ATT-01.md"
+    "mockup": "design/mockups/WM-EXP-02.html",
+    "spec": "design/screens/wm/WM-EXP-02.md"
   },
   {
-    "id": "DA-GPS-01",
-    "name": "Theo dõi vị trí nền",
-    "platform": "da",
-    "platformName": "App Tài xế",
+    "id": "WM-EXP-03",
+    "name": "Tạo phiếu chi",
+    "platform": "wm",
+    "platformName": "Web Merchant",
     "phase": 1,
-    "module": "Đồng bộ & GPS",
-    "route": "DriverGpsPermissionRoute",
-    "pattern": "mobile",
-    "purpose": "Trạng thái quyền vị trí & tracking; cảnh báo khi tắt quyền làm chuyến không gửi được vị trí.",
+    "module": "Thu chi & Công nợ",
+    "route": "/finance/expenses/new",
+    "pattern": "form",
+    "purpose": "Ghi khoản chi: chi phí chuyến, thuê xe ngoài, vật tư xe, hoàn ứng, ứng lương, tạm ứng chuyến, chi khác; gắn đối tượng theo loại.",
     "roles": [
-      "driver"
+      "admin",
+      "accountant",
+      "operation"
     ],
     "api": [
-      "POST /driver/gps/batch",
-      "local: permission_handler + background location service"
+      "trips",
+      "orders",
+      "vehicles",
+      "drivers",
+      "suppliers",
+      "catalogItems(type: EXPENSE_CATEGORY)",
+      "createExpense(input)"
     ],
     "data": [
-      "permission: always|whileInUse|denied",
-      "preciseLocation",
-      "batteryOptimization",
-      "activeTrip",
-      "lastSentAt",
-      "bufferedPoints"
+      "category",
+      "subCategory",
+      "tripId",
+      "orderId",
+      "vehicleId",
+      "driverId",
+      "supplierId",
+      "amount",
+      "date",
+      "paidBy(COMPANY|DRIVER|ADVANCE)",
+      "reimburseDriver",
+      "status",
+      "note",
+      "attachments[]"
     ],
     "actions": [
       {
-        "label": "Mở cài đặt vị trí",
-        "guard": "OS settings"
+        "label": "Lưu phiếu chi",
+        "guard": "expense.create"
       },
       {
-        "label": "Kiểm tra lại",
-        "guard": "driver"
+        "label": "Lưu & tạo tiếp",
+        "guard": "expense.create"
       }
     ],
     "states": {
-      "ok": "Quyền 'Luôn cho phép' → Banner success 'Đang gửi vị trí'",
-      "off": "Banner danger (mockup)",
-      "no-trip": "Không có chuyến đang chạy → 'Không theo dõi vị trí'"
+      "validation": "Trường bắt buộc đổi theo loại (bảng 'Trường gắn theo loại chi'); Thuê xe ngoài bắt buộc đơn + NCC",
+      "prefill": "Từ WM-ORD-07 / WM-TRIP-01 / WM-SUP-02 / WM-ADV-01: điền sẵn đơn/chuyến/NCC/loại"
     },
     "notes": [
-      "Chỉ tracking khi có chuyến đang chạy (từ Bắt đầu đi lấy đến Hoàn thành). Không gửi GPS ngoài chuyến.",
-      "GPS buffer offline, gửi bù theo batch; backend kiểm tra driver sở hữu trip."
+      "Mockup ở loại Chi phí chuyến, tài xế chi trước (seed PC-202609-0001).",
+      "Chọn chuyến tự điền đơn, xe, tài xế (read-only).",
+      "Tạm ứng chuyến → xuất hiện ở WM-ADV-01; ứng lương → trừ bảng lương kỳ."
     ],
     "overlayOf": null,
     "components": [
-      "Banner",
+      "RadioGroup",
+      "EntityPicker",
+      "FormField",
+      "TextField",
+      "Select",
+      "MoneyInput",
+      "DateField",
+      "Checkbox",
+      "StatusBadge",
+      "AttachmentUploader",
+      "AttachmentList",
+      "IconButton",
+      "Button",
+      "DataTable",
+      "PageHeader",
+      "Breadcrumb",
+      "AppShell",
+      "Sidebar",
+      "Logo",
+      "Topbar",
+      "QuickSearch",
+      "NotificationBell"
+    ],
+    "size": {
+      "w": 1440,
+      "h": 1320
+    },
+    "mockup": "design/mockups/WM-EXP-03.html",
+    "spec": "design/screens/wm/WM-EXP-03.md"
+  },
+  {
+    "id": "WM-DEBT-01",
+    "name": "Công nợ khách tổng hợp",
+    "platform": "wm",
+    "platformName": "Web Merchant",
+    "phase": 1,
+    "module": "Thu chi & Công nợ",
+    "route": "/finance/customer-debt",
+    "pattern": "list",
+    "purpose": "Phải thu theo khách: tổng phải thu, đã thu, còn nợ, quá hạn, số dư, hạn mức; quét cảnh báo, ghi thu, tạo bảng kê.",
+    "roles": [
+      "admin",
+      "accountant",
+      "operation"
+    ],
+    "api": [
+      "customerDebt(filter: {asOf, overdueOnly, overLimit, hasCredit})"
+    ],
+    "data": [
+      "customer",
+      "receivable",
+      "paid(allocated)",
+      "remaining",
+      "overdueAmount",
+      "maxOverdueDays",
+      "creditBalance",
+      "creditLimit",
+      "openOrders"
+    ],
+    "actions": [
+      {
+        "label": "Ghi nhận thanh toán",
+        "guard": "payment.create"
+      },
+      {
+        "label": "Tạo bảng kê",
+        "guard": "debtStatement.create — admin/kế toán"
+      },
+      {
+        "label": "Xuất Excel",
+        "guard": "finance.view"
+      }
+    ],
+    "states": {
+      "loading": "Skeleton",
+      "empty": "EmptyState 'Không có khách còn nợ'",
+      "error": "Banner danger + Thử lại"
+    },
+    "notes": [
+      "Còn nợ = tổng đơn − tổng phân bổ; không trừ số dư (credit) tự động.",
+      "Vượt hạn mức chỉ cảnh báo, không chặn tạo đơn.",
+      "Click khách → WM-CUS-05 (tab công nợ)."
+    ],
+    "overlayOf": null,
+    "components": [
       "StatusBadge",
       "IconButton",
       "Button",
-      "MobileHeader",
-      "PrimaryBottomAction"
+      "DueIndicator",
+      "DataTable",
+      "PageHeader",
+      "Breadcrumb",
+      "KpiCard",
+      "FilterBar",
+      "TextField",
+      "FilterChip",
+      "AppShell",
+      "Sidebar",
+      "Logo",
+      "Topbar",
+      "QuickSearch",
+      "NotificationBell"
     ],
     "size": {
-      "w": 390,
-      "h": 844
+      "w": 1440,
+      "h": 1060
     },
-    "mockup": "design/mockups/DA-GPS-01.html",
-    "spec": "design/screens/da/DA-GPS-01.md"
+    "mockup": "design/mockups/WM-DEBT-01.html",
+    "spec": "design/screens/wm/WM-DEBT-01.md"
   },
   {
-    "id": "DA-SYNC-01",
-    "name": "Đồng bộ offline",
-    "platform": "da",
-    "platformName": "App Tài xế",
+    "id": "WM-DEBT-02",
+    "name": "Công nợ NCC",
+    "platform": "wm",
+    "platformName": "Web Merchant",
     "phase": 1,
-    "module": "Đồng bộ & GPS",
-    "route": "DriverSyncRoute",
+    "module": "Thu chi & Công nợ",
+    "route": "/finance/supplier-debt",
     "pattern": "list",
-    "purpose": "Hàng đợi trạng thái/COD/POD/GPS/sự cố chưa gửi; retry và xem lỗi.",
+    "purpose": "Phải trả NCC = phiếu chi gắn NCC chưa trả, theo tuổi nợ; trả NCC bằng đánh dấu phiếu chi đã trả.",
     "roles": [
-      "driver"
+      "admin",
+      "accountant",
+      "operation"
     ],
     "api": [
-      "local: syncQueue (drift/sqlite)",
-      "replay: driverUpdateTripStatus / driverUpdateStopStatus / driverSubmitCod / uploads / gps batch / driverReportIncident"
+      "supplierDebt(filter: {asOf})",
+      "expenses(filter: {supplierId, status: UNPAID})"
     ],
     "data": [
-      "items[{type, entityLabel, capturedAt, status: pending|failed|done, attempts, error}]"
+      "supplier",
+      "unpaidTotal",
+      "aging[0-15, 16-30, 31-60, >60]",
+      "oldestDays",
+      "unpaidCount",
+      "expenses[]"
     ],
     "actions": [
       {
-        "label": "Thử lại tất cả",
-        "guard": "driver"
+        "label": "Trả NCC (đánh dấu phiếu chi đã trả)",
+        "guard": "expense.markPaid — admin/kế toán"
       },
       {
-        "label": "Thử lại mục lỗi",
-        "guard": "driver"
-      },
-      {
-        "label": "Mở mục",
-        "guard": "driver"
+        "label": "Tạo phiếu chi",
+        "guard": "expense.create"
       }
     ],
     "states": {
-      "empty": "'Tất cả dữ liệu đã đồng bộ' + thời điểm",
-      "offline": "OfflineBanner (mockup)"
+      "loading": "Skeleton",
+      "empty": "EmptyState 'Không còn công nợ NCC'",
+      "forbidden": "Operation xem hạn chế (⚠️)"
     },
     "notes": [
-      "Gửi theo thứ tự ghi nhận (FIFO) với idempotencyKey.",
-      "Không cho đăng xuất mất dữ liệu: cảnh báo khi còn mục chờ."
+      "Khoản chi không gắn NCC không vào công nợ NCC.",
+      "Tuổi nợ tính từ ngày chi."
     ],
     "overlayOf": null,
     "components": [
-      "SyncQueue",
+      "Button",
       "StatusBadge",
-      "Button",
-      "OfflineBanner",
-      "Banner",
-      "MobileHeader",
-      "PrimaryBottomAction"
+      "DataTable",
+      "PageHeader",
+      "Breadcrumb",
+      "KpiCard",
+      "FilterBar",
+      "TextField",
+      "FilterChip",
+      "AppShell",
+      "Sidebar",
+      "Logo",
+      "Topbar",
+      "QuickSearch",
+      "NotificationBell",
+      "IconButton"
     ],
     "size": {
-      "w": 390,
-      "h": 844
+      "w": 1440,
+      "h": 900
     },
-    "mockup": "design/mockups/DA-SYNC-01.html",
-    "spec": "design/screens/da/DA-SYNC-01.md"
+    "mockup": "design/mockups/WM-DEBT-02.html",
+    "spec": "design/screens/wm/WM-DEBT-02.md"
   },
   {
-    "id": "DA-NOTI-01",
-    "name": "Thông báo",
-    "platform": "da",
-    "platformName": "App Tài xế",
+    "id": "WM-DEBT-03",
+    "name": "Danh sách bảng kê công nợ",
+    "platform": "wm",
+    "platformName": "Web Merchant",
     "phase": 1,
-    "module": "Hôm nay & lịch chuyến",
-    "route": "DriverNotificationsRoute",
+    "module": "Thu chi & Công nợ",
+    "route": "/finance/debt-statements",
     "pattern": "list",
-    "purpose": "Chuyến mới, thay đổi chuyến, yêu cầu xử lý, cảnh báo COD; mở chuyến/điểm liên quan.",
+    "purpose": "Danh sách bảng kê theo khách/kỳ với tổng nợ snapshot và trạng thái Nháp/Đã chốt/Đã gửi/Đã hủy; tạo bảng kê.",
     "roles": [
-      "driver"
+      "admin",
+      "accountant"
     ],
     "api": [
-      "notifications(filter: {recipient: me})",
-      "markNotificationRead(id)",
-      "markAllNotificationsRead"
-    ],
-    "data": [
-      "type",
-      "title",
-      "body",
-      "createdAt",
-      "read",
-      "target{tripId|stopId}"
-    ],
-    "actions": [
-      {
-        "label": "Mở thông báo",
-        "guard": "driver"
-      },
-      {
-        "label": "Đọc hết",
-        "guard": "driver"
-      }
-    ],
-    "states": {
-      "empty": "'Chưa có thông báo'",
-      "loading": "Skeleton rows"
-    },
-    "notes": [
-      "Push notification mở thẳng route đích.",
-      "Không hiển thị cảnh báo tài chính công ty."
-    ],
-    "overlayOf": null,
-    "components": [
-      "NotificationItem",
-      "SegmentedControl",
-      "Button",
-      "MobileHeader",
-      "BottomNav"
-    ],
-    "size": {
-      "w": 390,
-      "h": 844
-    },
-    "mockup": "design/mockups/DA-NOTI-01.html",
-    "spec": "design/screens/da/DA-NOTI-01.md"
-  },
-  {
-    "id": "DA-MONEY-01",
-    "name": "Thưởng & khoản ứng của tôi",
-    "platform": "da",
-    "platformName": "App Tài xế",
-    "phase": 1,
-    "module": "Tài khoản & tiền",
-    "route": "DriverMoneyRoute",
-    "pattern": "mobile",
-    "purpose": "Minh bạch khoản liên quan tới tài xế: thưởng chuyến, ứng lương, tạm ứng chuyến, COD đang giữ, lịch sử nộp COD.",
-    "roles": [
-      "driver"
-    ],
-    "api": [
-      "driverLedger(driverId: me)",
-      "driverJobs(filter: {bonus: true, period})"
-    ],
-    "data": [
-      "tripBonuses[]",
-      "salaryAdvances[]",
-      "tripAdvances[]",
-      "codHeld",
-      "codRemittances[]",
-      "reimbursable"
-    ],
-    "actions": [
-      {
-        "label": "Mở chuyến",
-        "guard": "View own money/bonus/advance summary"
-      }
-    ],
-    "states": {
-      "empty": "Tháng chưa có khoản → EmptyState",
-      "offline": "Dữ liệu cache + thời điểm cập nhật"
-    },
-    "notes": [
-      "Chỉ dữ liệu của chính tài xế — không hiển thị báo cáo/lợi nhuận công ty.",
-      "Seed: thưởng 1.500.000 đ, tạm ứng 2.000.000 đ (PC-202609-0004), công ty nợ 800.000 đ phí cầu đường (PC-202609-0001)."
-    ],
-    "overlayOf": null,
-    "components": [
-      "DriverWallet",
-      "MoneyText",
-      "Banner",
-      "MobileHeader"
-    ],
-    "size": {
-      "w": 390,
-      "h": 844
-    },
-    "mockup": "design/mockups/DA-MONEY-01.html",
-    "spec": "design/screens/da/DA-MONEY-01.md"
-  },
-  {
-    "id": "DA-HIST-01",
-    "name": "Lịch sử chuyến",
-    "platform": "da",
-    "platformName": "App Tài xế",
-    "phase": 1,
-    "module": "Tài khoản & tiền",
-    "route": "DriverHistoryRoute",
-    "pattern": "list",
-    "purpose": "Xem lại chuyến đã hoàn thành/hủy với POD, COD, thưởng.",
-    "roles": [
-      "driver"
-    ],
-    "api": [
-      "driverJobs(filter: {status: [COMPLETED, CANCELLED], period})"
+      "debtStatements(filter)",
+      "createDebtStatement(input: {customerId, from, to, scope})"
     ],
     "data": [
       "code",
-      "completedAt",
-      "route",
+      "customer",
+      "period",
+      "lineCount",
+      "totalAmount",
+      "paidAmount",
+      "remainingAmount",
       "status",
-      "podCount",
-      "codSummary",
-      "bonus"
+      "finalizedAt",
+      "sentAt"
     ],
     "actions": [
       {
-        "label": "Mở chuyến (chỉ xem)",
-        "guard": "own trip"
-      }
-    ],
-    "states": {
-      "empty": "'Chưa có chuyến trong tháng'"
-    },
-    "notes": [
-      "Mở DA-TRIP-01 ở chế độ read-only."
-    ],
-    "overlayOf": null,
-    "components": [
-      "SegmentedControl",
-      "TripCard",
-      "StatusBadge",
-      "MobileHeader"
-    ],
-    "size": {
-      "w": 390,
-      "h": 844
-    },
-    "mockup": "design/mockups/DA-HIST-01.html",
-    "spec": "design/screens/da/DA-HIST-01.md"
-  },
-  {
-    "id": "DA-PROFILE-01",
-    "name": "Hồ sơ cá nhân",
-    "platform": "da",
-    "platformName": "App Tài xế",
-    "phase": 1,
-    "module": "Tài khoản & tiền",
-    "route": "DriverProfileRoute",
-    "pattern": "mobile",
-    "purpose": "Thông tin tài xế, lối vào tiền/lịch sử/đồng bộ/GPS, đổi mật khẩu, đăng xuất.",
-    "roles": [
-      "driver"
-    ],
-    "api": [
-      "driverMe",
-      "driverLogout"
-    ],
-    "data": [
-      "name",
-      "phone",
-      "code",
-      "merchant.name",
-      "defaultVehicle",
-      "status",
-      "syncPendingCount",
-      "gpsPermission"
-    ],
-    "actions": [
-      {
-        "label": "Đổi mật khẩu",
-        "guard": "tùy auth decision"
+        "label": "Tạo nháp & xem trước",
+        "guard": "debtStatement.create — admin/kế toán"
       },
       {
-        "label": "Đăng xuất",
-        "guard": "cảnh báo nếu còn mục chưa đồng bộ"
+        "label": "Tải PDF (đã chốt/đã gửi)",
+        "guard": "finance.view"
       }
     ],
     "states": {
-      "offline": "Đăng xuất bị chặn khi còn mục chờ đồng bộ (confirm bottom sheet)"
+      "loading": "Skeleton",
+      "empty": "EmptyState 'Chưa có bảng kê' + form tạo",
+      "validation": "Khách + kỳ bắt buộc; đến ngày ≥ từ ngày"
     },
     "notes": [
-      "Thông tin hồ sơ do nhà xe quản lý (WM-DRV-02); tài xế chỉ xem.",
-      "Đổi mật khẩu phụ thuộc phương thức đăng nhập (chờ chốt)."
+      "Trạng thái Đã chốt có icon khóa.",
+      "Bảng kê Nháp tính theo dữ liệu hiện tại; chỉ khi chốt mới snapshot."
     ],
     "overlayOf": null,
     "components": [
-      "ListRow",
-      "MobileHeader",
-      "BottomNav"
+      "StatusBadge",
+      "Menu",
+      "IconButton",
+      "Button",
+      "EntityPicker",
+      "FormField",
+      "DateField",
+      "Select",
+      "PageHeader",
+      "Breadcrumb",
+      "FilterBar",
+      "TextField",
+      "FilterChip",
+      "Pagination",
+      "DataTable",
+      "AppShell",
+      "Sidebar",
+      "Logo",
+      "Topbar",
+      "QuickSearch",
+      "NotificationBell"
     ],
     "size": {
-      "w": 390,
-      "h": 844
+      "w": 1440,
+      "h": 960
     },
-    "mockup": "design/mockups/DA-PROFILE-01.html",
-    "spec": "design/screens/da/DA-PROFILE-01.md"
+    "mockup": "design/mockups/WM-DEBT-03.html",
+    "spec": "design/screens/wm/WM-DEBT-03.md"
+  },
+  {
+    "id": "WM-DEBT-04",
+    "name": "Chi tiết bảng kê công nợ",
+    "platform": "wm",
+    "platformName": "Web Merchant",
+    "phase": 1,
+    "module": "Thu chi & Công nợ",
+    "route": "/finance/debt-statements/:statementId",
+    "pattern": "detail",
+    "purpose": "Dòng snapshot các đơn (ngày, mã, tuyến, tổng, đã thu, còn lại, hạn, quá hạn); chốt, đánh dấu đã gửi, tải PDF, hủy.",
+    "roles": [
+      "admin",
+      "accountant"
+    ],
+    "api": [
+      "debtStatement(id){lines, pdf}",
+      "finalizeDebtStatement(id)",
+      "markDebtStatementSent(id)",
+      "cancelDebtStatement(id, reason)"
+    ],
+    "data": [
+      "code",
+      "customer",
+      "period",
+      "status",
+      "lines[{orderDate, orderCode, route, total, paid, remaining, dueDate, overdueDays}]",
+      "totals",
+      "finalizedAt",
+      "finalizedBy",
+      "pdfAttachment",
+      "diffVsCurrent[]"
+    ],
+    "actions": [
+      {
+        "label": "Tải PDF",
+        "guard": "finance.view → WM-SHELL-05"
+      },
+      {
+        "label": "Đánh dấu đã gửi",
+        "guard": "debtStatement.finalize — admin/kế toán"
+      },
+      {
+        "label": "Hủy bảng kê",
+        "guard": "debtStatement.cancel — sensitive, lý do bắt buộc (WM-SHELL-08)"
+      },
+      {
+        "label": "Chốt (khi Nháp)",
+        "guard": "debtStatement.finalize"
+      }
+    ],
+    "states": {
+      "draft": "Banner info 'Nháp — số liệu theo dữ liệu hiện tại' + nút Chốt bảng kê",
+      "finalized": "Banner primary khóa 'Đã chốt snapshot … — không thay đổi khi đơn/phiếu thay đổi'",
+      "cancelled": "Banner danger + lý do hủy; PDF vẫn xem được, gắn nhãn Đã hủy"
+    },
+    "notes": [
+      "Lines là snapshot (debt_statement_lines), không join lại order khi hiển thị.",
+      "PDF tải lại đúng bản đã chốt.",
+      "Khối 'Khác biệt so với dữ liệu hiện tại' chỉ tham khảo."
+    ],
+    "overlayOf": null,
+    "components": [
+      "Button",
+      "StatusBadge",
+      "EntityHeader",
+      "Breadcrumb",
+      "Banner",
+      "SummaryStrip",
+      "DataTable",
+      "DescriptionList",
+      "AttachmentList",
+      "IconButton",
+      "Timeline",
+      "AppShell",
+      "Sidebar",
+      "Logo",
+      "Topbar",
+      "QuickSearch",
+      "NotificationBell"
+    ],
+    "size": {
+      "w": 1440,
+      "h": 1060
+    },
+    "mockup": "design/mockups/WM-DEBT-04.html",
+    "spec": "design/screens/wm/WM-DEBT-04.md"
+  },
+  {
+    "id": "WM-COD-01",
+    "name": "COD tài xế đang giữ",
+    "platform": "wm",
+    "platformName": "Web Merchant",
+    "phase": 1,
+    "module": "Thu chi & Công nợ",
+    "route": "/finance/cod",
+    "pattern": "list",
+    "purpose": "COD tài xế đã thu chưa nộp, nhóm theo tài xế, theo đơn/chuyến/điểm, tuổi giữ tiền và cảnh báo; chọn khoản → tạo phiếu thu COD.",
+    "roles": [
+      "admin",
+      "accountant",
+      "operation"
+    ],
+    "api": [
+      "driverCodHeld(filter: {driverId, warningOnly})",
+      "merchantSettings{codWarningAmount, codWarningDays}"
+    ],
+    "data": [
+      "driver",
+      "heldTotal",
+      "items[{order, customer, trip, stop, collectedAt, codActual, remitted, held, daysHeld}]",
+      "warnings"
+    ],
+    "actions": [
+      {
+        "label": "Tạo phiếu thu COD",
+        "guard": "Record driver COD remittance — admin/kế toán → WM-PAY-03"
+      },
+      {
+        "label": "Xuất Excel",
+        "guard": "finance.view"
+      }
+    ],
+    "states": {
+      "loading": "Skeleton",
+      "empty": "EmptyState 'Chưa có khoản COD chưa nộp'",
+      "error": "Banner danger + Thử lại"
+    },
+    "notes": [
+      "COD held = Σ stop.cod_actual − Σ payment_in DRIVER_COD_REMITTANCE.",
+      "Cảnh báo theo cài đặt merchant: 5.000.000 đ hoặc 2 ngày (WM-SET-01).",
+      "Seed: Trần Minh Lái thu 7.500.000, đã nộp 2.000.000, còn giữ 5.500.000."
+    ],
+    "overlayOf": null,
+    "components": [
+      "StatusBadge",
+      "Checkbox",
+      "Button",
+      "DataTable",
+      "PageHeader",
+      "Breadcrumb",
+      "KpiCard",
+      "FilterBar",
+      "TextField",
+      "FilterChip",
+      "AppShell",
+      "Sidebar",
+      "Logo",
+      "Topbar",
+      "QuickSearch",
+      "NotificationBell",
+      "IconButton"
+    ],
+    "size": {
+      "w": 1440,
+      "h": 1000
+    },
+    "mockup": "design/mockups/WM-COD-01.html",
+    "spec": "design/screens/wm/WM-COD-01.md"
+  },
+  {
+    "id": "WM-ADV-01",
+    "name": "Tạm ứng chuyến & đối soát",
+    "platform": "wm",
+    "platformName": "Web Merchant",
+    "phase": 1,
+    "module": "Thu chi & Công nợ",
+    "route": "/finance/trip-advances",
+    "pattern": "list",
+    "purpose": "Theo dõi tạm ứng theo chuyến, chi phí thực tế, tài xế còn nộp/được hoàn; đối soát sau chuyến.",
+    "roles": [
+      "admin",
+      "accountant",
+      "operation"
+    ],
+    "api": [
+      "tripAdvances(filter)",
+      "expenses(filter: {tripId})",
+      "reconcileTripAdvance(input: {tripId, resolution, reason?})"
+    ],
+    "data": [
+      "trip",
+      "order",
+      "driver",
+      "advanceExpense",
+      "advanceAmount",
+      "actualCost",
+      "difference",
+      "resolution",
+      "status"
+    ],
+    "actions": [
+      {
+        "label": "Tạo tạm ứng",
+        "guard": "expense.create (category=TRIP_ADVANCE)"
+      },
+      {
+        "label": "Xác nhận đối soát",
+        "guard": "Trip advance reconciliation — admin/operation/kế toán"
+      },
+      {
+        "label": "Điều chỉnh",
+        "guard": "sensitive — lý do bắt buộc (WM-SHELL-08)"
+      }
+    ],
+    "states": {
+      "loading": "Skeleton",
+      "empty": "EmptyState 'Chưa có tạm ứng chuyến'",
+      "running": "Chuyến chưa hoàn thành: chênh lệch tạm tính, khóa nút xác nhận"
+    },
+    "notes": [
+      "Panel đối soát là Drawer (mở khi chọn dòng); mockup hiển thị cạnh danh sách.",
+      "Chênh lệch dương → tài xế nộp lại (phiếu thu Thu khác · hoàn tạm ứng, không phải doanh thu) hoặc trừ lương; âm → công ty hoàn (phiếu chi Hoàn ứng).",
+      "API tripAdvances/reconcileTripAdvance chưa có trong 07-api-contract-map — cần bổ sung."
+    ],
+    "overlayOf": null,
+    "components": [
+      "StatusBadge",
+      "FilterBar",
+      "TextField",
+      "FilterChip",
+      "Pagination",
+      "IconButton",
+      "Button",
+      "DataTable",
+      "DescriptionList",
+      "RadioGroup",
+      "FormField",
+      "Drawer",
+      "PageHeader",
+      "Breadcrumb",
+      "KpiCard",
+      "AppShell",
+      "Sidebar",
+      "Logo",
+      "Topbar",
+      "QuickSearch",
+      "NotificationBell"
+    ],
+    "size": {
+      "w": 1440,
+      "h": 1130
+    },
+    "mockup": "design/mockups/WM-ADV-01.html",
+    "spec": "design/screens/wm/WM-ADV-01.md"
   }
 ]

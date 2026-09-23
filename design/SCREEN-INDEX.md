@@ -2,60 +2,28 @@
 
 Sinh tự động bởi `python3 design/tools/build.py`. Không sửa tay.
 
-## App Tài xế (phase 1)
+## Web Merchant (phase 1)
 
-Stack: Flutter + Bloc/Cubit (apps/driver-app)
+Stack: React + Vite + Tailwind + shadcn/Radix (apps/web)
 
-### Đăng nhập
-
-| ID | Màn hình | Route | Pattern | Đi tới |
-|---|---|---|---|---|
-| [DA-AUTH-01](screens/da/DA-AUTH-01.md) | Splash/kiểm tra phiên | `DriverSplashRoute` | auth | DA-AUTH-02, DA-HOME-01 |
-| [DA-AUTH-02](screens/da/DA-AUTH-02.md) | Đăng nhập tài xế | `DriverLoginRoute` | auth | DA-AUTH-03, DA-HOME-01 |
-| [DA-AUTH-03](screens/da/DA-AUTH-03.md) | Quên mật khẩu | `DriverForgotPasswordRoute` | auth | DA-AUTH-02 |
-
-### Hôm nay & lịch chuyến
+### Thu chi & Công nợ
 
 | ID | Màn hình | Route | Pattern | Đi tới |
 |---|---|---|---|---|
-| [DA-HOME-01](screens/da/DA-HOME-01.md) | Trang chủ công việc | `DriverHomeRoute` | mobile | DA-JOB-01, DA-MONEY-01, DA-PROFILE-01, DA-SYNC-01, DA-TRIP-01 |
-| [DA-JOB-01](screens/da/DA-JOB-01.md) | Danh sách chuyến | `DriverJobListRoute` | list | DA-JOB-02, DA-TRIP-01 |
-| [DA-JOB-02](screens/da/DA-JOB-02.md) | Lịch chuyến | `DriverJobCalendarRoute` | mobile | DA-JOB-01, DA-TRIP-01 |
-| [DA-NOTI-01](screens/da/DA-NOTI-01.md) | Thông báo | `DriverNotificationsRoute` | list | DA-MONEY-01, DA-STOP-02, DA-TRIP-01 |
-
-### Chuyến & điểm dừng
-
-| ID | Màn hình | Route | Pattern | Đi tới |
-|---|---|---|---|---|
-| [DA-TRIP-01](screens/da/DA-TRIP-01.md) | Chi tiết chuyến | `DriverTripDetailRoute(tripId)` | detail | DA-ATT-01, DA-COD-01, DA-GPS-01, DA-INC-01, DA-STATUS-01, DA-STATUS-02, DA-STOP-01, DA-STOP-02 |
-| [DA-STOP-01](screens/da/DA-STOP-01.md) | Danh sách điểm dừng | `DriverStopListRoute(tripId)` | list | DA-STOP-02 |
-| [DA-STOP-02](screens/da/DA-STOP-02.md) | Chi tiết điểm dừng | `DriverStopDetailRoute(stopId)` | detail | DA-COD-01, DA-INC-01, DA-POD-01, DA-TRIP-01 |
-
-### Trạng thái · POD · COD · Sự cố
-
-| ID | Màn hình | Route | Pattern | Đi tới |
-|---|---|---|---|---|
-| [DA-STATUS-01](screens/da/DA-STATUS-01.md) | Cập nhật trạng thái chuyến | `DriverStatusUpdateRoute(tripId)` | dialog | DA-ATT-01, DA-COD-01, DA-GPS-01, DA-INC-01, DA-STATUS-01, DA-STATUS-02, DA-STOP-01, DA-STOP-02, DA-TRIP-01 |
-| [DA-STATUS-02](screens/da/DA-STATUS-02.md) | Tạm dừng chuyến | `DriverPauseTripRoute(tripId)` | dialog | DA-ATT-01, DA-COD-01, DA-GPS-01, DA-INC-01, DA-STATUS-01, DA-STATUS-02, DA-STOP-01, DA-STOP-02, DA-TRIP-01 |
-| [DA-POD-01](screens/da/DA-POD-01.md) | Chụp POD | `DriverPodCaptureRoute(stopId)` | mobile | DA-STOP-02 |
-| [DA-COD-01](screens/da/DA-COD-01.md) | Nhập COD thực thu | `DriverCodInputRoute(stopId)` | form | DA-STOP-02 |
-| [DA-INC-01](screens/da/DA-INC-01.md) | Báo sự cố | `DriverIncidentReportRoute(tripId)` | form | DA-ATT-01, DA-STATUS-02, DA-TRIP-01 |
-| [DA-ATT-01](screens/da/DA-ATT-01.md) | Upload chứng từ | `DriverAttachmentUploadRoute(entity)` | form | DA-TRIP-01 |
-
-### Đồng bộ & GPS
-
-| ID | Màn hình | Route | Pattern | Đi tới |
-|---|---|---|---|---|
-| [DA-GPS-01](screens/da/DA-GPS-01.md) | Theo dõi vị trí nền | `DriverGpsPermissionRoute` | mobile | DA-SYNC-01, DA-TRIP-01 |
-| [DA-SYNC-01](screens/da/DA-SYNC-01.md) | Đồng bộ offline | `DriverSyncRoute` | list | DA-COD-01, DA-GPS-01, DA-INC-01, DA-POD-01, DA-TRIP-01 |
-
-### Tài khoản & tiền
-
-| ID | Màn hình | Route | Pattern | Đi tới |
-|---|---|---|---|---|
-| [DA-MONEY-01](screens/da/DA-MONEY-01.md) | Thưởng & khoản ứng của tôi | `DriverMoneyRoute` | mobile | DA-HIST-01, DA-TRIP-01 |
-| [DA-HIST-01](screens/da/DA-HIST-01.md) | Lịch sử chuyến | `DriverHistoryRoute` | list | DA-TRIP-01 |
-| [DA-PROFILE-01](screens/da/DA-PROFILE-01.md) | Hồ sơ cá nhân | `DriverProfileRoute` | mobile | DA-AUTH-02, DA-GPS-01, DA-HIST-01, DA-MONEY-01, DA-SYNC-01 |
+| [WM-FIN-01](screens/wm/WM-FIN-01.md) | Sổ thu chi | `/finance` | list | WM-CUS-05, WM-DEBT-02, WM-DRV-05, WM-EXP-01, WM-EXP-02, WM-EXP-03, WM-PAY-01, WM-PAY-02, WM-PAY-03, WM-RPT-02, WM-SHELL-05 |
+| [WM-PAY-01](screens/wm/WM-PAY-01.md) | Danh sách phiếu thu | `/finance/payments` | list | WM-COD-01, WM-CUS-05, WM-DEBT-01, WM-DRV-05, WM-PAY-02, WM-PAY-03, WM-PAY-04, WM-SHELL-05 |
+| [WM-PAY-02](screens/wm/WM-PAY-02.md) | Chi tiết phiếu thu | `/finance/payments/:paymentId` | detail | WM-CUS-02, WM-CUS-05, WM-PAY-04, WM-SHELL-05, WM-SHELL-06, WM-SHELL-07, WM-SHELL-08 |
+| [WM-PAY-03](screens/wm/WM-PAY-03.md) | Tạo phiếu thu | `/finance/payments/new` | form | WM-COD-01, WM-DRV-05, WM-ORD-07, WM-PAY-01, WM-PAY-02, WM-PAY-04, WM-STOP-01, WM-TRIP-01 |
+| [WM-PAY-04](screens/wm/WM-PAY-04.md) | Phân bổ payment | `/finance/payments/:paymentId/allocate` | form | WM-CUS-05, WM-ORD-02, WM-ORD-07, WM-PAY-02 |
+| [WM-EXP-01](screens/wm/WM-EXP-01.md) | Danh sách phiếu chi | `/finance/expenses` | list | WM-ADV-01, WM-DEBT-02, WM-EXP-02, WM-EXP-03, WM-SHELL-05 |
+| [WM-EXP-02](screens/wm/WM-EXP-02.md) | Chi tiết phiếu chi | `/finance/expenses/:expenseId` | detail | WM-DRV-02, WM-DRV-05, WM-ORD-07, WM-SHELL-06, WM-SHELL-07, WM-SHELL-08, WM-TRIP-01, WM-VEH-02 |
+| [WM-EXP-03](screens/wm/WM-EXP-03.md) | Tạo phiếu chi | `/finance/expenses/new` | form | WM-EXP-01, WM-EXP-02 |
+| [WM-DEBT-01](screens/wm/WM-DEBT-01.md) | Công nợ khách tổng hợp | `/finance/customer-debt` | list | WM-CUS-05, WM-DEBT-03, WM-ORD-07, WM-PAY-02, WM-PAY-03, WM-RPT-06, WM-SHELL-05 |
+| [WM-DEBT-02](screens/wm/WM-DEBT-02.md) | Công nợ NCC | `/finance/supplier-debt` | list | WM-EXP-01, WM-EXP-02, WM-EXP-03, WM-ORD-07, WM-SHELL-05, WM-SUP-02, WM-VEH-02 |
+| [WM-DEBT-03](screens/wm/WM-DEBT-03.md) | Danh sách bảng kê công nợ | `/finance/debt-statements` | list | WM-DEBT-01, WM-DEBT-04, WM-SHELL-05 |
+| [WM-DEBT-04](screens/wm/WM-DEBT-04.md) | Chi tiết bảng kê công nợ | `/finance/debt-statements/:statementId` | detail | WM-CUS-05, WM-ORD-07, WM-SHELL-05, WM-SHELL-06, WM-SHELL-07, WM-SHELL-08 |
+| [WM-COD-01](screens/wm/WM-COD-01.md) | COD tài xế đang giữ | `/finance/cod` | list | WM-DRV-01, WM-DRV-05, WM-ORD-07, WM-PAY-01, WM-PAY-02, WM-PAY-03, WM-SET-01, WM-SHELL-05, WM-STOP-01, WM-TRIP-01 |
+| [WM-ADV-01](screens/wm/WM-ADV-01.md) | Tạm ứng chuyến & đối soát | `/finance/trip-advances` | list | WM-ADV-01, WM-DRV-05, WM-EXP-02, WM-EXP-03, WM-ORD-07, WM-PAY-03, WM-SHELL-08, WM-TRIP-01 |
 
 ## Flows
 

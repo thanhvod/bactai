@@ -32,7 +32,6 @@ Khôi phục mật khẩu qua SĐT + mã xác thực; hoặc nhờ nhà xe đặ
 
 | Trigger | Đích | Route đích | Loại |
 |---|---|---|---|
-| Đổi số điện thoại | [DA-AUTH-03](../da/DA-AUTH-03.md) Quên mật khẩu | `DriverForgotPasswordRoute` | action |
 | Quay lại đăng nhập | [DA-AUTH-02](../da/DA-AUTH-02.md) Đăng nhập tài xế | `DriverLoginRoute` | action |
 | Quay lại | [DA-AUTH-02](../da/DA-AUTH-02.md) Đăng nhập tài xế | `DriverLoginRoute` | back |
 | Đặt lại xong → Đăng nhập | [DA-AUTH-02](../da/DA-AUTH-02.md) Đăng nhập tài xế | `DriverLoginRoute` | action |
@@ -42,7 +41,6 @@ Khôi phục mật khẩu qua SĐT + mã xác thực; hoặc nhờ nhà xe đặ
 | Từ | Trigger |
 |---|---|
 | [DA-AUTH-02](../da/DA-AUTH-02.md) Đăng nhập tài xế | Quên mật khẩu |
-| [DA-AUTH-03](../da/DA-AUTH-03.md) Quên mật khẩu | Đổi số điện thoại |
 
 ## Components (design system)
 

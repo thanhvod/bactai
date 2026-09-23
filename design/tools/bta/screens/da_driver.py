@@ -183,9 +183,9 @@ def auth_03():
                  f'font-size: 22px; font-weight: 600; {NUM}">{d}</span>') for i, d in enumerate(["4", "8", "2", "7", "", ""])],
               gap=8, justify="space-between")
     body = col(
-        stepper(["Số điện thoại", "Mã xác thực", "Mật khẩu mới"], 1),
+        stepper(["SĐT", "Mã xác thực", "Mật khẩu"], 1),
         m_card(row(_icon_box("smartphone", "primary"), col(muted("Mã đã gửi tới", 14), text("0900 000 001", 17, 600, extra=NW), gap=0), spacer(),
-                   a("Đổi số", "DA-AUTH-03", "Đổi số điện thoại", 15), gap=12)),
+                   text("Đổi số", 15, 600, T["accent"]), gap=12)),
         _field("Nhập mã 6 số", otp, True, "Mã có hiệu lực 5 phút."),
         row(icon("timer", 18, T["text-muted"]), muted("Gửi lại mã sau 00:45", 15), gap=6, extra="min-height: 48px;"),
         _field("Mật khẩu mới", input_("", "Tối thiểu 8 ký tự", prefix_ic="lock", h=48, fs=16), True, "Nhập sau khi mã được xác thực."),
@@ -634,10 +634,10 @@ def money_01():
         banner("Công ty cần hoàn cho bạn <b>800.000 đ</b> phí cầu đường chi trước (PC-202609-0001).", "info", "wallet"),
         m_section("Thưởng theo chuyến", box(
             line(text(TRIP, 15, 600, extra=NW), "Đang chạy · tạm tính", "+" + money(500_000), "success", "DA-TRIP-01", "Mở chuyến có thưởng"),
-            line(text("2 chuyến đã hoàn thành", 15, 500), "CX-202609-0008, CX-202609-0009", "+" + money(1_000_000), "success", "DA-HIST-01", "Xem lịch sử chuyến"))),
+            line(text("2 chuyến đã hoàn thành", 15, 500), "CX-202609-0008 · CX-202609-0009", "+" + money(1_000_000), "success", "DA-HIST-01", "Xem lịch sử chuyến"))),
         m_section("Tạm ứng & COD", box(
-            line(text("Tạm ứng chuyến " + TRIP, 15, 500), "PC-202609-0004 · 22/09/2026", money(2_000_000), "warning"),
-            line(text("Nộp COD cho kế toán", 15, 500), "PT-202608-0014 · 28/08/2026 · Đã xác nhận", money(20_000_000)))),
+            line(text("Tạm ứng chuyến", 15, 500), TRIP + " · PC-202609-0004 · 22/09", money(2_000_000), "warning"),
+            line(text("Nộp COD cho kế toán", 15, 500), "PT-202608-0014 · 28/08 · Đã xác nhận", money(20_000_000)))),
         muted("Chỉ hiện các khoản của bạn. Số chính thức theo bảng lương đã duyệt.", 13),
         gap=12)
     return mobile_frame(mobile_header("Thưởng & khoản ứng", "DA-PROFILE-01", "Tháng 09/2026 · Nguyễn Văn Tài"), body)

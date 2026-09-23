@@ -320,6 +320,8 @@ def cus_06():
         ("DH-202607-0019", "28/07/2026", "Cần Thơ → Long An", "Hoàn thành", 7_200_000, 7_200_000, 0, "12/08/2026"),
         ("DH-202607-0011", "15/07/2026", "Cần Thơ → Bình Dương", "Đã hủy", 0, 0, 0, "—"),
         ("DH-202607-0004", "04/07/2026", "Cần Thơ → Q. Bình Tân", "Hoàn thành", 11_500_000, 11_500_000, 0, "19/07/2026"),
+        ("DH-202606-0023", "24/06/2026", "Cần Thơ → Bình Dương", "Hoàn thành", 12_000_000, 12_000_000, 0, "09/07/2026"),
+        ("DH-202606-0012", "11/06/2026", "Cần Thơ → Long An", "Hoàn thành", 7_000_000, 7_000_000, 0, "26/06/2026"),
     ]
     rows = []
     for c, d, route, stt, tot, paid, od, due_ in hist:
@@ -338,12 +340,12 @@ def cus_06():
         table([("Mã đơn", "left"), ("Ngày đơn", "left"), ("Tuyến", "left"), ("Trạng thái", "left"), ("Tổng thu", "right"),
                ("Đã thu", "right"), ("Còn lại", "right"), ("Hạn thanh toán", "left")], rows,
               total_row=["Tổng 18 đơn", "", "", "", money(236_400_000), money(208_900_000), money(27_500_000), ""],
-              footer=row(pagination("1–8", 18), gap=0, extra="width: 100%;")),
+              footer=pagination("1–10", 18, 10)),
         row(muted("Tổng tính trên toàn bộ kết quả lọc, không chỉ trang hiện tại.", 12), spacer(),
             btn("Xuất Excel", "secondary", "download", size="sm", to="WM-SHELL-05", trigger="Xuất lịch sử đơn"),
             btn("Tạo đơn", "primary", "plus", size="sm", to="WM-ORD-03", trigger="Tạo đơn cho khách"), gap=8),
         gap=14)
-    return customer_detail("Đơn hàng", body, 1180)
+    return customer_detail("Đơn hàng", body, 1260)
 
 
 # ---------------------------------------------------------------- shared driver detail frame
@@ -735,7 +737,7 @@ register(
                   "Số dư khách = tổng phiếu thu − tổng phân bổ; không tự trừ vào đơn.",
                   "Chọn nhiều đơn (checkbox) → Tạo bảng kê / Phân bổ với các đơn đã chọn.",
                   "Doanh thu ≠ phiếu thu: màn này chỉ hiện công nợ và dòng tiền phân bổ."]),
-    Screen(id="WM-CUS-06", name="Lịch sử đơn khách", route="/customers/:customerId?tab=orders", render=cus_06, pattern="detail", h=1180, **CK,
+    Screen(id="WM-CUS-06", name="Lịch sử đơn khách", route="/customers/:customerId?tab=orders", render=cus_06, pattern="detail", h=1260, **CK,
            purpose="Danh sách đơn theo khách với tổng tiền/đã thu/còn lại; lọc thời gian/trạng thái.",
            api=["orders(filter:{customerId, dateRange, status}, sort, first, after)", "orderTotals(filter)"],
            data=["code", "orderDate", "routeSummary", "status", "totalAmount", "paidAmount", "remainingAmount", "dueDate", "overdueDays"],

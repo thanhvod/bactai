@@ -174,7 +174,7 @@ def fin_01():
                action=a("Xem doanh thu – chi phí", "WM-RPT-02", "Mở báo cáo doanh thu/chi phí/lãi lỗ")),
         table(cols, rows, footer=pagination("1–14", 14), total_row=total, compact=True),
         gap=16)
-    return wm_shell("finance", content, h=1100, child="WM-FIN-01")
+    return wm_shell("finance", content, h=1210, child="WM-FIN-01")
 
 
 # ---------------------------------------------------------------- WM-PAY-01 Danh sách phiếu thu
@@ -257,7 +257,7 @@ def pay_02():
     content = col(header, strip, tabs(["Tổng quan", "Phân bổ", "Chứng từ", "Timeline"], 0, {"Timeline": "WM-SHELL-07"},
                                       counts={"Phân bổ": 0, "Chứng từ": 1}),
                   row(left, right, gap=16, align="flex-start"), gap=16)
-    return wm_shell("finance", content, h=1140, child="WM-PAY-01")
+    return wm_shell("finance", content, h=1200, child="WM-PAY-01")
 
 
 # ---------------------------------------------------------------- WM-PAY-03 Tạo phiếu thu (loại = Tài xế nộp COD)
@@ -275,19 +275,19 @@ def pay_03():
         cod_rows.append([col(code(o, to="WM-ORD-07", trigger="Mở tài chính đơn"), subtle(cus, 11), gap=0),
                          col(code(trip, to="WM-TRIP-01", trigger="Mở chuyến"), a(stop, "WM-STOP-01", "Mở điểm dừng", 11, 400), gap=0),
                          col(num(at, 12), badge(f"Giữ {days} ngày", "danger" if days > 2 else "warning"), gap=2),
-                         num(money(actual)), num(money(remitted), color=T["text-muted"]), num(money(held), weight=600),
-                         money_input(held, "132px", h=32, fs=13)])
+                         col(num(money(actual)), subtle(f"đã nộp {money(remitted)}", 11), gap=0, extra="align-items: flex-end;"),
+                         num(money(held), weight=600), money_input(held, "130px", h=32, fs=13)])
     cod = _section(3, "Khoản COD được nộp", col(
         table([("Đơn · Khách", "left"), ("Chuyến · Điểm trả", "left"), ("Thu lúc · Giữ", "left"), ("COD thực thu", "right"),
-               ("Đã nộp", "right"), ("Còn giữ", "right"), ("Nộp lần này", "right", "150px")], cod_rows, selected=[0, 1], checkbox_col=True, compact=False,
-              total_row=["2 khoản", "", "", money(7_500_000), money(2_000_000), money(5_500_000), money(5_500_000)]),
+               ("Còn giữ", "right"), ("Nộp lần này", "right", "140px")], cod_rows, selected=[0, 1], checkbox_col=True, compact=False,
+              total_row=["2 khoản", "", "", money(7_500_000), money(5_500_000), money(5_500_000)]),
         subtle("Nộp một phần được — phần còn lại tiếp tục tính COD đang giữ và tuổi giữ tiền.", 12), gap=8),
         right=a("Chọn thêm từ COD đang giữ", "WM-COD-01", "Mở danh sách COD tài xế đang giữ"))
     amount = _section(4, "Số tiền, ngày & hình thức", col(
-        row(field("Số tiền thu", money_input(5_500_000), True, hint="Bằng tổng “Nộp lần này”", width="30%"),
-            field("Ngày thu", date_input("23/09/2026"), True, width="22%"),
-            field("Hình thức", segmented(["Tiền mặt", "Chuyển khoản"], 0), True, width="26%"),
-            field("Người nhận tiền", select("Phan Ngọc Mai"), width="22%"), gap=12, align="flex-start"),
+        row(field("Số tiền thu", money_input(5_500_000), True, hint="Bằng tổng “Nộp lần này”", width="26%"),
+            field("Ngày thu", date_input("23/09/2026"), True, width="20%"),
+            field("Hình thức", segmented(["Tiền mặt", "Chuyển khoản"], 0), True, width="30%"),
+            field("Người nhận tiền", select("Phan Ngọc Mai"), width="24%"), gap=12, align="flex-start"),
         field("Ghi chú", textarea("Nộp tiền mặt tại văn phòng sau chuyến CX-202609-0008", h=40)), gap=12))
     docs = _section(5, "Chứng từ", col(upload_zone(h=76),
                                        attachment_list([("bien_nhan_nop_COD_230926.jpg", "Biên nhận", "1,2 MB · vừa tải lên", "image")]), gap=10),
@@ -314,7 +314,7 @@ def pay_03():
                         btn("Lưu phiếu thu", "primary", "check", to="WM-PAY-02", trigger="Lưu → chi tiết phiếu thu"), gap=8),
                     crumbs=[ROOT, ("Phiếu thu", "WM-PAY-01"), ("Tạo phiếu thu", None)]),
         row(form, side, gap=16, align="flex-start"), gap=16)
-    return wm_shell("finance", content, h=1320, child="WM-PAY-01")
+    return wm_shell("finance", content, h=1340, child="WM-PAY-01")
 
 
 # ---------------------------------------------------------------- WM-PAY-04 Phân bổ payment
@@ -443,7 +443,7 @@ EXP_TYPES = [("Chi phí chuyến", "Cầu đường, bốc xếp, lưu ca", "rou
              ("Vật tư xe", "Xăng dầu, lốp, sửa chữa", "wrench"), ("Hoàn ứng", "Hoàn chi phí tài xế chi trước", "undo-2"),
              ("Ứng lương", "Trừ vào bảng lương kỳ", "banknote"), ("Tạm ứng chuyến", "Đưa trước, đối soát sau chuyến", "coins"),
              ("Chi khác", "Văn phòng, phí ngân hàng…", "receipt-text")]
-LINK_RULES = [("Chi phí chuyến", "Chuyến", "Đơn, xe, tài xế (tự điền)"), ("Thuê xe ngoài", "Đơn, NCC", "Chuyến"),
+LINK_RULES = [("Chi phí chuyến", "Chuyến", "Đơn, xe, tài xế"), ("Thuê xe ngoài", "Đơn, NCC", "Chuyến"),
               ("Vật tư xe", "Xe", "NCC"), ("Hoàn ứng", "Tài xế, phiếu gốc", "—"), ("Ứng lương", "Tài xế", "Kỳ lương"),
               ("Tạm ứng chuyến", "Chuyến, tài xế", "—"), ("Chi khác", "—", "NCC")]
 
@@ -455,26 +455,27 @@ def exp_03():
         on = i == 0
         cards.append(f'<div style="display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border-radius: 6px; '
                      f'border: 1px solid {T["primary"] if on else T["border-control"]}; background: {T["primary-soft"] if on else T["surface"]};">'
-                     f'{icon(ic, 18, T["primary"] if on else T["text-muted"])}{radio(lab, on, sub)}</div>')
+                     f'{radio(lab, on, sub)}</div>')
     kind = _section(1, "Loại chi", grid(cards, 4, 8))
     link = _section(2, "Gắn với", col(
         row(field("Chuyến", _picker("CX-202609-0001", "Cần Thơ → Bình Dương · Đang vận chuyển", "route"), True, width="50%"),
             field("Nhà cung cấp", _picker("Không chọn", "Tùy chọn — khoản NCC chưa trả vào công nợ NCC", "store"), width="50%"), gap=12),
-        row(field("Đơn hàng", input_("DH-202609-0001 · Công ty Gạo Miền Tây", disabled=True)),
-            field("Xe", input_("51C-123.45", disabled=True)), field("Tài xế", input_("Nguyễn Văn Tài", disabled=True)), gap=12),
+        row(field("Đơn hàng", input_("DH-202609-0001 · Công ty Gạo Miền Tây", disabled=True), width="50%"),
+            field("Xe", input_("51C-123.45", disabled=True), width="25%"), field("Tài xế", input_("Nguyễn Văn Tài", disabled=True), width="25%"), gap=12),
         subtle("Đơn, xe, tài xế tự điền theo chuyến. Trường bắt buộc đổi theo loại chi.", 12), gap=12),
         sub="Chi phí chuyến: bắt buộc chuyến")
     amount = _section(3, "Danh mục, số tiền & ngày", row(
-        field("Danh mục chi", select("Phí cầu đường"), True, width="30%"), field("Số tiền", money_input(800_000), True, width="25%"),
-        field("Ngày chi", date_input("23/09/2026"), True, width="20%"), field("Ghi chú", input_("BOT Cần Thơ – Mỹ Thuận, 2 lượt"), width="25%"),
+        field("Danh mục chi", select("Phí cầu đường"), True, width="26%"), field("Số tiền", money_input(800_000), True, width="22%"),
+        field("Ngày chi", date_input("23/09/2026"), True, width="20%"), field("Ghi chú", input_("BOT Mỹ Thuận, 2 lượt"), width="32%"),
         gap=12, align="flex-start"))
     who = _section(4, "Ai chi trước", col(
         radio_cards([("Công ty chi", "Chọn trạng thái Đã trả / Chưa trả"), ("Tài xế chi trước", "Công ty nợ tài xế, hoàn sau"),
                      ("Chi từ tạm ứng chuyến", "Trừ vào tạm ứng khi đối soát")], 1),
         row(checkbox("Hoàn cho tài xế", True), muted("Trạng thái ban đầu:", 13), badge("Chưa trả", "warning"), spacer(),
             subtle("Ghi vào sổ công nợ tài xế Nguyễn Văn Tài", 12), gap=10), gap=12))
-    docs = _section(5, "Chứng từ", col(upload_zone(h=76), attachment_list([("bien_lai_BOT_1.jpg", "Biên lai", "420 KB", "image"),
-                                                                            ("bien_lai_BOT_2.jpg", "Biên lai", "398 KB", "image")]), gap=10),
+    docs = _section(5, "Chứng từ", row(col(upload_zone(h=76), gap=0, extra="flex: 1;"),
+                                       col(attachment_list([("bien_lai_BOT_1.jpg", "Biên lai", "420 KB", "image"),
+                                                            ("bien_lai_BOT_2.jpg", "Biên lai", "398 KB", "image")]), gap=0, extra="flex: 1;"), gap=12),
                     sub="Không bắt buộc")
     form = col(kind, link, amount, who, docs, gap=14, extra="flex: 1; min-width: 0;")
     rules = table([("Loại chi", "left"), ("Bắt buộc", "left"), ("Tùy chọn", "left")],
@@ -492,7 +493,7 @@ def exp_03():
                         btn("Lưu phiếu chi", "primary", "check", to="WM-EXP-02", trigger="Lưu → chi tiết phiếu chi"), gap=8),
                     crumbs=[ROOT, ("Phiếu chi", "WM-EXP-01"), ("Tạo phiếu chi", None)]),
         row(form, side, gap=16, align="flex-start"), gap=16)
-    return wm_shell("finance", content, h=1240, child="WM-EXP-01")
+    return wm_shell("finance", content, h=1320, child="WM-EXP-01")
 
 
 # ---------------------------------------------------------------- WM-DEBT-01 Công nợ khách tổng hợp
@@ -520,7 +521,7 @@ def debt_01():
                      num(money(c["overdue"]), weight=600 if c["overdue"] else 400, color=T["danger"] if c["overdue"] else T["text-muted"]),
                      num(money(c["credit"]), color=T["info"] if c["credit"] else T["text-muted"]),
                      col(progress(min(pct, 100), tone), subtle(f'{pct}% · {c["limit"] // 1_000_000} tr', 11), gap=2, extra="width: 104px;"),
-                     row(*warn, gap=4) if warn else muted("—"),
+                     col(*warn, gap=2, extra="align-items: flex-start;") if warn else muted("—"),
                      row(icon_btn("receipt", "Ghi nhận thanh toán", to="WM-PAY-03", trigger="Ghi nhận thanh toán cho khách"),
                          icon_btn("file-text", "Tạo bảng kê", to="WM-DEBT-03", trigger="Tạo bảng kê cho khách"), gap=0)])
     cols = [("Khách hàng", "left"), ("Tổng phải thu", "right"), ("Đã thu", "right"), ("Còn nợ", "right"), ("Quá hạn", "right"),
@@ -537,10 +538,10 @@ def debt_01():
                         btn("Tạo bảng kê", "secondary", "file-text", to="WM-DEBT-03", trigger="Mở bảng kê công nợ"),
                         btn("Ghi nhận thanh toán", "primary", "plus", to="WM-PAY-03", trigger="Tạo phiếu thu khách trả"), gap=8),
                     crumbs=[ROOT, ("Công nợ khách", None)]),
-        _kpis(kpi("Còn nợ", money(135_200_000), "5 khách · 9 đơn", "warning", "scale"),
+        _kpis(kpi("Còn nợ", money(135_200_000), "5 khách · 8 đơn", "warning", "scale"),
               kpi("Quá hạn", money(27_000_000), "2 đơn · 2 khách", "danger", "alarm-clock"),
               kpi("Số dư khách (chưa phân bổ)", money(3_000_000), "1 khách", "info", "wallet", to="WM-PAY-02", trigger="KPI số dư → phiếu chưa phân bổ"),
-              kpi("Vượt hạn mức", "1 khách", "Vật liệu Xây dựng Phú Mỹ · 107%", "danger", "triangle-alert")),
+              kpi("Vượt hạn mức", "1 khách", "Vật liệu Xây dựng Phú Mỹ · 108%", "danger", "triangle-alert")),
         filter_bar("Tìm khách hàng…", ["Tất cả", "Còn nợ", "Quá hạn", "Vượt hạn mức", "Có số dư"], date="Đến 23/09/2026"),
         table(cols, rows, total_row=total),
         row(icon("info", 14, T["text-muted"]), subtle("Đã thu = tổng phân bổ vào đơn. Số dư là tiền khách đã trả nhưng chưa phân bổ — không tự trừ vào còn nợ; "
@@ -782,7 +783,7 @@ def adv_01():
 C = dict(platform="wm", module="Thu chi & Công nợ")
 RA = ["admin", "accountant"]
 register(
-    Screen(id="WM-FIN-01", name="Sổ thu chi", route="/finance", render=fin_01, pattern="list", h=1100, roles=ROLES_FIN, **C,
+    Screen(id="WM-FIN-01", name="Sổ thu chi", route="/finance", render=fin_01, pattern="list", h=1210, roles=ROLES_FIN, **C,
            purpose="Sổ chung mọi phiếu thu/phiếu chi: loại, đối tượng, trạng thái, số tiền phiếu và dòng tiền vào/ra thực tế; điểm vào tạo phiếu.",
            api=["payments(filter, sort, first, after)", "expenses(filter, sort, first, after)"],
            data=["code", "date", "direction(IN|OUT)", "type", "counterpart", "linkedEntities", "status", "amount", "cashIn", "cashOut", "createdBy"],
@@ -802,7 +803,7 @@ register(
            states={"loading": "Skeleton", "empty": "EmptyState 'Chưa có phiếu thu' + Tạo phiếu thu", "error": "Banner danger + Thử lại"},
            notes=["Còn treo = amount − allocated (chỉ loại Khách trả) = số dư khách.", "Loại Tài xế nộp COD: cột phân bổ '—', trạng thái 'Đã đối trừ COD'.",
                   "Chip 'Còn treo' = filter.hasUnallocated=true."]),
-    Screen(id="WM-PAY-02", name="Chi tiết phiếu thu", route="/finance/payments/:paymentId", render=pay_02, pattern="detail", h=1140, roles=ROLES_FIN, **C,
+    Screen(id="WM-PAY-02", name="Chi tiết phiếu thu", route="/finance/payments/:paymentId", render=pay_02, pattern="detail", h=1200, roles=ROLES_FIN, **C,
            purpose="Thông tin thu, người nộp, phân bổ vào đơn, số dư khách phát sinh, chứng từ và audit.",
            api=["payment(id){allocations, attachments, customer{creditBalance}}", "activityLogs(entityType: PAYMENT_IN, entityId)"],
            data=["code", "type", "payer", "amount", "receivedAt", "method", "bankAccount", "transferNote", "allocations[]", "unallocatedAmount",
@@ -814,7 +815,7 @@ register(
            notes=["Seed PT-202609-0002: 3.000.000 đ chưa phân bổ → số dư khách Bao bì Hưng Lợi.",
                   "Hủy phiếu đã phân bổ: gỡ allocation, còn nợ đơn tăng lại; ghi audit before/after.",
                   "Với phiếu Tài xế nộp COD: thay khối 'Phân bổ vào đơn' bằng 'Khoản COD đã đối trừ'."]),
-    Screen(id="WM-PAY-03", name="Tạo phiếu thu", route="/finance/payments/new", render=pay_03, pattern="form", h=1320, roles=ROLES_FIN, **C,
+    Screen(id="WM-PAY-03", name="Tạo phiếu thu", route="/finance/payments/new", render=pay_03, pattern="form", h=1340, roles=ROLES_FIN, **C,
            purpose="Ghi nhận tiền vào: khách trả, tài xế nộp COD (chọn khoản COD cần đối trừ) hoặc thu khác.",
            api=["customers", "drivers", "driverCodHeld(filter: {driverId})", "createPaymentIn(input)"],
            data=["type(CUSTOMER_PAYMENT|DRIVER_COD_REMITTANCE|OTHER)", "customerId|driverId|payerName", "amount", "receivedAt", "method",
@@ -858,7 +859,7 @@ register(
            states={"loading": "Skeleton", "error": "Không tìm thấy / không có quyền", "paid": "Ẩn form hoàn tiền, hiện 'Đã trả 23/09/2026 · hình thức · người chi'"},
            notes=["Seed PC-202609-0001: phí cầu đường 800.000 đ, tài xế chi trước → công ty nợ tài xế (WM-DRV-05).",
                   "Đánh dấu đã trả giảm công nợ tài xế/NCC; không đổi lãi/lỗ đơn (chi phí đã ghi nhận khi tạo)."]),
-    Screen(id="WM-EXP-03", name="Tạo phiếu chi", route="/finance/expenses/new", render=exp_03, pattern="form", h=1240, roles=ROLES_FIN, **C,
+    Screen(id="WM-EXP-03", name="Tạo phiếu chi", route="/finance/expenses/new", render=exp_03, pattern="form", h=1320, roles=ROLES_FIN, **C,
            purpose="Ghi khoản chi: chi phí chuyến, thuê xe ngoài, vật tư xe, hoàn ứng, ứng lương, tạm ứng chuyến, chi khác; gắn đối tượng theo loại.",
            api=["trips", "orders", "vehicles", "drivers", "suppliers", "catalogItems(type: EXPENSE_CATEGORY)", "createExpense(input)"],
            data=["category", "subCategory", "tripId", "orderId", "vehicleId", "driverId", "supplierId", "amount", "date", "paidBy(COMPANY|DRIVER|ADVANCE)",

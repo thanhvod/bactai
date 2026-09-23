@@ -18,6 +18,10 @@ def _fsec(n, title, body):
     return col(row(_num_dot(n), h("sm", title), gap=8), body, gap=12)
 
 
+def _pair(*children, gap=12):
+    return grid(list(children), 2, gap, extra="align-items: start;")
+
+
 def _veh_status(s):
     return badge(s, VEH_STATUS.get(s, "neutral"))
 
@@ -46,7 +50,7 @@ def _veh_list_content():
                     row(btn("Import", "secondary", "upload", to="WM-SHELL-04", trigger="Import xe từ Excel"),
                         btn("Xuất Excel", "secondary", "download", to="WM-SHELL-05", trigger="Xuất danh sách xe"),
                         btn("Thêm xe", "primary", "plus", to="WM-VEH-03", trigger="Thêm xe"), gap=8)),
-        row(kpi("Tổng số xe", "5", "4 đang dùng"), kpi("Đang chạy", "2", "CX-202609-0001, CX-202609-0003", "accent", "route"),
+        row(kpi("Tổng số xe", "5", "4 đang dùng"), kpi("Đang chạy", "2", "CX-202609-0001 · 0003", "accent", "route"),
             kpi("Sẵn sàng", "1", "51C-456.78", "success", "circle-check"), kpi("Bảo dưỡng", "1", "51H-111.22 · Gara Đại Lộc", "warning", "wrench"),
             kpi("Chi phí xe tháng 9", money(10_000_000), "Nhiên liệu, cầu đường, sửa chữa", None, "fuel", "WM-EXP-01", "Mở phiếu chi xe"),
             gap=12, extra="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr));"),
@@ -118,15 +122,15 @@ def veh_02():
 def veh_03():
     body = col(
         _fsec(1, "Thông tin chính", col(
-            row(field("Biển số", input_("51D-902.18", mono=True), True, hint="Duy nhất trong nhà xe"), field("Mã xe", input_("Tự sinh: VEH-A-006", disabled=True)), gap=12),
-            row(field("Loại xe", select("Tải thùng"), True, hint="Danh mục loại xe"), field("Tải trọng", input_("10", suffix="tấn"), True), gap=12),
+            _pair(field("Biển số", input_("51D-902.18", mono=True), True, hint="Duy nhất trong nhà xe"), field("Mã xe", input_("Tự sinh: VEH-A-006", disabled=True)), gap=12),
+            _pair(field("Loại xe", select("Tải thùng"), True, hint="Danh mục loại xe"), field("Tải trọng", input_("10", suffix="tấn"), True), gap=12),
             gap=12)),
         divider(),
         _fsec(2, "Thông tin kỹ thuật", col(
-            row(field("Hãng · Model", input_("Isuzu FVR34QE4")), field("Năm sản xuất", input_("2022", mono=True)), gap=12),
-            row(field("Số khung", input_("RLEFVR34Q2V00871", mono=True)), field("Số máy", input_("6HK1-786231", mono=True)), gap=12),
-            row(field("Kích thước thùng", input_("7,2 × 2,4 × 2,5", suffix="m")), field("Định mức nhiên liệu", input_("20", suffix="lít/100 km")), gap=12),
-            row(field("Đăng kiểm đến", date_input("11/06/2027")), field("Bảo hiểm đến", date_input("30/04/2027")), gap=12),
+            _pair(field("Hãng · Model", input_("Isuzu FVR34QE4")), field("Năm sản xuất", input_("2022", mono=True)), gap=12),
+            _pair(field("Số khung", input_("RLEFVR34Q2V00871", mono=True)), field("Số máy", input_("6HK1-786231", mono=True)), gap=12),
+            _pair(field("Kích thước thùng", input_("7,2 × 2,4 × 2,5", suffix="m")), field("Định mức nhiên liệu", input_("20", suffix="lít/100 km")), gap=12),
+            _pair(field("Đăng kiểm đến", date_input("11/06/2027")), field("Bảo hiểm đến", date_input("30/04/2027")), gap=12),
             gap=12)),
         divider(),
         _fsec(3, "Trạng thái", col(
@@ -234,15 +238,15 @@ def sup_03():
     body = col(
         _fsec(1, "Thông tin NCC", col(
             field("Tên nhà cung cấp", input_("Gara Đại Lộc"), True),
-            row(field("Loại NCC", select("Sửa chữa"), True, hint="Danh mục loại NCC"), field("Mã số thuế", input_("0312 456 789", mono=True), hint="Không bắt buộc"), gap=12),
+            _pair(field("Loại NCC", select("Sửa chữa"), True, hint="Danh mục loại NCC"), field("Mã số thuế", input_("0312 456 789", mono=True), hint="Không bắt buộc"), gap=12),
             field("Địa chỉ", input_("Số 45 Quốc lộ 1A, Bình Tân, TP.HCM")),
-            row(field("Ngân hàng", select("Techcombank")), field("Số tài khoản", input_("1903 5566 7788 99", mono=True)), gap=12),
+            _pair(field("Ngân hàng", select("Techcombank")), field("Số tài khoản", input_("1903 5566 7788 99", mono=True)), gap=12),
             field("Điều khoản thanh toán", select("Trả sau 30 ngày")), gap=12)),
         divider(),
         _fsec(2, "Liên hệ", col(
-            row(field("Người liên hệ", input_("Anh Lộc"), True), field("Số điện thoại", input_("0907 333 555", mono=True), True), gap=12),
-            row(field("Chức vụ", input_("Chủ gara")), field("Email", input_("", "email@ncc.vn")), gap=12),
-            btn("Thêm người liên hệ", "ghost", "plus", size="sm"), gap=12)),
+            _pair(field("Người liên hệ", input_("Anh Lộc"), True), field("Số điện thoại", input_("0907 333 555", mono=True), True), gap=12),
+            _pair(field("Chức vụ", input_("Chủ gara")), field("Email", input_("", "email@ncc.vn")), gap=12),
+            row(btn("Thêm người liên hệ", "ghost", "plus", size="sm")), gap=12)),
         divider(),
         _fsec(3, "Ghi chú & trạng thái", col(
             field("Ghi chú", textarea("Bảo dưỡng định kỳ xe lạnh 51H-111.22; báo giá trước khi sửa trên 3 triệu.", h=56)),

@@ -6,19 +6,19 @@ Sinh tự động bởi `python3 design/tools/build.py`. Không sửa tay.
 
 Stack: React + Vite + Tailwind + shadcn/Radix (apps/web)
 
-### Đơn hàng
+### Điều phối
 
 | ID | Màn hình | Route | Pattern | Đi tới |
 |---|---|---|---|---|
-| [WM-ORD-01](screens/wm/WM-ORD-01.md) | Danh sách đơn hàng | `/orders` | list | WM-ORD-02, WM-ORD-03, WM-SHELL-05 |
-| [WM-ORD-02](screens/wm/WM-ORD-02.md) | Chi tiết đơn hàng | `/orders/:orderId` | detail | WM-CUS-02, WM-DISPATCH-01, WM-DRV-02, WM-INC-01, WM-ORD-03, WM-ORD-04, WM-ORD-05, WM-ORD-07, WM-ORD-08, WM-ORD-09, WM-SHELL-07, WM-TRIP-01, WM-TRIP-02 |
-| [WM-ORD-03](screens/wm/WM-ORD-03.md) | Tạo/sửa đơn | `/orders/new · /orders/:orderId/edit` | form | WM-CUS-04, WM-CUS-05, WM-ORD-01, WM-ORD-02 |
-| [WM-ORD-04](screens/wm/WM-ORD-04.md) | Điểm lấy/trả (tab) | `/orders/:orderId?tab=stops` | detail | WM-CUS-02, WM-ORD-02, WM-ORD-03, WM-ORD-05, WM-ORD-07, WM-ORD-08, WM-ORD-09, WM-SHELL-07, WM-STOP-01, WM-TRIP-02 |
-| [WM-ORD-05](screens/wm/WM-ORD-05.md) | Hàng hóa (tab) | `/orders/:orderId?tab=cargo` | detail | WM-CUS-02, WM-ORD-02, WM-ORD-03, WM-ORD-04, WM-ORD-07, WM-ORD-08, WM-ORD-09, WM-SHELL-07, WM-TRIP-02 |
-| [WM-ORD-06](screens/wm/WM-ORD-06.md) | Add-on & giá bán (drawer) | `/orders/:orderId?tab=finance (drawer)` | drawer | WM-CUS-02, WM-EXP-02, WM-EXP-03, WM-ORD-02, WM-ORD-03, WM-ORD-04, WM-ORD-05, WM-ORD-06, WM-ORD-07, WM-ORD-08, WM-ORD-09, WM-PAY-03, WM-PAY-04, WM-SHELL-07, WM-TRIP-02 |
-| [WM-ORD-07](screens/wm/WM-ORD-07.md) | Tài chính đơn (tab) | `/orders/:orderId?tab=finance` | detail | WM-CUS-02, WM-EXP-02, WM-EXP-03, WM-ORD-02, WM-ORD-03, WM-ORD-04, WM-ORD-05, WM-ORD-06, WM-ORD-08, WM-ORD-09, WM-PAY-03, WM-PAY-04, WM-SHELL-07, WM-TRIP-02 |
-| [WM-ORD-08](screens/wm/WM-ORD-08.md) | Hủy/sửa nhạy cảm đơn | `(modal)` | dialog | WM-CUS-02, WM-EXP-02, WM-EXP-03, WM-ORD-02, WM-ORD-03, WM-ORD-04, WM-ORD-05, WM-ORD-06, WM-ORD-07, WM-ORD-08, WM-ORD-09, WM-PAY-03, WM-PAY-04, WM-SHELL-07, WM-TRIP-02 |
-| [WM-ORD-09](screens/wm/WM-ORD-09.md) | In/chia sẻ đơn | `/orders/:orderId/print` | page | WM-ORD-02 |
+| [WM-TRIP-01](screens/wm/WM-TRIP-01.md) | Chi tiết chuyến | `/trips/:tripId` | detail | WM-ADV-01, WM-COD-01, WM-CUS-02, WM-DISPATCH-04, WM-DISPATCH-05, WM-DRV-02, WM-EXP-02, WM-EXP-03, WM-INC-01, WM-ORD-02, WM-SHELL-05, WM-SHELL-06, WM-SHELL-07, WM-SHELL-08, WM-STOP-01, WM-TRIP-02, WM-VEH-02 |
+| [WM-TRIP-02](screens/wm/WM-TRIP-02.md) | Tạo/sửa chuyến | `/orders/:orderId/trips/new · /trips/:tripId/edit` | form | WM-DISPATCH-02, WM-DISPATCH-03, WM-ORD-02, WM-TRIP-01 |
+| [WM-STOP-01](screens/wm/WM-STOP-01.md) | Chi tiết điểm dừng | `/orders/:orderId/stops/:stopId (drawer trên chuyến/đơn)` | drawer | WM-CUS-02, WM-DRV-02, WM-ORD-02, WM-SHELL-05, WM-SHELL-06, WM-SHELL-07, WM-SHELL-08, WM-STOP-01, WM-TRIP-01, WM-TRIP-02, WM-VEH-02 |
+| [WM-DISPATCH-01](screens/wm/WM-DISPATCH-01.md) | Bảng điều phối | `/dispatch` | board | WM-DISPATCH-02, WM-DISPATCH-03, WM-DISPATCH-04, WM-DISPATCH-05, WM-INC-01, WM-ORD-02, WM-TRIP-01, WM-TRIP-02 |
+| [WM-DISPATCH-02](screens/wm/WM-DISPATCH-02.md) | Lịch xe/tài xế | `/dispatch/calendar` | board | WM-DISPATCH-01, WM-DISPATCH-03, WM-TRIP-01, WM-TRIP-02 |
+| [WM-DISPATCH-03](screens/wm/WM-DISPATCH-03.md) | Cảnh báo lịch | `/dispatch/conflicts` | list | WM-DISPATCH-02, WM-SET-01, WM-SHELL-08, WM-TRIP-01, WM-TRIP-02 |
+| [WM-DISPATCH-04](screens/wm/WM-DISPATCH-04.md) | Theo dõi vị trí | `/dispatch/map` | page | WM-DISPATCH-01, WM-TRIP-01 |
+| [WM-DISPATCH-05](screens/wm/WM-DISPATCH-05.md) | Sự cố vận hành | `/dispatch/incidents` | list | WM-INC-01, WM-ORD-02, WM-SHELL-05, WM-TRIP-01 |
+| [WM-INC-01](screens/wm/WM-INC-01.md) | Chi tiết sự cố | `/dispatch/incidents/:incidentId` | detail | WM-DRV-02, WM-ORD-02, WM-SHELL-06, WM-SHELL-07, WM-SHELL-08, WM-TRIP-01, WM-VEH-02 |
 
 ## Flows
 

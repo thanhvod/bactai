@@ -20,5 +20,5 @@ flowchart LR
 | 1 | Operation | API | `` | Tạo phiếu chi, gắn đơn/chuyến/xe/NCC/tài xế |
 | 2 | System | API | `` | Chi tiết phiếu chi |
 | 3 | Operation | API | `` | Đối soát tạm ứng chuyến |
-| 4 | System | [WM-ORD-07](../screens/wm/WM-ORD-07.md) Tài chính đơn (tab) | `/orders/:orderId?tab=finance` | Lãi/lỗ đơn cập nhật |
+| 4 | System | API | `` | Lãi/lỗ đơn cập nhật |
 | 5 | Admin | API | `` | Báo cáo lãi/lỗ theo đơn |

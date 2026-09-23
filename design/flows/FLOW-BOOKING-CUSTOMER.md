@@ -23,5 +23,5 @@ flowchart LR
 | 2 | Customer | API | `` | Xem hồ sơ nhà xe |
 | 3 | Customer | API | `` | Gửi yêu cầu vận chuyển |
 | 4 | System | API | `` | Booking chờ tiếp nhận |
-| 5 | Operation | [WM-ORD-03](../screens/wm/WM-ORD-03.md) Tạo/sửa đơn | `/orders/new · /orders/:orderId/edit` | Tiếp nhận, chỉnh giá/điểm/hàng → tạo đơn |
+| 5 | Operation | API | `` | Tiếp nhận, chỉnh giá/điểm/hàng → tạo đơn |
 | 6 | Customer | API | `` | Khách theo dõi đơn đã tạo |

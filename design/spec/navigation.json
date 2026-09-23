@@ -8,1357 +8,1627 @@
   },
   "edges": [
     {
-      "from": "WM-ORD-01",
-      "to": "WM-ORD-02",
-      "trigger": "Click mã đơn → chi tiết",
+      "from": "WM-TRIP-01",
+      "to": "WM-EXP-02",
+      "trigger": "Mở phiếu chi",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-01",
-      "to": "WM-SHELL-05",
-      "trigger": "Xuất Excel",
+      "from": "WM-TRIP-01",
+      "to": "WM-ADV-01",
+      "trigger": "Mở tạm ứng chuyến",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-01",
-      "to": "WM-ORD-03",
-      "trigger": "Tạo đơn",
+      "from": "WM-TRIP-01",
+      "to": "WM-EXP-03",
+      "trigger": "Thêm chi phí chuyến",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-01",
-      "to": "WM-DASH-01",
-      "trigger": "Sidebar: Dashboard",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-01",
-      "to": "WM-ORD-01",
-      "trigger": "Sidebar: Đơn hàng",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-01",
-      "to": "WM-DISPATCH-01",
-      "trigger": "Sidebar: Điều phối",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-01",
-      "to": "WM-CUS-01",
-      "trigger": "Sidebar: Khách hàng",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-01",
-      "to": "WM-DRV-01",
-      "trigger": "Sidebar: Tài xế",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-01",
-      "to": "WM-VEH-01",
-      "trigger": "Sidebar: Xe",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-01",
-      "to": "WM-SUP-01",
-      "trigger": "Sidebar: Nhà cung cấp",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-01",
-      "to": "WM-FIN-01",
-      "trigger": "Sidebar: Thu chi & Công nợ",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-01",
-      "to": "WM-PAYROLL-01",
-      "trigger": "Sidebar: Lương",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-01",
-      "to": "WM-RPT-01",
-      "trigger": "Sidebar: Báo cáo",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-01",
-      "to": "WM-ORG-01",
-      "trigger": "Sidebar: Cài đặt",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-01",
-      "to": "WM-AUTH-03",
-      "trigger": "Merchant switcher",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-01",
-      "to": "WM-SHELL-03",
-      "trigger": "Quick search (Ctrl K)",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-01",
-      "to": "WM-SHELL-02",
-      "trigger": "Chuông thông báo",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-02",
-      "to": "WM-TRIP-01",
-      "trigger": "Mở chuyến",
+      "from": "WM-TRIP-01",
+      "to": "WM-SHELL-06",
+      "trigger": "Xem ảnh POD",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-02",
-      "to": "WM-DRV-02",
-      "trigger": "Mở tài xế",
+      "from": "WM-TRIP-01",
+      "to": "WM-COD-01",
+      "trigger": "Mở COD tài xế",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-02",
-      "to": "WM-ORD-04",
-      "trigger": "Quản lý điểm dừng",
+      "from": "WM-TRIP-01",
+      "to": "WM-SHELL-08",
+      "trigger": "Tạm dừng chuyến (nhập lý do)",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-02",
-      "to": "WM-DISPATCH-01",
-      "trigger": "Mở bảng điều phối",
+      "from": "WM-TRIP-01",
+      "to": "WM-SHELL-08",
+      "trigger": "Hủy chuyến (sensitive)",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-02",
-      "to": "WM-CUS-02",
-      "trigger": "Mở Công ty Gạo Miền Tây",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-02",
-      "to": "WM-INC-01",
-      "trigger": "Xem sự cố",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-02",
-      "to": "WM-SHELL-07",
-      "trigger": "Mở Timeline",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-02",
-      "to": "WM-SHELL-07",
-      "trigger": "Mở Timeline drawer",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-02",
-      "to": "WM-ORD-09",
-      "trigger": "In/chia sẻ đơn",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-02",
-      "to": "WM-ORD-03",
-      "trigger": "Sửa đơn",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-02",
-      "to": "WM-TRIP-02",
-      "trigger": "Tạo chuyến từ đơn",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-02",
-      "to": "WM-ORD-08",
-      "trigger": "Menu: Hủy đơn / sửa giá (sensitive)",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-02",
-      "to": "WM-CUS-02",
-      "trigger": "Mở khách hàng",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-02",
-      "to": "WM-ORD-01",
-      "trigger": "Breadcrumb Đơn hàng",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-02",
-      "to": "WM-ORD-04",
-      "trigger": "Tab Điểm dừng",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-02",
-      "to": "WM-ORD-05",
-      "trigger": "Tab Hàng hóa",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-02",
-      "to": "WM-ORD-07",
-      "trigger": "Tab Tài chính",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-02",
-      "to": "WM-DASH-01",
-      "trigger": "Sidebar: Dashboard",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-02",
-      "to": "WM-ORD-01",
-      "trigger": "Sidebar: Đơn hàng",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-02",
-      "to": "WM-DISPATCH-01",
-      "trigger": "Sidebar: Điều phối",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-02",
-      "to": "WM-CUS-01",
-      "trigger": "Sidebar: Khách hàng",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-02",
-      "to": "WM-DRV-01",
-      "trigger": "Sidebar: Tài xế",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-02",
-      "to": "WM-VEH-01",
-      "trigger": "Sidebar: Xe",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-02",
-      "to": "WM-SUP-01",
-      "trigger": "Sidebar: Nhà cung cấp",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-02",
-      "to": "WM-FIN-01",
-      "trigger": "Sidebar: Thu chi & Công nợ",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-02",
-      "to": "WM-PAYROLL-01",
-      "trigger": "Sidebar: Lương",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-02",
-      "to": "WM-RPT-01",
-      "trigger": "Sidebar: Báo cáo",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-02",
-      "to": "WM-ORG-01",
-      "trigger": "Sidebar: Cài đặt",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-02",
-      "to": "WM-AUTH-03",
-      "trigger": "Merchant switcher",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-02",
-      "to": "WM-SHELL-03",
-      "trigger": "Quick search (Ctrl K)",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-02",
-      "to": "WM-SHELL-02",
-      "trigger": "Chuông thông báo",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-03",
-      "to": "WM-CUS-05",
-      "trigger": "Xem công nợ khách",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-03",
-      "to": "WM-CUS-04",
-      "trigger": "Mở sổ địa chỉ khách",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-03",
-      "to": "WM-ORD-01",
-      "trigger": "Hủy tạo đơn",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-03",
-      "to": "WM-ORD-02",
-      "trigger": "Lưu đơn → chi tiết đơn",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-03",
-      "to": "WM-ORD-01",
-      "trigger": "Breadcrumb Đơn hàng",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-03",
-      "to": "WM-DASH-01",
-      "trigger": "Sidebar: Dashboard",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-03",
-      "to": "WM-ORD-01",
-      "trigger": "Sidebar: Đơn hàng",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-03",
-      "to": "WM-DISPATCH-01",
-      "trigger": "Sidebar: Điều phối",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-03",
-      "to": "WM-CUS-01",
-      "trigger": "Sidebar: Khách hàng",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-03",
-      "to": "WM-DRV-01",
-      "trigger": "Sidebar: Tài xế",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-03",
-      "to": "WM-VEH-01",
-      "trigger": "Sidebar: Xe",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-03",
-      "to": "WM-SUP-01",
-      "trigger": "Sidebar: Nhà cung cấp",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-03",
-      "to": "WM-FIN-01",
-      "trigger": "Sidebar: Thu chi & Công nợ",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-03",
-      "to": "WM-PAYROLL-01",
-      "trigger": "Sidebar: Lương",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-03",
-      "to": "WM-RPT-01",
-      "trigger": "Sidebar: Báo cáo",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-03",
-      "to": "WM-ORG-01",
-      "trigger": "Sidebar: Cài đặt",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-03",
-      "to": "WM-AUTH-03",
-      "trigger": "Merchant switcher",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-03",
-      "to": "WM-SHELL-03",
-      "trigger": "Quick search (Ctrl K)",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-03",
-      "to": "WM-SHELL-02",
-      "trigger": "Chuông thông báo",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-04",
+      "from": "WM-TRIP-01",
       "to": "WM-STOP-01",
       "trigger": "Mở chi tiết điểm dừng",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-04",
+      "from": "WM-TRIP-01",
+      "to": "WM-VEH-02",
+      "trigger": "Mở xe",
+      "kind": "action"
+    },
+    {
+      "from": "WM-TRIP-01",
+      "to": "WM-DRV-02",
+      "trigger": "Mở tài xế",
+      "kind": "action"
+    },
+    {
+      "from": "WM-TRIP-01",
+      "to": "WM-TRIP-02",
+      "trigger": "Đổi xe/tài xế",
+      "kind": "action"
+    },
+    {
+      "from": "WM-TRIP-01",
+      "to": "WM-DISPATCH-04",
+      "trigger": "Mở bản đồ vị trí xe",
+      "kind": "action"
+    },
+    {
+      "from": "WM-TRIP-01",
+      "to": "WM-INC-01",
+      "trigger": "Mở chi tiết sự cố",
+      "kind": "action"
+    },
+    {
+      "from": "WM-TRIP-01",
+      "to": "WM-DISPATCH-05",
+      "trigger": "Báo sự cố mới",
+      "kind": "action"
+    },
+    {
+      "from": "WM-TRIP-01",
+      "to": "WM-SHELL-07",
+      "trigger": "Mở Timeline",
+      "kind": "action"
+    },
+    {
+      "from": "WM-TRIP-01",
       "to": "WM-SHELL-07",
       "trigger": "Mở Timeline drawer",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-04",
-      "to": "WM-ORD-09",
-      "trigger": "In/chia sẻ đơn",
+      "from": "WM-TRIP-01",
+      "to": "WM-SHELL-05",
+      "trigger": "In phiếu điều xe",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-04",
-      "to": "WM-ORD-03",
-      "trigger": "Sửa đơn",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-04",
+      "from": "WM-TRIP-01",
       "to": "WM-TRIP-02",
-      "trigger": "Tạo chuyến từ đơn",
+      "trigger": "Sửa chuyến / đổi xe, tài xế",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-04",
-      "to": "WM-ORD-08",
-      "trigger": "Menu: Hủy đơn / sửa giá (sensitive)",
+      "from": "WM-TRIP-01",
+      "to": "WM-SHELL-08",
+      "trigger": "Menu: Hủy chuyến (sensitive)",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-04",
+      "from": "WM-TRIP-01",
+      "to": "WM-ORD-02",
+      "trigger": "Mở đơn hàng",
+      "kind": "action"
+    },
+    {
+      "from": "WM-TRIP-01",
       "to": "WM-CUS-02",
       "trigger": "Mở khách hàng",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-04",
-      "to": "WM-ORD-01",
-      "trigger": "Breadcrumb Đơn hàng",
+      "from": "WM-TRIP-01",
+      "to": "WM-DISPATCH-01",
+      "trigger": "Breadcrumb Điều phối",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-04",
-      "to": "WM-ORD-02",
-      "trigger": "Tab Tổng quan",
-      "kind": "action"
+      "from": "WM-TRIP-01",
+      "to": "WM-DISPATCH-01",
+      "trigger": "Breadcrumb Bảng điều phối",
+      "kind": "nav"
     },
     {
-      "from": "WM-ORD-04",
-      "to": "WM-ORD-05",
-      "trigger": "Tab Hàng hóa",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-04",
-      "to": "WM-ORD-07",
-      "trigger": "Tab Tài chính",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-04",
+      "from": "WM-TRIP-01",
       "to": "WM-DASH-01",
       "trigger": "Sidebar: Dashboard",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-04",
+      "from": "WM-TRIP-01",
       "to": "WM-ORD-01",
       "trigger": "Sidebar: Đơn hàng",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-04",
+      "from": "WM-TRIP-01",
       "to": "WM-DISPATCH-01",
       "trigger": "Sidebar: Điều phối",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-04",
+      "from": "WM-TRIP-01",
+      "to": "WM-DISPATCH-01",
+      "trigger": "Sidebar: Bảng điều phối",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-TRIP-01",
+      "to": "WM-DISPATCH-02",
+      "trigger": "Sidebar: Lịch xe/tài xế",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-TRIP-01",
+      "to": "WM-DISPATCH-03",
+      "trigger": "Sidebar: Cảnh báo lịch",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-TRIP-01",
+      "to": "WM-DISPATCH-04",
+      "trigger": "Sidebar: Vị trí xe",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-TRIP-01",
+      "to": "WM-DISPATCH-05",
+      "trigger": "Sidebar: Sự cố",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-TRIP-01",
       "to": "WM-CUS-01",
       "trigger": "Sidebar: Khách hàng",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-04",
+      "from": "WM-TRIP-01",
       "to": "WM-DRV-01",
       "trigger": "Sidebar: Tài xế",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-04",
+      "from": "WM-TRIP-01",
       "to": "WM-VEH-01",
       "trigger": "Sidebar: Xe",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-04",
+      "from": "WM-TRIP-01",
       "to": "WM-SUP-01",
       "trigger": "Sidebar: Nhà cung cấp",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-04",
+      "from": "WM-TRIP-01",
       "to": "WM-FIN-01",
       "trigger": "Sidebar: Thu chi & Công nợ",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-04",
+      "from": "WM-TRIP-01",
       "to": "WM-PAYROLL-01",
       "trigger": "Sidebar: Lương",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-04",
+      "from": "WM-TRIP-01",
       "to": "WM-RPT-01",
       "trigger": "Sidebar: Báo cáo",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-04",
+      "from": "WM-TRIP-01",
       "to": "WM-ORG-01",
       "trigger": "Sidebar: Cài đặt",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-04",
+      "from": "WM-TRIP-01",
       "to": "WM-AUTH-03",
       "trigger": "Merchant switcher",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-04",
+      "from": "WM-TRIP-01",
       "to": "WM-SHELL-03",
       "trigger": "Quick search (Ctrl K)",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-04",
+      "from": "WM-TRIP-01",
       "to": "WM-SHELL-02",
       "trigger": "Chuông thông báo",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-05",
-      "to": "WM-SHELL-07",
-      "trigger": "Mở Timeline drawer",
+      "from": "WM-TRIP-02",
+      "to": "WM-ORD-02",
+      "trigger": "Mở đơn hàng",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-05",
-      "to": "WM-ORD-09",
-      "trigger": "In/chia sẻ đơn",
+      "from": "WM-TRIP-02",
+      "to": "WM-TRIP-01",
+      "trigger": "Mở chuyến B",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-05",
-      "to": "WM-ORD-03",
-      "trigger": "Sửa đơn",
+      "from": "WM-TRIP-02",
+      "to": "WM-DISPATCH-02",
+      "trigger": "Mở lịch xe/tài xế",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-05",
-      "to": "WM-TRIP-02",
-      "trigger": "Tạo chuyến từ đơn",
+      "from": "WM-TRIP-02",
+      "to": "WM-DISPATCH-03",
+      "trigger": "Tiếp tục và ghi lý do → cảnh báo lịch",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-05",
-      "to": "WM-ORD-08",
-      "trigger": "Menu: Hủy đơn / sửa giá (sensitive)",
+      "from": "WM-TRIP-02",
+      "to": "WM-DISPATCH-02",
+      "trigger": "Xem lịch xe/tài xế",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-05",
-      "to": "WM-CUS-02",
-      "trigger": "Mở khách hàng",
+      "from": "WM-TRIP-02",
+      "to": "WM-ORD-02",
+      "trigger": "Hủy → quay lại đơn",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-05",
-      "to": "WM-ORD-01",
-      "trigger": "Breadcrumb Đơn hàng",
+      "from": "WM-TRIP-02",
+      "to": "WM-TRIP-01",
+      "trigger": "Lưu chuyến (không cảnh báo) → chi tiết chuyến",
+      "kind": "action"
+    },
+    {
+      "from": "WM-TRIP-02",
+      "to": "WM-DISPATCH-01",
+      "trigger": "Breadcrumb Điều phối",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-05",
+      "from": "WM-TRIP-02",
       "to": "WM-ORD-02",
-      "trigger": "Tab Tổng quan",
-      "kind": "action"
+      "trigger": "Breadcrumb DH-202609-0002",
+      "kind": "nav"
     },
     {
-      "from": "WM-ORD-05",
-      "to": "WM-ORD-04",
-      "trigger": "Tab Điểm dừng",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-05",
-      "to": "WM-ORD-07",
-      "trigger": "Tab Tài chính",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-05",
+      "from": "WM-TRIP-02",
       "to": "WM-DASH-01",
       "trigger": "Sidebar: Dashboard",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-05",
+      "from": "WM-TRIP-02",
       "to": "WM-ORD-01",
       "trigger": "Sidebar: Đơn hàng",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-05",
+      "from": "WM-TRIP-02",
       "to": "WM-DISPATCH-01",
       "trigger": "Sidebar: Điều phối",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-05",
+      "from": "WM-TRIP-02",
+      "to": "WM-DISPATCH-01",
+      "trigger": "Sidebar: Bảng điều phối",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-TRIP-02",
+      "to": "WM-DISPATCH-02",
+      "trigger": "Sidebar: Lịch xe/tài xế",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-TRIP-02",
+      "to": "WM-DISPATCH-03",
+      "trigger": "Sidebar: Cảnh báo lịch",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-TRIP-02",
+      "to": "WM-DISPATCH-04",
+      "trigger": "Sidebar: Vị trí xe",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-TRIP-02",
+      "to": "WM-DISPATCH-05",
+      "trigger": "Sidebar: Sự cố",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-TRIP-02",
       "to": "WM-CUS-01",
       "trigger": "Sidebar: Khách hàng",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-05",
+      "from": "WM-TRIP-02",
       "to": "WM-DRV-01",
       "trigger": "Sidebar: Tài xế",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-05",
+      "from": "WM-TRIP-02",
       "to": "WM-VEH-01",
       "trigger": "Sidebar: Xe",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-05",
+      "from": "WM-TRIP-02",
       "to": "WM-SUP-01",
       "trigger": "Sidebar: Nhà cung cấp",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-05",
+      "from": "WM-TRIP-02",
       "to": "WM-FIN-01",
       "trigger": "Sidebar: Thu chi & Công nợ",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-05",
+      "from": "WM-TRIP-02",
       "to": "WM-PAYROLL-01",
       "trigger": "Sidebar: Lương",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-05",
+      "from": "WM-TRIP-02",
       "to": "WM-RPT-01",
       "trigger": "Sidebar: Báo cáo",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-05",
+      "from": "WM-TRIP-02",
       "to": "WM-ORG-01",
       "trigger": "Sidebar: Cài đặt",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-05",
+      "from": "WM-TRIP-02",
       "to": "WM-AUTH-03",
       "trigger": "Merchant switcher",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-05",
+      "from": "WM-TRIP-02",
       "to": "WM-SHELL-03",
       "trigger": "Quick search (Ctrl K)",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-05",
+      "from": "WM-TRIP-02",
       "to": "WM-SHELL-02",
       "trigger": "Chuông thông báo",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-06",
-      "to": "WM-ORD-07",
+      "from": "WM-STOP-01",
+      "to": "WM-SHELL-06",
+      "trigger": "Xem ảnh POD điểm lấy",
+      "kind": "action"
+    },
+    {
+      "from": "WM-STOP-01",
+      "to": "WM-ORD-02",
+      "trigger": "Mở đơn hàng",
+      "kind": "action"
+    },
+    {
+      "from": "WM-STOP-01",
+      "to": "WM-TRIP-01",
+      "trigger": "Mở chuyến",
+      "kind": "action"
+    },
+    {
+      "from": "WM-STOP-01",
+      "to": "WM-SHELL-08",
+      "trigger": "Sửa COD thực thu (sensitive, nhập lý do)",
+      "kind": "action"
+    },
+    {
+      "from": "WM-STOP-01",
+      "to": "WM-SHELL-06",
+      "trigger": "Mở attachment viewer",
+      "kind": "action"
+    },
+    {
+      "from": "WM-STOP-01",
+      "to": "WM-SHELL-08",
+      "trigger": "Bỏ qua điểm (nhập lý do)",
+      "kind": "action"
+    },
+    {
+      "from": "WM-STOP-01",
+      "to": "WM-TRIP-01",
       "trigger": "Đóng drawer",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-06",
-      "to": "WM-ORD-08",
-      "trigger": "Lưu → nhập lý do (sensitive)",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-06",
-      "to": "WM-ORD-06",
-      "trigger": "Mở drawer giá cước/add-on",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-06",
-      "to": "WM-PAY-03",
-      "trigger": "Tạo phiếu thu",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-06",
-      "to": "WM-PAY-04",
-      "trigger": "Phân bổ từ phiếu có sẵn",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-06",
-      "to": "WM-EXP-02",
-      "trigger": "Mở phiếu chi",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-06",
-      "to": "WM-EXP-03",
-      "trigger": "Tạo phiếu chi gắn đơn",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-06",
-      "to": "WM-ORD-07",
+      "from": "WM-STOP-01",
+      "to": "WM-TRIP-01",
       "trigger": "Đóng",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-06",
+      "from": "WM-STOP-01",
       "to": "WM-SHELL-07",
       "trigger": "Mở Timeline drawer",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-06",
-      "to": "WM-ORD-09",
-      "trigger": "In/chia sẻ đơn",
+      "from": "WM-STOP-01",
+      "to": "WM-SHELL-05",
+      "trigger": "In phiếu điều xe",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-06",
-      "to": "WM-ORD-03",
-      "trigger": "Sửa đơn",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-06",
+      "from": "WM-STOP-01",
       "to": "WM-TRIP-02",
-      "trigger": "Tạo chuyến từ đơn",
+      "trigger": "Sửa chuyến / đổi xe, tài xế",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-06",
-      "to": "WM-ORD-08",
-      "trigger": "Menu: Hủy đơn / sửa giá (sensitive)",
+      "from": "WM-STOP-01",
+      "to": "WM-SHELL-08",
+      "trigger": "Menu: Hủy chuyến (sensitive)",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-06",
+      "from": "WM-STOP-01",
       "to": "WM-CUS-02",
       "trigger": "Mở khách hàng",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-06",
-      "to": "WM-ORD-01",
-      "trigger": "Breadcrumb Đơn hàng",
+      "from": "WM-STOP-01",
+      "to": "WM-VEH-02",
+      "trigger": "Mở xe",
+      "kind": "action"
+    },
+    {
+      "from": "WM-STOP-01",
+      "to": "WM-DRV-02",
+      "trigger": "Mở tài xế",
+      "kind": "action"
+    },
+    {
+      "from": "WM-STOP-01",
+      "to": "WM-DISPATCH-01",
+      "trigger": "Breadcrumb Điều phối",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-06",
-      "to": "WM-ORD-02",
-      "trigger": "Tab Tổng quan",
+      "from": "WM-STOP-01",
+      "to": "WM-DISPATCH-01",
+      "trigger": "Breadcrumb Bảng điều phối",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-STOP-01",
+      "to": "WM-SHELL-08",
+      "trigger": "Tạm dừng chuyến (nhập lý do)",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-06",
-      "to": "WM-ORD-04",
-      "trigger": "Tab Điểm dừng",
+      "from": "WM-STOP-01",
+      "to": "WM-SHELL-08",
+      "trigger": "Hủy chuyến (sensitive)",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-06",
-      "to": "WM-ORD-05",
-      "trigger": "Tab Hàng hóa",
+      "from": "WM-STOP-01",
+      "to": "WM-STOP-01",
+      "trigger": "Mở chi tiết điểm dừng",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-06",
+      "from": "WM-STOP-01",
       "to": "WM-DASH-01",
       "trigger": "Sidebar: Dashboard",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-06",
+      "from": "WM-STOP-01",
       "to": "WM-ORD-01",
       "trigger": "Sidebar: Đơn hàng",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-06",
+      "from": "WM-STOP-01",
       "to": "WM-DISPATCH-01",
       "trigger": "Sidebar: Điều phối",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-06",
+      "from": "WM-STOP-01",
+      "to": "WM-DISPATCH-01",
+      "trigger": "Sidebar: Bảng điều phối",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-STOP-01",
+      "to": "WM-DISPATCH-02",
+      "trigger": "Sidebar: Lịch xe/tài xế",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-STOP-01",
+      "to": "WM-DISPATCH-03",
+      "trigger": "Sidebar: Cảnh báo lịch",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-STOP-01",
+      "to": "WM-DISPATCH-04",
+      "trigger": "Sidebar: Vị trí xe",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-STOP-01",
+      "to": "WM-DISPATCH-05",
+      "trigger": "Sidebar: Sự cố",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-STOP-01",
       "to": "WM-CUS-01",
       "trigger": "Sidebar: Khách hàng",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-06",
+      "from": "WM-STOP-01",
       "to": "WM-DRV-01",
       "trigger": "Sidebar: Tài xế",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-06",
+      "from": "WM-STOP-01",
       "to": "WM-VEH-01",
       "trigger": "Sidebar: Xe",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-06",
+      "from": "WM-STOP-01",
       "to": "WM-SUP-01",
       "trigger": "Sidebar: Nhà cung cấp",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-06",
+      "from": "WM-STOP-01",
       "to": "WM-FIN-01",
       "trigger": "Sidebar: Thu chi & Công nợ",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-06",
+      "from": "WM-STOP-01",
       "to": "WM-PAYROLL-01",
       "trigger": "Sidebar: Lương",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-06",
+      "from": "WM-STOP-01",
       "to": "WM-RPT-01",
       "trigger": "Sidebar: Báo cáo",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-06",
+      "from": "WM-STOP-01",
       "to": "WM-ORG-01",
       "trigger": "Sidebar: Cài đặt",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-06",
+      "from": "WM-STOP-01",
       "to": "WM-AUTH-03",
       "trigger": "Merchant switcher",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-06",
+      "from": "WM-STOP-01",
       "to": "WM-SHELL-03",
       "trigger": "Quick search (Ctrl K)",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-06",
+      "from": "WM-STOP-01",
       "to": "WM-SHELL-02",
       "trigger": "Chuông thông báo",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-07",
-      "to": "WM-ORD-06",
-      "trigger": "Mở drawer giá cước/add-on",
+      "from": "WM-DISPATCH-01",
+      "to": "WM-DISPATCH-03",
+      "trigger": "Mở cảnh báo lịch từ thẻ chuyến",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-07",
-      "to": "WM-PAY-03",
-      "trigger": "Tạo phiếu thu",
+      "from": "WM-DISPATCH-01",
+      "to": "WM-TRIP-01",
+      "trigger": "Mở chuyến từ thẻ",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-07",
-      "to": "WM-PAY-04",
-      "trigger": "Phân bổ từ phiếu có sẵn",
+      "from": "WM-DISPATCH-01",
+      "to": "WM-ORD-02",
+      "trigger": "Mở đơn từ thẻ",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-07",
-      "to": "WM-EXP-02",
-      "trigger": "Mở phiếu chi",
+      "from": "WM-DISPATCH-01",
+      "to": "WM-TRIP-02",
+      "trigger": "Gán xe/tài xế từ thẻ",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-07",
-      "to": "WM-EXP-03",
-      "trigger": "Tạo phiếu chi gắn đơn",
+      "from": "WM-DISPATCH-01",
+      "to": "WM-INC-01",
+      "trigger": "Mở sự cố từ thẻ chuyến",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-07",
+      "from": "WM-DISPATCH-01",
+      "to": "WM-DISPATCH-02",
+      "trigger": "Chuyển sang Lịch",
+      "kind": "action"
+    },
+    {
+      "from": "WM-DISPATCH-01",
+      "to": "WM-DISPATCH-03",
+      "trigger": "Mở cảnh báo lịch",
+      "kind": "action"
+    },
+    {
+      "from": "WM-DISPATCH-01",
+      "to": "WM-TRIP-02",
+      "trigger": "Tạo chuyến",
+      "kind": "action"
+    },
+    {
+      "from": "WM-DISPATCH-01",
+      "to": "WM-TRIP-02",
+      "trigger": "Gán xe cho chuyến chưa gán",
+      "kind": "action"
+    },
+    {
+      "from": "WM-DISPATCH-01",
+      "to": "WM-DISPATCH-03",
+      "trigger": "Click KPI cảnh báo lịch",
+      "kind": "action"
+    },
+    {
+      "from": "WM-DISPATCH-01",
+      "to": "WM-DISPATCH-05",
+      "trigger": "Click KPI sự cố",
+      "kind": "action"
+    },
+    {
+      "from": "WM-DISPATCH-01",
+      "to": "WM-DISPATCH-04",
+      "trigger": "Mở vị trí xe",
+      "kind": "action"
+    },
+    {
+      "from": "WM-DISPATCH-01",
+      "to": "WM-DISPATCH-02",
+      "trigger": "Mở lịch xe/tài xế",
+      "kind": "action"
+    },
+    {
+      "from": "WM-DISPATCH-01",
+      "to": "WM-DASH-01",
+      "trigger": "Sidebar: Dashboard",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-01",
+      "to": "WM-ORD-01",
+      "trigger": "Sidebar: Đơn hàng",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-01",
+      "to": "WM-DISPATCH-01",
+      "trigger": "Sidebar: Điều phối",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-01",
+      "to": "WM-DISPATCH-01",
+      "trigger": "Sidebar: Bảng điều phối",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-01",
+      "to": "WM-DISPATCH-02",
+      "trigger": "Sidebar: Lịch xe/tài xế",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-01",
+      "to": "WM-DISPATCH-03",
+      "trigger": "Sidebar: Cảnh báo lịch",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-01",
+      "to": "WM-DISPATCH-04",
+      "trigger": "Sidebar: Vị trí xe",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-01",
+      "to": "WM-DISPATCH-05",
+      "trigger": "Sidebar: Sự cố",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-01",
+      "to": "WM-CUS-01",
+      "trigger": "Sidebar: Khách hàng",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-01",
+      "to": "WM-DRV-01",
+      "trigger": "Sidebar: Tài xế",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-01",
+      "to": "WM-VEH-01",
+      "trigger": "Sidebar: Xe",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-01",
+      "to": "WM-SUP-01",
+      "trigger": "Sidebar: Nhà cung cấp",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-01",
+      "to": "WM-FIN-01",
+      "trigger": "Sidebar: Thu chi & Công nợ",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-01",
+      "to": "WM-PAYROLL-01",
+      "trigger": "Sidebar: Lương",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-01",
+      "to": "WM-RPT-01",
+      "trigger": "Sidebar: Báo cáo",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-01",
+      "to": "WM-ORG-01",
+      "trigger": "Sidebar: Cài đặt",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-01",
+      "to": "WM-AUTH-03",
+      "trigger": "Merchant switcher",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-01",
+      "to": "WM-SHELL-03",
+      "trigger": "Quick search (Ctrl K)",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-01",
+      "to": "WM-SHELL-02",
+      "trigger": "Chuông thông báo",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-02",
+      "to": "WM-TRIP-01",
+      "trigger": "Click block CX-202609-0001",
+      "kind": "action"
+    },
+    {
+      "from": "WM-DISPATCH-02",
+      "to": "WM-TRIP-01",
+      "trigger": "Click block CX-202609-0002",
+      "kind": "action"
+    },
+    {
+      "from": "WM-DISPATCH-02",
+      "to": "WM-TRIP-01",
+      "trigger": "Click block CX-202609-0003",
+      "kind": "action"
+    },
+    {
+      "from": "WM-DISPATCH-02",
+      "to": "WM-TRIP-01",
+      "trigger": "Click block CX-202609-0007",
+      "kind": "action"
+    },
+    {
+      "from": "WM-DISPATCH-02",
+      "to": "WM-DISPATCH-03",
+      "trigger": "Mở danh sách cảnh báo lịch",
+      "kind": "action"
+    },
+    {
+      "from": "WM-DISPATCH-02",
+      "to": "WM-TRIP-02",
+      "trigger": "Tạo chuyến",
+      "kind": "action"
+    },
+    {
+      "from": "WM-DISPATCH-02",
+      "to": "WM-DISPATCH-01",
+      "trigger": "Chuyển sang Danh sách",
+      "kind": "action"
+    },
+    {
+      "from": "WM-DISPATCH-02",
+      "to": "WM-DISPATCH-01",
+      "trigger": "Chuyển sang Bảng",
+      "kind": "action"
+    },
+    {
+      "from": "WM-DISPATCH-02",
+      "to": "WM-DASH-01",
+      "trigger": "Sidebar: Dashboard",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-02",
+      "to": "WM-ORD-01",
+      "trigger": "Sidebar: Đơn hàng",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-02",
+      "to": "WM-DISPATCH-01",
+      "trigger": "Sidebar: Điều phối",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-02",
+      "to": "WM-DISPATCH-01",
+      "trigger": "Sidebar: Bảng điều phối",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-02",
+      "to": "WM-DISPATCH-02",
+      "trigger": "Sidebar: Lịch xe/tài xế",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-02",
+      "to": "WM-DISPATCH-03",
+      "trigger": "Sidebar: Cảnh báo lịch",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-02",
+      "to": "WM-DISPATCH-04",
+      "trigger": "Sidebar: Vị trí xe",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-02",
+      "to": "WM-DISPATCH-05",
+      "trigger": "Sidebar: Sự cố",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-02",
+      "to": "WM-CUS-01",
+      "trigger": "Sidebar: Khách hàng",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-02",
+      "to": "WM-DRV-01",
+      "trigger": "Sidebar: Tài xế",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-02",
+      "to": "WM-VEH-01",
+      "trigger": "Sidebar: Xe",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-02",
+      "to": "WM-SUP-01",
+      "trigger": "Sidebar: Nhà cung cấp",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-02",
+      "to": "WM-FIN-01",
+      "trigger": "Sidebar: Thu chi & Công nợ",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-02",
+      "to": "WM-PAYROLL-01",
+      "trigger": "Sidebar: Lương",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-02",
+      "to": "WM-RPT-01",
+      "trigger": "Sidebar: Báo cáo",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-02",
+      "to": "WM-ORG-01",
+      "trigger": "Sidebar: Cài đặt",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-02",
+      "to": "WM-AUTH-03",
+      "trigger": "Merchant switcher",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-02",
+      "to": "WM-SHELL-03",
+      "trigger": "Quick search (Ctrl K)",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-02",
+      "to": "WM-SHELL-02",
+      "trigger": "Chuông thông báo",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-03",
+      "to": "WM-TRIP-01",
+      "trigger": "Mở chuyến bị trùng",
+      "kind": "action"
+    },
+    {
+      "from": "WM-DISPATCH-03",
+      "to": "WM-SHELL-08",
+      "trigger": "Override cảnh báo (sensitive)",
+      "kind": "action"
+    },
+    {
+      "from": "WM-DISPATCH-03",
+      "to": "WM-TRIP-01",
+      "trigger": "Mở chuyến",
+      "kind": "action"
+    },
+    {
+      "from": "WM-DISPATCH-03",
+      "to": "WM-TRIP-02",
+      "trigger": "Quay lại form chuyến",
+      "kind": "action"
+    },
+    {
+      "from": "WM-DISPATCH-03",
+      "to": "WM-TRIP-01",
+      "trigger": "Override có lý do → lưu chuyến",
+      "kind": "action"
+    },
+    {
+      "from": "WM-DISPATCH-03",
+      "to": "WM-DISPATCH-02",
+      "trigger": "Mở lịch xe/tài xế",
+      "kind": "action"
+    },
+    {
+      "from": "WM-DISPATCH-03",
+      "to": "WM-DISPATCH-01",
+      "trigger": "Breadcrumb Điều phối",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-03",
+      "to": "WM-SET-01",
+      "trigger": "Mở cài đặt vận hành",
+      "kind": "action"
+    },
+    {
+      "from": "WM-DISPATCH-03",
+      "to": "WM-DASH-01",
+      "trigger": "Sidebar: Dashboard",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-03",
+      "to": "WM-ORD-01",
+      "trigger": "Sidebar: Đơn hàng",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-03",
+      "to": "WM-DISPATCH-01",
+      "trigger": "Sidebar: Điều phối",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-03",
+      "to": "WM-DISPATCH-01",
+      "trigger": "Sidebar: Bảng điều phối",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-03",
+      "to": "WM-DISPATCH-02",
+      "trigger": "Sidebar: Lịch xe/tài xế",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-03",
+      "to": "WM-DISPATCH-03",
+      "trigger": "Sidebar: Cảnh báo lịch",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-03",
+      "to": "WM-DISPATCH-04",
+      "trigger": "Sidebar: Vị trí xe",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-03",
+      "to": "WM-DISPATCH-05",
+      "trigger": "Sidebar: Sự cố",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-03",
+      "to": "WM-CUS-01",
+      "trigger": "Sidebar: Khách hàng",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-03",
+      "to": "WM-DRV-01",
+      "trigger": "Sidebar: Tài xế",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-03",
+      "to": "WM-VEH-01",
+      "trigger": "Sidebar: Xe",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-03",
+      "to": "WM-SUP-01",
+      "trigger": "Sidebar: Nhà cung cấp",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-03",
+      "to": "WM-FIN-01",
+      "trigger": "Sidebar: Thu chi & Công nợ",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-03",
+      "to": "WM-PAYROLL-01",
+      "trigger": "Sidebar: Lương",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-03",
+      "to": "WM-RPT-01",
+      "trigger": "Sidebar: Báo cáo",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-03",
+      "to": "WM-ORG-01",
+      "trigger": "Sidebar: Cài đặt",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-03",
+      "to": "WM-AUTH-03",
+      "trigger": "Merchant switcher",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-03",
+      "to": "WM-SHELL-03",
+      "trigger": "Quick search (Ctrl K)",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-03",
+      "to": "WM-SHELL-02",
+      "trigger": "Chuông thông báo",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-04",
+      "to": "WM-TRIP-01",
+      "trigger": "Mở chuyến từ danh sách vị trí",
+      "kind": "action"
+    },
+    {
+      "from": "WM-DISPATCH-04",
+      "to": "WM-TRIP-01",
+      "trigger": "Mở tab GPS của chuyến",
+      "kind": "action"
+    },
+    {
+      "from": "WM-DISPATCH-04",
+      "to": "WM-TRIP-01",
+      "trigger": "Mở chuyến chưa chạy",
+      "kind": "action"
+    },
+    {
+      "from": "WM-DISPATCH-04",
+      "to": "WM-DISPATCH-01",
+      "trigger": "Mở bảng điều phối",
+      "kind": "action"
+    },
+    {
+      "from": "WM-DISPATCH-04",
+      "to": "WM-DASH-01",
+      "trigger": "Sidebar: Dashboard",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-04",
+      "to": "WM-ORD-01",
+      "trigger": "Sidebar: Đơn hàng",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-04",
+      "to": "WM-DISPATCH-01",
+      "trigger": "Sidebar: Điều phối",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-04",
+      "to": "WM-DISPATCH-01",
+      "trigger": "Sidebar: Bảng điều phối",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-04",
+      "to": "WM-DISPATCH-02",
+      "trigger": "Sidebar: Lịch xe/tài xế",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-04",
+      "to": "WM-DISPATCH-03",
+      "trigger": "Sidebar: Cảnh báo lịch",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-04",
+      "to": "WM-DISPATCH-04",
+      "trigger": "Sidebar: Vị trí xe",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-04",
+      "to": "WM-DISPATCH-05",
+      "trigger": "Sidebar: Sự cố",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-04",
+      "to": "WM-CUS-01",
+      "trigger": "Sidebar: Khách hàng",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-04",
+      "to": "WM-DRV-01",
+      "trigger": "Sidebar: Tài xế",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-04",
+      "to": "WM-VEH-01",
+      "trigger": "Sidebar: Xe",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-04",
+      "to": "WM-SUP-01",
+      "trigger": "Sidebar: Nhà cung cấp",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-04",
+      "to": "WM-FIN-01",
+      "trigger": "Sidebar: Thu chi & Công nợ",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-04",
+      "to": "WM-PAYROLL-01",
+      "trigger": "Sidebar: Lương",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-04",
+      "to": "WM-RPT-01",
+      "trigger": "Sidebar: Báo cáo",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-04",
+      "to": "WM-ORG-01",
+      "trigger": "Sidebar: Cài đặt",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-04",
+      "to": "WM-AUTH-03",
+      "trigger": "Merchant switcher",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-04",
+      "to": "WM-SHELL-03",
+      "trigger": "Quick search (Ctrl K)",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-04",
+      "to": "WM-SHELL-02",
+      "trigger": "Chuông thông báo",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-05",
+      "to": "WM-INC-01",
+      "trigger": "Mở chi tiết sự cố",
+      "kind": "action"
+    },
+    {
+      "from": "WM-DISPATCH-05",
+      "to": "WM-ORD-02",
+      "trigger": "Mở đơn",
+      "kind": "action"
+    },
+    {
+      "from": "WM-DISPATCH-05",
+      "to": "WM-TRIP-01",
+      "trigger": "Mở chuyến",
+      "kind": "action"
+    },
+    {
+      "from": "WM-DISPATCH-05",
+      "to": "WM-SHELL-05",
+      "trigger": "Xuất danh sách sự cố",
+      "kind": "action"
+    },
+    {
+      "from": "WM-DISPATCH-05",
+      "to": "WM-INC-01",
+      "trigger": "Tạo sự cố",
+      "kind": "action"
+    },
+    {
+      "from": "WM-DISPATCH-05",
+      "to": "WM-DASH-01",
+      "trigger": "Sidebar: Dashboard",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-05",
+      "to": "WM-ORD-01",
+      "trigger": "Sidebar: Đơn hàng",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-05",
+      "to": "WM-DISPATCH-01",
+      "trigger": "Sidebar: Điều phối",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-05",
+      "to": "WM-DISPATCH-01",
+      "trigger": "Sidebar: Bảng điều phối",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-05",
+      "to": "WM-DISPATCH-02",
+      "trigger": "Sidebar: Lịch xe/tài xế",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-05",
+      "to": "WM-DISPATCH-03",
+      "trigger": "Sidebar: Cảnh báo lịch",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-05",
+      "to": "WM-DISPATCH-04",
+      "trigger": "Sidebar: Vị trí xe",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-05",
+      "to": "WM-DISPATCH-05",
+      "trigger": "Sidebar: Sự cố",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-05",
+      "to": "WM-CUS-01",
+      "trigger": "Sidebar: Khách hàng",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-05",
+      "to": "WM-DRV-01",
+      "trigger": "Sidebar: Tài xế",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-05",
+      "to": "WM-VEH-01",
+      "trigger": "Sidebar: Xe",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-05",
+      "to": "WM-SUP-01",
+      "trigger": "Sidebar: Nhà cung cấp",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-05",
+      "to": "WM-FIN-01",
+      "trigger": "Sidebar: Thu chi & Công nợ",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-05",
+      "to": "WM-PAYROLL-01",
+      "trigger": "Sidebar: Lương",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-05",
+      "to": "WM-RPT-01",
+      "trigger": "Sidebar: Báo cáo",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-05",
+      "to": "WM-ORG-01",
+      "trigger": "Sidebar: Cài đặt",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-05",
+      "to": "WM-AUTH-03",
+      "trigger": "Merchant switcher",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-05",
+      "to": "WM-SHELL-03",
+      "trigger": "Quick search (Ctrl K)",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-DISPATCH-05",
+      "to": "WM-SHELL-02",
+      "trigger": "Chuông thông báo",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-INC-01",
+      "to": "WM-TRIP-01",
+      "trigger": "Mở chuyến liên quan",
+      "kind": "action"
+    },
+    {
+      "from": "WM-INC-01",
+      "to": "WM-ORD-02",
+      "trigger": "Mở đơn liên quan",
+      "kind": "action"
+    },
+    {
+      "from": "WM-INC-01",
       "to": "WM-SHELL-07",
       "trigger": "Mở Timeline drawer",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-07",
-      "to": "WM-ORD-09",
-      "trigger": "In/chia sẻ đơn",
+      "from": "WM-INC-01",
+      "to": "WM-SHELL-08",
+      "trigger": "Đóng sự cố (nhập ghi chú)",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-07",
-      "to": "WM-ORD-03",
-      "trigger": "Sửa đơn",
+      "from": "WM-INC-01",
+      "to": "WM-SHELL-06",
+      "trigger": "Xem ảnh sự cố",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-07",
-      "to": "WM-TRIP-02",
-      "trigger": "Tạo chuyến từ đơn",
+      "from": "WM-INC-01",
+      "to": "WM-DRV-02",
+      "trigger": "Mở tài xế",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-07",
-      "to": "WM-ORD-08",
-      "trigger": "Menu: Hủy đơn / sửa giá (sensitive)",
+      "from": "WM-INC-01",
+      "to": "WM-VEH-02",
+      "trigger": "Mở xe",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-07",
-      "to": "WM-CUS-02",
-      "trigger": "Mở khách hàng",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-07",
-      "to": "WM-ORD-01",
-      "trigger": "Breadcrumb Đơn hàng",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-07",
-      "to": "WM-ORD-02",
-      "trigger": "Tab Tổng quan",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-07",
-      "to": "WM-ORD-04",
-      "trigger": "Tab Điểm dừng",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-07",
-      "to": "WM-ORD-05",
-      "trigger": "Tab Hàng hóa",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-07",
-      "to": "WM-DASH-01",
-      "trigger": "Sidebar: Dashboard",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-07",
-      "to": "WM-ORD-01",
-      "trigger": "Sidebar: Đơn hàng",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-07",
-      "to": "WM-DISPATCH-01",
-      "trigger": "Sidebar: Điều phối",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-07",
-      "to": "WM-CUS-01",
-      "trigger": "Sidebar: Khách hàng",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-07",
-      "to": "WM-DRV-01",
-      "trigger": "Sidebar: Tài xế",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-07",
-      "to": "WM-VEH-01",
-      "trigger": "Sidebar: Xe",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-07",
-      "to": "WM-SUP-01",
-      "trigger": "Sidebar: Nhà cung cấp",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-07",
-      "to": "WM-FIN-01",
-      "trigger": "Sidebar: Thu chi & Công nợ",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-07",
-      "to": "WM-PAYROLL-01",
-      "trigger": "Sidebar: Lương",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-07",
-      "to": "WM-RPT-01",
-      "trigger": "Sidebar: Báo cáo",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-07",
-      "to": "WM-ORG-01",
-      "trigger": "Sidebar: Cài đặt",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-07",
-      "to": "WM-AUTH-03",
-      "trigger": "Merchant switcher",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-07",
-      "to": "WM-SHELL-03",
-      "trigger": "Quick search (Ctrl K)",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-07",
-      "to": "WM-SHELL-02",
-      "trigger": "Chuông thông báo",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-08",
-      "to": "WM-ORD-07",
-      "trigger": "Quay lại",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-08",
-      "to": "WM-ORD-02",
-      "trigger": "Xác nhận sửa giá",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-08",
-      "to": "WM-ORD-07",
-      "trigger": "Đóng",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-08",
-      "to": "WM-ORD-06",
-      "trigger": "Mở drawer giá cước/add-on",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-08",
-      "to": "WM-PAY-03",
-      "trigger": "Tạo phiếu thu",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-08",
-      "to": "WM-PAY-04",
-      "trigger": "Phân bổ từ phiếu có sẵn",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-08",
-      "to": "WM-EXP-02",
-      "trigger": "Mở phiếu chi",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-08",
-      "to": "WM-EXP-03",
-      "trigger": "Tạo phiếu chi gắn đơn",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-08",
+      "from": "WM-INC-01",
       "to": "WM-SHELL-07",
-      "trigger": "Mở Timeline drawer",
+      "trigger": "Mở Timeline",
       "kind": "action"
     },
     {
-      "from": "WM-ORD-08",
-      "to": "WM-ORD-09",
-      "trigger": "In/chia sẻ đơn",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-08",
-      "to": "WM-ORD-03",
-      "trigger": "Sửa đơn",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-08",
-      "to": "WM-TRIP-02",
-      "trigger": "Tạo chuyến từ đơn",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-08",
-      "to": "WM-ORD-08",
-      "trigger": "Menu: Hủy đơn / sửa giá (sensitive)",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-08",
-      "to": "WM-CUS-02",
-      "trigger": "Mở khách hàng",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-08",
-      "to": "WM-ORD-01",
-      "trigger": "Breadcrumb Đơn hàng",
+      "from": "WM-INC-01",
+      "to": "WM-DISPATCH-01",
+      "trigger": "Breadcrumb Điều phối",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-08",
-      "to": "WM-ORD-02",
-      "trigger": "Tab Tổng quan",
-      "kind": "action"
+      "from": "WM-INC-01",
+      "to": "WM-DISPATCH-05",
+      "trigger": "Breadcrumb Sự cố",
+      "kind": "nav"
     },
     {
-      "from": "WM-ORD-08",
-      "to": "WM-ORD-04",
-      "trigger": "Tab Điểm dừng",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-08",
-      "to": "WM-ORD-05",
-      "trigger": "Tab Hàng hóa",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-08",
+      "from": "WM-INC-01",
       "to": "WM-DASH-01",
       "trigger": "Sidebar: Dashboard",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-08",
+      "from": "WM-INC-01",
       "to": "WM-ORD-01",
       "trigger": "Sidebar: Đơn hàng",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-08",
+      "from": "WM-INC-01",
       "to": "WM-DISPATCH-01",
       "trigger": "Sidebar: Điều phối",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-08",
-      "to": "WM-CUS-01",
-      "trigger": "Sidebar: Khách hàng",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-08",
-      "to": "WM-DRV-01",
-      "trigger": "Sidebar: Tài xế",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-08",
-      "to": "WM-VEH-01",
-      "trigger": "Sidebar: Xe",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-08",
-      "to": "WM-SUP-01",
-      "trigger": "Sidebar: Nhà cung cấp",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-08",
-      "to": "WM-FIN-01",
-      "trigger": "Sidebar: Thu chi & Công nợ",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-08",
-      "to": "WM-PAYROLL-01",
-      "trigger": "Sidebar: Lương",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-08",
-      "to": "WM-RPT-01",
-      "trigger": "Sidebar: Báo cáo",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-08",
-      "to": "WM-ORG-01",
-      "trigger": "Sidebar: Cài đặt",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-08",
-      "to": "WM-AUTH-03",
-      "trigger": "Merchant switcher",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-08",
-      "to": "WM-SHELL-03",
-      "trigger": "Quick search (Ctrl K)",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-08",
-      "to": "WM-SHELL-02",
-      "trigger": "Chuông thông báo",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-09",
-      "to": "WM-ORD-02",
-      "trigger": "Quay lại chi tiết đơn",
-      "kind": "action"
-    },
-    {
-      "from": "WM-ORD-09",
-      "to": "WM-ORD-01",
-      "trigger": "Breadcrumb Đơn hàng",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-09",
-      "to": "WM-ORD-02",
-      "trigger": "Breadcrumb DH-202609-0001",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-09",
-      "to": "WM-DASH-01",
-      "trigger": "Sidebar: Dashboard",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-09",
-      "to": "WM-ORD-01",
-      "trigger": "Sidebar: Đơn hàng",
-      "kind": "nav"
-    },
-    {
-      "from": "WM-ORD-09",
+      "from": "WM-INC-01",
       "to": "WM-DISPATCH-01",
-      "trigger": "Sidebar: Điều phối",
+      "trigger": "Sidebar: Bảng điều phối",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-09",
+      "from": "WM-INC-01",
+      "to": "WM-DISPATCH-02",
+      "trigger": "Sidebar: Lịch xe/tài xế",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-INC-01",
+      "to": "WM-DISPATCH-03",
+      "trigger": "Sidebar: Cảnh báo lịch",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-INC-01",
+      "to": "WM-DISPATCH-04",
+      "trigger": "Sidebar: Vị trí xe",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-INC-01",
+      "to": "WM-DISPATCH-05",
+      "trigger": "Sidebar: Sự cố",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-INC-01",
       "to": "WM-CUS-01",
       "trigger": "Sidebar: Khách hàng",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-09",
+      "from": "WM-INC-01",
       "to": "WM-DRV-01",
       "trigger": "Sidebar: Tài xế",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-09",
+      "from": "WM-INC-01",
       "to": "WM-VEH-01",
       "trigger": "Sidebar: Xe",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-09",
+      "from": "WM-INC-01",
       "to": "WM-SUP-01",
       "trigger": "Sidebar: Nhà cung cấp",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-09",
+      "from": "WM-INC-01",
       "to": "WM-FIN-01",
       "trigger": "Sidebar: Thu chi & Công nợ",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-09",
+      "from": "WM-INC-01",
       "to": "WM-PAYROLL-01",
       "trigger": "Sidebar: Lương",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-09",
+      "from": "WM-INC-01",
       "to": "WM-RPT-01",
       "trigger": "Sidebar: Báo cáo",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-09",
+      "from": "WM-INC-01",
       "to": "WM-ORG-01",
       "trigger": "Sidebar: Cài đặt",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-09",
+      "from": "WM-INC-01",
       "to": "WM-AUTH-03",
       "trigger": "Merchant switcher",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-09",
+      "from": "WM-INC-01",
       "to": "WM-SHELL-03",
       "trigger": "Quick search (Ctrl K)",
       "kind": "nav"
     },
     {
-      "from": "WM-ORD-09",
+      "from": "WM-INC-01",
       "to": "WM-SHELL-02",
       "trigger": "Chuông thông báo",
       "kind": "nav"

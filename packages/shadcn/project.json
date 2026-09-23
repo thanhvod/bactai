@@ -1,8 +1,0 @@
-{
-  "name": "shadcn",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/shadcn",
-  "projectType": "library",
-  "tags": [],
-  "targets": {}
-}

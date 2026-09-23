@@ -1,6 +1,0 @@
-include: package:flutter_lints/flutter.yaml
-
-analyzer:
-  errors:
-    # Treat shadcn_flutter import outside this package as a warning (CI can escalate)
-    unused_import: warning

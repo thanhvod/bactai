@@ -150,7 +150,7 @@ def auth_01():
             f'<div style="width: 200px; align-self: center;">{progress(60, "primary", 4)}</div>', gap=12, extra="margin-top: 40px;"),
         spacer(),
         m_card(row(icon("refresh-cw", 18, T["warning"]), col(text("2 mục chờ đồng bộ trên máy", 15, 600),
-                                                              muted("Sẽ gửi ngay sau khi vào app. Dữ liệu không bị mất.", 13), gap=0), gap=10)),
+                                                              muted("Sẽ gửi ngay sau khi vào app. Dữ liệu không bị mất.", 13), gap=0), gap=10), extra="text-align: left;"),
         row(a("Đăng nhập tài khoản khác", "DA-AUTH-02", "Tự động: chưa đăng nhập / phiên hết hạn → Đăng nhập", 15), gap=0, justify="center",
             extra="min-height: 48px;"),
         subtle("Phiên bản 1.0.0 (phase 1)", 13),
@@ -320,8 +320,8 @@ def _trip_page(overlay=None):
         return m_card(col(row(icon(ic, 18, TONES[tone][1]), muted(label, 13), gap=6), text(val, 15, 700, TONES[tone][1] if tone != "neutral" else None, NW),
                           muted(sub, 13), gap=2), to=to, trigger=trig, pad=10)
     rows_ = grid([tile("hand-coins", "COD cần thu", money(12_500_000), "Chưa nhập", "warning", "DA-COD-01", "Nhập COD"),
-                  tile("camera", "Chứng từ/POD", "0 ảnh", "Thêm chứng từ", "neutral", "DA-ATT-01", "Upload chứng từ chuyến"),
-                  tile("triangle-alert", "Sự cố", "Kẹt xe", "Đang mở · 10:42", "danger", "DA-INC-01", "Xem/báo sự cố")], 3, 8,
+                  tile("camera", "Chứng từ", "0 ảnh", "Chưa có POD", "neutral", "DA-ATT-01", "Upload chứng từ chuyến"),
+                  tile("triangle-alert", "Sự cố", "Kẹt xe", "Đang mở", "danger", "DA-INC-01", "Xem/báo sự cố")], 3, 8,
                  extra="grid-template-columns: 1.35fr 1fr 1fr;")
     body = col(head, stops, m_section("Hàng hóa & ghi chú", cargo), rows_, gap=10)
     sec = row(btn("Tạm dừng", "secondary", "pause", to="DA-STATUS-02", size="lg", full=True, trigger="Tạm dừng chuyến"),

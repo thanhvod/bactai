@@ -201,20 +201,20 @@ def sup_02():
     rental = panel("Thuê xe ngoài", table(
         [("Đơn", "left"), ("Xe NCC · Tài xế NCC", "left"), ("Tuyến · Ngày", "left"), ("Giá thuê", "right"), ("Phiếu chi", "left")],
         [[code("DH-202609-0002", to="WM-ORD-02", trigger="Mở đơn thuê xe ngoài"), col(num("43C-555.21", 13, 500), muted("Anh Sơn · 0905 222 111", 12), gap=0),
-          col(text("Long An → Q.7", 13), muted("23/09/2026", 12), gap=0), num(money(8_000_000)), code("PC-202609-0003", 12)],
+          col(text("Long An → Thủ Đức", 13), muted("22/09/2026 · chở bổ sung", 12), gap=0), num(money(8_000_000)), code("PC-202609-0003", 12)],
          [code("DH-202608-0007", to="WM-ORD-02", trigger="Mở đơn thuê xe ngoài"), col(num("43C-417.09", 13, 500), muted("Anh Sơn · 0905 222 111", 12), gap=0),
           col(text("Bình Dương → Đà Nẵng", 13), muted("25/08/2026", 12), gap=0), num(money(6_500_000)), code("PC-202608-0021", 12)]],
         compact=True), muted("Chi phí thuê ngoài trừ vào lãi/lỗ đơn", 12), body_pad=False)
     left = col(expenses, rental, gap=16, extra="flex: 2; min-width: 0;")
     debt = panel("Công nợ phải trả", col(
         row(text("Chưa trả", 13), spacer(), num(money(8_000_000), 16, 700, T["warning"]), gap=8),
-        progress(55, "warning"),
+        progress(100, "warning"),
         dl([("0–30 ngày", num(money(8_000_000), 14)), ("31–60 ngày", num(money(0), 14)), ("> 60 ngày", num(money(0), 14))], cols=3),
         subtle("Công nợ NCC = phiếu chi gắn NCC chưa trả. Đánh dấu đã trả trên phiếu chi để giảm nợ.", 12),
         gap=10), a("Công nợ NCC", "WM-DEBT-02", "Mở công nợ NCC"))
     info = panel("Hồ sơ & liên hệ", col(
         dl([("Tên", "Chành Xe Miền Trung"), ("Loại NCC", "Vận tải thuê ngoài"), ("MST", num("0401234567", 14)),
-            ("Địa chỉ", "Số 88 Điện Biên Phủ, Thanh Khê, Đà Nẵng"), ("Tài khoản", num("Vietcombank · 0041 000 123 456", 14)), ("Điều khoản", "Trả sau 15 ngày")], cols=2),
+            ("Địa chỉ", "Số 88 Điện Biên Phủ, Thanh Khê, Đà Nẵng"), ("Tài khoản", f'Vietcombank<br>{num("0041 000 123 456", 14)}'), ("Điều khoản", "Trả sau 15 ngày")], cols=2),
         divider(),
         row(avatar("AT", 28, "accent"), col(text("Anh Tuấn", 13, 600), muted("Điều phối · 0905 111 333", 12), gap=0), gap=10),
         row(avatar("CN", 28, "accent"), col(text("Chị Ngân", 13, 600), muted("Kế toán · 0905 666 888", 12), gap=0), gap=10), gap=10))
@@ -226,7 +226,7 @@ def sup_02():
     content = col(breadcrumb([("Nhà cung cấp", "WM-SUP-01"), ("Chành Xe Miền Trung", None)]), head, strip,
                   tabs(SUP_TABS, 0, counts={"Khoản chi": 3, "Thuê xe ngoài": 2, "Chứng từ": 2}),
                   row(left, right, gap=16, align="flex-start"), gap=16)
-    return wm_shell("suppliers", content, h=1200)
+    return wm_shell("suppliers", content, h=1240)
 
 
 # ---------------------------------------------------------------- WM-SUP-03 (drawer)
@@ -292,7 +292,7 @@ register(
            actions=[("Thêm NCC", "supplier.create (Admin, Operation, Accountant)"), ("Xuất Excel", "supplier.view")],
            states={"loading": "DataTable skeleton", "empty": "EmptyState 'Chưa có nhà cung cấp' + 'Thêm NCC'", "error": "Banner danger + Thử lại"},
            notes=["Công nợ NCC = tổng phiếu chi gắn NCC chưa trả (FIN-005). Operation xem công nợ ⚠️ theo cấu hình."]),
-    Screen(id="WM-SUP-02", name="Chi tiết NCC", route="/suppliers/:supplierId", render=sup_02, pattern="detail", h=1200, **S,
+    Screen(id="WM-SUP-02", name="Chi tiết NCC", route="/suppliers/:supplierId", render=sup_02, pattern="detail", h=1240, **S,
            purpose="Hồ sơ, liên hệ, khoản chi, công nợ phải trả, thuê xe ngoài, chứng từ, timeline; tạo phiếu chi.",
            api=["supplier(id)", "expenses(filter: {supplierId})", "supplierDebt(filter: {supplierId})", "externalTransports(filter: {supplierId})",
                 "activityLogs(entityType: SUPPLIER, entityId)"],

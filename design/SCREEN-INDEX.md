@@ -6,27 +6,35 @@ Sinh tự động bởi `python3 design/tools/build.py`. Không sửa tay.
 
 Stack: React + Vite + Tailwind + shadcn/Radix (apps/web)
 
-### Khách hàng
+### Điều phối
 
 | ID | Màn hình | Route | Pattern | Đi tới |
 |---|---|---|---|---|
-| [WM-CUS-01](screens/wm/WM-CUS-01.md) | Danh sách khách hàng | `/customers` | list | WM-CUS-02, WM-CUS-03, WM-DEBT-01, WM-ORD-03, WM-PAY-03, WM-SHELL-04, WM-SHELL-05, WM-SHELL-08 |
-| [WM-CUS-02](screens/wm/WM-CUS-02.md) | Chi tiết khách hàng | `/customers/:customerId` | detail | WM-CUS-03, WM-CUS-04, WM-CUS-05, WM-CUS-06, WM-DEBT-03, WM-DEBT-04, WM-ORD-02, WM-ORD-03, WM-PAY-03, WM-SHELL-07, WM-SHELL-08 |
-| [WM-CUS-03](screens/wm/WM-CUS-03.md) | Form khách hàng | `/customers/new · /customers/:customerId/edit` | form | WM-CUS-02, WM-CUS-04 |
-| [WM-CUS-04](screens/wm/WM-CUS-04.md) | Sổ địa chỉ/liên hệ | `/customers/:customerId/locations (tab)` | detail | WM-CUS-02, WM-CUS-03, WM-CUS-05, WM-CUS-06, WM-ORD-03, WM-PAY-03, WM-SHELL-07, WM-SHELL-08 |
-| [WM-CUS-05](screens/wm/WM-CUS-05.md) | Công nợ khách | `/customers/:customerId?tab=debt` | detail | WM-CUS-02, WM-CUS-03, WM-CUS-04, WM-CUS-06, WM-DEBT-03, WM-DEBT-04, WM-ORD-02, WM-ORD-03, WM-PAY-02, WM-PAY-03, WM-PAY-04, WM-SHELL-05, WM-SHELL-07, WM-SHELL-08 |
-| [WM-CUS-06](screens/wm/WM-CUS-06.md) | Lịch sử đơn khách | `/customers/:customerId?tab=orders` | detail | WM-CUS-02, WM-CUS-03, WM-CUS-04, WM-CUS-05, WM-ORD-02, WM-ORD-03, WM-PAY-03, WM-SHELL-05, WM-SHELL-07, WM-SHELL-08 |
+| [WM-TRIP-01](screens/wm/WM-TRIP-01.md) | Chi tiết chuyến | `/trips/:tripId` | detail | WM-ADV-01, WM-COD-01, WM-CUS-02, WM-DISPATCH-04, WM-DISPATCH-05, WM-DRV-02, WM-EXP-02, WM-EXP-03, WM-INC-01, WM-ORD-02, WM-SHELL-05, WM-SHELL-06, WM-SHELL-07, WM-SHELL-08, WM-STOP-01, WM-TRIP-01, WM-TRIP-02, WM-VEH-02 |
+| [WM-TRIP-02](screens/wm/WM-TRIP-02.md) | Tạo/sửa chuyến | `/orders/:orderId/trips/new · /trips/:tripId/edit` | form | WM-DISPATCH-02, WM-DISPATCH-03, WM-ORD-02, WM-TRIP-01 |
+| [WM-STOP-01](screens/wm/WM-STOP-01.md) | Chi tiết điểm dừng | `/orders/:orderId/stops/:stopId (drawer trên chuyến/đơn)` | drawer | WM-CUS-02, WM-DRV-02, WM-ORD-02, WM-SHELL-05, WM-SHELL-06, WM-SHELL-07, WM-SHELL-08, WM-STOP-01, WM-TRIP-01, WM-TRIP-02, WM-VEH-02 |
+| [WM-DISPATCH-01](screens/wm/WM-DISPATCH-01.md) | Bảng điều phối | `/dispatch` | board | WM-DISPATCH-02, WM-DISPATCH-03, WM-DISPATCH-04, WM-DISPATCH-05, WM-INC-01, WM-ORD-02, WM-TRIP-01, WM-TRIP-02 |
+| [WM-DISPATCH-02](screens/wm/WM-DISPATCH-02.md) | Lịch xe/tài xế | `/dispatch/calendar` | board | WM-DISPATCH-01, WM-DISPATCH-03, WM-TRIP-01, WM-TRIP-02 |
+| [WM-DISPATCH-03](screens/wm/WM-DISPATCH-03.md) | Cảnh báo lịch | `/dispatch/conflicts` | list | WM-DISPATCH-02, WM-SET-01, WM-SHELL-08, WM-TRIP-01, WM-TRIP-02 |
+| [WM-DISPATCH-04](screens/wm/WM-DISPATCH-04.md) | Theo dõi vị trí | `/dispatch/map` | page | WM-DISPATCH-01, WM-TRIP-01, WM-VEH-02 |
+| [WM-DISPATCH-05](screens/wm/WM-DISPATCH-05.md) | Sự cố vận hành | `/dispatch/incidents` | list | WM-INC-01, WM-ORD-02, WM-SHELL-05, WM-TRIP-01 |
+| [WM-INC-01](screens/wm/WM-INC-01.md) | Chi tiết sự cố | `/dispatch/incidents/:incidentId` | detail | WM-DRV-02, WM-ORD-02, WM-SHELL-06, WM-SHELL-07, WM-SHELL-08, WM-TRIP-01, WM-VEH-02 |
 
-### Tài xế
+### Xe
 
 | ID | Màn hình | Route | Pattern | Đi tới |
 |---|---|---|---|---|
-| [WM-DRV-01](screens/wm/WM-DRV-01.md) | Danh sách tài xế | `/drivers` | list | WM-DISPATCH-02, WM-DRV-02, WM-DRV-03, WM-DRV-05, WM-DRV-06, WM-SHELL-04, WM-SHELL-05, WM-TRIP-01 |
-| [WM-DRV-02](screens/wm/WM-DRV-02.md) | Chi tiết tài xế | `/drivers/:driverId` | detail | WM-ADV-01, WM-DISPATCH-02, WM-DRV-03, WM-DRV-04, WM-DRV-05, WM-EXP-03, WM-ORD-02, WM-PAYROLL-02, WM-SHELL-07, WM-SHELL-08, WM-TRIP-01 |
-| [WM-DRV-03](screens/wm/WM-DRV-03.md) | Form tài xế | `/drivers/new · /drivers/:driverId/edit` | form | WM-DRV-02, WM-DRV-04 |
-| [WM-DRV-04](screens/wm/WM-DRV-04.md) | Lịch sử lương cố định | `/drivers/:driverId/salary-history (tab Lương/ứng)` | detail | WM-ADV-01, WM-DRV-02, WM-DRV-03, WM-DRV-05, WM-EXP-02, WM-EXP-03, WM-PAYROLL-01, WM-PAYROLL-02, WM-PAYROLL-04, WM-SHELL-07, WM-SHELL-08, WM-TRIP-01 |
-| [WM-DRV-05](screens/wm/WM-DRV-05.md) | Sổ công nợ tài xế | `/drivers/:driverId?tab=ledger` | detail | WM-ADV-01, WM-COD-01, WM-DRV-02, WM-DRV-03, WM-DRV-04, WM-DRV-06, WM-EXP-02, WM-EXP-03, WM-PAY-03, WM-SHELL-05, WM-SHELL-07, WM-SHELL-08, WM-TRIP-01 |
-| [WM-DRV-06](screens/wm/WM-DRV-06.md) | COD tài xế đang giữ | `/drivers/:driverId?tab=ledger&view=cod` | detail | WM-COD-01, WM-DRV-02, WM-DRV-03, WM-DRV-04, WM-DRV-05, WM-ORD-02, WM-PAY-02, WM-PAY-03, WM-SET-01, WM-SHELL-05, WM-SHELL-07, WM-SHELL-08, WM-STOP-01, WM-TRIP-01 |
+| [WM-VEH-01](screens/wm/WM-VEH-01.md) | Danh sách xe | `/vehicles` | list | WM-EXP-01, WM-SHELL-04, WM-SHELL-05, WM-TRIP-01, WM-VEH-02, WM-VEH-03 |
+| [WM-VEH-02](screens/wm/WM-VEH-02.md) | Chi tiết xe | `/vehicles/:vehicleId` | detail | WM-DISPATCH-02, WM-DRV-02, WM-EXP-02, WM-EXP-03, WM-SHELL-06, WM-SHELL-07, WM-SHELL-08, WM-SUP-02, WM-TRIP-01, WM-VEH-03 |
+| [WM-VEH-03](screens/wm/WM-VEH-03.md) | Form xe | `/vehicles/new · /vehicles/:vehicleId/edit` | drawer | WM-EXP-01, WM-SHELL-04, WM-SHELL-05, WM-TRIP-01, WM-VEH-01, WM-VEH-02, WM-VEH-03 |
+
+### Nhà cung cấp
+
+| ID | Màn hình | Route | Pattern | Đi tới |
+|---|---|---|---|---|
+| [WM-SUP-01](screens/wm/WM-SUP-01.md) | Danh sách NCC | `/suppliers` | list | WM-DEBT-02, WM-EXP-01, WM-SHELL-05, WM-SUP-02, WM-SUP-03 |
+| [WM-SUP-02](screens/wm/WM-SUP-02.md) | Chi tiết NCC | `/suppliers/:supplierId` | detail | WM-DEBT-02, WM-EXP-01, WM-EXP-02, WM-EXP-03, WM-ORD-02, WM-SHELL-07, WM-SHELL-08, WM-SUP-03 |
+| [WM-SUP-03](screens/wm/WM-SUP-03.md) | Form NCC | `/suppliers/new · /suppliers/:supplierId/edit` | drawer | WM-DEBT-02, WM-EXP-01, WM-SHELL-05, WM-SUP-01, WM-SUP-02, WM-SUP-03 |
 
 ## Flows
 

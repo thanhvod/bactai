@@ -36,4 +36,4 @@ flowchart LR
 | 7 | Driver | API | `` | Chụp POD |
 | 8 | Driver | API | `` | Hoàn thành điểm trả |
 | 9 | Driver | API | `` | Offline: hàng đợi, thử lại |
-| 10 | Operation | API | `` | Thấy trạng thái, POD, COD |
+| 10 | Operation | [WM-TRIP-01](../screens/wm/WM-TRIP-01.md) Chi tiết chuyến | `/trips/:tripId` | Thấy trạng thái, POD, COD |

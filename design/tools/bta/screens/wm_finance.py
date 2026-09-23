@@ -327,36 +327,37 @@ def pay_04():
                            ("Phân bổ lần này", money(3_000_000), "primary"), ("Còn lại → số dư khách", money(0), "success")])
     rows = [
         [col(code("DH-202609-0012", to="WM-ORD-07", trigger="Mở tài chính đơn"), subtle("Bình Dương → Q. Tân Phú", 11), gap=0),
-         status("Chờ xác nhận"), num("21/09/2026"), due(None, "30/09/2026"), num(money(4_800_000)), num(money(0), color=T["text-muted"]),
-         num(money(4_800_000), weight=600, color=T["warning"]), money_input(3_000_000, "140px", h=32, fs=13), num(money(1_800_000), weight=600)],
+         status("Chờ xác nhận"), col(num("21/09/2026"), subtle("Hạn 30/09/2026 · còn hạn", 11), gap=0), num(money(4_800_000)),
+         num(money(0), color=T["text-muted"]), num(money(4_800_000), weight=600, color=T["warning"]),
+         money_input(3_000_000, "150px", h=32, fs=13), num(money(1_800_000), weight=600)],
         [col(code("DH-202609-0003", to="WM-ORD-02", trigger="Mở đơn nháp"), subtle("Bình Dương → Q.12", 11), gap=0),
-         status("Nháp"), num("12/09/2026"), muted("—"), num(money(3_600_000), color=T["text-muted"]), muted("—"), muted("—"),
-         col(input_("", "Đơn nháp", "140px", disabled=True, h=32), gap=0), muted("—")],
+         status("Nháp"), col(num("12/09/2026"), subtle("Chưa có hạn", 11), gap=0), num(money(3_600_000), color=T["text-muted"]),
+         muted("—"), muted("—"), input_("", "Đơn nháp — không nhận", "150px", disabled=True, h=32, fs=12), muted("—")],
         [col(code("DH-202608-0021", to="WM-ORD-07", trigger="Mở tài chính đơn"), subtle("Bình Dương → Q.12", 11), gap=0),
-         status("Hoàn thành"), num("24/08/2026"), due(paid=True), num(money(3_200_000), color=T["text-muted"]), num(money(3_200_000), color=T["success"]),
-         num(money(0), color=T["text-muted"]), col(input_("", "Đã đủ tiền", "140px", disabled=True, h=32), gap=0), muted("—")],
+         status("Hoàn thành"), col(num("24/08/2026"), subtle("Hạn 31/08/2026", 11), gap=0), num(money(3_200_000), color=T["text-muted"]),
+         num(money(3_200_000), color=T["success"]), row(badge("Đã đủ tiền", "success"), gap=0, justify="flex-end"),
+         input_("", "Đã đủ tiền — khóa", "150px", disabled=True, h=32, fs=12), muted("—")],
     ]
-    cols = [("Đơn · Tuyến", "left"), ("Trạng thái", "left"), ("Ngày đơn", "left"), ("Hạn thanh toán", "left"), ("Tổng tiền", "right"),
-            ("Đã thu", "right"), ("Còn nợ", "right"), ("Phân bổ", "right", "160px"), ("Còn nợ sau", "right")]
+    cols = [("Đơn · Tuyến", "left"), ("Trạng thái", "left"), ("Ngày đơn · Hạn thanh toán", "left"), ("Tổng tiền", "right"),
+            ("Đã thu", "right"), ("Còn nợ", "right"), ("Phân bổ lần này", "right", "170px"), ("Còn nợ sau", "right")]
     orders = panel("Đơn của khách", col(
-        row(input_("", "Tìm mã đơn…", "240px", "search", h=32), switch(True, ""), text("Hiện đơn đã đủ tiền", 13), spacer(),
+        row(input_("", "Tìm mã đơn…", "240px", "search", h=32), switch(True, ""), text("Hiện đơn đã đủ tiền", 13, extra="white-space: nowrap;"), spacer(),
             btn("Tự điền theo hạn cũ nhất", "ghost", "list-filter", size="sm"), btn("Xóa số đã nhập", "ghost", "rotate-ccw", size="sm"), gap=8),
-        table(cols, rows, selected=0, total_row=["Tổng", "", "", "", money(11_600_000), money(3_200_000), money(4_800_000), money(3_000_000), money(1_800_000)]),
+        table(cols, rows, selected=0, total_row=["Tổng", "", "", money(11_600_000), money(3_200_000), money(4_800_000), money(3_000_000), money(1_800_000)]),
         gap=12), sub="Chỉ đơn của Bao bì Hưng Lợi · đơn nháp/đã hủy không nhận phân bổ")
     checks = panel("Kiểm tra trước khi lưu", col(
         _check(True, "Không vượt tiền phiếu", "Phân bổ 3.000.000 / còn lại 3.000.000 đ"),
         _check(True, "Không phân bổ vào đơn đã đủ tiền", "DH-202608-0021 đã thu đủ — khóa ô nhập"),
-        _check(True, "Khách không có đơn quá hạn", "Nếu có: gợi ý phân bổ đơn quá hạn trước"),
-        gap=10))
+        _check(True, "Khách không có đơn quá hạn", "Nếu có: cảnh báo, gợi ý phân bổ đơn quá hạn trước"),
+        gap=10), extra="flex: 1; min-width: 0;")
     preview = panel("Xem trước sau phân bổ", _impact([
         ("Số dư khách Bao bì Hưng Lợi", money(3_000_000), money(0), "success"),
         ("Còn nợ DH-202609-0012", money(4_800_000), money(1_800_000), "warning"),
-        ("Còn lại của phiếu", money(3_000_000), money(0), None)]))
-    warn = warning_panel("Lưu ý", ["DH-202609-0012 đang <b>Chờ xác nhận</b>. Nếu đơn bị hủy, cần gỡ phân bổ để tiền quay về số dư khách.",
-                                   "Nếu phân bổ vượt còn nợ của đơn, hệ thống chặn — phần dư để lại trong số dư khách."],
-                         a("Xem công nợ khách", "WM-CUS-05", "Mở công nợ khách"))
-    side = col(preview, checks, warn, gap=16, extra="width: 340px; flex-shrink: 0;")
-    content = col(header, strip, row(col(orders, gap=16, extra="flex: 1; min-width: 0;"), side, gap=16, align="flex-start"), gap=16)
+        ("Còn lại của phiếu", money(3_000_000), money(0), None)]), extra="flex: 1; min-width: 0;")
+    warn = col(warning_panel("Lưu ý", ["DH-202609-0012 đang <b>Chờ xác nhận</b>. Nếu đơn bị hủy, cần gỡ phân bổ để tiền quay về số dư khách.",
+                                       "Phân bổ vượt còn nợ của đơn bị chặn — phần dư để lại trong số dư khách."],
+                             a("Xem công nợ khách", "WM-CUS-05", "Mở công nợ khách")), gap=0, extra="flex: 1; min-width: 0;")
+    content = col(header, strip, orders, row(preview, checks, warn, gap=16, align="stretch"), gap=16)
     return wm_shell("finance", content, h=960, child="WM-PAY-01")
 
 

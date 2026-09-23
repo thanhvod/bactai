@@ -7,7 +7,7 @@
 | Route | `/suppliers/:supplierId` |
 | Pattern | `detail` |
 | Roles | admin, operation, accountant |
-| Kích thước mockup | 1440×1200 |
+| Kích thước mockup | 1440×1240 |
 | Mockup | [../../mockups/WM-SUP-02.html](../../mockups/WM-SUP-02.html) · canvas artboard `WM-SUP-02.dc.html` |
 
 ## Mục đích

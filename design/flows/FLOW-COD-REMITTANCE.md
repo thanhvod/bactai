@@ -21,4 +21,4 @@ flowchart LR
 | 2 | System | API | `` | COD đang giữ hiện theo tài xế |
 | 3 | Accountant | API | `` | Chọn khoản COD cần nộp |
 | 4 | Accountant | API | `` | Tạo phiếu thu loại Tài xế nộp COD (không phải doanh thu) |
-| 5 | System | [WM-DRV-05](../screens/wm/WM-DRV-05.md) Sổ công nợ tài xế | `/drivers/:driverId?tab=ledger` | Sổ công nợ tài xế cập nhật |
+| 5 | System | API | `` | Sổ công nợ tài xế cập nhật |

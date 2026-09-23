@@ -54,8 +54,8 @@ Danh sách sự cố theo trạng thái/mức độ; tạo, gán người xử l
 | Sidebar: Sự cố | [WM-DISPATCH-05](../wm/WM-DISPATCH-05.md) Sự cố vận hành | `/dispatch/incidents` | nav |
 | Sidebar: Khách hàng | WM-CUS-01 | | nav |
 | Sidebar: Tài xế | WM-DRV-01 | | nav |
-| Sidebar: Xe | WM-VEH-01 | | nav |
-| Sidebar: Nhà cung cấp | WM-SUP-01 | | nav |
+| Sidebar: Xe | [WM-VEH-01](../wm/WM-VEH-01.md) Danh sách xe | `/vehicles` | nav |
+| Sidebar: Nhà cung cấp | [WM-SUP-01](../wm/WM-SUP-01.md) Danh sách NCC | `/suppliers` | nav |
 | Sidebar: Thu chi & Công nợ | WM-FIN-01 | | nav |
 | Sidebar: Lương | WM-PAYROLL-01 | | nav |
 | Sidebar: Báo cáo | WM-RPT-01 | | nav |

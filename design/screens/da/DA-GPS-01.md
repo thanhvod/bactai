@@ -50,7 +50,7 @@ Trạng thái quyền vị trí & tracking; cảnh báo khi tắt quyền làm c
 
 ## Components (design system)
 
-`Banner`, `StatusBadge`, `Button`, `MobileHeader`, `PrimaryBottomAction`
+`Banner`, `StatusBadge`, `IconButton`, `Button`, `MobileHeader`, `PrimaryBottomAction`
 
 ## API (GraphQL)
 

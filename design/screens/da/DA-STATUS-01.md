@@ -59,7 +59,7 @@ Bottom sheet chọn trạng thái hợp lệ tiếp theo, ghi chú, lưu giờ t
 
 ## Components (design system)
 
-`RadioGroup`, `Textarea`, `FormField`, `Button`, `BottomSheet`, `EntityHeader`, `StatusBadge`, `StopCard`, `MoneyText`, `ListRow`, `PrimaryBottomAction`, `IconButton`, `MobileHeader`
+`RadioGroup`, `Textarea`, `FormField`, `Button`, `BottomSheet`, `EntityHeader`, `StatusBadge`, `StopCard`, `MoneyText`, `PrimaryBottomAction`, `IconButton`, `MobileHeader`
 
 ## API (GraphQL)
 

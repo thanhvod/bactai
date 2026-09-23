@@ -57,8 +57,9 @@ def _meta(ic, s):
 
 def _trip_card(code_, route, time_, st_, vehicle="51C-123.45", extra="", to="DA-TRIP-01", trigger=None, sync=None):
     use("TripCard")
-    top = row(text(code_, 15, 600, extra=NW), sync or "", spacer(), _st(st_), gap=8)
-    body = col(top, text(route, 16, 600), row(_meta("clock", time_), _meta("truck", vehicle), gap=14), extra, gap=6)
+    top = row(text(code_, 15, 600, extra=NW), spacer(), _st(st_), gap=8)
+    meta = row(_meta("clock", time_), _meta("truck", vehicle), spacer(), sync or "", gap=12)
+    body = col(top, text(route, 16, 600), meta, extra, gap=6)
     return m_card(body, to=to, trigger=trigger or f"Mở chuyến {code_}")
 
 
@@ -232,8 +233,8 @@ def home_01():
 # ---------------------------------------------------------------- DA-JOB-01 Job list
 def job_01():
     t1 = _trip_card(TRIP, "Kho Cần Thơ → Kho Bình Dương", "06:00 – 14:00", "Đang vận chuyển",
-                    extra=row(muted("COD cần thu", 14), spacer(), _money(12_500_000, 16, weight=600), gap=8),
-                    sync=badge("1 chờ gửi", "warning", "refresh-cw", size=12))
+                    extra=row(badge("1 chờ gửi", "warning", "refresh-cw", size=13), spacer(), muted("COD cần thu", 14),
+                              _money(12_500_000, 16, weight=600), gap=8))
     t2 = _trip_card("CX-202609-0002", "Nhà máy Long An → Công trình Quận 7", "15:00 – 19:00", "Đã lên lịch",
                     extra=row(muted("COD", 14), spacer(), muted("Không thu", 14), gap=8))
     later = col(text("Sắp tới", 15, 600),
@@ -270,7 +271,7 @@ def job_02():
         cells.append(f'<span style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; height: 48px; '
                      f'border-radius: 8px; background: {bg}; {bd}"><span style="font-size: 15px; font-weight: {700 if on else 500}; color: {fg}; {NUM}">{d}</span>'
                      f'{dot or "<span style=" + chr(34) + "height: 6px;" + chr(34) + "></span>"}</span>')
-    grid_ = (f'<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px;">{head}{"".join(cells)}</div>')
+    grid_ = (f'<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 2px;">{head}{"".join(cells)}</div>')
     cal = m_card(col(row(icon_btn("chevron-left", "Tháng trước", size="lg"), spacer(), text("Tháng 9/2026", 17, 600), spacer(),
                          icon_btn("chevron-right", "Tháng sau", size="lg"), gap=4), grid_,
                      gap=8), pad=12)
@@ -322,13 +323,13 @@ def _trip_page(overlay=None):
                   tile("camera", "Chứng từ/POD", "0 ảnh", "Thêm chứng từ", "neutral", "DA-ATT-01", "Upload chứng từ chuyến"),
                   tile("triangle-alert", "Sự cố", "Kẹt xe", "Đang mở · 10:42", "danger", "DA-INC-01", "Xem/báo sự cố")], 3, 8,
                  extra="grid-template-columns: 1.35fr 1fr 1fr;")
-    body = col(head, stops, m_section("Hàng hóa & ghi chú", cargo), rows_, gap=12)
+    body = col(head, stops, m_section("Hàng hóa & ghi chú", cargo), rows_, gap=10)
     sec = row(btn("Tạm dừng", "secondary", "pause", to="DA-STATUS-02", size="lg", full=True, trigger="Tạm dừng chuyến"),
               btn("Báo sự cố", "danger-outline", "triangle-alert", to="DA-INC-01", size="lg", full=True, trigger="Báo sự cố"), gap=8)
     bottom = primary_bottom_action("Đến điểm trả", "DA-STATUS-01", "map-pin", secondary=sec, trigger="Primary theo trạng thái: Đến điểm trả → xác nhận")
     header = mobile_header(TRIP, "DA-HOME-01", "Đơn DH-202609-0001 · Gạo Miền Tây",
                            right=icon_btn("list", "Danh sách điểm dừng", to="DA-STOP-01", size="lg", trigger="Mở danh sách điểm dừng"))
-    return mobile_frame(header, body, bottom, overlay=overlay)
+    return mobile_frame(header, body, bottom, overlay=overlay, body_gap=10)
 
 
 def trip_01():

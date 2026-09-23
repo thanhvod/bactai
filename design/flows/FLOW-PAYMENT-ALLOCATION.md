@@ -20,8 +20,8 @@ flowchart LR
 | # | Actor | Màn hình | Route | Hành động |
 |---:|---|---|---|---|
 | 1 | Accountant | API | `` | Mở công nợ khách |
-| 2 | Accountant | API | `` | Hoặc từ tab công nợ khách |
+| 2 | Accountant | [WM-CUS-05](../screens/wm/WM-CUS-05.md) Công nợ khách | `/customers/:customerId?tab=debt` | Hoặc từ tab công nợ khách |
 | 3 | Accountant | API | `` | Tạo phiếu thu loại Khách trả |
 | 4 | System | API | `` | Phiếu thu hiện số chưa phân bổ |
 | 5 | Accountant | API | `` | Phân bổ vào các đơn còn nợ; dư → số dư khách |
-| 6 | System | API | `` | Cập nhật công nợ và số dư |
+| 6 | System | [WM-CUS-05](../screens/wm/WM-CUS-05.md) Công nợ khách | `/customers/:customerId?tab=debt` | Cập nhật công nợ và số dư |

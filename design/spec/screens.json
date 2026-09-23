@@ -1,65 +1,83 @@
 [
   {
-    "id": "WM-PAYROLL-01",
-    "name": "Danh sách bảng lương",
+    "id": "WM-CUS-01",
+    "name": "Danh sách khách hàng",
     "platform": "wm",
     "platformName": "Web Merchant",
     "phase": 1,
-    "module": "Lương",
-    "route": "/payroll",
+    "module": "Khách hàng",
+    "route": "/customers",
     "pattern": "list",
-    "purpose": "Danh sách bảng lương theo kỳ và trạng thái; điểm vào tạo bảng lương và duyệt.",
+    "purpose": "Tìm/lọc khách, theo dõi công nợ, số dư, hạn mức và cảnh báo; điểm vào tạo khách, import, tạo đơn nhanh.",
     "roles": [
       "admin",
       "operation",
       "accountant"
     ],
     "api": [
-      "payrolls(filter{period, status, createdBy}, first, after)"
+      "customers(filter, sort, first, after)"
     ],
     "data": [
       "code",
-      "period{from, to, label}",
-      "status (DRAFT|SUBMITTED|APPROVED|PAID|RETURNED)",
-      "driverCount",
-      "totalNet",
-      "createdBy/createdAt",
-      "approvedBy/approvedAt",
-      "paidAt/paidBy"
+      "name",
+      "phone",
+      "taxCode",
+      "debtSummary{remaining, overdue, overdueDays}",
+      "creditBalance",
+      "creditLimit",
+      "limitUsagePct",
+      "defaultDebtDays",
+      "orderCount",
+      "warnings[]",
+      "isActive"
     ],
     "actions": [
       {
-        "label": "Tạo bảng lương",
-        "guard": "payroll.generate (admin, operation)"
+        "label": "Tạo khách hàng",
+        "guard": "customer.create (admin/operation/accountant)"
+      },
+      {
+        "label": "Import",
+        "guard": "customer.create → WM-SHELL-04"
       },
       {
         "label": "Xuất Excel",
-        "guard": "payroll.export (admin, accountant)"
+        "guard": "customer.view"
       },
       {
-        "label": "Xem và duyệt",
-        "guard": "payroll.approve (admin)"
+        "label": "Row menu: Tạo đơn",
+        "guard": "order.create → WM-ORD-03 prefill customerId"
+      },
+      {
+        "label": "Row menu: Ghi nhận thanh toán",
+        "guard": "payment.create"
+      },
+      {
+        "label": "Row menu: Ngừng hoạt động",
+        "guard": "customer.deactivate — sensitive nếu có đơn (admin; operation nếu được cấp)"
       }
     ],
     "states": {
       "loading": "DataTable skeleton rows",
-      "empty": "EmptyState 'Chưa có bảng lương' + nút 'Tạo bảng lương kỳ này' (ẩn với kế toán)",
-      "error": "Banner danger 'Không tải được bảng lương' + Thử lại"
+      "empty": "EmptyState 'Chưa có khách hàng' + Tạo khách hàng / Import từ Excel",
+      "error": "Banner danger 'Không tải được danh sách khách' + Thử lại",
+      "filtered-empty": "Không có khách khớp bộ lọc + Xóa bộ lọc"
     },
     "notes": [
-      "Chip trạng thái map filter.status. Kỳ lương hiển thị theo cài đặt merchant (WM-SET-01), không hard-code tháng.",
-      "Banner chờ duyệt chỉ hiện với admin; operation thấy 'Đang chờ duyệt'.",
-      "Tiền căn phải, tabular-nums."
+      "Search theo tên/SĐT/MST/mã; chip lọc: còn nợ, quá hạn, vượt hạn mức, có số dư, ngừng hoạt động.",
+      "Cột hạn mức: số hạn mức + thanh % đã dùng (≥80% warning, >100% danger). Vượt hạn mức chỉ cảnh báo, không chặn tạo đơn.",
+      "Khách ngừng hoạt động hiển thị mờ, không chọn được khi tạo đơn mới.",
+      "KPI Tổng còn nợ/Quá hạn mở WM-DEBT-01."
     ],
     "overlayOf": null,
     "components": [
       "StatusBadge",
-      "Menu",
       "IconButton",
       "Button",
+      "Menu",
+      "Popover",
       "KpiCard",
       "PageHeader",
-      "Banner",
       "FilterBar",
       "TextField",
       "FilterChip",
@@ -76,160 +94,178 @@
       "w": 1440,
       "h": 960
     },
-    "mockup": "design/mockups/WM-PAYROLL-01.html",
-    "spec": "design/screens/wm/WM-PAYROLL-01.md"
+    "mockup": "design/mockups/WM-CUS-01.html",
+    "spec": "design/screens/wm/WM-CUS-01.md"
   },
   {
-    "id": "WM-PAYROLL-02",
-    "name": "Chi tiết bảng lương",
+    "id": "WM-CUS-02",
+    "name": "Chi tiết khách hàng",
     "platform": "wm",
     "platformName": "Web Merchant",
     "phase": 1,
-    "module": "Lương",
-    "route": "/payroll/:payrollId",
+    "module": "Khách hàng",
+    "route": "/customers/:customerId",
     "pattern": "detail",
-    "purpose": "Kiểm tra từng dòng lương tài xế (snapshot), cảnh báo dữ liệu; gửi duyệt, duyệt, trả về, đánh dấu đã trả, xuất.",
+    "purpose": "Toàn bộ quan hệ với một khách: hồ sơ, đơn, công nợ, số dư, địa chỉ/liên hệ, bảng kê, chứng từ, timeline.",
     "roles": [
       "admin",
       "operation",
       "accountant"
     ],
     "api": [
-      "payroll(id){lines{driver, baseSalary, bonusTotal, advanceTotal, deductionTotal, net, anomalies[]}}",
-      "submitPayroll(id)",
-      "returnPayroll(id, reason)",
-      "markPayrollPaid(id)",
-      "activityTimeline(entity: PAYROLL)"
+      "customer(id){locations, debtSummary, creditBalance}",
+      "orders(filter:{customerId}, first: 5)",
+      "debtStatements(filter:{customerId})",
+      "activityLogs(entityType: CUSTOMER, entityId)"
     ],
     "data": [
-      "code",
-      "status",
-      "period",
-      "createdBy",
-      "submittedAt",
-      "approver",
-      "totals{salary, bonus, advance, deduction, net}",
-      "lines[]",
-      "anomalies[] (COD giữ, chuyến đang chạy, tài xế ngừng hoạt động)"
+      "name",
+      "legalName",
+      "type",
+      "taxCode",
+      "phone",
+      "invoiceEmail",
+      "primaryContact",
+      "billingAddress",
+      "creditLimit",
+      "defaultDebtDays",
+      "debtSummary",
+      "creditBalance",
+      "recentOrders[]",
+      "locations[]",
+      "statements[]"
     ],
     "actions": [
       {
-        "label": "Gửi duyệt",
-        "guard": "payroll.submit (admin, operation) — chỉ khi Nháp"
+        "label": "Tạo đơn",
+        "guard": "order.create"
       },
       {
-        "label": "Duyệt",
-        "guard": "payroll.approve (admin) → WM-PAYROLL-05"
+        "label": "Ghi nhận thanh toán",
+        "guard": "payment.create (admin/accountant; operation ⚠️)"
       },
       {
-        "label": "Trả về / Hủy duyệt",
-        "guard": "payroll.return (admin) — sensitive, lý do bắt buộc"
+        "label": "Sửa",
+        "guard": "customer.update"
       },
       {
-        "label": "Đánh dấu đã trả",
-        "guard": "payroll.markPaid (admin, accountant) — chỉ khi Đã duyệt"
+        "label": "Tạo bảng kê",
+        "guard": "debtStatement.create (admin/accountant)"
       },
       {
-        "label": "Xuất",
-        "guard": "payroll.export (admin, accountant)"
+        "label": "Ngừng hoạt động",
+        "guard": "customer.deactivate — sensitive (WM-SHELL-08)"
+      },
+      {
+        "label": "Timeline",
+        "guard": "customer.view"
       }
     ],
     "states": {
-      "loading": "Skeleton header + strip + bảng",
-      "error": "Không tìm thấy / không có quyền → EmptyState + quay lại danh sách",
-      "draft": "Nháp: hiện 'Gửi duyệt' primary; dòng lương cho thêm giảm trừ",
-      "approved": "Đã duyệt: 'Đánh dấu đã trả' primary; 'Hủy duyệt' trong menu (sensitive)"
+      "loading": "Skeleton header + tabs",
+      "error": "Không tìm thấy khách / không có quyền → EmptyState + về danh sách"
     },
     "notes": [
-      "Primary action đổi theo trạng thái: Nháp→Gửi duyệt; Chờ duyệt→Duyệt (admin); Đã duyệt→Đánh dấu đã trả.",
-      "Giá trị là snapshot lúc tạo; đổi lương tài xế sau đó không làm thay đổi bảng lương.",
-      "Cảnh báo dữ liệu là WarningPanel, không chặn duyệt. COD tài xế giữ không trừ vào lương."
+      "Tabs dùng ?tab= (overview|orders|debt|credit|locations|statements|attachments|timeline).",
+      "Tab Số dư: danh sách phiếu thu còn tiền chưa phân bổ (dùng lại bảng lịch sử ở WM-CUS-05, lọc unallocated>0).",
+      "Tab Bảng kê: danh sách WM-DEBT-03 lọc theo khách; Chứng từ: AttachmentList → WM-SHELL-06.",
+      "Header warning quá hạn lấy từ debtSummary.overdueDays lớn nhất."
     ],
     "overlayOf": null,
     "components": [
-      "EntityHeader",
-      "Button",
+      "DescriptionList",
       "StatusBadge",
-      "SummaryStrip",
-      "Breadcrumb",
-      "Stepper",
-      "Tabs",
+      "DueIndicator",
       "DataTable",
       "WarningPanel",
-      "DescriptionList",
+      "Button",
       "Timeline",
+      "EntityHeader",
+      "IconButton",
+      "SummaryStrip",
+      "Breadcrumb",
+      "Tabs",
       "AppShell",
       "Sidebar",
       "Logo",
       "Topbar",
       "QuickSearch",
-      "NotificationBell",
-      "IconButton"
+      "NotificationBell"
     ],
     "size": {
       "w": 1440,
-      "h": 1180
+      "h": 1280
     },
-    "mockup": "design/mockups/WM-PAYROLL-02.html",
-    "spec": "design/screens/wm/WM-PAYROLL-02.md"
+    "mockup": "design/mockups/WM-CUS-02.html",
+    "spec": "design/screens/wm/WM-CUS-02.md"
   },
   {
-    "id": "WM-PAYROLL-03",
-    "name": "Tạo bảng lương",
+    "id": "WM-CUS-03",
+    "name": "Form khách hàng",
     "platform": "wm",
     "platformName": "Web Merchant",
     "phase": 1,
-    "module": "Lương",
-    "route": "/payroll/new",
+    "module": "Khách hàng",
+    "route": "/customers/new · /customers/:customerId/edit",
     "pattern": "form",
-    "purpose": "Chọn kỳ và tài xế, xem trước dữ liệu gốc (lịch sử lương, thưởng chuyến, ứng lương, giảm trừ) rồi tạo bảng lương nháp.",
+    "purpose": "Tạo/sửa khách: loại khách, pháp lý/xuất hóa đơn, liên hệ chính, hạn mức nợ, số ngày công nợ mặc định, trạng thái.",
     "roles": [
       "admin",
       "operation",
       "accountant"
     ],
     "api": [
-      "merchantSettings{payrollPeriod}",
-      "drivers(filter{status})",
-      "payrollPreview(input{period, driverIds})",
-      "generatePayroll(input)"
+      "createCustomer(input)",
+      "updateCustomer(id, input)",
+      "deactivateCustomer(id, reason)"
     ],
     "data": [
-      "period{label, from, to}",
-      "driverIds[]",
-      "preview.lines[{driver, baseSalary, effectiveFrom, bonuses[], advances[], deductions[], netEstimate}]",
-      "warnings[]"
+      "type(COMPANY|INDIVIDUAL)",
+      "name",
+      "code(auto)",
+      "taxCode",
+      "phone",
+      "email",
+      "group",
+      "legalName",
+      "billingAddress",
+      "invoiceEmail",
+      "primaryContact{name, role, phone, zalo}",
+      "creditLimit?",
+      "defaultDebtDays",
+      "isActive",
+      "note"
     ],
     "actions": [
       {
-        "label": "Tạo bảng lương nháp",
-        "guard": "payroll.generate (admin, operation)"
+        "label": "Lưu khách hàng",
+        "guard": "customer.create | customer.update → WM-CUS-02"
       },
       {
         "label": "Hủy",
-        "guard": "—"
+        "guard": "→ WM-CUS-02 (sửa) / WM-CUS-01 (tạo)"
       }
     ],
     "states": {
-      "validation": "Kỳ đã có bảng lương cho tài xế → lỗi inline dưới field Kỳ lương",
-      "empty": "Không có tài xế hoạt động → EmptyState + link Tài xế",
-      "loading": "Preview skeleton khi đổi kỳ/tài xế"
+      "validation": "Tên, SĐT, số ngày công nợ bắt buộc; SĐT/MST trùng trong merchant → lỗi inline + link khách đã có",
+      "saving": "Nút Lưu loading, khóa form"
     },
     "notes": [
-      "Kỳ lương lấy từ WM-SET-01 (tháng dương lịch, 5→5…).",
-      "Tạm ứng chuyến và chi phí tài xế chi trước không vào bảng lương.",
-      "Sau tạo → /payroll/:payrollId (Nháp)."
+      "react-hook-form + zod; MoneyInput số nguyên VND; hạn mức để trống = không giới hạn.",
+      "Số ngày công nợ mặc định lấy từ cài đặt merchant (seed: 15) khi tạo mới.",
+      "Chuyển sang Ngừng hoạt động khi khách đã có đơn → SensitiveActionModal (lý do bắt buộc).",
+      "Tạo mới: tiêu đề 'Tạo khách hàng', breadcrumb Khách hàng › Tạo; lưu xong mở chi tiết."
     ],
     "overlayOf": null,
     "components": [
-      "Select",
+      "RadioGroup",
       "FormField",
       "TextField",
-      "Checkbox",
-      "StatusBadge",
-      "DataTable",
+      "Select",
+      "MoneyInput",
+      "Banner",
+      "Textarea",
       "Button",
-      "WarningPanel",
       "PageHeader",
       "Breadcrumb",
       "AppShell",
@@ -244,357 +280,81 @@
       "w": 1440,
       "h": 1300
     },
-    "mockup": "design/mockups/WM-PAYROLL-03.html",
-    "spec": "design/screens/wm/WM-PAYROLL-03.md"
+    "mockup": "design/mockups/WM-CUS-03.html",
+    "spec": "design/screens/wm/WM-CUS-03.md"
   },
   {
-    "id": "WM-PAYROLL-04",
-    "name": "Chi tiết dòng lương tài xế",
+    "id": "WM-CUS-04",
+    "name": "Sổ địa chỉ/liên hệ",
     "platform": "wm",
     "platformName": "Web Merchant",
     "phase": 1,
-    "module": "Lương",
-    "route": "/payroll/:payrollId/lines/:lineId",
+    "module": "Khách hàng",
+    "route": "/customers/:customerId/locations (tab)",
     "pattern": "detail",
-    "purpose": "Các khoản cấu thành lương của một tài xế, drilldown chuyến/đơn/phiếu chi; thêm giảm trừ có lý do; in phiếu lương.",
+    "purpose": "Kho/địa chỉ thường dùng của khách kèm người liên hệ, tọa độ, ghi chú; chọn nhanh ở form đơn (WM-ORD-03).",
     "roles": [
       "admin",
       "operation",
       "accountant"
     ],
     "api": [
-      "payrollLine(id){items[{type, description, sourceRef, date, amount}]}",
-      "addPayrollDeduction(lineId, input{reasonId, amount, refId, note})",
-      "driverLedger(driverId)"
+      "customer(id){locations{contacts}}",
+      "createCustomerLocation(customerId, input)",
+      "updateCustomerLocation(id, input)",
+      "deleteCustomerLocation(id)"
     ],
     "data": [
-      "driver",
-      "baseSalarySnapshot",
-      "items[] (BASE|BONUS|ADVANCE|DEDUCTION)",
-      "net",
-      "excluded[] (chi phí chi trước, tạm ứng chuyến)",
-      "disputes[]"
+      "name",
+      "usage[PICKUP|DROPOFF|DOCUMENTS]",
+      "address",
+      "province",
+      "lat?",
+      "lng?",
+      "contacts[{name, role, phone}]",
+      "note",
+      "usedInOrders"
     ],
     "actions": [
       {
-        "label": "Thêm giảm trừ",
-        "guard": "payroll.line.update (admin, operation) — chỉ khi Nháp; lý do bắt buộc"
+        "label": "Thêm địa chỉ",
+        "guard": "customer.update → Drawer"
       },
       {
-        "label": "In phiếu lương",
-        "guard": "payroll.export (admin, accountant)"
+        "label": "Sửa địa chỉ (drawer)",
+        "guard": "customer.update"
+      },
+      {
+        "label": "Xóa địa chỉ",
+        "guard": "customer.update — nếu đã dùng trong đơn: SensitiveActionModal, chỉ ẩn khỏi picker"
       }
     ],
     "states": {
-      "readonly": "Chờ duyệt/Đã duyệt/Đã trả: form giảm trừ disabled + banner giải thích",
-      "loading": "Skeleton"
+      "empty": "EmptyState 'Chưa có địa chỉ' + Thêm địa chỉ",
+      "validation": "Tên + địa chỉ bắt buộc; tọa độ không bắt buộc"
     },
     "notes": [
-      "Mỗi khoản thưởng link chuyến (WM-TRIP-01) và đơn (WM-ORD-02); ứng lương link phiếu chi (WM-EXP-02).",
-      "Giảm trừ dùng danh mục lý do (WM-CAT-01), ghi Timeline."
+      "Drawer phải 520px; map picker không bắt buộc (kéo ghim cập nhật lat/lng).",
+      "Đơn lưu snapshot địa chỉ/liên hệ: sửa sổ địa chỉ không đổi đơn cũ.",
+      "WM-ORD-03 dùng customerLocations(customerId) cho picker 'Chọn từ sổ địa chỉ'."
     ],
     "overlayOf": null,
     "components": [
-      "EntityHeader",
-      "StatusBadge",
-      "Button",
-      "SummaryStrip",
-      "DataTable",
-      "Banner",
-      "Select",
-      "FormField",
-      "MoneyInput",
-      "Textarea",
-      "Timeline",
-      "Breadcrumb",
-      "AppShell",
-      "Sidebar",
-      "Logo",
-      "Topbar",
-      "QuickSearch",
-      "NotificationBell",
-      "IconButton"
-    ],
-    "size": {
-      "w": 1440,
-      "h": 1240
-    },
-    "mockup": "design/mockups/WM-PAYROLL-04.html",
-    "spec": "design/screens/wm/WM-PAYROLL-04.md"
-  },
-  {
-    "id": "WM-PAYROLL-05",
-    "name": "Duyệt bảng lương",
-    "platform": "wm",
-    "platformName": "Web Merchant",
-    "phase": 1,
-    "module": "Lương",
-    "route": "/payroll/:payrollId/approve",
-    "pattern": "dialog",
-    "purpose": "Giám đốc/Admin xem tóm tắt tổng tiền và thay đổi so với kỳ trước, rồi duyệt (ghi chú tùy chọn) hoặc trả về (lý do bắt buộc).",
-    "roles": [
-      "admin"
-    ],
-    "api": [
-      "payroll(id){totals, previousTotals, changes[]}",
-      "approvePayroll(id, reason?)",
-      "returnPayroll(id, reason)"
-    ],
-    "data": [
-      "totals vs previous period",
-      "changes[] (giảm trừ, lương cố định thay đổi, cảnh báo)",
-      "approver",
-      "note/reason"
-    ],
-    "actions": [
-      {
-        "label": "Duyệt bảng lương",
-        "guard": "payroll.approve (admin) — ghi chú tùy chọn"
-      },
-      {
-        "label": "Trả về",
-        "guard": "payroll.return (admin) — lý do bắt buộc"
-      }
-    ],
-    "states": {
-      "validation": "Trả về khi chưa nhập lý do → lỗi inline 'Nhập lý do trả về'"
-    },
-    "notes": [
-      "Duyệt trên App Merchant (MA-PAYROLL-01) ghi audit giống web.",
-      "Sau duyệt: status Đã duyệt, thông báo kế toán."
-    ],
-    "overlayOf": "WM-PAYROLL-02",
-    "components": [
-      "DataTable",
-      "DescriptionList",
       "TextField",
       "FormField",
-      "Textarea",
+      "Checkbox",
+      "MapView",
       "Button",
-      "Dialog",
       "IconButton",
-      "EntityHeader",
+      "Textarea",
       "StatusBadge",
+      "Menu",
+      "DataTable",
+      "Drawer",
+      "EntityHeader",
       "SummaryStrip",
       "Breadcrumb",
-      "Stepper",
       "Tabs",
-      "WarningPanel",
-      "Timeline",
-      "AppShell",
-      "Sidebar",
-      "Logo",
-      "Topbar",
-      "QuickSearch",
-      "NotificationBell"
-    ],
-    "size": {
-      "w": 1440,
-      "h": 1180
-    },
-    "mockup": "design/mockups/WM-PAYROLL-05.html",
-    "spec": "design/screens/wm/WM-PAYROLL-05.md"
-  },
-  {
-    "id": "WM-RPT-01",
-    "name": "Trung tâm báo cáo",
-    "platform": "wm",
-    "platformName": "Web Merchant",
-    "phase": 1,
-    "module": "Báo cáo",
-    "route": "/reports",
-    "pattern": "dashboard",
-    "purpose": "Danh sách báo cáo theo nhóm Vận hành / Tài chính / Lương, kèm số tóm tắt theo khoảng thời gian.",
-    "roles": [
-      "admin",
-      "operation",
-      "accountant"
-    ],
-    "api": [
-      "reportSummary(filter{dateRange})"
-    ],
-    "data": [
-      "group",
-      "report",
-      "headlineMetric"
-    ],
-    "actions": [
-      {
-        "label": "Mở báo cáo",
-        "guard": "report.view"
-      }
-    ],
-    "states": {
-      "loading": "Skeleton KPI + chart + bảng",
-      "empty": "EmptyState 'Không có dữ liệu trong khoảng thời gian đã chọn' + đổi khoảng thời gian",
-      "error": "Banner danger 'Không tải được báo cáo' + Thử lại"
-    },
-    "notes": [
-      "Thẻ báo cáo ẩn theo quyền (kế toán không thấy báo cáo lương nếu không được cấp)."
-    ],
-    "overlayOf": null,
-    "components": [
-      "ReportCard",
-      "Button",
-      "PageHeader",
-      "FilterBar",
-      "TextField",
-      "FilterChip",
-      "AppShell",
-      "Sidebar",
-      "Logo",
-      "Topbar",
-      "QuickSearch",
-      "NotificationBell",
-      "IconButton"
-    ],
-    "size": {
-      "w": 1440,
-      "h": 1060
-    },
-    "mockup": "design/mockups/WM-RPT-01.html",
-    "spec": "design/screens/wm/WM-RPT-01.md"
-  },
-  {
-    "id": "WM-RPT-02",
-    "name": "Doanh thu - chi phí - lãi/lỗ",
-    "platform": "wm",
-    "platformName": "Web Merchant",
-    "phase": 1,
-    "module": "Báo cáo",
-    "route": "/reports/profit",
-    "pattern": "report",
-    "purpose": "Doanh thu (giá cước + dịch vụ thêm), chi phí, lãi/lỗ theo thời gian; lọc theo khách/xe/tài xế.",
-    "roles": [
-      "admin",
-      "operation",
-      "accountant"
-    ],
-    "api": [
-      "reportProfit(filter{dateRange, groupBy, customerId, vehicleId, driverId})"
-    ],
-    "data": [
-      "period",
-      "freight",
-      "addons",
-      "revenue",
-      "tripCost",
-      "outsourcedCost",
-      "profit",
-      "margin",
-      "byCustomer[]"
-    ],
-    "actions": [
-      {
-        "label": "Xuất Excel",
-        "guard": "report.export"
-      },
-      {
-        "label": "Mở khách hàng",
-        "guard": "customer.view"
-      }
-    ],
-    "states": {
-      "loading": "Skeleton KPI + chart + bảng",
-      "empty": "EmptyState 'Không có dữ liệu trong khoảng thời gian đã chọn' + đổi khoảng thời gian",
-      "error": "Banner danger 'Không tải được báo cáo' + Thử lại"
-    },
-    "notes": [
-      "Filter (date range, khách/xe/tài xế) lưu vào query string để chia sẻ link.",
-      "Breadcrumb quay về /reports. Xuất Excel mở WM-SHELL-05 với cùng filter.",
-      "Report query dùng chung công thức với màn nghiệp vụ (order finance, driver ledger) — không có công thức riêng.",
-      "Chart: tối đa 4 series, màu chart-1..chart-4 theo thứ tự cố định; luôn có bảng dữ liệu đi kèm; tooltip hiển thị số tiền đầy đủ."
-    ],
-    "overlayOf": null,
-    "components": [
-      "KpiCard",
-      "BarChart",
-      "LineChart",
-      "DataTable",
-      "Button",
-      "PageHeader",
-      "Breadcrumb",
-      "FilterBar",
-      "TextField",
-      "AppShell",
-      "Sidebar",
-      "Logo",
-      "Topbar",
-      "QuickSearch",
-      "NotificationBell",
-      "IconButton"
-    ],
-    "size": {
-      "w": 1440,
-      "h": 1500
-    },
-    "mockup": "design/mockups/WM-RPT-02.html",
-    "spec": "design/screens/wm/WM-RPT-02.md"
-  },
-  {
-    "id": "WM-RPT-03",
-    "name": "Lãi/lỗ theo đơn",
-    "platform": "wm",
-    "platformName": "Web Merchant",
-    "phase": 1,
-    "module": "Báo cáo",
-    "route": "/reports/profit?view=orders",
-    "pattern": "report",
-    "purpose": "Lãi/lỗ từng đơn: doanh thu, chi phí chuyến/đơn, thuê ngoài; mở chi tiết đơn.",
-    "roles": [
-      "admin",
-      "operation",
-      "accountant"
-    ],
-    "api": [
-      "reportProfit(filter{dateRange, groupBy: ORDER, customerId, status})"
-    ],
-    "data": [
-      "orderCode",
-      "customer",
-      "route",
-      "status",
-      "revenue",
-      "tripOrderCost",
-      "outsourcedCost",
-      "profit",
-      "margin",
-      "isProvisional"
-    ],
-    "actions": [
-      {
-        "label": "Xuất Excel",
-        "guard": "report.export"
-      },
-      {
-        "label": "Mở đơn",
-        "guard": "order.view"
-      }
-    ],
-    "states": {
-      "loading": "Skeleton KPI + chart + bảng",
-      "empty": "EmptyState 'Không có dữ liệu trong khoảng thời gian đã chọn' + đổi khoảng thời gian",
-      "error": "Banner danger 'Không tải được báo cáo' + Thử lại"
-    },
-    "notes": [
-      "Filter (date range, khách/xe/tài xế) lưu vào query string để chia sẻ link.",
-      "Breadcrumb quay về /reports. Xuất Excel mở WM-SHELL-05 với cùng filter.",
-      "Report query dùng chung công thức với màn nghiệp vụ (order finance, driver ledger) — không có công thức riêng.",
-      "Số lãi/lỗ phải bằng tab Tài chính đơn (WM-ORD-07). Tạm ứng chuyến chỉ tính khi đã đối soát."
-    ],
-    "overlayOf": null,
-    "components": [
-      "StatusBadge",
-      "SummaryStrip",
-      "Pagination",
-      "IconButton",
-      "Button",
-      "DataTable",
-      "PageHeader",
-      "Breadcrumb",
-      "FilterBar",
-      "TextField",
-      "FilterChip",
       "AppShell",
       "Sidebar",
       "Logo",
@@ -606,385 +366,670 @@
       "w": 1440,
       "h": 1000
     },
-    "mockup": "design/mockups/WM-RPT-03.html",
-    "spec": "design/screens/wm/WM-RPT-03.md"
+    "mockup": "design/mockups/WM-CUS-04.html",
+    "spec": "design/screens/wm/WM-CUS-04.md"
   },
   {
-    "id": "WM-RPT-04",
-    "name": "Hiệu suất xe",
-    "platform": "wm",
-    "platformName": "Web Merchant",
-    "phase": 1,
-    "module": "Báo cáo",
-    "route": "/reports/vehicles",
-    "pattern": "report",
-    "purpose": "So sánh xe: số chuyến, ngày chạy/tỷ lệ sử dụng, doanh thu liên quan, chi phí xe và chuyến.",
-    "roles": [
-      "admin",
-      "operation",
-      "accountant"
-    ],
-    "api": [
-      "reportVehicles(filter{dateRange, vehicleType, status})"
-    ],
-    "data": [
-      "plate",
-      "type",
-      "status",
-      "tripCount",
-      "activeDays",
-      "utilization",
-      "revenue",
-      "vehicleCost",
-      "tripCost",
-      "grossProfit"
-    ],
-    "actions": [
-      {
-        "label": "Xuất Excel",
-        "guard": "report.export"
-      },
-      {
-        "label": "Mở xe",
-        "guard": "vehicle.view"
-      }
-    ],
-    "states": {
-      "loading": "Skeleton KPI + chart + bảng",
-      "empty": "EmptyState 'Không có dữ liệu trong khoảng thời gian đã chọn' + đổi khoảng thời gian",
-      "error": "Banner danger 'Không tải được báo cáo' + Thử lại"
-    },
-    "notes": [
-      "Filter (date range, khách/xe/tài xế) lưu vào query string để chia sẻ link.",
-      "Breadcrumb quay về /reports. Xuất Excel mở WM-SHELL-05 với cùng filter.",
-      "Report query dùng chung công thức với màn nghiệp vụ (order finance, driver ledger) — không có công thức riêng.",
-      "Chart: tối đa 4 series, màu chart-1..chart-4 theo thứ tự cố định; luôn có bảng dữ liệu đi kèm; tooltip hiển thị số tiền đầy đủ."
-    ],
-    "overlayOf": null,
-    "components": [
-      "StatusBadge",
-      "DataTable",
-      "BarChart",
-      "KpiCard",
-      "Button",
-      "PageHeader",
-      "Breadcrumb",
-      "FilterBar",
-      "TextField",
-      "AppShell",
-      "Sidebar",
-      "Logo",
-      "Topbar",
-      "QuickSearch",
-      "NotificationBell",
-      "IconButton"
-    ],
-    "size": {
-      "w": 1440,
-      "h": 1180
-    },
-    "mockup": "design/mockups/WM-RPT-04.html",
-    "spec": "design/screens/wm/WM-RPT-04.md"
-  },
-  {
-    "id": "WM-RPT-05",
-    "name": "Hiệu suất tài xế",
-    "platform": "wm",
-    "platformName": "Web Merchant",
-    "phase": 1,
-    "module": "Báo cáo",
-    "route": "/reports/drivers",
-    "pattern": "report",
-    "purpose": "So sánh tài xế: chuyến hoàn thành, đúng giờ, thưởng theo đơn, COD đang giữ, sự cố.",
-    "roles": [
-      "admin",
-      "operation",
-      "accountant"
-    ],
-    "api": [
-      "reportDrivers(filter{dateRange, status, vehicleId})"
-    ],
-    "data": [
-      "driver",
-      "status",
-      "completedTrips",
-      "onTimeRate",
-      "revenue",
-      "bonusTotal",
-      "codHeld",
-      "incidents"
-    ],
-    "actions": [
-      {
-        "label": "Xuất Excel",
-        "guard": "report.export"
-      },
-      {
-        "label": "Mở tài xế",
-        "guard": "driver.view"
-      }
-    ],
-    "states": {
-      "loading": "Skeleton KPI + chart + bảng",
-      "empty": "EmptyState 'Không có dữ liệu trong khoảng thời gian đã chọn' + đổi khoảng thời gian",
-      "error": "Banner danger 'Không tải được báo cáo' + Thử lại"
-    },
-    "notes": [
-      "Filter (date range, khách/xe/tài xế) lưu vào query string để chia sẻ link.",
-      "Breadcrumb quay về /reports. Xuất Excel mở WM-SHELL-05 với cùng filter.",
-      "Report query dùng chung công thức với màn nghiệp vụ (order finance, driver ledger) — không có công thức riêng.",
-      "Chart: tối đa 4 series, màu chart-1..chart-4 theo thứ tự cố định; luôn có bảng dữ liệu đi kèm; tooltip hiển thị số tiền đầy đủ."
-    ],
-    "overlayOf": null,
-    "components": [
-      "StatusBadge",
-      "DataTable",
-      "BarChart",
-      "Button",
-      "PageHeader",
-      "Breadcrumb",
-      "FilterBar",
-      "TextField",
-      "AppShell",
-      "Sidebar",
-      "Logo",
-      "Topbar",
-      "QuickSearch",
-      "NotificationBell",
-      "IconButton"
-    ],
-    "size": {
-      "w": 1440,
-      "h": 1000
-    },
-    "mockup": "design/mockups/WM-RPT-05.html",
-    "spec": "design/screens/wm/WM-RPT-05.md"
-  },
-  {
-    "id": "WM-RPT-06",
+    "id": "WM-CUS-05",
     "name": "Công nợ khách",
     "platform": "wm",
     "platformName": "Web Merchant",
     "phase": 1,
-    "module": "Báo cáo",
-    "route": "/reports/customer-debt",
-    "pattern": "report",
-    "purpose": "Tuổi nợ theo khách (0–15 / 16–30 / 31–60 / >60 ngày), quá hạn, hạn mức, số dư có; tạo bảng kê.",
+    "module": "Khách hàng",
+    "route": "/customers/:customerId?tab=debt",
+    "pattern": "detail",
+    "purpose": "Tổng nợ, quá hạn, số dư, tuổi nợ, đơn còn nợ (DueIndicator), lịch sử phiếu thu/phân bổ; ghi nhận thanh toán, phân bổ, tạo bảng kê.",
     "roles": [
       "admin",
       "operation",
       "accountant"
     ],
     "api": [
-      "reportCustomerDebt(filter{dateRange, customerId, overdueOnly})"
+      "customerDebt(filter:{customerId})",
+      "payments(filter:{customerId})",
+      "customer(id){creditBalance, creditLimit}"
     ],
     "data": [
-      "customer",
-      "creditLimit",
-      "totalDebt",
-      "aging{d0_15, d16_30, d31_60, d60p}",
-      "overdue",
-      "creditBalance",
-      "warnings[]"
+      "orderDate",
+      "orderCode",
+      "routeSummary",
+      "totalAmount",
+      "allocatedAmount",
+      "remainingAmount",
+      "dueDate",
+      "overdueDays",
+      "statementCode",
+      "aging{current, d1_15, d16_30, d30plus}",
+      "payments[{code, date, method, amount, allocations[], unallocated, status}]"
     ],
     "actions": [
       {
+        "label": "Ghi nhận thanh toán",
+        "guard": "payment.create → WM-PAY-03 (prefill khách)"
+      },
+      {
+        "label": "Phân bổ",
+        "guard": "payment.allocate (admin/accountant) → WM-PAY-04"
+      },
+      {
         "label": "Tạo bảng kê",
-        "guard": "debtStatement.create (admin, accountant)"
+        "guard": "debtStatement.create (admin/accountant) → WM-DEBT-03"
       },
       {
         "label": "Xuất Excel",
-        "guard": "report.export"
+        "guard": "customer.debt.view"
       }
     ],
     "states": {
-      "loading": "Skeleton KPI + chart + bảng",
-      "empty": "EmptyState 'Không có dữ liệu trong khoảng thời gian đã chọn' + đổi khoảng thời gian",
-      "error": "Banner danger 'Không tải được báo cáo' + Thử lại"
+      "empty": "Không còn nợ → EmptyState 'Khách không còn công nợ' + lịch sử thanh toán vẫn hiện",
+      "loading": "Skeleton bảng"
     },
     "notes": [
-      "Filter (date range, khách/xe/tài xế) lưu vào query string để chia sẻ link.",
-      "Breadcrumb quay về /reports. Xuất Excel mở WM-SHELL-05 với cùng filter.",
-      "Report query dùng chung công thức với màn nghiệp vụ (order finance, driver ledger) — không có công thức riêng.",
-      "Tuổi nợ tính từ ngày hoàn thành đơn; quá hạn theo hạn thanh toán từng đơn.",
-      "Chart: tối đa 4 series, màu chart-1..chart-4 theo thứ tự cố định; luôn có bảng dữ liệu đi kèm; tooltip hiển thị số tiền đầy đủ."
+      "Còn nợ = tổng thu khách − tổng phân bổ; overdueDays = hôm nay − dueDate khi còn nợ.",
+      "Số dư khách = tổng phiếu thu − tổng phân bổ; không tự trừ vào đơn.",
+      "Chọn nhiều đơn (checkbox) → Tạo bảng kê / Phân bổ với các đơn đã chọn.",
+      "Doanh thu ≠ phiếu thu: màn này chỉ hiện công nợ và dòng tiền phân bổ."
     ],
     "overlayOf": null,
     "components": [
+      "Button",
+      "SummaryStrip",
+      "DueIndicator",
       "StatusBadge",
       "DataTable",
-      "KpiCard",
-      "Button",
-      "PageHeader",
+      "Checkbox",
+      "WarningPanel",
+      "EntityHeader",
+      "IconButton",
       "Breadcrumb",
-      "FilterBar",
-      "TextField",
-      "FilterChip",
+      "Tabs",
       "AppShell",
       "Sidebar",
       "Logo",
       "Topbar",
       "QuickSearch",
-      "NotificationBell",
-      "IconButton"
+      "NotificationBell"
+    ],
+    "size": {
+      "w": 1440,
+      "h": 1120
+    },
+    "mockup": "design/mockups/WM-CUS-05.html",
+    "spec": "design/screens/wm/WM-CUS-05.md"
+  },
+  {
+    "id": "WM-CUS-06",
+    "name": "Lịch sử đơn khách",
+    "platform": "wm",
+    "platformName": "Web Merchant",
+    "phase": 1,
+    "module": "Khách hàng",
+    "route": "/customers/:customerId?tab=orders",
+    "pattern": "detail",
+    "purpose": "Danh sách đơn theo khách với tổng tiền/đã thu/còn lại; lọc thời gian/trạng thái.",
+    "roles": [
+      "admin",
+      "operation",
+      "accountant"
+    ],
+    "api": [
+      "orders(filter:{customerId, dateRange, status}, sort, first, after)",
+      "orderTotals(filter)"
+    ],
+    "data": [
+      "code",
+      "orderDate",
+      "routeSummary",
+      "status",
+      "totalAmount",
+      "paidAmount",
+      "remainingAmount",
+      "dueDate",
+      "overdueDays"
+    ],
+    "actions": [
+      {
+        "label": "Mở đơn",
+        "guard": "order.view → WM-ORD-02"
+      },
+      {
+        "label": "Tạo đơn",
+        "guard": "order.create → WM-ORD-03"
+      },
+      {
+        "label": "Xuất Excel",
+        "guard": "order.view"
+      }
+    ],
+    "states": {
+      "empty": "Khách chưa có đơn → EmptyState + Tạo đơn",
+      "filtered-empty": "Không có đơn trong khoảng thời gian"
+    },
+    "notes": [
+      "Tổng (KPI + total row) tính trên toàn bộ kết quả lọc từ server, không cộng trang hiện tại.",
+      "Đơn đã hủy tổng thu = 0."
+    ],
+    "overlayOf": null,
+    "components": [
+      "StatusBadge",
+      "DueIndicator",
+      "FilterBar",
+      "TextField",
+      "FilterChip",
+      "KpiCard",
+      "Pagination",
+      "IconButton",
+      "Button",
+      "DataTable",
+      "EntityHeader",
+      "SummaryStrip",
+      "Breadcrumb",
+      "Tabs",
+      "AppShell",
+      "Sidebar",
+      "Logo",
+      "Topbar",
+      "QuickSearch",
+      "NotificationBell"
+    ],
+    "size": {
+      "w": 1440,
+      "h": 1180
+    },
+    "mockup": "design/mockups/WM-CUS-06.html",
+    "spec": "design/screens/wm/WM-CUS-06.md"
+  },
+  {
+    "id": "WM-DRV-01",
+    "name": "Danh sách tài xế",
+    "platform": "wm",
+    "platformName": "Web Merchant",
+    "phase": 1,
+    "module": "Tài xế",
+    "route": "/drivers",
+    "pattern": "list",
+    "purpose": "Tìm/lọc tài xế; thấy trạng thái, xe/chuyến hiện tại, tài khoản app, COD đang giữ và công nợ 2 chiều.",
+    "roles": [
+      "admin",
+      "operation",
+      "accountant"
+    ],
+    "api": [
+      "drivers(filter, sort, first, after){currentTrip, appAccount, ledgerSummary{codHeld, companyOwes, driverOwes}}"
+    ],
+    "data": [
+      "code",
+      "name",
+      "phone",
+      "status",
+      "currentTrip{code, status, vehiclePlate, route}",
+      "appAccountStatus",
+      "fixedSalary",
+      "codHeld",
+      "codOverThreshold",
+      "companyOwesDriver",
+      "driverOwesCompany"
+    ],
+    "actions": [
+      {
+        "label": "Thêm tài xế",
+        "guard": "driver.create (admin/operation)"
+      },
+      {
+        "label": "Import",
+        "guard": "driver.create → WM-SHELL-04"
+      },
+      {
+        "label": "Xuất Excel",
+        "guard": "driver.view"
+      }
+    ],
+    "states": {
+      "loading": "DataTable skeleton",
+      "empty": "EmptyState 'Chưa có tài xế' + Thêm tài xế / Import",
+      "error": "Banner danger + Thử lại"
+    },
+    "notes": [
+      "Tài xế ngừng hoạt động (DRV-A-003) hiển thị mờ; không chọn được ở WM-TRIP-02.",
+      "COD đang giữ vượt ngưỡng (merchant setting: 5.000.000 đ hoặc 2 ngày) → badge danger.",
+      "Kế toán xem được, không có nút Thêm (driver.create chỉ admin/operation)."
+    ],
+    "overlayOf": null,
+    "components": [
+      "StatusBadge",
+      "Menu",
+      "IconButton",
+      "Button",
+      "KpiCard",
+      "PageHeader",
+      "FilterBar",
+      "TextField",
+      "FilterChip",
+      "Pagination",
+      "DataTable",
+      "Banner",
+      "AppShell",
+      "Sidebar",
+      "Logo",
+      "Topbar",
+      "QuickSearch",
+      "NotificationBell"
     ],
     "size": {
       "w": 1440,
       "h": 960
     },
-    "mockup": "design/mockups/WM-RPT-06.html",
-    "spec": "design/screens/wm/WM-RPT-06.md"
+    "mockup": "design/mockups/WM-DRV-01.html",
+    "spec": "design/screens/wm/WM-DRV-01.md"
   },
   {
-    "id": "WM-RPT-07",
-    "name": "COD tài xế",
+    "id": "WM-DRV-02",
+    "name": "Chi tiết tài xế",
     "platform": "wm",
     "platformName": "Web Merchant",
     "phase": 1,
-    "module": "Báo cáo",
-    "route": "/reports/cod",
-    "pattern": "report",
-    "purpose": "COD đã thu, đã nộp, đang giữ theo tài xế/đơn/tuổi giữ; tạo phiếu thu COD.",
+    "module": "Tài xế",
+    "route": "/drivers/:driverId",
+    "pattern": "detail",
+    "purpose": "Quản lý tài xế end-to-end: hồ sơ, tài khoản app, lương cố định, lịch sử lái, công nợ, bảng lương, chứng từ, timeline.",
     "roles": [
       "admin",
       "operation",
       "accountant"
     ],
     "api": [
-      "reportCodHeld(filter{dateRange, driverId})"
+      "driver(id){salaryHistory, appAccount, currentTrip}",
+      "trips(filter:{driverId}, first: 5)",
+      "driverLedger(driverId)",
+      "createOrResetDriverAccount(driverId)",
+      "activityLogs(entityType: DRIVER, entityId)"
     ],
     "data": [
-      "driver",
-      "codCollected",
-      "codRemitted",
-      "codHeld",
-      "heldDays",
-      "orders[]",
-      "remittancePayments[]"
+      "profile{name, phone, idNumber, dob, address, emergencyContact}",
+      "license{class, number, expiresAt}",
+      "appAccount{status, lastLoginAt, device}",
+      "currentSalary",
+      "recentTrips[]",
+      "ledgerSummary",
+      "currentPayroll"
     ],
     "actions": [
       {
-        "label": "Tạo phiếu thu COD",
-        "guard": "payment.create (admin, accountant) — loại Tài xế nộp COD"
+        "label": "Sửa",
+        "guard": "driver.update (admin/operation)"
       },
       {
-        "label": "Xuất Excel",
-        "guard": "report.export"
+        "label": "Mời/đặt lại tài khoản app",
+        "guard": "driver.account.reset (admin/operation) — confirm dialog"
+      },
+      {
+        "label": "Tạo phiếu chi hoàn ứng",
+        "guard": "expense.create → WM-EXP-03"
+      },
+      {
+        "label": "Ngừng hoạt động",
+        "guard": "driver.update — sensitive"
+      },
+      {
+        "label": "Timeline",
+        "guard": "driver.view"
       }
     ],
     "states": {
-      "loading": "Skeleton KPI + chart + bảng",
-      "empty": "EmptyState 'Không có dữ liệu trong khoảng thời gian đã chọn' + đổi khoảng thời gian",
-      "error": "Banner danger 'Không tải được báo cáo' + Thử lại"
+      "loading": "Skeleton header + tabs",
+      "error": "Không tìm thấy tài xế → EmptyState + về danh sách"
     },
     "notes": [
-      "Filter (date range, khách/xe/tài xế) lưu vào query string để chia sẻ link.",
-      "Breadcrumb quay về /reports. Xuất Excel mở WM-SHELL-05 với cùng filter.",
-      "Report query dùng chung công thức với màn nghiệp vụ (order finance, driver ledger) — không có công thức riêng.",
-      "Số đang giữ phải bằng sổ công nợ tài xế. Phiếu thu COD không phải doanh thu."
+      "Tabs ?tab= (overview|trips|ledger|salary|attachments|timeline).",
+      "Primary action đổi theo dữ liệu: giữ COD → 'Ghi nhận nộp COD'; công ty nợ → 'Tạo phiếu chi hoàn ứng'.",
+      "Phương thức đăng nhập app phụ thuộc quyết định driver auth (P0-001); UI chỉ hiện trạng thái + mời/đặt lại."
     ],
     "overlayOf": null,
     "components": [
+      "DescriptionList",
+      "StatusBadge",
+      "DataTable",
+      "Button",
+      "Timeline",
+      "EntityHeader",
+      "IconButton",
+      "SummaryStrip",
+      "Breadcrumb",
+      "Tabs",
+      "AppShell",
+      "Sidebar",
+      "Logo",
+      "Topbar",
+      "QuickSearch",
+      "NotificationBell"
+    ],
+    "size": {
+      "w": 1440,
+      "h": 1200
+    },
+    "mockup": "design/mockups/WM-DRV-02.html",
+    "spec": "design/screens/wm/WM-DRV-02.md"
+  },
+  {
+    "id": "WM-DRV-03",
+    "name": "Form tài xế",
+    "platform": "wm",
+    "platformName": "Web Merchant",
+    "phase": 1,
+    "module": "Tài xế",
+    "route": "/drivers/new · /drivers/:driverId/edit",
+    "pattern": "form",
+    "purpose": "Tạo/sửa tài xế: thông tin cá nhân, GPLX (nếu có), lương cố định + ngày hiệu lực, trạng thái, tài khoản app.",
+    "roles": [
+      "admin",
+      "operation",
+      "accountant"
+    ],
+    "api": [
+      "createDriver(input)",
+      "updateDriver(id, input)",
+      "addDriverSalaryHistory(driverId, input)",
+      "createOrResetDriverAccount(driverId)"
+    ],
+    "data": [
+      "name",
+      "phone",
+      "code(auto)",
+      "dob",
+      "idNumber",
+      "address",
+      "emergencyContact",
+      "license{class, number, expiresAt, photos[]}",
+      "fixedSalary",
+      "salaryEffectiveFrom",
+      "salaryReason",
+      "status",
+      "appLoginEnabled"
+    ],
+    "actions": [
+      {
+        "label": "Lưu tài xế",
+        "guard": "driver.create | driver.update → WM-DRV-02"
+      },
+      {
+        "label": "Mời/đặt lại tài khoản app",
+        "guard": "driver.account.reset"
+      }
+    ],
+    "states": {
+      "validation": "Họ tên, SĐT bắt buộc; SĐT trùng trong merchant → lỗi inline; đổi lương mà thiếu lý do → lỗi inline",
+      "saving": "Nút Lưu loading"
+    },
+    "notes": [
+      "Đổi lương trong form = addDriverSalaryHistory (mốc mới), không update đè.",
+      "Quản lý lịch sử lương: admin; operation nếu được cấp (⚠️).",
+      "Tạo mới: lương cố định + hiệu lực từ ngày vào làm."
+    ],
+    "overlayOf": null,
+    "components": [
+      "TextField",
+      "FormField",
+      "DateField",
+      "Select",
+      "AttachmentUploader",
+      "MoneyInput",
+      "Banner",
+      "RadioGroup",
+      "Switch",
       "StatusBadge",
       "Button",
+      "PageHeader",
+      "Breadcrumb",
+      "AppShell",
+      "Sidebar",
+      "Logo",
+      "Topbar",
+      "QuickSearch",
+      "NotificationBell",
+      "IconButton"
+    ],
+    "size": {
+      "w": 1440,
+      "h": 1120
+    },
+    "mockup": "design/mockups/WM-DRV-03.html",
+    "spec": "design/screens/wm/WM-DRV-03.md"
+  },
+  {
+    "id": "WM-DRV-04",
+    "name": "Lịch sử lương cố định",
+    "platform": "wm",
+    "platformName": "Web Merchant",
+    "phase": 1,
+    "module": "Tài xế",
+    "route": "/drivers/:driverId/salary-history (tab Lương/ứng)",
+    "pattern": "detail",
+    "purpose": "Các mốc lương cố định theo ngày hiệu lực, người sửa, lý do; thêm mốc lương mới mà kỳ cũ vẫn tính đúng.",
+    "roles": [
+      "admin",
+      "operation",
+      "accountant"
+    ],
+    "api": [
+      "driver(id){salaryHistory}",
+      "addDriverSalaryHistory(driverId, input{amount, effectiveFrom, reason})",
+      "payrolls(filter:{driverId})"
+    ],
+    "data": [
+      "effectiveFrom",
+      "effectiveTo",
+      "amount",
+      "delta",
+      "reason",
+      "createdBy",
+      "createdAt",
+      "payrollsUsing[]",
+      "payrollLines[{payrollCode, salarySnapshot, bonus, advances, net, status}]"
+    ],
+    "actions": [
+      {
+        "label": "Thêm mốc lương (dialog)",
+        "guard": "driver.salary.manage (admin; operation ⚠️)"
+      }
+    ],
+    "states": {
+      "validation": "Số tiền > 0; ngày hiệu lực bắt buộc, không trùng mốc đã có; lý do bắt buộc",
+      "empty": "Chưa có mốc lương → EmptyState + Thêm mốc lương"
+    },
+    "notes": [
+      "Payroll lấy lương cố định theo mốc hiệu lực trong kỳ và lưu snapshot vào dòng lương; thêm mốc mới không tính lại bảng lương đã tạo.",
+      "Quy tắc khi mốc rơi giữa kỳ (vd ngày 15) cần chốt cùng payroll; acceptance: kỳ trước không đổi.",
+      "Dialog hiện diff trước/sau và kỳ lương bị ảnh hưởng."
+    ],
+    "overlayOf": null,
+    "components": [
+      "MoneyInput",
+      "FormField",
+      "DateField",
+      "AuditDiff",
+      "Textarea",
+      "Banner",
+      "Button",
+      "StatusBadge",
+      "DataTable",
+      "Dialog",
+      "IconButton",
+      "EntityHeader",
+      "SummaryStrip",
+      "Breadcrumb",
+      "Tabs",
+      "AppShell",
+      "Sidebar",
+      "Logo",
+      "Topbar",
+      "QuickSearch",
+      "NotificationBell"
+    ],
+    "size": {
+      "w": 1440,
+      "h": 1060
+    },
+    "mockup": "design/mockups/WM-DRV-04.html",
+    "spec": "design/screens/wm/WM-DRV-04.md"
+  },
+  {
+    "id": "WM-DRV-05",
+    "name": "Sổ công nợ tài xế",
+    "platform": "wm",
+    "platformName": "Web Merchant",
+    "phase": 1,
+    "module": "Tài xế",
+    "route": "/drivers/:driverId?tab=ledger",
+    "pattern": "detail",
+    "purpose": "Sổ đối chiếu 2 chiều: công ty nợ tài xế (chi phí tài xế ứng trả) và tài xế giữ/nợ công ty (COD chưa nộp, tạm ứng, ứng lương) + lịch sử đối soát.",
+    "roles": [
+      "admin",
+      "operation",
+      "accountant"
+    ],
+    "api": [
+      "driverLedger(driverId)",
+      "expenses(filter:{driverId, paidBy: DRIVER})",
+      "payments(filter:{driverId, type: DRIVER_COD_REMITTANCE})"
+    ],
+    "data": [
+      "companyOwesDriver",
+      "reimbursableExpenses[]",
+      "codHeld",
+      "tripAdvances[]",
+      "wageAdvances[]",
+      "entries[{date, docCode, description, companyOwes, driverOwes, runningBalance, status}]"
+    ],
+    "actions": [
+      {
+        "label": "Tạo phiếu chi hoàn ứng",
+        "guard": "expense.create → WM-EXP-03 (prefill tài xế + khoản chưa hoàn)"
+      },
+      {
+        "label": "Ghi nhận nộp COD",
+        "guard": "payment.create DRIVER_COD_REMITTANCE (admin/accountant) → WM-PAY-03"
+      },
+      {
+        "label": "Đối soát tạm ứng",
+        "guard": "→ WM-ADV-01"
+      },
+      {
+        "label": "Xuất Excel",
+        "guard": "driver.ledger.view"
+      }
+    ],
+    "states": {
+      "empty": "Không có phát sinh → 'Công nợ tài xế đang cân bằng'"
+    },
+    "notes": [
+      "Hoàn ứng không chờ kỳ lương: tạo phiếu chi bất kỳ lúc nào.",
+      "COD tài xế nộp là thu hồi phải thu, không phải doanh thu.",
+      "Số dư ròng chỉ tham khảo; hai chiều tất toán bằng chứng từ riêng."
+    ],
+    "overlayOf": null,
+    "components": [
+      "Button",
+      "StatusBadge",
       "DataTable",
       "Banner",
-      "KpiCard",
-      "PageHeader",
+      "SegmentedControl",
+      "EntityHeader",
+      "IconButton",
+      "SummaryStrip",
       "Breadcrumb",
-      "FilterBar",
-      "TextField",
+      "Tabs",
       "AppShell",
       "Sidebar",
       "Logo",
       "Topbar",
       "QuickSearch",
-      "NotificationBell",
-      "IconButton"
+      "NotificationBell"
     ],
     "size": {
       "w": 1440,
-      "h": 1100
+      "h": 1180
     },
-    "mockup": "design/mockups/WM-RPT-07.html",
-    "spec": "design/screens/wm/WM-RPT-07.md"
+    "mockup": "design/mockups/WM-DRV-05.html",
+    "spec": "design/screens/wm/WM-DRV-05.md"
   },
   {
-    "id": "WM-RPT-08",
-    "name": "Báo cáo bảng lương",
+    "id": "WM-DRV-06",
+    "name": "COD tài xế đang giữ",
     "platform": "wm",
     "platformName": "Web Merchant",
     "phase": 1,
-    "module": "Báo cáo",
-    "route": "/reports/payroll",
-    "pattern": "report",
-    "purpose": "Thực lãnh, thưởng, ứng, giảm trừ theo kỳ và theo tài xế; xuất bảng lương/phiếu lương.",
+    "module": "Tài xế",
+    "route": "/drivers/:driverId?tab=ledger&view=cod",
+    "pattern": "detail",
+    "purpose": "COD tài xế đang giữ theo điểm dừng/đơn/chuyến, tuổi nợ, cảnh báo vượt ngưỡng; chọn mục để ghi nhận tài xế nộp COD.",
     "roles": [
       "admin",
       "operation",
       "accountant"
     ],
     "api": [
-      "reportPayroll(filter{year, status, driverId})"
+      "driverCodHeld(filter:{driverId, status})",
+      "payments(filter:{driverId, type: DRIVER_COD_REMITTANCE})"
     ],
     "data": [
-      "payrollCode",
-      "period",
-      "status",
-      "driverCount",
-      "salary",
-      "bonus",
-      "advance",
-      "deduction",
-      "net",
-      "paidAt",
-      "byDriver[]"
+      "collectedAt",
+      "orderCode",
+      "tripCode",
+      "stop{sequence, name, address}",
+      "codExpected",
+      "codActual",
+      "remitted",
+      "held",
+      "ageDays",
+      "thresholds{amount: 5000000, days: 2}"
     ],
     "actions": [
       {
-        "label": "Xuất Excel",
-        "guard": "payroll.export (admin, accountant)"
+        "label": "Ghi nhận nộp COD",
+        "guard": "payment.create DRIVER_COD_REMITTANCE (admin/accountant) → WM-PAY-03 prefill các mục đã chọn"
       },
       {
-        "label": "Xuất phiếu lương",
-        "guard": "payroll.export (admin, accountant)"
+        "label": "Xuất Excel",
+        "guard": "driver.ledger.view"
       }
     ],
     "states": {
-      "loading": "Skeleton KPI + chart + bảng",
-      "empty": "EmptyState 'Không có dữ liệu trong khoảng thời gian đã chọn' + đổi khoảng thời gian",
-      "error": "Banner danger 'Không tải được báo cáo' + Thử lại"
+      "empty": "Không giữ COD → EmptyState 'Tài xế không giữ COD'",
+      "loading": "Skeleton bảng"
     },
     "notes": [
-      "Filter (date range, khách/xe/tài xế) lưu vào query string để chia sẻ link.",
-      "Breadcrumb quay về /reports. Xuất Excel mở WM-SHELL-05 với cùng filter.",
-      "Report query dùng chung công thức với màn nghiệp vụ (order finance, driver ledger) — không có công thức riêng.",
-      "Chart: tối đa 4 series, màu chart-1..chart-4 theo thứ tự cố định; luôn có bảng dữ liệu đi kèm; tooltip hiển thị số tiền đầy đủ."
+      "COD held = Σ stop.codActual − Σ phiếu thu DRIVER_COD_REMITTANCE.",
+      "Cảnh báo khi tổng giữ > ngưỡng tiền hoặc khoản giữ quá ngưỡng ngày (WM-SET-01).",
+      "Operation xem được nhưng không ghi nhận nộp COD (nút ẩn)."
     ],
     "overlayOf": null,
     "components": [
       "StatusBadge",
       "DataTable",
-      "BarChart",
-      "KpiCard",
+      "Checkbox",
       "Button",
-      "PageHeader",
-      "Breadcrumb",
+      "SegmentedControl",
       "FilterBar",
       "TextField",
+      "FilterChip",
+      "WarningPanel",
+      "EntityHeader",
+      "IconButton",
+      "SummaryStrip",
+      "Breadcrumb",
+      "Tabs",
       "AppShell",
       "Sidebar",
       "Logo",
       "Topbar",
       "QuickSearch",
-      "NotificationBell",
-      "IconButton"
+      "NotificationBell"
     ],
     "size": {
       "w": 1440,
-      "h": 1320
+      "h": 1180
     },
-    "mockup": "design/mockups/WM-RPT-08.html",
-    "spec": "design/screens/wm/WM-RPT-08.md"
+    "mockup": "design/mockups/WM-DRV-06.html",
+    "spec": "design/screens/wm/WM-DRV-06.md"
   }
 ]

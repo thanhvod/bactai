@@ -7,7 +7,7 @@
 | Route | `/reports/profit` |
 | Pattern | `report` |
 | Roles | admin, operation, accountant |
-| Kích thước mockup | 1440×1500 |
+| Kích thước mockup | 1440×1420 |
 | Mockup | [../../mockups/WM-RPT-02.html](../../mockups/WM-RPT-02.html) · canvas artboard `WM-RPT-02.dc.html` |
 
 ## Mục đích

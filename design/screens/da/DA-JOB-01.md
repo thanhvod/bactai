@@ -54,7 +54,7 @@ Danh sách chuyến được giao theo ngày/trạng thái, filter đơn giản.
 
 ## Components (design system)
 
-`MoneyText`, `StatusBadge`, `TripCard`, `SegmentedControl`, `IconButton`, `Button`, `MobileHeader`, `BottomNav`
+`StatusBadge`, `MoneyText`, `TripCard`, `SegmentedControl`, `IconButton`, `Button`, `MobileHeader`, `BottomNav`
 
 ## API (GraphQL)
 

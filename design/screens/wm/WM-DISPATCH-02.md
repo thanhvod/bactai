@@ -48,8 +48,8 @@ ScheduleView: dòng là xe hoặc tài xế, trục 00–24, khối là chuyến
 | Sidebar: Sự cố | [WM-DISPATCH-05](../wm/WM-DISPATCH-05.md) Sự cố vận hành | `/dispatch/incidents` | nav |
 | Sidebar: Khách hàng | WM-CUS-01 | | nav |
 | Sidebar: Tài xế | WM-DRV-01 | | nav |
-| Sidebar: Xe | WM-VEH-01 | | nav |
-| Sidebar: Nhà cung cấp | WM-SUP-01 | | nav |
+| Sidebar: Xe | [WM-VEH-01](../wm/WM-VEH-01.md) Danh sách xe | `/vehicles` | nav |
+| Sidebar: Nhà cung cấp | [WM-SUP-01](../wm/WM-SUP-01.md) Danh sách NCC | `/suppliers` | nav |
 | Sidebar: Thu chi & Công nợ | WM-FIN-01 | | nav |
 | Sidebar: Lương | WM-PAYROLL-01 | | nav |
 | Sidebar: Báo cáo | WM-RPT-01 | | nav |
@@ -67,6 +67,7 @@ ScheduleView: dòng là xe hoặc tài xế, trục 00–24, khối là chuyến
 | [WM-DISPATCH-01](../wm/WM-DISPATCH-01.md) Bảng điều phối | Chuyển sang Lịch |
 | [WM-DISPATCH-01](../wm/WM-DISPATCH-01.md) Bảng điều phối | Mở lịch xe/tài xế |
 | [WM-DISPATCH-03](../wm/WM-DISPATCH-03.md) Cảnh báo lịch | Mở lịch xe/tài xế |
+| [WM-VEH-02](../wm/WM-VEH-02.md) Chi tiết xe | Mở lịch xe |
 
 ## Components (design system)
 

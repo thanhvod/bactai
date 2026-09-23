@@ -109,7 +109,7 @@ def cus_01():
                  _dim(num(money(0), 13, 400, T["text-muted"])), _dim(num(money(0), 13, 400, T["text-muted"])),
                  _dim(_usage(0, 30_000_000)), _dim(num("15 ngày")), _dim(num("2")), badge("Ngừng hoạt động", "neutral"), row_menu()])
     kpis = grid([kpi("Khách đang hoạt động", "42", "1 khách ngừng hoạt động", ic="building-2"),
-                 kpi("Tổng còn nợ", money(135_200_000), "5 khách còn nợ", "warning", "scale", to="WM-DEBT-01", trigger="Click KPI Tổng còn nợ → công nợ khách"),
+                 kpi("Tổng còn nợ", money(135_200_000), "4 khách còn nợ", "warning", "scale", to="WM-DEBT-01", trigger="Click KPI Tổng còn nợ → công nợ khách"),
                  kpi("Quá hạn", money(27_000_000), "2 khách · cần thu hồi", "danger", "alarm-clock", to="WM-DEBT-01", trigger="Click KPI Quá hạn → công nợ khách"),
                  kpi("Số dư chưa phân bổ", money(3_000_000), "1 khách có tiền dư", "info", "wallet")], 4, 12)
     content = col(
@@ -119,10 +119,10 @@ def cus_01():
                         btn("Tạo khách hàng", "primary", "plus", to="WM-CUS-03", trigger="Tạo khách hàng"), gap=8)),
         kpis,
         filter_bar("Tìm tên, SĐT, MST, mã khách…", ["Tất cả", "Còn nợ", "Quá hạn", "Vượt hạn mức", "Có số dư", "Ngừng hoạt động"],
-                   right=btn("Bộ lọc", "secondary", "sliders-horizontal", size="sm"), selects=["Sắp xếp: Còn nợ giảm dần"]),
+                   right=btn("Bộ lọc", "secondary", "sliders-horizontal", size="sm")),
         table(cols, rows, footer=pagination("1–6", 43)),
         gap=16)
-    return wm_shell("customers", content, h=1000)
+    return wm_shell("customers", content, h=960)
 
 
 # ---------------------------------------------------------------- WM-CUS-02
@@ -210,7 +210,7 @@ def cus_03():
                         btn("Lưu khách hàng", "primary", "check", to="WM-CUS-02", trigger="Lưu → chi tiết khách"), gap=8),
                     crumbs=[("Khách hàng", "WM-CUS-01"), (CUS["name"], "WM-CUS-02"), ("Sửa", None)]),
         general, legal, contact, debt, status_, gap=14)
-    return wm_shell("customers", content, h=1260)
+    return wm_shell("customers", content, h=1300)
 
 
 # ---------------------------------------------------------------- WM-CUS-04 Sổ địa chỉ/liên hệ (tab) + drawer
@@ -246,7 +246,7 @@ def cus_04():
         field("Tên địa điểm", input_("Kho Cần Thơ"), True),
         field("Công dụng", row(checkbox("Điểm lấy hàng", True), checkbox("Điểm trả hàng"), checkbox("Nhận chứng từ"), gap=16)),
         field("Địa chỉ", input_("KCN Trà Nóc 1, Bình Thủy, Cần Thơ", prefix_ic="map-pin"), True),
-        row(field("Vĩ độ", input_("10.0891", mono=True)), field("Kinh độ", input_("105.7324", mono=True)), gap=12),
+        row(field("Vĩ độ", input_("10.0891", mono=True), width="50%"), field("Kinh độ", input_("105.7324", mono=True), width="50%"), gap=12),
         map_placeholder(h=150, pins=[(46, 62, "Kho Cần Thơ", "info")], label="Kéo ghim để chỉnh tọa độ (không bắt buộc)"),
         divider(),
         row(text("Người liên hệ", 14, 600), spacer(), btn("Thêm liên hệ", "ghost", "plus", size="sm"), gap=8),
@@ -268,14 +268,9 @@ def cus_05():
         btn("Tạo bảng kê", "secondary", "file-text", size="sm", to="WM-DEBT-03", trigger="Tạo bảng kê công nợ"),
         btn("Phân bổ", "secondary", "layers", size="sm", to="WM-PAY-04", trigger="Phân bổ phiếu thu vào đơn"),
         btn("Ghi nhận thanh toán", "primary", "plus", size="sm", to="WM-PAY-03", trigger="Tạo phiếu thu khách trả"), gap=8)
-    aging = panel("Tuổi nợ", col(
-        *[row(muted(lab, 13, ), spacer(), num(money(v), 13, 600 if v else 400, TONES[tone][1] if v else T["text-muted"]), gap=8)
-          for lab, v, tone in [("Trong hạn", 12_500_000, "primary"), ("Quá hạn 1–15 ngày", 15_000_000, "danger"),
-                               ("Quá hạn 16–30 ngày", 0, "danger"), ("Quá hạn trên 30 ngày", 0, "danger")]],
-        divider(),
-        row(text("Tổng nợ", 14, 600), spacer(), num(money(27_500_000), 16, 700), gap=8),
-        row(muted("Hạn mức còn lại"), spacer(), num(money(72_500_000), 13), gap=8),
-        progress(27.5, "primary", 6), gap=8), extra="width: 280px; flex-shrink: 0;")
+    aging = summary_strip([("Trong hạn", money(12_500_000)), ("Quá hạn 1–15 ngày", money(15_000_000), "danger"),
+                           ("Quá hạn 16–30 ngày", money(0)), ("Quá hạn trên 30 ngày", money(0)),
+                           ("Hạn mức còn lại", money(72_500_000)), ("Số dư khách", money(0))])
     open_rows = [
         [col(code("DH-202608-0009", to="WM-ORD-02", trigger="Mở đơn còn nợ"), muted("29/08/2026 · Cần Thơ → Bình Dương", 12), gap=0),
          num(money(20_000_000)), num(money(5_000_000), color=T["success"]), num(money(15_000_000), weight=600, color=T["danger"]),
@@ -290,7 +285,7 @@ def cus_05():
         open_rows, checkbox_col=True, selected=0, compact=True,
         total_row=["Tổng 2 đơn", money(32_500_000), money(5_000_000), money(27_500_000), "", ""]),
         muted("Chọn đơn để tạo bảng kê hoặc phân bổ", 12), body_pad=False)
-    top = row(col(open_tbl, gap=0, extra="flex: 1; min-width: 0;"), aging, gap=16, align="flex-start")
+    top = col(aging, open_tbl, gap=12)
     pay_rows = [
         [num("19/09/2026"), code("PT-202609-0007", to="WM-PAY-02", trigger="Mở phiếu thu"), muted("Chuyển khoản · VCB"), num(money(15_000_000)),
          col(row(code("DH-202609-0009", to="WM-ORD-02", trigger="Mở đơn được phân bổ"), num(money(15_000_000), 12), gap=6), gap=0),
@@ -552,13 +547,10 @@ def _drv_04_body():
                  btn("Thêm mốc lương", "secondary", "plus", size="sm"), body_pad=False,
                  sub="Mỗi mốc có ngày hiệu lực; kỳ lương lấy mức đang hiệu lực tại kỳ đó và lưu snapshot")
     pay = panel("Bảng lương theo kỳ", table(
-        [("Kỳ", "left"), ("Lương CĐ (snapshot)", "right"), ("Thưởng", "right"), ("Ứng", "right"), ("Thực lãnh", "right"), ("Trạng thái", "left")],
-        [[code("BL-202609-0001", to="WM-PAYROLL-04", trigger="Mở dòng lương tài xế"), num(money(10_000_000)), num(money(1_500_000)),
-          num("−" + money(2_000_000)), num(money(9_500_000), 13, 600), status("Chờ duyệt", "fin")],
-         [code("BL-202608-0001", to="WM-PAYROLL-04", trigger="Mở dòng lương tài xế"), num(money(10_000_000)), num(money(1_200_000)),
-          num(money(0)), num(money(11_200_000), 13, 600), status("Đã trả", "fin")],
-         [code("BL-202607-0001", to="WM-PAYROLL-04", trigger="Mở dòng lương tài xế"), num(money(9_000_000)), num(money(900_000)),
-          num("−" + money(1_000_000)), num(money(8_900_000), 13, 600), status("Đã trả", "fin")]], compact=True),
+        [("Kỳ", "left"), ("Lương CĐ (snapshot)", "right"), ("Thưởng · ứng", "right"), ("Thực lãnh", "right"), ("Trạng thái", "left")],
+        [[code("BL-202609-0001", to="WM-PAYROLL-04", trigger="Mở dòng lương tài xế"), num(money(10_000_000)), col(num("+" + money(1_500_000)), num("−" + money(2_000_000)), gap=0, extra="align-items: flex-end;"), num(money(9_500_000), 13, 600), status("Chờ duyệt", "fin")],
+         [code("BL-202608-0001", to="WM-PAYROLL-04", trigger="Mở dòng lương tài xế"), num(money(10_000_000)), col(num("+" + money(1_200_000)), num(money(0)), gap=0, extra="align-items: flex-end;"), num(money(11_200_000), 13, 600), status("Đã trả", "fin")],
+         [code("BL-202607-0001", to="WM-PAYROLL-04", trigger="Mở dòng lương tài xế"), num(money(9_000_000)), col(num("+" + money(900_000)), num("−" + money(1_000_000)), gap=0, extra="align-items: flex-end;"), num(money(8_900_000), 13, 600), status("Đã trả", "fin")]], compact=True),
         a("Tất cả bảng lương", "WM-PAYROLL-01", "Mở danh sách bảng lương"), body_pad=False)
     adv = panel("Ứng trong kỳ T9/2026", col(table(
         [("Chứng từ · ngày", "left"), ("Loại", "left"), ("Số tiền", "right"), ("Trừ vào", "left")],
@@ -567,7 +559,7 @@ def _drv_04_body():
         col(muted("Lương kỳ = lương cố định + thưởng theo đơn − ứng − giảm trừ. Không chấm công; giảm trừ do operation nhập kèm lý do.", 12),
             gap=0, extra="padding: 10px 16px;"), gap=0),
         a("Đối soát tạm ứng", "WM-ADV-01", "Mở tạm ứng chuyến & đối soát"), body_pad=False)
-    return col(left, row(col(pay, gap=0, extra="flex: 3; min-width: 0;"), col(adv, gap=0, extra="flex: 2; min-width: 0;"), gap=16, align="flex-start"),
+    return col(left, row(col(pay, gap=0, extra="flex: 6; min-width: 0;"), col(adv, gap=0, extra="flex: 5; min-width: 0;"), gap=16, align="flex-start"),
                gap=16)
 
 
@@ -679,7 +671,7 @@ C = dict(platform="wm", roles=ROLES_ALL)
 CK = dict(module="Khách hàng", **C)
 DK = dict(module="Tài xế", **C)
 register(
-    Screen(id="WM-CUS-01", name="Danh sách khách hàng", route="/customers", render=cus_01, pattern="list", h=1000, **CK,
+    Screen(id="WM-CUS-01", name="Danh sách khách hàng", route="/customers", render=cus_01, pattern="list", h=960, **CK,
            purpose="Tìm/lọc khách, theo dõi công nợ, số dư, hạn mức và cảnh báo; điểm vào tạo khách, import, tạo đơn nhanh.",
            api=["customers(filter, sort, first, after)"],
            data=["code", "name", "phone", "taxCode", "debtSummary{remaining, overdue, overdueDays}", "creditBalance", "creditLimit",
@@ -707,7 +699,7 @@ register(
                   "Tab Số dư: danh sách phiếu thu còn tiền chưa phân bổ (dùng lại bảng lịch sử ở WM-CUS-05, lọc unallocated>0).",
                   "Tab Bảng kê: danh sách WM-DEBT-03 lọc theo khách; Chứng từ: AttachmentList → WM-SHELL-06.",
                   "Header warning quá hạn lấy từ debtSummary.overdueDays lớn nhất."]),
-    Screen(id="WM-CUS-03", name="Form khách hàng", route="/customers/new · /customers/:customerId/edit", render=cus_03, pattern="form", h=1260, **CK,
+    Screen(id="WM-CUS-03", name="Form khách hàng", route="/customers/new · /customers/:customerId/edit", render=cus_03, pattern="form", h=1300, **CK,
            purpose="Tạo/sửa khách: loại khách, pháp lý/xuất hóa đơn, liên hệ chính, hạn mức nợ, số ngày công nợ mặc định, trạng thái.",
            api=["createCustomer(input)", "updateCustomer(id, input)", "deactivateCustomer(id, reason)"],
            data=["type(COMPANY|INDIVIDUAL)", "name", "code(auto)", "taxCode", "phone", "email", "group", "legalName", "billingAddress",

@@ -413,7 +413,7 @@ def rpt_02():
                                              ("Biên", "right"), ("", "right")], c_rows, compact=True),
                    subtle("Doanh thu ghi nhận trên đơn (không gồm phiếu thu, COD tài xế nộp)", 12), body_pad=False)
     body = col(kpis, charts, table_w, by_cus, gap=16)
-    return rpt_frame("Doanh thu – chi phí – lãi/lỗ", "Doanh thu = giá cước + dịch vụ thêm của đơn; chi phí = chi phí chuyến/đơn + thuê ngoài", body, 1500,
+    return rpt_frame("Doanh thu – chi phí – lãi/lỗ", "Doanh thu = giá cước + dịch vụ thêm của đơn; chi phí = chi phí chuyến/đơn + thuê ngoài", body, 1420,
                      selects=["Nhóm theo: Tuần", "Khách hàng: Tất cả", "Xe: Tất cả", "Tài xế: Tất cả"], search="Tìm mã đơn…")
 
 
@@ -501,15 +501,15 @@ def rpt_05():
         cod_c = (col(a(money(cod), "WM-DRV-06", "Mở COD tài xế đang giữ", 13, 600), badge("Quá ngưỡng 5 triệu", "warning"), gap=2, extra="align-items: flex-end;")
                  if cod else num(money(0), color=T["text-muted"]))
         inc_c = a("1 đang mở", "WM-INC-01", "Mở sự cố") if inc else muted("0")
-        rows.append([col(a(name, "WM-DRV-02", "Mở chi tiết tài xế", 13, 600), subtle(f"{did} · xe {veh}", 12), gap=0),
+        rows.append([col(a(name, "WM-DRV-02", "Mở chi tiết tài xế", 13, 600), subtle(f"{did} · xe {veh}" if veh != "—" else did, 12), gap=0),
                      badge("Ngừng hoạt động", "neutral") if inactive else badge("Hoạt động", "success"),
                      num(str(trips)), num(f"{ontime}%" if ontime is not None else "—", color=T["warning"] if ontime and ontime < 95 else None),
                      num(money(rev)), num(money(bonus)), cod_c, inc_c])
     tbl = panel("So sánh tài xế", table([("Tài xế", "left"), ("Trạng thái", "left"), ("Chuyến hoàn thành", "right"), ("Đúng giờ", "right"),
                                          ("Doanh thu liên quan", "right"), ("Thưởng theo đơn", "right"), ("COD đang giữ", "right"), ("Sự cố", "left")], rows,
                                         total_row=["4 tài xế", "", "35", "94%", money(117_000_000), money(4_300_000), money(5_500_000), "1"]), body_pad=False)
-    chart = panel("Doanh thu liên quan theo tài xế", bar_chart([d[0] for d in ds[:3]], [("Doanh thu liên quan", [d[8] / 1e6 for d in ds[:3]], "chart-1"),
-                                                                                         ("Thưởng theo đơn", [d[5] / 1e6 for d in ds[:3]], "chart-2")], 1080, 200))
+    chart = panel("Doanh thu liên quan theo tài xế", bar_chart([d[0] for d in ds[:3]], [("Doanh thu liên quan", [d[8] / 1e6 for d in ds[:3]], "chart-1")], 1080, 200),
+                  sub="Tài xế đang hoạt động; số liệu chi tiết ở bảng bên dưới")
     body = col(chart, tbl,
                subtle("Đúng giờ = chuyến hoàn thành trước giờ trả dự kiến. COD đang giữ lấy từ sổ công nợ tài xế; không trừ vào lương.", 12), gap=16)
     return rpt_frame("Hiệu suất tài xế", "Số chuyến, đúng giờ, thưởng, COD đang giữ và sự cố theo tài xế", body, 1000,
@@ -708,7 +708,7 @@ register(
            purpose="Danh sách báo cáo theo nhóm Vận hành / Tài chính / Lương, kèm số tóm tắt theo khoảng thời gian.",
            api=["reportSummary(filter{dateRange})"], data=["group", "report", "headlineMetric"],
            actions=[("Mở báo cáo", "report.view")], states=RPT_STATES, notes=["Thẻ báo cáo ẩn theo quyền (kế toán không thấy báo cáo lương nếu không được cấp)."]),
-    Screen(id="WM-RPT-02", name="Doanh thu - chi phí - lãi/lỗ", route="/reports/profit", render=rpt_02, pattern="report", h=1500, **R,
+    Screen(id="WM-RPT-02", name="Doanh thu - chi phí - lãi/lỗ", route="/reports/profit", render=rpt_02, pattern="report", h=1420, **R,
            purpose="Doanh thu (giá cước + dịch vụ thêm), chi phí, lãi/lỗ theo thời gian; lọc theo khách/xe/tài xế.",
            api=["reportProfit(filter{dateRange, groupBy, customerId, vehicleId, driverId})"],
            data=["period", "freight", "addons", "revenue", "tripCost", "outsourcedCost", "profit", "margin", "byCustomer[]"],

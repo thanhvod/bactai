@@ -54,7 +54,7 @@ Trung tâm một chuyến: phân công xe/tài xế, điểm dừng được gia
 | Tạm dừng chuyến (nhập lý do) | WM-SHELL-08 | | action |
 | Hủy chuyến (sensitive) | WM-SHELL-08 | | action |
 | Mở chi tiết điểm dừng | [WM-STOP-01](../wm/WM-STOP-01.md) Chi tiết điểm dừng | `/orders/:orderId/stops/:stopId (drawer trên chuyến/đơn)` | action |
-| Mở xe | WM-VEH-02 | | action |
+| Mở xe | [WM-VEH-02](../wm/WM-VEH-02.md) Chi tiết xe | `/vehicles/:vehicleId` | action |
 | Mở tài xế | WM-DRV-02 | | action |
 | Mở chuyến kế tiếp | [WM-TRIP-01](../wm/WM-TRIP-01.md) Chi tiết chuyến | `/trips/:tripId` | action |
 | Đổi xe/tài xế | [WM-TRIP-02](../wm/WM-TRIP-02.md) Tạo/sửa chuyến | `/orders/:orderId/trips/new · /trips/:tripId/edit` | action |
@@ -80,8 +80,8 @@ Trung tâm một chuyến: phân công xe/tài xế, điểm dừng được gia
 | Sidebar: Sự cố | [WM-DISPATCH-05](../wm/WM-DISPATCH-05.md) Sự cố vận hành | `/dispatch/incidents` | nav |
 | Sidebar: Khách hàng | WM-CUS-01 | | nav |
 | Sidebar: Tài xế | WM-DRV-01 | | nav |
-| Sidebar: Xe | WM-VEH-01 | | nav |
-| Sidebar: Nhà cung cấp | WM-SUP-01 | | nav |
+| Sidebar: Xe | [WM-VEH-01](../wm/WM-VEH-01.md) Danh sách xe | `/vehicles` | nav |
+| Sidebar: Nhà cung cấp | [WM-SUP-01](../wm/WM-SUP-01.md) Danh sách NCC | `/suppliers` | nav |
 | Sidebar: Thu chi & Công nợ | WM-FIN-01 | | nav |
 | Sidebar: Lương | WM-PAYROLL-01 | | nav |
 | Sidebar: Báo cáo | WM-RPT-01 | | nav |
@@ -113,6 +113,10 @@ Trung tâm một chuyến: phân công xe/tài xế, điểm dừng được gia
 | [WM-DISPATCH-04](../wm/WM-DISPATCH-04.md) Theo dõi vị trí | Mở chuyến chưa chạy |
 | [WM-DISPATCH-05](../wm/WM-DISPATCH-05.md) Sự cố vận hành | Mở chuyến |
 | [WM-INC-01](../wm/WM-INC-01.md) Chi tiết sự cố | Mở chuyến liên quan |
+| [WM-VEH-01](../wm/WM-VEH-01.md) Danh sách xe | Mở chuyến hiện tại |
+| [WM-VEH-02](../wm/WM-VEH-02.md) Chi tiết xe | Mở chuyến hiện tại |
+| [WM-VEH-02](../wm/WM-VEH-02.md) Chi tiết xe | Mở chuyến |
+| [WM-VEH-03](../wm/WM-VEH-03.md) Form xe | Mở chuyến hiện tại |
 
 ## Components (design system)
 

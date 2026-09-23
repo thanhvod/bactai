@@ -7,7 +7,7 @@
 | Route | `/customers/new · /customers/:customerId/edit` |
 | Pattern | `form` |
 | Roles | admin, operation, accountant |
-| Kích thước mockup | 1440×1260 |
+| Kích thước mockup | 1440×1300 |
 | Mockup | [../../mockups/WM-CUS-03.html](../../mockups/WM-CUS-03.html) · canvas artboard `WM-CUS-03.dc.html` |
 
 ## Mục đích

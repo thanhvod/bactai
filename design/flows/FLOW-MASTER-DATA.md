@@ -25,12 +25,12 @@ flowchart LR
 
 | # | Actor | Màn hình | Route | Hành động |
 |---:|---|---|---|---|
-| 1 | User | API | `` | Tìm/lọc, bấm Tạo |
-| 2 | User | API | `` | Nhập field bắt buộc, lưu |
-| 3 | System | API | `` | Mở chi tiết vừa tạo |
-| 4 | User | API | `` | Thêm địa chỉ/liên hệ |
-| 5 | User | API | `` | Tạo tài xế + tài khoản app |
-| 6 | User | API | `` | Thêm mốc lương cố định |
+| 1 | User | [WM-CUS-01](../screens/wm/WM-CUS-01.md) Danh sách khách hàng | `/customers` | Tìm/lọc, bấm Tạo |
+| 2 | User | [WM-CUS-03](../screens/wm/WM-CUS-03.md) Form khách hàng | `/customers/new · /customers/:customerId/edit` | Nhập field bắt buộc, lưu |
+| 3 | System | [WM-CUS-02](../screens/wm/WM-CUS-02.md) Chi tiết khách hàng | `/customers/:customerId` | Mở chi tiết vừa tạo |
+| 4 | User | [WM-CUS-04](../screens/wm/WM-CUS-04.md) Sổ địa chỉ/liên hệ | `/customers/:customerId/locations (tab)` | Thêm địa chỉ/liên hệ |
+| 5 | User | [WM-DRV-03](../screens/wm/WM-DRV-03.md) Form tài xế | `/drivers/new · /drivers/:driverId/edit` | Tạo tài xế + tài khoản app |
+| 6 | User | [WM-DRV-04](../screens/wm/WM-DRV-04.md) Lịch sử lương cố định | `/drivers/:driverId/salary-history (tab Lương/ứng)` | Thêm mốc lương cố định |
 | 7 | User | API | `` | Tạo xe (biển số duy nhất) |
 | 8 | User | API | `` | Tạo NCC |
 | 9 | User | API | `` | Hoặc import Excel |

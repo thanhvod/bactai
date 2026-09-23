@@ -7,7 +7,7 @@
 | Route | `/customers` |
 | Pattern | `list` |
 | Roles | admin, operation, accountant |
-| Kích thước mockup | 1440×1000 |
+| Kích thước mockup | 1440×960 |
 | Mockup | [../../mockups/WM-CUS-01.html](../../mockups/WM-CUS-01.html) · canvas artboard `WM-CUS-01.dc.html` |
 
 ## Mục đích

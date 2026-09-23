@@ -85,7 +85,7 @@ Tổng nợ, quá hạn, số dư, tuổi nợ, đơn còn nợ (DueIndicator), 
 
 ## Components (design system)
 
-`Button`, `DueIndicator`, `StatusBadge`, `DataTable`, `Checkbox`, `WarningPanel`, `EntityHeader`, `IconButton`, `SummaryStrip`, `Breadcrumb`, `Tabs`, `AppShell`, `Sidebar`, `Logo`, `Topbar`, `QuickSearch`, `NotificationBell`
+`Button`, `SummaryStrip`, `DueIndicator`, `StatusBadge`, `DataTable`, `Checkbox`, `WarningPanel`, `EntityHeader`, `IconButton`, `Breadcrumb`, `Tabs`, `AppShell`, `Sidebar`, `Logo`, `Topbar`, `QuickSearch`, `NotificationBell`
 
 ## API (GraphQL)
 

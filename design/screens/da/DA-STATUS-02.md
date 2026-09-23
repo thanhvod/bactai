@@ -60,7 +60,7 @@ ReasonBottomSheet: đặt chuyến Tạm dừng với lý do từ danh mục, gh
 
 ## Components (design system)
 
-`ReasonBottomSheet`, `Banner`, `FilterChip`, `FormField`, `Textarea`, `Button`, `BottomSheet`, `EntityHeader`, `StatusBadge`, `StopCard`, `MoneyText`, `ListRow`, `PrimaryBottomAction`, `IconButton`, `MobileHeader`
+`ReasonBottomSheet`, `Banner`, `FilterChip`, `FormField`, `Textarea`, `Button`, `BottomSheet`, `EntityHeader`, `StatusBadge`, `StopCard`, `MoneyText`, `PrimaryBottomAction`, `IconButton`, `MobileHeader`
 
 ## API (GraphQL)
 

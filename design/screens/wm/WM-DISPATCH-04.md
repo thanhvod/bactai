@@ -40,7 +40,7 @@ Bản đồ + LocationList vị trí gần nhất của xe có chuyến đang ch
 | Mở chuyến từ danh sách vị trí | [WM-TRIP-01](../wm/WM-TRIP-01.md) Chi tiết chuyến | `/trips/:tripId` | action |
 | Mở tab GPS của chuyến | [WM-TRIP-01](../wm/WM-TRIP-01.md) Chi tiết chuyến | `/trips/:tripId` | action |
 | Mở chuyến chưa chạy | [WM-TRIP-01](../wm/WM-TRIP-01.md) Chi tiết chuyến | `/trips/:tripId` | action |
-| Mở xe | WM-VEH-02 | | action |
+| Mở xe | [WM-VEH-02](../wm/WM-VEH-02.md) Chi tiết xe | `/vehicles/:vehicleId` | action |
 | Mở bảng điều phối | [WM-DISPATCH-01](../wm/WM-DISPATCH-01.md) Bảng điều phối | `/dispatch` | action |
 | Sidebar: Dashboard | WM-DASH-01 | | nav |
 | Sidebar: Đơn hàng | WM-ORD-01 | | nav |
@@ -52,8 +52,8 @@ Bản đồ + LocationList vị trí gần nhất của xe có chuyến đang ch
 | Sidebar: Sự cố | [WM-DISPATCH-05](../wm/WM-DISPATCH-05.md) Sự cố vận hành | `/dispatch/incidents` | nav |
 | Sidebar: Khách hàng | WM-CUS-01 | | nav |
 | Sidebar: Tài xế | WM-DRV-01 | | nav |
-| Sidebar: Xe | WM-VEH-01 | | nav |
-| Sidebar: Nhà cung cấp | WM-SUP-01 | | nav |
+| Sidebar: Xe | [WM-VEH-01](../wm/WM-VEH-01.md) Danh sách xe | `/vehicles` | nav |
+| Sidebar: Nhà cung cấp | [WM-SUP-01](../wm/WM-SUP-01.md) Danh sách NCC | `/suppliers` | nav |
 | Sidebar: Thu chi & Công nợ | WM-FIN-01 | | nav |
 | Sidebar: Lương | WM-PAYROLL-01 | | nav |
 | Sidebar: Báo cáo | WM-RPT-01 | | nav |

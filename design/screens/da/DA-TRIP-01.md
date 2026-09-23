@@ -87,7 +87,7 @@ Xem chuyến: điểm lấy/trả, hàng, ghi chú, COD, chứng từ, sự cố
 
 ## Components (design system)
 
-`EntityHeader`, `StatusBadge`, `StopCard`, `MoneyText`, `ListRow`, `Button`, `PrimaryBottomAction`, `IconButton`, `MobileHeader`
+`EntityHeader`, `StatusBadge`, `StopCard`, `MoneyText`, `Button`, `PrimaryBottomAction`, `IconButton`, `MobileHeader`
 
 ## API (GraphQL)
 

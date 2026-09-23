@@ -44,10 +44,10 @@ def _chips(items, active=0):
     out = []
     for i, c in enumerate(items):
         on = i == active
-        out.append(f'<span style="display: inline-flex; align-items: center; height: 32px; padding: 0 12px; border-radius: 16px; font-size: 14px; '
+        out.append(f'<span style="display: inline-flex; align-items: center; height: 32px; padding: 0 10px; border-radius: 16px; font-size: 13px; '
                    f'font-weight: {600 if on else 500}; border: 1px solid {T["primary"] if on else T["border-control"]}; '
                    f'background: {T["primary-soft"] if on else T["surface"]}; color: {T["primary"] if on else T["text"]}; white-space: nowrap;">{c}</span>')
-    return f'<div style="display: flex; gap: 8px; flex-shrink: 0; flex-wrap: wrap;">{"".join(out)}</div>'
+    return f'<div style="display: flex; gap: 6px; flex-shrink: 0; flex-wrap: wrap;">{"".join(out)}</div>'
 
 
 def _seg(items, active, links):
@@ -221,7 +221,7 @@ def _order_card(o):
         w = badge(warn, "warning", size=13)
     else:
         w = muted(f"Hạn TT {due_}", 13) if due_ != "—" else ""
-    money_line = row(muted("Còn nợ", 14), text(money(remain), 15, 600, T["warning"] if remain else T["text-muted"], NUMW), spacer(), w, gap=6)
+    money_line = row(text("Còn nợ", 14, 400, T["text-muted"], "white-space: nowrap;"), text(money(remain), 15, 600, T["warning"] if remain else T["text-muted"], NUMW), spacer(), w, gap=6)
     return m_card(col(row(text(c, 15, 600, extra=NUMW), spacer(), status(stt), gap=8),
                       col(text(cus, 15, 500), muted(route, 14), gap=0), money_line, gap=4),
                   to="MA-ORD-02", trigger="Mở chi tiết đơn", pad=12)
@@ -321,7 +321,7 @@ def trip_01():
     head = mobile_header("Đơn & chuyến", right=_hbtn("map", "Theo dõi xe", "MA-MAP-01", trigger="Mở bản đồ theo dõi xe"))
     trips = [t for t in D.TRIPS if t[0] in ("CX-202609-0001", "CX-202609-0003", "CX-202609-0002", "CX-202609-0004")]
     body = col(_seg(["Đơn", "Chuyến"], 1, ["MA-ORD-01", None]),
-               _chips(["Hôm nay · 4", "Đang chạy · 2", "Sắp chạy", "Có cảnh báo"], 0),
+               _chips(["Hôm nay", "Đang chạy", "Sắp chạy", "Cảnh báo"], 0),
                *[_trip_card(t) for t in trips], gap=10)
     return mobile_frame(head, body, bottom_nav(MA_TABS, 1), h=H)
 
@@ -386,7 +386,7 @@ def cus_01():
         warn2 = badge(c["warn"], "warning", size=13) if c["warn"] == "Vượt hạn mức" else ""
         return m_card(col(row(text(c["name"], 15, 600), spacer(), warn2, gap=8),
                           muted(f"{c['id']} · {c['phone']}", 14),
-                          row(muted("Còn nợ", 14), text(money(c["debt"]), 15, 600, T["warning"] if c["debt"] else T["text-muted"], NUMW), spacer(), w, gap=6),
+                          row(text("Còn nợ", 14, 400, T["text-muted"], "white-space: nowrap;"), text(money(c["debt"]), 15, 600, T["warning"] if c["debt"] else T["text-muted"], NUMW), spacer(), w, gap=6),
                           gap=2), to="MA-CUS-02", trigger="Mở chi tiết khách", pad=12)
     body = col(_search("Tìm tên, mã, số điện thoại…"), _chips(["Tất cả", "Còn nợ", "Quá hạn", "Vượt hạn mức"], 0),
                *[card(c) for c in D.CUSTOMERS], gap=10)
@@ -398,7 +398,7 @@ def cus_02():
     head = mobile_header("Công ty Gạo Miền Tây", back_to="MA-CUS-01", sub="CUS-A-001 · 0292 3812 456",
                          right=_hbtn("phone", "Gọi khách"))
     debt = m_card(col(
-        row(col(muted("Còn nợ", 14), text(money(27_500_000), 22, 700, T["warning"], NUMW), gap=0), spacer(),
+        row(col(text("Còn nợ", 14, 400, T["text-muted"], "white-space: nowrap;"), text(money(27_500_000), 22, 700, T["warning"], NUMW), gap=0), spacer(),
             col(muted("Quá hạn", 14), text(money(15_000_000), 18, 700, T["danger"], NUMW), gap=0, extra="align-items: flex-end;"), gap=8),
         progress(27.5, "warning", 8),
         row(muted("Hạn mức 100.000.000 đ · 27,5%", 13), spacer(), muted("Nợ 15 ngày", 13), gap=8),

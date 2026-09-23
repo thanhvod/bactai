@@ -1,0 +1,3288 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Account {
+  avatarUrl: String
+  email: String!
+  hasAppPassword: Boolean!
+  id: ID!
+  mustChangePassword: Boolean!
+  name: String
+  phone: String
+}
+
+type AgingReportView {
+  current: Money!
+  d1_15: Money!
+  d16_30: Money!
+  d31_60: Money!
+  d60p: Money!
+}
+
+type AgingView {
+  current: Money!
+  d1_15: Money!
+  d16_30: Money!
+  d31_60: Money!
+  d60p: Money!
+}
+
+input AllocatePaymentInput {
+  lines: [AllocationLineInput!]!
+  paymentId: ID!
+}
+
+type AllocatePaymentPayload {
+  creditBalance: Money!
+  payment: PaymentView!
+}
+
+input AllocationLineInput {
+  amount: Money!
+  orderId: ID!
+}
+
+type AllocationView {
+  amount: Money!
+  createdAt: DateTime!
+  id: ID!
+  method: String
+  orderCode: String!
+  orderId: ID!
+  paymentCode: String!
+  paymentId: ID!
+  receivedAt: DateTime
+}
+
+type AmountCount {
+  amount: Money!
+  count: Int!
+}
+
+enum AttachmentCategory {
+  CONTRACT
+  DEBT_STATEMENT_PDF
+  EXPENSE_RECEIPT
+  INCIDENT_PHOTO
+  INVOICE
+  LICENSE
+  LOADING_RECEIPT
+  LOGO
+  OTHER
+  PAYMENT_PROOF
+  POD
+  PRINT_DOCUMENT
+  WAREHOUSE_SLIP
+}
+
+type AttachmentView {
+  capturedAt: DateTime
+  category: String!
+  createdAt: DateTime!
+  entityId: ID!
+  entityType: String!
+  fileName: String!
+  id: ID!
+  lat: Float
+  lng: Float
+  mimeType: String!
+  note: String
+  sharedWithCustomer: Boolean!
+  size: Int!
+  status: String!
+  uploadedByName: String
+  uploadedByType: String!
+  url: String
+}
+
+type BookingConnection {
+  nodes: [BookingView!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+input BookingFilter {
+  dateFrom: String
+  dateTo: String
+  keyword: String
+  status: [String!]
+}
+
+input BookingInput {
+  cargoName: String!
+  contactName: String!
+  contactPhone: String!
+  deliverBefore: DateTime
+  flexibility: String
+  fragile: Boolean
+  loadingAtDrop: Boolean
+  loadingAtPickup: Boolean
+  merchantId: ID!
+  note: String
+  packages: Int
+  pickupFrom: DateTime
+  stops: [BookingStopInput!]!
+  vehicleTypeHint: String
+  weightTon: Float
+}
+
+type BookingNoteView {
+  authorName: String
+  authorType: String!
+  body: String!
+  createdAt: DateTime!
+  id: ID!
+}
+
+type BookingStatusEntry {
+  actorName: String
+  changedAt: DateTime!
+  fromStatus: String
+  reason: String
+  toStatus: String!
+}
+
+input BookingStopInput {
+  address: String!
+  addressId: ID
+  contactName: String
+  contactPhone: String
+  locationName: String
+  note: String
+  type: String!
+}
+
+type BookingStopView {
+  address: String!
+  contactName: String
+  contactPhone: String
+  locationName: String
+  note: String
+  type: String!
+}
+
+type BookingView {
+  accountEmail: String
+  accountName: String
+  cancelReason: String
+  cargoName: String!
+  code: String!
+  contactName: String!
+  contactPhone: String!
+  createdAt: DateTime!
+  customerId: ID
+  customerName: String
+  deliverBefore: DateTime
+  flexibility: String
+  fragile: Boolean!
+  id: ID!
+  loadingAtDrop: Boolean!
+  loadingAtPickup: Boolean!
+  merchantId: ID!
+  merchantName: String!
+  note: String
+  notes: [BookingNoteView!]!
+  orderAdjustments: JSON
+  orderCode: String
+  orderId: ID
+  packages: Int
+  pickupFrom: DateTime
+  rejectReason: String
+  status: String!
+  statusHistory: [BookingStatusEntry!]!
+  stops: [BookingStopView!]!
+  vehicleTypeHint: String
+  weightTon: Float
+}
+
+input CargoLineInput {
+  cargoTypeId: ID
+  declaredValue: Money
+  dropoffStopId: ID
+  id: ID
+  name: String!
+  note: String
+  packagingUnit: String
+  packagingUnitId: ID
+  pickupStopId: ID
+  properties: [String!]
+  quantity: Float
+  volumeM3: Float
+  weightKg: Float
+}
+
+type CargoLineView {
+  cargoTypeId: ID
+  cargoTypeName: String
+  declaredValue: Money
+  dropoffStopId: ID
+  id: ID!
+  name: String!
+  note: String
+  packagingUnit: String
+  packagingUnitId: ID
+  pickupStopId: ID
+  properties: [String!]!
+  quantity: Float
+  volumeM3: Float
+  weightKg: Float
+}
+
+input CatalogItemInput {
+  active: Boolean
+  appliesTo: String
+  code: String
+  name: String!
+  sortOrder: Int
+  type: String!
+}
+
+type CatalogItemView {
+  active: Boolean!
+  appliesTo: String
+  code: String!
+  id: ID!
+  isDefault: Boolean!
+  name: String!
+  sortOrder: Int!
+  type: String!
+  usageCount: Int!
+}
+
+enum CatalogType {
+  ADDON_SERVICE
+  CARGO_TYPE
+  CUSTOMER_GROUP
+  DEDUCTION_REASON
+  DOCUMENT_TYPE
+  EXPENSE_CATEGORY
+  INCIDENT_TYPE
+  PACKAGING_UNIT
+  PAUSE_REASON
+  SUPPLIER_TYPE
+  VEHICLE_TYPE
+}
+
+input CheckTripOverlapInput {
+  driverId: ID
+  plannedEndAt: DateTime
+  plannedStartAt: DateTime!
+  tripId: ID
+  vehicleId: ID
+}
+
+type CodHeldReport {
+  overThresholdCount: Int!
+  rows: [CodHeldReportRow!]!
+  thresholdAmount: Money!
+  thresholdDays: Int!
+  totalHeld: Money!
+}
+
+type CodHeldReportRow {
+  codCollected: Money!
+  codHeld: Money!
+  codRemitted: Money!
+  code: String!
+  driverId: ID!
+  heldDays: Int!
+  items: [CodItemView!]!
+  name: String!
+  oldestHeldAt: DateTime
+  overAmount: Boolean!
+  overDays: Boolean!
+  phone: String!
+  remittances: [CodRemittanceView!]!
+}
+
+type CodItemView {
+  address: String!
+  codActual: Money!
+  codExpected: Money!
+  collectedAt: DateTime!
+  customerName: String!
+  daysHeld: Int!
+  held: Money!
+  orderCode: String!
+  orderId: ID!
+  remitted: Money!
+  stopId: ID!
+  stopName: String
+  stopSequence: Int!
+  tripCode: String
+  tripId: ID
+}
+
+type CodRemittanceItemView {
+  amount: Money!
+  orderCode: String!
+  stopId: ID!
+  stopName: String
+}
+
+type CodRemittanceView {
+  amount: Money!
+  code: String!
+  id: ID!
+  method: String!
+  receivedAt: DateTime!
+}
+
+input ContactInput {
+  email: String
+  name: String
+  phone: String
+  role: String
+  zalo: String
+}
+
+type ContactView {
+  email: String
+  name: String
+  phone: String
+  role: String
+  zalo: String
+}
+
+input CreateDebtStatementInput {
+  customerId: ID!
+  note: String
+  periodFrom: String!
+  periodTo: String!
+  scope: String
+}
+
+input CreateMerchantInput {
+  address: String
+  contactName: String
+  email: String
+  legalName: String
+  name: String!
+  phone: String
+  taxCode: String
+}
+
+input CreateOrderInput {
+  addons: [OrderAddonInput!]
+  bookingId: ID
+  cargoLines: [CargoLineInput!]
+  createTrip: QuickTripInput
+  customerId: ID!
+  dueDate: String
+  freightAmount: Money!
+  internalNote: String
+  note: String
+  orderDate: String
+  requiredCapacityTons: Float
+  requiredVehicleTypeId: ID
+  status: String
+  stops: [OrderStopInput!]!
+}
+
+type CreditLimitCheckView {
+  creditLimit: Money
+  currentDebt: Money!
+  details: JSON
+  overLimit: Boolean!
+  overdueOrders: Int!
+  projectedDebt: Money!
+  warnings: [String!]!
+}
+
+type CurrentContext {
+  membershipId: ID!
+  merchantCode: String!
+  merchantId: ID!
+  merchantName: String!
+  permissions: [String!]!
+  role: String!
+}
+
+type CustomerAccountView {
+  billingAddress: String
+  companyName: String
+  contactTitle: String
+  email: String
+  fullName: String!
+  id: ID!
+  notificationPrefs: JSON
+  phone: String!
+  taxCode: String
+}
+
+input CustomerAddressInput {
+  address: String!
+  contactName: String
+  contactPhone: String
+  isDefaultPickup: Boolean
+  lat: Float
+  lng: Float
+  name: String!
+  note: String
+  usage: String
+}
+
+type CustomerAddressView {
+  address: String!
+  contactName: String
+  contactPhone: String
+  id: ID!
+  isDefaultPickup: Boolean!
+  lat: Float
+  lng: Float
+  name: String!
+  note: String
+  usage: String!
+}
+
+type CustomerConnection {
+  nodes: [CustomerView!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+input CustomerDebtFilter {
+  asOf: String
+  customerId: ID
+  hasCredit: Boolean
+  openOnly: Boolean
+  overLimit: Boolean
+  overdueOnly: Boolean
+  search: String
+}
+
+type CustomerDebtOrderRow {
+  allocated: Money!
+  code: String!
+  customerId: ID!
+  dueDate: DateTime
+  orderDate: DateTime!
+  orderId: ID!
+  overdueDays: Int!
+  remaining: Money!
+  routeSummary: String
+  statementCode: String
+  status: String!
+  total: Money!
+}
+
+type CustomerDebtReport {
+  aging: AgingReportView!
+  rows: [CustomerDebtReportRow!]!
+  totalCredit: Money!
+  totalDebt: Money!
+  totalOverdue: Money!
+}
+
+type CustomerDebtReportRow {
+  aging: AgingReportView!
+  code: String!
+  creditBalance: Money!
+  creditLimit: Money
+  customerId: ID!
+  maxOverdueDays: Int!
+  name: String!
+  openOrders: Int!
+  overdue: Money!
+  paid: Money!
+  receivable: Money!
+  totalDebt: Money!
+  warnings: [String!]!
+}
+
+type CustomerDebtResult {
+  orders: [CustomerDebtOrderRow!]!
+  rows: [CustomerDebtRow!]!
+  totals: DebtTotals!
+}
+
+type CustomerDebtRow {
+  aging: AgingView!
+  creditBalance: Money!
+  creditLimit: Money
+  customer: RefView!
+  limitUsagePct: Int
+  maxOverdueDays: Int!
+  openOrders: Int!
+  overLimit: Boolean!
+  overdueAmount: Money!
+  overdueOrders: Int!
+  paid: Money!
+  phone: String
+  receivable: Money!
+  remaining: Money!
+}
+
+type CustomerDebtSummaryView {
+  aging: AgingView!
+  creditBalance: Money!
+  creditLimit: Money
+  limitUsagePct: Int
+  maxOverdueDays: Int!
+  openOrders: Int!
+  overLimit: Boolean!
+  overdueAmount: Money!
+  overdueOrders: Int!
+  paid: Money!
+  receivable: Money!
+  remaining: Money!
+}
+
+input CustomerFilter {
+  debtStatus: String
+  groupId: ID
+  search: String
+  status: String
+}
+
+input CustomerInput {
+  billingAddress: String
+  creditLimit: Money
+  defaultDebtDays: Int
+  email: String
+  groupId: ID
+  invoiceEmail: String
+  legalName: String
+  name: String!
+  note: String
+  phone: String
+  primaryContact: ContactInput
+  status: String
+  taxCode: String
+  type: String!
+}
+
+input CustomerLocationInput {
+  address: String!
+  contactName: String
+  contactPhone: String
+  isDefault: Boolean
+  lat: Float
+  lng: Float
+  name: String!
+  note: String
+  province: String
+  usage: String!
+}
+
+type CustomerLocationView {
+  active: Boolean!
+  address: String!
+  contactName: String
+  contactPhone: String
+  customerId: ID!
+  id: ID!
+  isDefault: Boolean!
+  lat: Float
+  lng: Float
+  name: String!
+  note: String
+  province: String
+  usage: String!
+  usedInOrders: Int!
+}
+
+type CustomerMe {
+  account: CustomerAccountView!
+  merchantLinks: [MerchantLinkView!]!
+}
+
+input CustomerProfileInput {
+  billingAddress: String
+  companyName: String
+  contactTitle: String
+  email: String
+  fullName: String!
+  notificationPrefs: JSON
+  taxCode: String
+}
+
+type CustomerView {
+  billingAddress: String
+  code: String!
+  createdAt: DateTime!
+  creditBalance: Money!
+  creditLimit: Money
+  deactivateReason: String
+  debtSummary: CustomerDebtSummaryView!
+  defaultDebtDays: Int
+  email: String
+  groupId: ID
+  groupName: String
+  hasPortalAccount: Boolean!
+  id: ID!
+  invoiceEmail: String
+  legalName: String
+  locations: [CustomerLocationView!]
+  name: String!
+  note: String
+  orderCount: Int!
+  phone: String
+  primaryContact: ContactView
+  status: String!
+  taxCode: String
+  type: String!
+  updatedAt: DateTime!
+  warnings: [String!]!
+}
+
+type DashboardCodHolder {
+  codHeld: Money!
+  daysHeld: Int!
+  driverId: ID!
+  name: String!
+  overThreshold: Boolean!
+  phone: String!
+}
+
+type DashboardOverdueOrder {
+  code: String!
+  customerId: ID!
+  customerName: String!
+  dueDate: DateTime
+  orderId: ID!
+  overdueDays: Int!
+  remaining: Money!
+}
+
+type DashboardSummary {
+  cashInMonth: Money!
+  codHeld: AmountCount!
+  codHolders: [DashboardCodHolder!]!
+  codOverThreshold: Int!
+  costMonth: Money!
+  date: String!
+  newOrdersToday: Int!
+  openIncidents: Int!
+  ordersNeedAction: Int!
+  overdueDebt: AmountCount!
+  overdueOrders: [DashboardOverdueOrder!]!
+  payrollPending: Int!
+  profitMonth: Money!
+  receivable: Money!
+  revenueMonth: Money!
+  runningTrips: Int!
+  scheduleWarnings: Int!
+  supplierPayable: Money!
+  todayTripList: [DashboardTrip!]!
+  todayTrips: Int!
+  tripCountsByStatus: [TripStatusCount!]!
+  unassignedOrders: Int!
+}
+
+type DashboardTrip {
+  code: String!
+  driverName: String
+  hasWarning: Boolean!
+  id: ID!
+  lastLocationAt: DateTime
+  openIncident: Boolean!
+  orderCode: String!
+  orderId: ID!
+  plannedEndAt: DateTime
+  plannedStartAt: DateTime!
+  routeSummary: String
+  status: String!
+  vehiclePlate: String
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type DebtStatementConnection {
+  nodes: [DebtStatementView!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type DebtStatementCustomerRef {
+  code: String!
+  hasPortalAccount: Boolean!
+  id: ID!
+  invoiceEmail: String
+  name: String!
+  phone: String
+}
+
+type DebtStatementDiffView {
+  currentPaid: Money!
+  currentRemaining: Money!
+  message: String!
+  orderCode: String!
+  orderId: ID!
+  snapshotPaid: Money!
+  snapshotRemaining: Money!
+}
+
+input DebtStatementFilter {
+  customerId: ID
+  status: [String!]
+}
+
+type DebtStatementLineView {
+  dueDate: DateTime
+  id: ID!
+  orderCode: String!
+  orderDate: DateTime!
+  orderId: ID!
+  overdueDays: Int!
+  paidAmount: Money!
+  remainingAmount: Money!
+  route: String
+  sequence: Int!
+  totalAmount: Money!
+}
+
+type DebtStatementView {
+  cancelReason: String
+  cancelledAt: DateTime
+  code: String!
+  createdAt: DateTime!
+  createdByName: String
+  customer: DebtStatementCustomerRef!
+  diffVsCurrent: [DebtStatementDiffView!]
+  finalizedAt: DateTime
+  finalizedByName: String
+  id: ID!
+  lineCount: Int!
+  lines: [DebtStatementLineView!]
+  note: String
+  paidAmount: Money!
+  pdfAttachmentId: ID
+  pdfUrl: String
+  periodFrom: DateTime!
+  periodTo: DateTime!
+  remainingAmount: Money!
+  scope: String!
+  sentAt: DateTime
+  sharedWithCustomer: Boolean!
+  status: String!
+  totalAmount: Money!
+}
+
+type DebtTotals {
+  creditBalance: Money!
+  customerCount: Int!
+  overdueAmount: Money!
+  paid: Money!
+  receivable: Money!
+  remaining: Money!
+}
+
+type DispatchSummary {
+  byStatus: [StatusCount!]!
+  date: String!
+  openIncidents: Int!
+  ordersWaitingDispatch: Int!
+  running: Int!
+  total: Int!
+  unassigned: Int!
+  warnings: Int!
+}
+
+enum DocType {
+  BOOKING
+  CUSTOMER
+  DEBT_STATEMENT
+  DRIVER
+  EXPENSE
+  INCIDENT
+  ORDER
+  PAYMENT_IN
+  PAYROLL
+  SUPPLIER
+  TRIP
+  VEHICLE
+}
+
+type DriverAccountCredentials {
+  phone: String!
+  status: String!
+  tempPassword: String!
+}
+
+type DriverAppAccountView {
+  deviceInfo: String
+  lastLoginAt: DateTime
+  mustChangePassword: Boolean!
+  status: String!
+}
+
+type DriverCalendarDay {
+  date: String!
+  statuses: [String!]!
+  tripCount: Int!
+}
+
+type DriverCargoView {
+  name: String!
+  note: String
+  packagingUnit: String
+  properties: [String!]!
+  quantity: Float
+  type: String
+  volumeM3: Float
+  weightKg: Float
+}
+
+input DriverCodHeldFilter {
+  driverId: ID
+  warningOnly: Boolean
+}
+
+type DriverCodHeldReport {
+  codWarningAmount: Money!
+  codWarningDays: Int!
+  rows: [DriverCodHeldRow!]!
+  totalHeld: Money!
+}
+
+type DriverCodHeldRow {
+  codCollected: Money!
+  codHeld: Money!
+  codRemitted: Money!
+  daysHeld: Int!
+  driver: RefView!
+  items: [DriverCodItemView!]!
+  oldestHeldAt: DateTime
+  overAmount: Boolean!
+  overDays: Boolean!
+  phone: String
+}
+
+input DriverCodInput {
+  amount: Money!
+  idempotencyKey: String
+  note: String
+  reason: String
+  stopId: ID!
+}
+
+type DriverCodItemView {
+  address: String!
+  codActual: Money!
+  codExpected: Money!
+  collectedAt: DateTime!
+  customerName: String!
+  daysHeld: Int!
+  held: Money!
+  orderCode: String!
+  orderId: ID!
+  remitted: Money!
+  stopId: ID!
+  stopName: String
+  stopSequence: Int!
+  tripCode: String
+  tripId: ID
+}
+
+type DriverConnection {
+  nodes: [DriverView!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type DriverCurrentTrip {
+  code: String!
+  id: ID!
+  plannedStartAt: DateTime!
+  routeSummary: String
+  status: String!
+  vehiclePlate: String
+}
+
+input DriverFilter {
+  codWarning: Boolean
+  hasApp: Boolean
+  search: String
+  status: String
+}
+
+type DriverIncidentBrief {
+  code: String!
+  createdAt: DateTime!
+  id: ID!
+  severity: String!
+  status: String!
+  title: String!
+}
+
+input DriverIncidentInput {
+  attachmentIds: [ID!]
+  description: String
+  idempotencyKey: String
+  location: String
+  severity: String!
+  stopId: ID
+  title: String!
+  tripId: ID!
+  typeId: ID
+}
+
+input DriverInput {
+  address: String
+  appLoginEnabled: Boolean
+  dob: String
+  emergencyContact: String
+  fixedSalary: Money
+  idNumber: String
+  licenseClass: String
+  licenseExpiresAt: String
+  licenseNumber: String
+  name: String!
+  note: String
+  phone: String!
+  salaryEffectiveFrom: String
+  salaryReason: String
+  status: String
+}
+
+input DriverJobsFilter {
+  bucket: String
+  date: String
+  from: String
+  status: [String!]
+  to: String
+}
+
+type DriverLedgerBrief {
+  codHeld: Money!
+  companyOwesDriver: Money!
+  daysHeld: Int!
+  driverOwesCompany: Money!
+  netBalance: Money!
+  overAmount: Boolean!
+  overDays: Boolean!
+}
+
+type DriverLedgerView {
+  codCollected: Money!
+  codHeld: Money!
+  codItems: [DriverCodItemView!]!
+  codRemittances: [PaymentView!]!
+  codRemitted: Money!
+  companyOwesDriver: Money!
+  daysHeld: Int!
+  driver: RefView!
+  driverOwesCompany: Money!
+  entries: [LedgerEntryView!]!
+  netBalance: Money!
+  oldestHeldAt: DateTime
+  overAmount: Boolean!
+  overDays: Boolean!
+  phone: String
+  reimbursableExpenses: [ExpenseView!]!
+  salaryAdvanceUndeducted: Money!
+  salaryAdvances: [ExpenseView!]!
+  tripAdvanceOutstanding: Money!
+  tripAdvances: [TripAdvanceView!]!
+  tripBonuses: [TripBonusView!]!
+}
+
+type DriverMeView {
+  codHeld: Money!
+  code: String!
+  id: ID!
+  licenseClass: String
+  licenseExpiresAt: DateTime
+  merchantHotline: String
+  merchantId: ID!
+  merchantName: String!
+  mustChangePassword: Boolean!
+  name: String!
+  phone: String!
+  unreadNotifications: Int!
+}
+
+type DriverOption {
+  busy: Boolean!
+  busyTripCode: String
+  code: String!
+  id: ID!
+  name: String!
+  phone: String!
+  status: String!
+}
+
+type DriverRef {
+  code: String
+  id: ID!
+  name: String!
+  phone: String!
+  status: String!
+}
+
+type DriverReportRow {
+  bonusTotal: Money!
+  codHeld: Money!
+  code: String!
+  completedTrips: Int!
+  driverId: ID!
+  incidents: Int!
+  name: String!
+  onTimeRate: Float
+  revenue: Money!
+  status: String!
+}
+
+type DriverSalaryHistoryView {
+  amount: Money!
+  createdAt: DateTime!
+  createdByName: String
+  delta: Money
+  effectiveFrom: DateTime!
+  effectiveTo: DateTime
+  id: ID!
+  isCurrent: Boolean!
+  reason: String
+}
+
+type DriverStopPayload {
+  orderStatus: String
+  stop: DriverStopView!
+  warnings: [String!]!
+}
+
+input DriverStopStatusInput {
+  actualAt: DateTime
+  idempotencyKey: String
+  note: String
+  reason: String
+  status: String!
+  stopId: ID!
+  tripId: ID
+}
+
+type DriverStopView {
+  address: String!
+  arrivedAt: DateTime
+  cargoSummary: [String!]!
+  codActual: Money
+  codCollectedAt: DateTime
+  codExpected: Money
+  codNote: String
+  completedAt: DateTime
+  contactName: String
+  contactPhone: String
+  id: ID!
+  lat: Float
+  lng: Float
+  locationName: String
+  note: String
+  orderId: ID!
+  plannedAt: DateTime
+  podCount: Int!
+  sequence: Int!
+  skipReason: String
+  status: String!
+  type: String!
+}
+
+type DriverTripPayload {
+  trip: DriverTripView!
+  warnings: [String!]!
+}
+
+input DriverTripStatusInput {
+  actualAt: DateTime
+  idempotencyKey: String
+  note: String
+  pauseReasonId: ID
+  reason: String
+  status: String!
+  tripId: ID!
+}
+
+type DriverTripView {
+  actualEndAt: DateTime
+  actualStartAt: DateTime
+  allowedNextStatuses: [String!]!
+  attachmentCount: Int!
+  cargoLines: [DriverCargoView!]!
+  codActualTotal: Money!
+  codExpectedTotal: Money!
+  code: String!
+  completedStopCount: Int!
+  customerName: String!
+  driverBonusAmount: Money!
+  id: ID!
+  incidents: [DriverIncidentBrief!]!
+  isRunning: Boolean!
+  lastLocationAt: DateTime
+  note: String
+  orderCode: String!
+  orderId: ID!
+  orderNote: String
+  pauseReason: String
+  plannedEndAt: DateTime
+  plannedStartAt: DateTime!
+  previousStatusBeforePause: String
+  routeSummary: String
+  status: String!
+  stopCount: Int!
+  stops: [DriverStopView!]!
+  vehiclePlate: String
+  vehicleType: String
+}
+
+type DriverView {
+  address: String
+  appAccount: DriverAppAccountView!
+  code: String!
+  createdAt: DateTime!
+  currentTrip: DriverCurrentTrip
+  dob: DateTime
+  emergencyContact: String
+  fixedSalary: Money
+  id: ID!
+  idNumber: String
+  issuedTempPassword: String
+  ledgerSummary: DriverLedgerBrief!
+  licenseClass: String
+  licenseExpiresAt: DateTime
+  licenseNumber: String
+  name: String!
+  note: String
+  phone: String!
+  recentTrips: [MasterTripItem!]
+  salaryHistory: [DriverSalaryHistoryView!]
+  status: String!
+  updatedAt: DateTime!
+  warnings: [String!]!
+}
+
+input EntityRefInput {
+  id: ID!
+  type: String!
+}
+
+enum EntityType {
+  BOOKING
+  CATALOG_ITEM
+  CUSTOMER
+  CUSTOMER_LOCATION
+  DEBT_STATEMENT
+  DRIVER
+  EXPENSE
+  INCIDENT
+  MERCHANT
+  MERCHANT_USER
+  ORDER
+  ORDER_STOP
+  PAYMENT_IN
+  PAYROLL
+  PAYROLL_LINE
+  SETTINGS
+  SUPPLIER
+  TRIP
+  TRIP_ADVANCE
+  VEHICLE
+}
+
+type ExpenseConnection {
+  nodes: [ExpenseView!]!
+  pageInfo: PageInfo!
+  totalAmount: Money!
+  totalCount: Int!
+}
+
+input ExpenseFilter {
+  categoryId: ID
+  dateFrom: String
+  dateTo: String
+  driverId: ID
+  kind: [String!]
+  orderId: ID
+  paidBy: String
+  paidStatus: String
+  search: String
+  status: String
+  supplierId: ID
+  tripId: ID
+  vehicleId: ID
+}
+
+input ExpenseInput {
+  amount: Money!
+  attachmentIds: [ID!]
+  categoryId: ID
+  description: String
+  driverId: ID
+  expenseDate: String!
+  kind: String!
+  note: String
+  orderId: ID
+  paidBy: String
+  paidStatus: String
+  reimbursable: Boolean
+  supplierId: ID
+  tripId: ID
+  vehicleId: ID
+}
+
+type ExpenseView {
+  amount: Money!
+  attachmentCount: Int!
+  cancelReason: String
+  cancelledAt: DateTime
+  categoryId: ID
+  categoryName: String
+  code: String!
+  createdAt: DateTime!
+  description: String
+  driver: RefView
+  driverId: ID
+  expenseDate: DateTime!
+  id: ID!
+  isCost: Boolean!
+  kind: String!
+  kindLabel: String!
+  note: String
+  order: RefView
+  orderId: ID
+  paidAt: DateTime
+  paidBy: String!
+  paidMethod: String
+  paidStatus: String!
+  reimbursable: Boolean!
+  status: String!
+  supplier: RefView
+  supplierId: ID
+  trip: RefView
+  tripId: ID
+  vehicle: RefView
+  vehicleId: ID
+}
+
+input ExportFileInput {
+  filter: JSON
+  template: String!
+}
+
+type ExportedFile {
+  fileName: String!
+  rowCount: Int!
+  template: String!
+  url: String!
+}
+
+input ExternalTransportInput {
+  agreedAmount: Money
+  driverName: String
+  driverPhone: String
+  note: String
+  supplierId: ID
+  vehiclePlate: String
+}
+
+type ExternalTransportView {
+  agreedAmount: Money
+  createdAt: DateTime!
+  driverName: String
+  driverPhone: String
+  id: ID!
+  note: String
+  orderCode: String
+  orderId: ID!
+  supplierId: ID
+  supplierName: String
+  tripCode: String
+  tripId: ID
+  vehiclePlate: String
+}
+
+type FinanceAlertsResult {
+  codWarnings: Int!
+  overdueOrders: Int!
+}
+
+type FinanceLedgerConnection {
+  nodes: [FinanceLedgerEntry!]!
+  pageInfo: PageInfo!
+  summary: FinanceLedgerSummary!
+  totalCount: Int!
+}
+
+type FinanceLedgerEntry {
+  amount: Money!
+  cashMoved: Boolean!
+  code: String!
+  counterpart: String!
+  createdByName: String
+  date: DateTime!
+  direction: String!
+  id: ID!
+  links: String!
+  notRevenue: Boolean!
+  status: String!
+  type: String!
+  typeLabel: String!
+}
+
+input FinanceLedgerFilter {
+  dateFrom: String
+  dateTo: String
+  direction: String
+  search: String
+  status: String
+}
+
+type FinanceLedgerSummary {
+  advanceReturns: Money!
+  cashIn: Money!
+  cashOut: Money!
+  codRemittances: Money!
+  customerReceipts: Money!
+  driverPaidOut: Money!
+  otherIn: Money!
+  unpaidOut: Money!
+}
+
+input GeneratePayrollInput {
+  driverIds: [ID!]
+  month: Int!
+  note: String
+  year: Int!
+}
+
+type GlobalSearchResult {
+  code: String
+  id: ID!
+  status: String
+  subtitle: String
+  title: String!
+  type: String!
+}
+
+type ImportFieldView {
+  key: String!
+  label: String!
+  required: Boolean!
+  sourceColumn: String
+}
+
+type ImportJobView {
+  committedAt: DateTime
+  createdAt: DateTime!
+  createdCount: Int
+  entityType: String!
+  errorRows: Int!
+  fields: [ImportFieldView!]!
+  fileName: String!
+  id: ID!
+  rows: [ImportRowView!]!
+  skippedCount: Int
+  status: String!
+  totalRows: Int!
+  unmappedColumns: [String!]!
+  validRows: Int!
+  warningRows: Int!
+}
+
+input ImportPreviewFilter {
+  onlyErrors: Boolean
+  onlyWarnings: Boolean
+}
+
+type ImportRowView {
+  createdCode: String
+  errors: [String!]!
+  line: Int!
+  values: JSON!
+  warnings: [String!]!
+}
+
+type ImportTemplateFile {
+  fileName: String!
+  url: String!
+}
+
+type IncidentConnection {
+  nodes: [IncidentView!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+input IncidentFilter {
+  assigneeId: ID
+  dateFrom: String
+  dateTo: String
+  orderId: ID
+  search: String
+  severity: [String!]
+  status: [String!]
+  tripId: ID
+  typeId: ID
+}
+
+input IncidentInput {
+  assigneeUserId: ID
+  attachmentIds: [ID!]
+  clientRequestId: String
+  description: String
+  location: String
+  orderId: ID
+  severity: String!
+  status: String
+  stopId: ID
+  title: String!
+  tripId: ID
+  typeId: ID
+}
+
+type IncidentView {
+  activity: [TimelineEntry!]
+  assigneeName: String
+  assigneeUserId: ID
+  attachments: [AttachmentView!]
+  code: String!
+  createdAt: DateTime!
+  description: String
+  driverId: ID
+  driverName: String
+  driverPhone: String
+  id: ID!
+  location: String
+  orderCode: String
+  orderId: ID
+  reportedByName: String
+  reportedByType: String!
+  resolvedAt: DateTime
+  resolvedNote: String
+  severity: String!
+  status: String!
+  stopId: ID
+  title: String!
+  tripCode: String
+  tripId: ID
+  typeId: ID
+  typeName: String
+  updatedAt: DateTime!
+  vehicleId: ID
+  vehiclePlate: String
+}
+
+input InviteMerchantUserInput {
+  email: String!
+  extraPermissions: [String!]
+  name: String!
+  note: String
+  phone: String
+  role: String!
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+type LastKnownLocationView {
+  capturedAt: DateTime!
+  driverName: String
+  driverPhone: String
+  isStale: Boolean!
+  lat: Float!
+  lng: Float!
+  orderCode: String!
+  tripCode: String!
+  tripId: ID!
+  tripStatus: String!
+  vehiclePlate: String
+}
+
+type LastLocationView {
+  capturedAt: DateTime!
+  isStale: Boolean!
+  lat: Float!
+  lng: Float!
+  speed: Float
+}
+
+type LedgerEntryView {
+  companyOwes: Money!
+  date: DateTime!
+  description: String!
+  docCode: String
+  driverOwes: Money!
+  kind: String!
+  refId: ID
+  runningBalance: Money!
+}
+
+input MarkExpensePaidInput {
+  method: String
+  note: String
+  paidAt: DateTime
+}
+
+type MasterExpenseItem {
+  amount: Money!
+  categoryName: String
+  code: String!
+  description: String
+  expenseDate: DateTime!
+  id: ID!
+  kind: String!
+  orderCode: String
+  paidBy: String!
+  paidStatus: String!
+  status: String!
+  supplierName: String
+  tripCode: String
+  vehiclePlate: String
+}
+
+type MasterRef {
+  id: ID!
+  name: String!
+}
+
+type MasterTripItem {
+  actualEndAt: DateTime
+  actualStartAt: DateTime
+  code: String!
+  driverBonusAmount: Money!
+  driverName: String
+  id: ID!
+  orderCode: String
+  orderId: ID!
+  plannedEndAt: DateTime
+  plannedStartAt: DateTime!
+  routeSummary: String
+  status: String!
+  vehiclePlate: String
+}
+
+type Me {
+  account: Account!
+  canCreateMerchant: Boolean!
+  current: CurrentContext
+  memberships: [Membership!]!
+}
+
+type Membership {
+  id: ID!
+  lastAccessAt: DateTime
+  merchantCode: String!
+  merchantId: ID!
+  merchantName: String!
+  role: String!
+  status: String!
+}
+
+type MerchantLinkView {
+  customerCode: String!
+  merchantId: ID!
+  merchantName: String!
+  orderCount: Int!
+  paymentTermDays: Int
+}
+
+type MerchantProfile {
+  address: String
+  businessType: String
+  code: String!
+  contactName: String
+  dispatchHotline: String
+  district: String
+  email: String
+  id: ID!
+  intro: String
+  legalName: String
+  logoAttachmentId: String
+  logoUrl: String
+  name: String!
+  phone: String
+  province: String
+  publicProfile: Boolean!
+  representativeName: String
+  representativeTitle: String
+  serviceAreas: [String!]!
+  services: [String!]!
+  taxCode: String
+  updatedAt: DateTime!
+  yardName: String
+}
+
+input MerchantProfileInput {
+  address: String
+  businessType: String
+  contactName: String
+  dispatchHotline: String
+  district: String
+  email: String
+  intro: String
+  legalName: String
+  logoAttachmentId: ID
+  name: String!
+  phone: String
+  province: String
+  publicProfile: Boolean
+  representativeName: String
+  representativeTitle: String
+  serviceAreas: [String!]
+  services: [String!]
+  taxCode: String
+  yardName: String
+}
+
+input MerchantSettingsInput {
+  codDashboardAlert: Boolean
+  codWarningAmount: Money
+  codWarningDays: Int
+  defaultCreditLimit: Money
+  defaultDebtDays: Int
+  defaultTripHours: Int
+  gpsRetentionDays: Int
+  nearOverlapMinutes: Int
+  overlapWarnDriver: Boolean
+  overlapWarnVehicle: Boolean
+  payrollPeriodType: String
+  payrollStartDay: Int
+  warnOverLimit: Boolean
+  warnOverdue: Boolean
+}
+
+type MerchantSettingsView {
+  codDashboardAlert: Boolean!
+  codWarningAmount: Money!
+  codWarningDays: Int!
+  defaultCreditLimit: Money
+  defaultDebtDays: Int!
+  defaultTripHours: Int!
+  gpsRetentionDays: Int!
+  nearOverlapMinutes: Int!
+  overlapWarnDriver: Boolean!
+  overlapWarnVehicle: Boolean!
+  payrollPeriodType: String!
+  payrollStartDay: Int!
+  updatedAt: DateTime!
+  warnOverLimit: Boolean!
+  warnOverdue: Boolean!
+}
+
+type MerchantUserConnection {
+  nodes: [MerchantUserView!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+input MerchantUserFilter {
+  role: String
+  search: String
+  status: String
+}
+
+type MerchantUserView {
+  appLogin: StaffAppLoginView!
+  effectivePermissions: [String!]!
+  email: String!
+  extraPermissions: [String!]!
+  id: ID!
+  invitedAt: DateTime!
+  invitedByName: String
+  isSelf: Boolean!
+  joinedAt: DateTime
+  lastAccessAt: DateTime
+  name: String!
+  note: String
+  phone: String
+  role: String!
+  status: String!
+  title: String
+}
+
+"""Số tiền VND (số nguyên, có thể > 2^31)"""
+scalar Money
+
+type Mutation {
+  acceptBooking(customerId: ID, id: ID!): BookingView!
+  acceptInvitation(membershipId: ID!): Membership!
+  activateCatalogItem(id: ID!): CatalogItemView!
+  activateCustomer(id: ID!): CustomerView!
+  activateDriver(id: ID!): DriverView!
+  activateSupplier(id: ID!): SupplierView!
+  activateVehicle(id: ID!): VehicleView!
+  addBookingNote(body: String!, bookingId: ID!): BookingView!
+  addDriverSalaryHistory(driverId: ID!, input: SalaryHistoryInput!): [DriverSalaryHistoryView!]!
+  addPayrollItem(input: PayrollItemInput!): PayrollLineView!
+  allocatePayment(input: AllocatePaymentInput!): AllocatePaymentPayload!
+  approvePayroll(id: ID!, note: String): PayrollView!
+  assignIncident(id: ID!, userId: ID!): IncidentView!
+  cancelBooking(id: ID!, reason: String!): BookingView!
+  cancelDebtStatement(id: ID!, reason: String): DebtStatementView!
+  cancelExpense(id: ID!, reason: String!): ExpenseView!
+  cancelImport(id: ID!): ImportJobView!
+  cancelIncident(id: ID!, reason: String!): IncidentView!
+  cancelOrder(id: ID!, reason: String!): OrderView!
+  cancelPaymentIn(id: ID!, reason: String!): PaymentView!
+  cancelPayroll(id: ID!, reason: String!): PayrollView!
+  cancelTrip(id: ID!, reason: String!): TripView!
+  closeIncident(id: ID!, note: String!): IncidentView!
+  commitImport(id: ID!, skipErrors: Boolean = false): ImportJobView!
+  createBooking(input: BookingInput!): BookingView!
+  createCatalogItem(input: CatalogItemInput!): CatalogItemView!
+  createCustomer(input: CustomerInput!): CustomerView!
+  createCustomerLocation(customerId: ID!, input: CustomerLocationInput!): CustomerLocationView!
+  createDebtStatement(input: CreateDebtStatementInput!): DebtStatementView!
+  createDriver(input: DriverInput!): DriverView!
+  createExpense(input: ExpenseInput!): ExpenseView!
+  createIncident(input: IncidentInput!): IncidentView!
+  createMerchant(input: CreateMerchantInput!): Membership!
+  createMyAddress(input: CustomerAddressInput!): CustomerAddressView!
+  createOrResetDriverAccount(driverId: ID!): DriverAccountCredentials!
+  createOrder(input: CreateOrderInput!): OrderPayload!
+  createOrderStop(input: OrderStopInput!, orderId: ID!): OrderView!
+  createPaymentIn(input: PaymentInInput!): PaymentView!
+  createSupplier(input: SupplierInput!): SupplierView!
+  createTrip(input: TripInput!): TripPayload!
+  createVehicle(input: VehicleInput!): VehicleView!
+  deactivateCatalogItem(id: ID!): CatalogItemView!
+  deactivateCustomer(id: ID!, reason: String): CustomerView!
+  deactivateDriver(id: ID!, reason: String!): DriverView!
+  deactivateSupplier(id: ID!, reason: String!): SupplierView!
+  deactivateVehicle(id: ID!, reason: String!): VehicleView!
+  deleteAttachment(id: ID!, reason: String!): AttachmentView!
+  deleteCargoLine(id: ID!): OrderView!
+  deleteCustomerLocation(id: ID!, reason: String): Boolean!
+  deleteMyAddress(id: ID!): Boolean!
+  deleteOrderAddon(id: ID!, reason: String): OrderView!
+  disableDriverAccount(driverId: ID!): DriverView!
+  disableMerchantUserAppLogin(id: ID!): MerchantUserView!
+  driverReportIncident(input: DriverIncidentInput!): IncidentView!
+  driverResumeTrip(idempotencyKey: String, note: String, tripId: ID!): DriverTripPayload!
+  driverSubmitCod(input: DriverCodInput!): DriverStopPayload!
+  driverUpdateStopStatus(input: DriverStopStatusInput!): DriverStopPayload!
+  driverUpdateTripStatus(input: DriverTripStatusInput!): DriverTripPayload!
+  exportFile(input: ExportFileInput!): ExportedFile!
+  finalizeDebtStatement(id: ID!): DebtStatementView!
+  generatePayroll(input: GeneratePayrollInput!): PayrollView!
+  inviteMerchantUser(input: InviteMerchantUserInput!): MerchantUserView!
+  lockMerchantUser(id: ID!): MerchantUserView!
+  markAllNotificationsRead: Int!
+  markDebtStatementSent(id: ID!, shareWithCustomer: Boolean): DebtStatementView!
+  markExpensePaid(id: ID!, input: MarkExpensePaidInput): ExpenseView!
+  markExpensesPaid(ids: [ID!]!, input: MarkExpensePaidInput): [ExpenseView!]!
+  markNotificationRead(id: ID!): Int!
+  markNotificationsRead(ids: [ID!]): Int!
+  markPayrollPaid(id: ID!, paidAt: DateTime): PayrollView!
+  reconcileTripAdvance(input: ReconcileTripAdvanceInput!): TripAdvanceView!
+  refreshDebtStatement(id: ID!): DebtStatementView!
+  rejectBooking(id: ID!, reason: String!): BookingView!
+  removeOrderStop(id: ID!, reason: String): OrderView!
+  removePayrollItem(id: ID!, reason: String!): PayrollLineView!
+  renderDocument(input: RenderDocumentInput!): RenderedDocument!
+  reorderCatalogItems(ids: [ID!]!, type: CatalogType!): [CatalogItemView!]!
+  reorderOrderStops(orderId: ID!, stopIds: [ID!]!): OrderView!
+  resendInvite(id: ID!): MerchantUserView!
+  resetMerchantUserAppPassword(id: ID!, phone: String): StaffAppCredentials!
+  resolveScheduleWarning(id: ID!): Boolean!
+  resumeTrip(id: ID!, note: String): TripView!
+  returnPayroll(id: ID!, reason: String): PayrollView!
+  runFinanceAlerts: FinanceAlertsResult!
+  setAttachmentShared(id: ID!, shared: Boolean!): AttachmentView!
+  setMyAppCredentials(newPassword: String!, phone: String!): Me!
+  setVehicleStatus(id: ID!, reason: String, status: String!): VehicleView!
+  startImport(input: StartImportInput!): ImportJobView!
+  submitPayroll(id: ID!): PayrollView!
+  unallocatePayment(allocationId: ID!, reason: String!): PaymentView!
+  unlockMerchantUser(id: ID!): MerchantUserView!
+  updateBooking(id: ID!, input: BookingInput!): BookingView!
+  updateCatalogItem(id: ID!, input: CatalogItemInput!): CatalogItemView!
+  updateCustomer(id: ID!, input: CustomerInput!): CustomerView!
+  updateCustomerLocation(id: ID!, input: CustomerLocationInput!): CustomerLocationView!
+  updateCustomerProfile(input: CustomerProfileInput!): CustomerMe!
+  updateDriver(id: ID!, input: DriverInput!): DriverView!
+  updateExpense(id: ID!, input: ExpenseInput!, reason: String!): ExpenseView!
+  updateIncident(id: ID!, input: IncidentInput!): IncidentView!
+  updateMerchantProfile(input: MerchantProfileInput!): MerchantProfile!
+  updateMerchantSettings(input: MerchantSettingsInput!): MerchantSettingsView!
+  updateMerchantUser(id: ID!, input: UpdateMerchantUserInput!): MerchantUserView!
+  updateMyAddress(id: ID!, input: CustomerAddressInput!): CustomerAddressView!
+  updateNumberSequenceFormat(docType: DocType!, input: NumberFormatInput!): NumberSequenceView!
+  updateOrder(id: ID!, input: UpdateOrderInput!, reason: String): OrderView!
+  updateOrderPricing(id: ID!, input: OrderPricingInput!): OrderView!
+  updateOrderStatus(id: ID!, note: String, reason: String, status: String!): OrderView!
+  updateOrderStop(id: ID!, input: OrderStopInput!, reason: String): OrderStopView!
+  updatePaymentIn(id: ID!, input: UpdatePaymentInInput!, reason: String!): PaymentView!
+  updateRolePermission(grant: String!, permission: String!, role: String!): PermissionMatrixRow!
+  updateStopCodActual(amount: Money!, id: ID!, note: String, reason: String): OrderStopStatusView!
+  updateStopStatus(actualAt: DateTime, id: ID!, reason: String, status: String!, tripId: ID): OrderStopStatusView!
+  updateSupplier(id: ID!, input: SupplierInput!): SupplierView!
+  updateTrip(id: ID!, input: UpdateTripInput!, reason: String): TripPayload!
+  updateTripStatus(id: ID!, input: TripStatusChangeInput!): TripView!
+  updateVehicle(id: ID!, input: VehicleInput!): VehicleView!
+  upsertCargoLine(input: CargoLineInput!, orderId: ID!): OrderView!
+  upsertExternalTransport(input: ExternalTransportInput!, orderId: ID!, tripId: ID): ExternalTransportView!
+  upsertOrderAddon(input: OrderAddonInput!, orderId: ID!, reason: String): OrderView!
+}
+
+type MyDebtSummary {
+  openOrders: Int!
+  overdue: Money!
+  paid: Money!
+  remaining: Money!
+  total: Money!
+}
+
+type MyOrderConnection {
+  nodes: [MyOrderView!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+input MyOrderFilter {
+  dateFrom: String
+  dateTo: String
+  keyword: String
+  status: [String!]
+  unpaidOnly: Boolean
+}
+
+type MyOrderStopView {
+  actualAt: DateTime
+  address: String!
+  contactName: String
+  place: String
+  plannedAt: DateTime
+  status: String!
+  type: String!
+}
+
+type MyOrderView {
+  bookingCode: String
+  bookingId: ID
+  cargo: [String!]
+  code: String!
+  dueDate: DateTime
+  id: ID!
+  merchantId: ID!
+  merchantName: String!
+  orderDate: DateTime!
+  overdueDays: Int!
+  paidAmount: Money!
+  pricingLines: [PricingLine!]
+  remainingAmount: Money!
+  routeSummary: String
+  sharedAttachments: [SharedAttachmentView!]
+  statementCode: String
+  status: String!
+  stops: [MyOrderStopView!]
+  totalAmount: Money!
+  trips: [MyTripProgress!]
+}
+
+type MyStatementLine {
+  dueDate: DateTime
+  orderCode: String!
+  orderDate: DateTime!
+  orderId: ID!
+  overdueDays: Int!
+  paid: Money!
+  remaining: Money!
+  route: String
+  total: Money!
+}
+
+type MyStatementView {
+  code: String!
+  id: ID!
+  lines: [MyStatementLine!]
+  merchantName: String!
+  orderCount: Int!
+  paid: Money!
+  pdfUrl: String
+  periodFrom: DateTime!
+  periodTo: DateTime!
+  remaining: Money!
+  sentAt: DateTime
+  status: String!
+  total: Money!
+}
+
+type MyTripProgress {
+  code: String!
+  driverName: String
+  lastUpdateAt: DateTime!
+  plate: String
+  status: String!
+  vehicleType: String
+}
+
+type NavBadges {
+  codOverThreshold: Int!
+  dispatch: Int!
+  finance: Int!
+  incidents: Int!
+  overdueCustomers: Int!
+  payroll: Int!
+  scheduleWarnings: Int!
+}
+
+type NotificationConnection {
+  nodes: [NotificationView!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+  unreadCount: Int!
+}
+
+input NotificationFilter {
+  types: [String!]
+  unread: Boolean
+}
+
+type NotificationView {
+  body: String
+  createdAt: DateTime!
+  entityId: ID
+  entityType: String
+  id: ID!
+  readAt: DateTime
+  severity: String
+  title: String!
+  type: String!
+}
+
+input NumberFormatInput {
+  datePart: String!
+  digits: Int!
+  prefix: String!
+  resetPeriod: String!
+  separator: String!
+}
+
+type NumberSequenceView {
+  datePart: String!
+  digits: Int!
+  docType: String!
+  issuedThisPeriod: Int!
+  label: String!
+  nextValue: String!
+  pattern: String!
+  prefix: String!
+  resetPeriod: String!
+  separator: String!
+}
+
+input OrderAddonInput {
+  amount: Money!
+  id: ID
+  name: String!
+  note: String
+  serviceId: ID
+}
+
+type OrderAddonView {
+  amount: Money!
+  id: ID!
+  name: String!
+  note: String
+  serviceId: ID
+}
+
+type OrderAllocationView {
+  amount: Money!
+  id: ID!
+  paymentCode: String!
+  paymentId: ID!
+  receivedAt: DateTime!
+}
+
+type OrderConnection {
+  nodes: [OrderView!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type OrderCustomerRef {
+  code: String!
+  id: ID!
+  name: String!
+  phone: String
+}
+
+type OrderExpenseView {
+  amount: Money!
+  categoryName: String
+  code: String!
+  description: String
+  expenseDate: DateTime!
+  id: ID!
+  isCost: Boolean!
+  kind: String!
+  paidBy: String!
+  paidStatus: String!
+  status: String!
+  supplierName: String
+  tripCode: String
+}
+
+input OrderFilter {
+  customerId: ID
+  dateFrom: String
+  dateTo: String
+  debtStatus: String
+  needsAction: Boolean
+  search: String
+  status: [String!]
+  warning: Boolean
+}
+
+type OrderFinanceSummary {
+  addonTotal: Money!
+  allocations: [OrderAllocationView!]!
+  driverBonusTotal: Money!
+  expenseTotal: Money!
+  expenses: [OrderExpenseView!]!
+  freight: Money!
+  margin: Float
+  otherCost: Money!
+  outsourcedCost: Money!
+  overdueDays: Int!
+  paidAmount: Money!
+  profit: Money!
+  provisional: Boolean!
+  receivable: Money!
+  remainingAmount: Money!
+  totalAmount: Money!
+  tripCost: Money!
+}
+
+type OrderFinanceView {
+  addonTotal: Money!
+  allocations: [AllocationView!]!
+  code: String!
+  cost: Money!
+  dueDate: DateTime
+  expenses: [ExpenseView!]!
+  freightAmount: Money!
+  margin: Float
+  orderId: ID!
+  otherCost: Money!
+  outsourcedCost: Money!
+  overdueDays: Int!
+  paidAmount: Money!
+  profit: Money!
+  provisional: Boolean!
+  receivable: Money!
+  remainingAmount: Money!
+  revenue: Money!
+  status: String!
+  totalAmount: Money!
+  tripCost: Money!
+}
+
+type OrderPayload {
+  order: OrderView!
+  trip: TripView
+  warnings: [String!]!
+}
+
+input OrderPricingInput {
+  addons: [OrderAddonInput!]
+  dueDate: String
+  freightAmount: Money!
+  reason: String
+}
+
+input OrderStopInput {
+  address: String
+  codExpected: Money
+  contactName: String
+  contactPhone: String
+  id: ID
+  lat: Float
+  lng: Float
+  locationId: ID
+  locationName: String
+  note: String
+  plannedAt: DateTime
+  province: String
+  sequence: Int
+  type: String!
+}
+
+type OrderStopStatusView {
+  arrivedAt: DateTime
+  codActual: Money
+  codCollectedAt: DateTime
+  codExpected: Money
+  completedAt: DateTime
+  id: ID!
+  orderId: ID!
+  orderStatus: String!
+  skipReason: String
+  status: String!
+  warnings: [String!]!
+}
+
+type OrderStopView {
+  address: String!
+  arrivedAt: DateTime
+  codActual: Money
+  codCollectedAt: DateTime
+  codExpected: Money
+  codNote: String
+  completedAt: DateTime
+  contactName: String
+  contactPhone: String
+  id: ID!
+  lat: Float
+  lng: Float
+  locationId: ID
+  locationName: String
+  note: String
+  orderCode: String
+  orderId: ID!
+  plannedAt: DateTime
+  podAttachments: [AttachmentView!]
+  podCount: Int!
+  province: String
+  sequence: Int!
+  skipReason: String
+  status: String!
+  statusHistory: [TimelineEntry!]
+  tripCodes: [String!]!
+  tripIds: [ID!]!
+  type: String!
+}
+
+type OrderTotalsView {
+  count: Int!
+  overdueAmount: Money!
+  paidAmount: Money!
+  remainingAmount: Money!
+  totalAmount: Money!
+}
+
+type OrderView {
+  addonTotal: Money!
+  addons: [OrderAddonView!]
+  attachmentCount: Int
+  bookingId: ID
+  cancelReason: String
+  cancelledAt: DateTime
+  cargoLines: [CargoLineView!]
+  code: String!
+  completedAt: DateTime
+  confirmedAt: DateTime
+  createdAt: DateTime!
+  customer: OrderCustomerRef!
+  customerWarnings: [String!]
+  dueDate: DateTime
+  externalTransports: [ExternalTransportView!]
+  financeSummary: OrderFinanceSummary
+  freightAmount: Money!
+  id: ID!
+  incidents: [TripIncidentRef!]
+  internalNote: String
+  note: String
+  orderDate: DateTime!
+  overdueDays: Int!
+  paidAmount: Money!
+  priceLocked: Boolean!
+  remainingAmount: Money!
+  requiredCapacityTons: Float
+  requiredVehicleTypeId: ID
+  requiredVehicleTypeName: String
+  routeSummary: String
+  startedAt: DateTime
+  status: String!
+  stops: [OrderStopView!]
+  totalAmount: Money!
+  tripCount: Int!
+  trips: [TripView!]
+  updatedAt: DateTime!
+  warnings: [String!]!
+}
+
+type PageInfo {
+  endCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+}
+
+type PaymentConnection {
+  nodes: [PaymentView!]!
+  pageInfo: PageInfo!
+  totalAmount: Money!
+  totalCount: Int!
+}
+
+input PaymentFilter {
+  customerId: ID
+  dateFrom: String
+  dateTo: String
+  driverId: ID
+  hasUnallocated: Boolean
+  method: String
+  search: String
+  status: String
+  type: String
+}
+
+input PaymentInInput {
+  allocations: [AllocationLineInput!]
+  amount: Money!
+  attachmentIds: [ID!]
+  bankAccount: String
+  clientRequestId: String
+  codStopIds: [ID!]
+  customerId: ID
+  driverId: ID
+  method: String!
+  note: String
+  payerName: String
+  receivedAt: DateTime!
+  receivedBy: String
+  transferNote: String
+  tripId: ID
+  type: String!
+}
+
+type PaymentView {
+  allocatedAmount: Money!
+  allocations: [AllocationView!]!
+  amount: Money!
+  attachmentCount: Int!
+  bankAccount: String
+  cancelReason: String
+  cancelledAt: DateTime
+  codItems: [CodRemittanceItemView!]!
+  code: String!
+  createdAt: DateTime!
+  customer: RefView
+  customerCreditBalance: Money
+  driver: RefView
+  id: ID!
+  method: String!
+  notRevenue: Boolean!
+  note: String
+  payerLabel: String!
+  payerName: String
+  receivedAt: DateTime!
+  receivedBy: String
+  status: String!
+  transferNote: String
+  trip: RefView
+  type: String!
+  typeLabel: String!
+  unallocatedAmount: Money!
+}
+
+type PayrollChangeView {
+  amount: Money
+  driverName: String
+  kind: String!
+  message: String!
+}
+
+type PayrollConnection {
+  nodes: [PayrollView!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type PayrollExcludedView {
+  amount: Money!
+  code: String!
+  date: DateTime
+  description: String!
+  kind: String!
+  reason: String!
+}
+
+input PayrollFilter {
+  driverId: ID
+  status: [String!]
+  year: Int
+}
+
+input PayrollItemInput {
+  amount: Money!
+  description: String!
+  lineId: ID!
+  note: String
+  reason: String
+  reasonId: ID
+  type: String
+}
+
+type PayrollItemView {
+  amount: Money!
+  createdByName: String
+  description: String!
+  expenseId: ID
+  id: ID
+  itemDate: DateTime
+  note: String
+  reasonId: ID
+  reasonName: String
+  sourceRef: String
+  tripId: ID
+  type: String!
+}
+
+type PayrollLineView {
+  adjustmentTotal: Money!
+  advanceTotal: Money!
+  anomalies: [String!]!
+  baseSalary: Money!
+  bonusTotal: Money!
+  deductionTotal: Money!
+  driverCode: String
+  driverId: ID!
+  driverName: String!
+  excluded: [PayrollExcludedView!]
+  id: ID
+  items: [PayrollItemView!]!
+  netAmount: Money!
+  note: String
+  payrollCode: String
+  payrollId: ID!
+  payrollStatus: String
+  periodLabel: String
+  salaryEffectiveFrom: DateTime
+}
+
+type PayrollPreviewView {
+  conflictPayrollCode: String
+  lines: [PayrollLineView!]!
+  periodFrom: String!
+  periodLabel: String!
+  periodTo: String!
+  totals: PayrollTotalsView!
+  warnings: [String!]!
+}
+
+type PayrollReportDriverRow {
+  adjustment: Money!
+  advance: Money!
+  bonus: Money!
+  deduction: Money!
+  driverId: ID!
+  driverName: String!
+  net: Money!
+  salary: Money!
+}
+
+type PayrollReportRow {
+  adjustment: Money!
+  advance: Money!
+  bonus: Money!
+  byDriver: [PayrollReportDriverRow!]!
+  deduction: Money!
+  driverCount: Int!
+  net: Money!
+  paidAt: DateTime
+  payrollCode: String!
+  payrollId: ID!
+  period: String!
+  salary: Money!
+  status: String!
+}
+
+type PayrollTotalsView {
+  adjustment: Money!
+  advance: Money!
+  bonus: Money!
+  deduction: Money!
+  driverCount: Int!
+  net: Money!
+  salary: Money!
+}
+
+type PayrollView {
+  anomalyCount: Int!
+  approvalNote: String
+  approvedAt: DateTime
+  approvedByName: String
+  cancelReason: String
+  cancelledAt: DateTime
+  changes: [PayrollChangeView!]
+  code: String!
+  createdAt: DateTime!
+  createdByName: String
+  id: ID!
+  lines: [PayrollLineView!]
+  note: String
+  paidAt: DateTime
+  paidByName: String
+  periodFrom: DateTime!
+  periodLabel: String!
+  periodTo: DateTime!
+  previousCode: String
+  previousTotals: PayrollTotalsView
+  returnReason: String
+  returnedAt: DateTime
+  status: String!
+  submittedAt: DateTime
+  submittedByName: String
+  totals: PayrollTotalsView!
+}
+
+type PermissionMatrixRow {
+  accountant: String!
+  action: String!
+  admin: String!
+  grantedUserCount: Int!
+  group: String!
+  groupLabel: String!
+  label: String!
+  operation: String!
+  requiresReason: Boolean!
+}
+
+type PricingLine {
+  amount: Money!
+  label: String!
+}
+
+type ProfitReport {
+  dateFrom: String!
+  dateTo: String!
+  groupBy: String!
+  notes: [String!]!
+  rows: [ProfitRow!]!
+  totals: ProfitRow!
+}
+
+type ProfitRow {
+  addons: Money!
+  cost: Money!
+  entityId: ID
+  freight: Money!
+  isProvisional: Boolean!
+  key: String!
+  label: String!
+  margin: Float
+  orderCount: Int!
+  otherCost: Money!
+  outsourcedCost: Money!
+  profit: Money!
+  revenue: Money!
+  status: String
+  sublabel: String
+  tripCost: Money!
+}
+
+type PublicMerchantConnection {
+  nodes: [PublicMerchantView!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+input PublicMerchantFilter {
+  area: String
+  keyword: String
+  service: String
+  vehicleType: String
+}
+
+type PublicMerchantView {
+  address: String
+  dispatchHotline: String
+  email: String
+  hasRelationship: Boolean!
+  id: ID!
+  intro: String
+  logoUrl: String
+  myOrderCount: Int!
+  name: String!
+  phone: String
+  province: String
+  serviceAreas: [String!]!
+  services: [String!]!
+  vehicleCount: Int!
+  vehicleTypes: [String!]!
+}
+
+type Query {
+  activityByActor(actorId: ID!, first: Int): [TimelineEntry!]!
+  activityTimeline(entity: EntityRefInput!, filter: TimelineFilter): [TimelineEntry!]!
+  attachment(id: ID!): AttachmentView!
+  attachments(category: AttachmentCategory, entityId: ID!, entityType: EntityType!): [AttachmentView!]!
+  booking(id: ID!): BookingView!
+  bookings(after: String, filter: BookingFilter, first: Int = 20): BookingConnection!
+  catalogItems(activeOnly: Boolean = false, type: CatalogType): [CatalogItemView!]!
+  checkTripOverlap(input: CheckTripOverlapInput!): [ScheduleWarningView!]!
+  customer(id: ID!): CustomerView!
+  customerCreditCheck(additionalAmount: Money, customerId: ID!): CreditLimitCheckView!
+  customerDebt(filter: CustomerDebtFilter): CustomerDebtResult!
+  customerLocations(customerId: ID!, includeInactive: Boolean): [CustomerLocationView!]!
+  customerMe: CustomerMe!
+  customers(after: String, filter: CustomerFilter, first: Int = 20): CustomerConnection!
+  dashboardSummary(date: String): DashboardSummary!
+  debtStatement(id: ID!): DebtStatementView!
+  debtStatements(after: String, filter: DebtStatementFilter, first: Int = 20): DebtStatementConnection!
+  dispatchSummary(date: String): DispatchSummary!
+  driver(id: ID!): DriverView!
+  driverCodHeld(filter: DriverCodHeldFilter): DriverCodHeldReport!
+  driverJobCalendar(from: String!, to: String!): [DriverCalendarDay!]!
+  driverJobs(filter: DriverJobsFilter): [DriverTripView!]!
+  driverLedger(driverId: ID): DriverLedgerView!
+  driverMe: DriverMeView!
+  driverOptions(activeOnly: Boolean = true): [DriverOption!]!
+  driverPayrollLines(driverId: ID!): [PayrollLineView!]!
+  driverSalaryHistory(driverId: ID!): [DriverSalaryHistoryView!]!
+  driverSchedules(date: String, days: Int): [ScheduleRow!]!
+  driverStop(id: ID!): DriverStopView!
+  driverTrip(id: ID!): DriverTripView!
+  drivers(
+    after: String
+    filter: DriverFilter
+    first: Int = 20
+
+    """name | code | -createdAt"""
+    sort: String
+  ): DriverConnection!
+  expense(id: ID!): ExpenseView!
+  expenses(after: String, filter: ExpenseFilter, first: Int = 20): ExpenseConnection!
+  externalTransports(orderId: ID, supplierId: ID): [ExternalTransportView!]!
+  financeLedger(after: String, filter: FinanceLedgerFilter, first: Int = 20): FinanceLedgerConnection!
+  globalSearch(first: Int, query: String!, types: [String!]): [GlobalSearchResult!]!
+  importPreview(filter: ImportPreviewFilter, id: ID!): ImportJobView!
+  importTemplate(entityType: String!): ImportTemplateFile!
+  incident(id: ID!): IncidentView!
+  incidents(after: String, filter: IncidentFilter, first: Int = 20): IncidentConnection!
+  lastKnownLocations(running: Boolean = true): [LastKnownLocationView!]!
+  me: Me!
+  merchantProfile: MerchantProfile!
+  merchantSettings: MerchantSettingsView!
+  merchantUser(id: ID!): MerchantUserView!
+  merchantUsers(after: String, filter: MerchantUserFilter, first: Int = 20): MerchantUserConnection!
+  myAddresses: [CustomerAddressView!]!
+  myBooking(id: ID!): BookingView!
+  myBookings(after: String, filter: BookingFilter, first: Int = 20): BookingConnection!
+  myDebtStatement(id: ID!): MyStatementView!
+  myDebtStatements: [MyStatementView!]!
+  myDebtSummary: MyDebtSummary!
+  myOrder(id: ID!): MyOrderView!
+  myOrders(after: String, filter: MyOrderFilter, first: Int = 20): MyOrderConnection!
+  navBadges: NavBadges!
+  notifications(after: String, filter: NotificationFilter, first: Int = 20): NotificationConnection!
+  numberSequences: [NumberSequenceView!]!
+  order(id: ID!): OrderView!
+  orderAttachments(orderId: ID!): [AttachmentView!]!
+  orderFinance(orderId: ID!): OrderFinanceView!
+  orderStop(id: ID!): OrderStopView!
+  orderTotals(filter: OrderFilter): OrderTotalsView!
+  orders(after: String, filter: OrderFilter, first: Int = 20, sort: String): OrderConnection!
+  payment(id: ID!): PaymentView!
+  payments(after: String, filter: PaymentFilter, first: Int = 20): PaymentConnection!
+  payroll(id: ID!): PayrollView!
+  payrollLine(id: ID!): PayrollLineView!
+  payrollPreview(input: GeneratePayrollInput!): PayrollPreviewView!
+  payrolls(after: String, filter: PayrollFilter, first: Int = 20): PayrollConnection!
+  permissionMatrix: [PermissionMatrixRow!]!
+  publicMerchant(id: ID!): PublicMerchantView!
+  publicMerchants(after: String, filter: PublicMerchantFilter, first: Int = 20): PublicMerchantConnection!
+  reportCodHeld(filter: ReportFilter): CodHeldReport!
+  reportCustomerDebt(filter: ReportFilter): CustomerDebtReport!
+  reportDrivers(filter: ReportFilter): [DriverReportRow!]!
+  reportPayroll(filter: ReportFilter): [PayrollReportRow!]!
+  reportProfit(filter: ReportFilter): ProfitReport!
+  reportSummary(filter: ReportFilter): [ReportSummaryItem!]!
+  reportVehicles(filter: ReportFilter): [VehicleReportRow!]!
+  roles: [RoleView!]!
+  scheduleWarnings(after: String, filter: ScheduleWarningFilter, first: Int = 20): ScheduleWarningConnection!
+  staffOptions: [MerchantUserView!]!
+  supplier(id: ID!): SupplierView!
+  supplierDebt(filter: SupplierDebtFilter): SupplierDebtReport!
+  supplierOptions(activeOnly: Boolean = true): [SupplierOption!]!
+  suppliers(
+    after: String
+    filter: SupplierFilter
+    first: Int = 20
+
+    """name | code | -createdAt"""
+    sort: String
+  ): SupplierConnection!
+  trip(id: ID!): TripView!
+  tripAdvances(filter: TripAdvanceFilter): [TripAdvanceView!]!
+  tripLocations(from: DateTime, to: DateTime, tripId: ID!): [TripLocationPoint!]!
+  trips(after: String, filter: TripFilter, first: Int = 20, sort: String): TripConnection!
+  unreadNotificationCount: Int!
+  vehicle(id: ID!): VehicleView!
+  vehicleOptions(activeOnly: Boolean = true): [VehicleOption!]!
+  vehicleSchedules(date: String, days: Int): [ScheduleRow!]!
+  vehicles(
+    after: String
+    filter: VehicleFilter
+    first: Int = 20
+
+    """plate | code | -createdAt"""
+    sort: String
+  ): VehicleConnection!
+}
+
+input QuickTripInput {
+  driverBonusAmount: Money
+  driverId: ID
+  overrideReason: String
+  plannedEndAt: DateTime
+  plannedStartAt: DateTime!
+  vehicleId: ID
+}
+
+input ReconcileTripAdvanceInput {
+  amount: Money
+  note: String
+  reason: String
+  resolution: String!
+  tripId: ID!
+}
+
+type RefView {
+  code: String
+  id: ID!
+  name: String
+}
+
+input RenderDocumentInput {
+  entityId: ID!
+  format: String = "PDF"
+  from: String
+  template: String!
+  to: String
+}
+
+type RenderedDocument {
+  attachmentId: ID
+  fileName: String!
+  html: String
+  template: String!
+  url: String
+}
+
+input ReportFilter {
+  customerId: ID
+  dateFrom: String
+  dateTo: String
+  driverId: ID
+  groupBy: String
+  overdueOnly: Boolean
+  status: [String!]
+  vehicleId: ID
+  vehicleTypeId: ID
+  year: Int
+}
+
+type ReportSummaryItem {
+  group: String!
+  headline: String!
+  key: String!
+  route: String!
+  title: String!
+  value: Money
+}
+
+type RoleView {
+  key: String!
+  name: String!
+  userCount: Int!
+}
+
+input SalaryHistoryInput {
+  amount: Money!
+  effectiveFrom: String!
+  reason: String
+}
+
+type ScheduleBlock {
+  code: String!
+  counterpartLabel: String
+  end: DateTime!
+  orderCode: String
+  routeSummary: String
+  start: DateTime!
+  status: String!
+  tripId: ID!
+  warning: Boolean!
+}
+
+type ScheduleResource {
+  id: ID!
+  label: String!
+  status: String!
+  sublabel: String
+  type: String!
+}
+
+type ScheduleRow {
+  blocks: [ScheduleBlock!]!
+  resource: ScheduleResource!
+}
+
+type ScheduleWarningConnection {
+  nodes: [ScheduleWarningRecord!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+input ScheduleWarningFilter {
+  dateFrom: String
+  dateTo: String
+  resolved: Boolean
+  subject: String
+  tripId: ID
+}
+
+type ScheduleWarningRecord {
+  conflictTrip: TripBrief
+  createdAt: DateTime!
+  gapMinutes: Int!
+  id: ID!
+  overriddenByName: String
+  overrideReason: String
+  resolvedAt: DateTime
+  status: String!
+  subject: String!
+  subjectId: ID!
+  subjectLabel: String
+  thresholdMinutes: Int!
+  trip: TripBrief!
+  type: String!
+}
+
+type ScheduleWarningView {
+  conflictTripCode: String
+  conflictTripId: ID
+  gapMinutes: Int!
+  id: ID
+  overrideReason: String
+  subject: String!
+  subjectId: String!
+  subjectLabel: String
+  thresholdMinutes: Int!
+  type: String!
+}
+
+type SharedAttachmentView {
+  category: String!
+  createdAt: DateTime!
+  fileName: String!
+  id: ID!
+  url: String
+}
+
+type StaffAppCredentials {
+  phone: String!
+  tempPassword: String!
+}
+
+type StaffAppLoginView {
+  hasPassword: Boolean!
+  lastLoginAt: DateTime
+  mustChangePassword: Boolean!
+  phone: String
+  sharedWithOtherMerchants: Boolean!
+}
+
+input StartImportInput {
+  entityType: String!
+  fileBase64: String!
+  fileName: String!
+  mapping: JSON
+}
+
+type StatusCount {
+  count: Int!
+  status: String!
+}
+
+type SupplierAgingView {
+  d0_15: Money!
+  d16_30: Money!
+  d31_60: Money!
+  d60p: Money!
+}
+
+type SupplierConnection {
+  nodes: [SupplierView!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type SupplierDebtAgingView {
+  d0_15: Money!
+  d16_30: Money!
+  d31_60: Money!
+  d60p: Money!
+}
+
+input SupplierDebtFilter {
+  asOf: String
+  supplierId: ID
+}
+
+type SupplierDebtReport {
+  rows: [SupplierDebtRow!]!
+  total: Money!
+}
+
+type SupplierDebtRow {
+  aging: SupplierDebtAgingView!
+  expenses: [ExpenseView!]!
+  oldestDays: Int!
+  supplier: RefView!
+  unpaidCount: Int!
+  unpaidTotal: Money!
+}
+
+type SupplierExternalTransportView {
+  agreedAmount: Money
+  createdAt: DateTime!
+  driverName: String
+  driverPhone: String
+  id: ID!
+  note: String
+  orderCode: String
+  orderId: ID!
+  tripCode: String
+  tripId: ID
+  vehiclePlate: String
+}
+
+input SupplierFilter {
+  hasDebt: Boolean
+  search: String
+  status: String
+  typeId: ID
+}
+
+input SupplierInput {
+  address: String
+  bankAccountNo: String
+  bankName: String
+  contacts: [ContactInput!]
+  name: String!
+  note: String
+  paymentTerms: String
+  status: String
+  taxCode: String
+  typeId: ID
+}
+
+type SupplierOption {
+  code: String!
+  id: ID!
+  name: String!
+  status: String!
+  typeName: String
+}
+
+type SupplierPayableView {
+  aging: SupplierAgingView!
+  oldestDays: Int!
+  total: Money!
+  unpaidCount: Int!
+}
+
+type SupplierView {
+  address: String
+  bankAccountNo: String
+  bankName: String
+  code: String!
+  contacts: [ContactView!]!
+  createdAt: DateTime!
+  deactivateReason: String
+  expenseCount: Int!
+  externalTransports: [SupplierExternalTransportView!]
+  id: ID!
+  name: String!
+  note: String
+  payable: SupplierPayableView
+  payableAmount: Money!
+  paymentTerms: String
+  recentExpenses: [MasterExpenseItem!]
+  status: String!
+  taxCode: String
+  type: MasterRef
+  typeId: ID
+  updatedAt: DateTime!
+}
+
+type TimelineEntry {
+  action: String!
+  actorId: String
+  actorName: String
+  actorType: String!
+  after: JSON
+  before: JSON
+  category: String!
+  createdAt: DateTime!
+  entityId: ID!
+  entityType: String!
+  fromStatus: String
+  id: ID!
+  kind: String!
+  reason: String
+  sensitive: Boolean!
+  summary: String!
+  toStatus: String
+}
+
+input TimelineFilter {
+  categories: [String!]
+  includeChildren: Boolean
+}
+
+input TripAdvanceFilter {
+  dateFrom: String
+  dateTo: String
+  driverId: ID
+  status: String
+  tripId: ID
+}
+
+type TripAdvanceView {
+  actualCost: Money!
+  advanceAmount: Money!
+  advances: [ExpenseView!]!
+  difference: Money!
+  driver: RefView
+  note: String
+  orderCode: String!
+  orderId: ID!
+  plannedStartAt: DateTime!
+  reason: String
+  reimbursed: Money!
+  resolution: String
+  resolvedAt: DateTime
+  returned: Money!
+  spentFromAdvance: Money!
+  status: String!
+  tripCode: String!
+  tripId: ID!
+  tripStatus: String!
+}
+
+type TripBonusView {
+  amount: Money!
+  date: DateTime!
+  orderCode: String!
+  status: String!
+  tripCode: String!
+  tripId: ID!
+}
+
+type TripBrief {
+  code: String!
+  driverName: String
+  id: ID!
+  orderCode: String
+  plannedEndAt: DateTime
+  plannedStartAt: DateTime!
+  status: String!
+  vehiclePlate: String
+}
+
+type TripConnection {
+  nodes: [TripView!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type TripExpenseView {
+  amount: Money!
+  categoryName: String
+  code: String!
+  description: String
+  expenseDate: DateTime!
+  id: ID!
+  kind: String!
+  paidBy: String!
+  paidStatus: String!
+  reimbursable: Boolean!
+  status: String!
+  tripCode: String
+}
+
+input TripFilter {
+  dateFrom: String
+  dateTo: String
+  driverId: ID
+  hasWarning: Boolean
+  orderId: ID
+  running: Boolean
+  search: String
+  status: [String!]
+  vehicleId: ID
+}
+
+type TripIncidentRef {
+  code: String!
+  createdAt: DateTime!
+  id: ID!
+  severity: String!
+  status: String!
+  title: String!
+}
+
+input TripInput {
+  driverBonusAmount: Money
+  driverId: ID
+  externalTransport: ExternalTransportInput
+  isExternal: Boolean
+  note: String
+  orderId: ID!
+  overrideReason: String
+  plannedEndAt: DateTime
+  plannedStartAt: DateTime!
+  stopIds: [ID!]
+  vehicleId: ID
+}
+
+type TripLocationPoint {
+  accuracy: Float
+  lat: Float!
+  lng: Float!
+  recordedAt: DateTime!
+  speed: Float
+}
+
+type TripOrderRef {
+  code: String!
+  customerId: ID!
+  customerName: String!
+  customerPhone: String
+  id: ID!
+  status: String!
+}
+
+type TripPayload {
+  notices: [String!]!
+  trip: TripView!
+  warnings: [ScheduleWarningView!]!
+}
+
+input TripStatusChangeInput {
+  actualAt: DateTime
+  note: String
+  pauseReasonId: ID
+  reason: String
+  status: String!
+}
+
+type TripStatusCount {
+  count: Int!
+  status: String!
+}
+
+type TripStopView {
+  address: String!
+  arrivedAt: DateTime
+  codActual: Money
+  codCollectedAt: DateTime
+  codExpected: Money
+  completedAt: DateTime
+  contactName: String
+  contactPhone: String
+  id: ID!
+  lat: Float
+  lng: Float
+  locationName: String
+  note: String
+  orderId: ID!
+  plannedAt: DateTime
+  podCount: Int!
+  sequence: Int!
+  skipReason: String
+  status: String!
+  tripSequence: Int!
+  type: String!
+}
+
+type TripView {
+  actualEndAt: DateTime
+  actualStartAt: DateTime
+  advances: [TripExpenseView!]
+  allowedNextStatuses: [String!]!
+  attachmentCount: Int
+  cancelReason: String
+  codActualTotal: Money!
+  codExpectedTotal: Money!
+  code: String!
+  createdAt: DateTime!
+  driver: DriverRef
+  driverBonusAmount: Money!
+  expenses: [TripExpenseView!]
+  externalTransport: ExternalTransportView
+  hasWarning: Boolean!
+  id: ID!
+  incidents: [TripIncidentRef!]
+  isExternal: Boolean!
+  lastLocation: LastLocationView
+  note: String
+  openIncidentCount: Int!
+  order: TripOrderRef!
+  orderId: ID!
+  pauseNote: String
+  pauseReasonLabel: String
+  pausedAt: DateTime
+  pausedReasonId: ID
+  plannedEndAt: DateTime
+  plannedStartAt: DateTime!
+  previousStatusBeforePause: String
+  resumedAt: DateTime
+  routeSummary: String
+  status: String!
+  stopCount: Int!
+  stops: [TripStopView!]
+  vehicle: VehicleRef
+  warnings: [ScheduleWarningView!]
+}
+
+input UpdateMerchantUserInput {
+  extraPermissions: [String!]
+  name: String
+  note: String
+  phone: String
+  role: String
+  title: String
+}
+
+input UpdateOrderInput {
+  addons: [OrderAddonInput!]
+  cargoLines: [CargoLineInput!]
+  customerId: ID
+  dueDate: String
+  freightAmount: Money
+  internalNote: String
+  note: String
+  orderDate: String
+  requiredCapacityTons: Float
+  requiredVehicleTypeId: ID
+  stops: [OrderStopInput!]
+}
+
+input UpdatePaymentInInput {
+  amount: Money
+  bankAccount: String
+  method: String
+  note: String
+  payerName: String
+  receivedAt: DateTime
+  receivedBy: String
+  transferNote: String
+}
+
+input UpdateTripInput {
+  driverBonusAmount: Money
+  driverId: ID
+  externalTransport: ExternalTransportInput
+  isExternal: Boolean
+  note: String
+  overrideReason: String
+  plannedEndAt: DateTime
+  plannedStartAt: DateTime
+  stopIds: [ID!]
+  vehicleId: ID
+}
+
+type VehicleConnection {
+  nodes: [VehicleView!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type VehicleCurrentTrip {
+  code: String!
+  driverName: String
+  id: ID!
+  plannedStartAt: DateTime!
+  status: String!
+}
+
+input VehicleFilter {
+  search: String
+  status: String
+  typeId: ID
+}
+
+input VehicleInput {
+  boxSize: String
+  brandModel: String
+  capacityTons: Float
+  chassisNo: String
+  engineNo: String
+  fuelNorm: String
+  insuranceExpiresAt: String
+  note: String
+  plate: String!
+  registrationExpiresAt: String
+  status: String
+  typeId: ID
+  year: Int
+}
+
+type VehicleOption {
+  busy: Boolean!
+  busyTripCode: String
+  capacityTons: Float
+  code: String!
+  id: ID!
+  plate: String!
+  status: String!
+  typeName: String
+}
+
+type VehicleRef {
+  capacityTons: Float
+  code: String
+  id: ID!
+  plate: String!
+  status: String!
+  typeName: String
+}
+
+type VehicleReportRow {
+  activeDays: Int!
+  grossProfit: Money!
+  plate: String!
+  revenue: Money!
+  status: String!
+  tripCost: Money!
+  tripCount: Int!
+  type: String
+  utilization: Float!
+  vehicleCost: Money!
+  vehicleId: ID!
+}
+
+type VehicleStats {
+  cost30d: Money!
+  tripCount30d: Int!
+}
+
+type VehicleView {
+  boxSize: String
+  brandModel: String
+  capacityTons: Float
+  chassisNo: String
+  code: String!
+  createdAt: DateTime!
+  currentTrip: VehicleCurrentTrip
+  engineNo: String
+  expenses: [MasterExpenseItem!]
+  expiryWarnings: [String!]!
+  fuelNorm: String
+  id: ID!
+  insuranceExpiresAt: DateTime
+  monthCost: Money!
+  note: String
+  plate: String!
+  registrationExpiresAt: DateTime
+  stats: VehicleStats
+  status: String!
+  tripHistory: [MasterTripItem!]
+  type: MasterRef
+  typeId: ID
+  updatedAt: DateTime!
+  year: Int
+}

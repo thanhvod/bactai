@@ -1,0 +1,27 @@
+node_modules/
+dist/
+build/
+.nx/
+coverage/
+*.log
+.env
+.env.*
+!.env.example
+.DS_Store
+storage/
+apps/api/storage/
+*.tsbuildinfo
+# Flutter
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+**/ios/Pods/
+**/android/.gradle/
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Test output
+test-results/
+playwright-report/
+apps/api/.tmp-*/

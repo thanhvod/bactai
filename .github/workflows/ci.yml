@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  node:
+    name: API + Web (typecheck, test, build)
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: bta
+          POSTGRES_PASSWORD: bta
+          POSTGRES_DB: bta_test
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U bta" --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      DATABASE_URL: postgresql://bta:bta@localhost:5432/bta_test?schema=public
+      TEST_DATABASE_URL: postgresql://bta:bta@localhost:5432/bta_test?schema=public
+      AUTH_DEV_BYPASS: 'true'
+      SCHEDULER_ENABLED: 'false'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run build -w @bta/shared
+      - run: npm run build -w @bta/db
+      - name: Typecheck
+        run: |
+          npm run typecheck -w @bta/api
+          npm run typecheck -w @bta/web
+          npm run typecheck -w @bta/customer-web
+      - name: Unit test shared/db
+        run: |
+          npm test -w @bta/shared
+          npm test -w @bta/db
+      - name: API e2e (Postgres)
+        run: npm test -w @bta/api
+      - name: Web tests
+        run: |
+          npm test -w @bta/web
+          npm test -w @bta/customer-web
+      - name: Build
+        run: |
+          npm run build -w @bta/api
+          npm run build -w @bta/web
+          npm run build -w @bta/customer-web
+
+  flutter:
+    name: Flutter (analyze, test)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Analyze & test
+        run: |
+          for d in packages/flutter-ui packages/flutter-core apps/driver-app apps/merchant-app; do
+            (cd "$d" && flutter pub get && flutter analyze && flutter test)
+          done

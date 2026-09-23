@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * { @apply border-border; }
+  body { @apply bg-background text-text text-body antialiased; }
+  h1, h2, h3, h4 { @apply text-text; }
+  a { @apply text-accent; }
+  ::selection { background: var(--bta-primary-soft); }
+}
+
+@layer utilities {
+  .tabular-nums { font-variant-numeric: tabular-nums; }
+  .scrollbar-thin { scrollbar-width: thin; }
+}
+
+/* Print sheet A4 */
+@media print {
+  .no-print { display: none !important; }
+  .print-sheet { box-shadow: none !important; margin: 0 !important; }
+}

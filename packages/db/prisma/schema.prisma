@@ -1,0 +1,1636 @@
+// BTA — Prisma schema (PostgreSQL). Nguồn: doc/1-BRD/07-data-model.md, doc/3-TECHNICAL/ARCHITECTURE.md §12–13.
+// Quy ước: mọi bảng nghiệp vụ có merchantId; tiền VND = BigInt; không xóa cứng (status/cancel/deletedAt);
+// enum khớp @bta/shared (packages/db/src/enum-sync.spec.ts kiểm tra).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================================
+// ENUMS (khớp packages/shared/src/status.ts & permissions.ts)
+// ============================================================================
+
+enum MerchantRole {
+  ADMIN
+  OPERATION
+  ACCOUNTANT
+}
+
+enum PermissionGrant {
+  ALLOWED
+  GRANTABLE
+  DENIED
+}
+
+enum MemberStatus {
+  INVITED
+  ACTIVE
+  LOCKED
+}
+
+enum ActiveStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum VehicleStatus {
+  ACTIVE
+  MAINTENANCE
+  INACTIVE
+}
+
+enum CustomerType {
+  COMPANY
+  INDIVIDUAL
+}
+
+enum LocationUsage {
+  PICKUP
+  DROPOFF
+  BOTH
+  DOCUMENTS
+}
+
+enum DriverAccountStatus {
+  NONE
+  ACTIVE
+  MUST_CHANGE_PASSWORD
+  DISABLED
+}
+
+enum CatalogType {
+  EXPENSE_CATEGORY
+  ADDON_SERVICE
+  CARGO_TYPE
+  PACKAGING_UNIT
+  PAUSE_REASON
+  DEDUCTION_REASON
+  DOCUMENT_TYPE
+  INCIDENT_TYPE
+  VEHICLE_TYPE
+  SUPPLIER_TYPE
+  CUSTOMER_GROUP
+}
+
+enum OrderStatus {
+  DRAFT
+  PENDING_CONFIRMATION
+  CONFIRMED
+  DISPATCHED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum TripStatus {
+  SCHEDULED
+  TO_PICKUP
+  PICKING_UP
+  IN_TRANSIT
+  PAUSED
+  DELIVERING
+  COMPLETED
+  CANCELLED
+}
+
+enum StopStatus {
+  NOT_ARRIVED
+  ARRIVED
+  COMPLETED
+  SKIPPED
+}
+
+enum StopType {
+  PICKUP
+  DROPOFF
+}
+
+enum CargoProperty {
+  FRAGILE
+  COLD
+  OVERSIZE
+  HAZARDOUS
+}
+
+enum ScheduleWarningType {
+  OVERLAP
+  NEAR_OVERLAP
+}
+
+enum ScheduleSubject {
+  VEHICLE
+  DRIVER
+}
+
+enum IncidentSeverity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum IncidentStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CANCELLED
+}
+
+enum ExpenseKind {
+  TRIP_COST
+  EXTERNAL_TRANSPORT
+  VEHICLE_SUPPLY
+  OTHER_COST
+  DRIVER_REIMBURSEMENT
+  SALARY_ADVANCE
+  TRIP_ADVANCE
+  SALARY_PAYMENT
+}
+
+enum ExpensePaidBy {
+  COMPANY
+  DRIVER
+  DRIVER_ADVANCE
+}
+
+enum PaidStatus {
+  UNPAID
+  PAID
+}
+
+enum DocStatus {
+  ACTIVE
+  CANCELLED
+}
+
+enum PaymentInType {
+  CUSTOMER_PAYMENT
+  DRIVER_COD_REMITTANCE
+  DRIVER_ADVANCE_RETURN
+  OTHER
+}
+
+enum PaymentMethod {
+  BANK_TRANSFER
+  CASH
+  OTHER
+}
+
+enum TripAdvanceStatus {
+  OPEN
+  RECONCILED
+}
+
+enum DebtStatementStatus {
+  DRAFT
+  FINALIZED
+  SENT
+  CANCELLED
+}
+
+enum DebtStatementScope {
+  UNPAID_ONLY
+  ALL_IN_PERIOD
+}
+
+enum PayrollStatus {
+  DRAFT
+  SUBMITTED
+  RETURNED
+  APPROVED
+  PAID
+  CANCELLED
+}
+
+enum PayrollItemType {
+  BASE
+  BONUS
+  ADVANCE
+  DEDUCTION
+  ADJUSTMENT
+}
+
+enum PayrollPeriodType {
+  MONTHLY
+  CUSTOM
+}
+
+enum BookingStatus {
+  SUBMITTED
+  ACCEPTED
+  CONVERTED
+  REJECTED
+  CANCELLED
+}
+
+enum ActorType {
+  USER
+  DRIVER
+  CUSTOMER
+  SYSTEM
+}
+
+enum RecipientType {
+  USER
+  DRIVER
+  CUSTOMER
+}
+
+enum EntityType {
+  MERCHANT
+  MERCHANT_USER
+  CUSTOMER
+  CUSTOMER_LOCATION
+  DRIVER
+  VEHICLE
+  SUPPLIER
+  CATALOG_ITEM
+  ORDER
+  ORDER_STOP
+  TRIP
+  EXPENSE
+  PAYMENT_IN
+  DEBT_STATEMENT
+  PAYROLL
+  PAYROLL_LINE
+  INCIDENT
+  BOOKING
+  TRIP_ADVANCE
+  SETTINGS
+}
+
+enum ActivityCategory {
+  CREATE
+  UPDATE
+  STATUS
+  MONEY
+  ATTACHMENT
+  NOTE
+  SENSITIVE
+  ASSIGNMENT
+}
+
+enum NotificationType {
+  TRIP_ASSIGNED
+  TRIP_CHANGED
+  ORDER_OVERDUE
+  CUSTOMER_OVER_LIMIT
+  COD_HELD_WARNING
+  PAYROLL_SUBMITTED
+  PAYROLL_APPROVED
+  PAYROLL_RETURNED
+  SCHEDULE_CONFLICT
+  INCIDENT_NEW
+  INCIDENT_ASSIGNED
+  BOOKING_NEW
+  BOOKING_UPDATED
+  ORDER_UPDATED
+  DEBT_STATEMENT_SENT
+  SYSTEM
+}
+
+enum DocType {
+  ORDER
+  TRIP
+  PAYMENT_IN
+  EXPENSE
+  PAYROLL
+  DEBT_STATEMENT
+  INCIDENT
+  BOOKING
+  CUSTOMER
+  DRIVER
+  VEHICLE
+  SUPPLIER
+}
+
+enum ResetPeriod {
+  MONTHLY
+  YEARLY
+  NEVER
+}
+
+enum AttachmentCategory {
+  POD
+  WAREHOUSE_SLIP
+  INVOICE
+  LOADING_RECEIPT
+  EXPENSE_RECEIPT
+  INCIDENT_PHOTO
+  CONTRACT
+  PAYMENT_PROOF
+  DEBT_STATEMENT_PDF
+  PRINT_DOCUMENT
+  LICENSE
+  LOGO
+  OTHER
+}
+
+enum AttachmentStatus {
+  PENDING
+  READY
+  DELETED
+}
+
+enum ImportEntityType {
+  CUSTOMER
+  VEHICLE
+  DRIVER
+}
+
+enum ImportStatus {
+  PREVIEW
+  COMMITTED
+  CANCELLED
+}
+
+// ============================================================================
+// TENANT / AUTH
+// ============================================================================
+
+/// Tài khoản đăng nhập Google (Firebase) dùng chung nhiều merchant — không có merchantId.
+model UserAccount {
+  id                 String    @id @default(cuid())
+  email              String    @unique
+  firebaseUid        String?   @unique
+  name               String?
+  avatarUrl          String?
+  /// SĐT đăng nhập App Merchant (D-014) — unique toàn hệ thống
+  phone              String?   @unique
+  passwordHash       String?
+  mustChangePassword Boolean   @default(false)
+  passwordUpdatedAt  DateTime?
+  createdAt          DateTime  @default(now())
+  lastLoginAt        DateTime?
+
+  memberships   MerchantUser[]
+  refreshTokens UserRefreshToken[]
+
+  @@map("user_accounts")
+}
+
+model Merchant {
+  id                  String       @id @default(cuid())
+  code                String       @unique
+  name                String
+  legalName           String?
+  taxCode             String?
+  businessType        String?
+  address             String?
+  province            String?
+  district            String?
+  yardName            String?
+  representativeName  String?
+  representativeTitle String?
+  contactName         String?
+  phone               String?
+  dispatchHotline     String?
+  email               String?
+  intro               String?
+  logoAttachmentId    String?
+  publicProfile       Boolean      @default(false)
+  serviceAreas        String[]     @default([])
+  services            String[]     @default([])
+  status              ActiveStatus @default(ACTIVE)
+  createdAt           DateTime     @default(now())
+  updatedAt           DateTime     @updatedAt
+
+  settings        MerchantSettings?
+  users           MerchantUser[]
+  rolePermissions MerchantRolePermission[]
+  numberFormats   NumberFormat[]
+  numberSequences NumberSequence[]
+  catalogItems    CatalogItem[]
+  customers       Customer[]
+  drivers         Driver[]
+  vehicles        Vehicle[]
+  suppliers       Supplier[]
+  orders          Order[]
+  trips           Trip[]
+  expenses        Expense[]
+  paymentIns      PaymentIn[]
+  payrolls        Payroll[]
+  debtStatements  DebtStatement[]
+  incidents       Incident[]
+  bookings        Booking[]
+  attachments     Attachment[]
+  activityLogs    ActivityLog[]
+  statusHistories StatusHistory[]
+  notifications   Notification[]
+
+  @@map("merchants")
+}
+
+model MerchantSettings {
+  id                 String            @id @default(cuid())
+  merchantId         String            @unique
+  merchant           Merchant          @relation(fields: [merchantId], references: [id])
+  payrollPeriodType  PayrollPeriodType @default(MONTHLY)
+  payrollStartDay    Int               @default(1)
+  nearOverlapMinutes Int               @default(120)
+  defaultTripHours   Int               @default(8)
+  overlapWarnVehicle Boolean           @default(true)
+  overlapWarnDriver  Boolean           @default(true)
+  codWarningAmount   BigInt            @default(5000000)
+  codWarningDays     Int               @default(2)
+  codDashboardAlert  Boolean           @default(true)
+  defaultDebtDays    Int               @default(15)
+  defaultCreditLimit BigInt?
+  warnOverLimit      Boolean           @default(true)
+  warnOverdue        Boolean           @default(true)
+  gpsRetentionDays   Int               @default(180)
+  updatedAt          DateTime          @updatedAt
+
+  @@map("merchant_settings")
+}
+
+/// Nhân viên merchant (membership). Một UserAccount có thể thuộc nhiều merchant với role khác nhau.
+model MerchantUser {
+  id               String       @id @default(cuid())
+  merchantId       String
+  merchant         Merchant     @relation(fields: [merchantId], references: [id])
+  accountId        String?
+  account          UserAccount? @relation(fields: [accountId], references: [id])
+  email            String
+  name             String
+  phone            String?
+  title            String?
+  role             MerchantRole
+  extraPermissions String[]     @default([])
+  status           MemberStatus @default(INVITED)
+  note             String?
+  invitedByUserId  String?
+  invitedAt        DateTime     @default(now())
+  joinedAt         DateTime?
+  lastAccessAt     DateTime?
+  lastLoginAt      DateTime?
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  assignedIncidents Incident[] @relation("IncidentAssignee")
+
+  @@unique([merchantId, email])
+  @@index([accountId])
+  @@map("merchant_users")
+}
+
+/// Phiên App Merchant (SĐT + mật khẩu, D-014).
+model UserRefreshToken {
+  id         String      @id @default(cuid())
+  accountId  String
+  account    UserAccount @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  tokenHash  String      @unique
+  deviceInfo String?
+  expiresAt  DateTime
+  revokedAt  DateTime?
+  createdAt  DateTime    @default(now())
+
+  @@index([accountId])
+  @@map("user_refresh_tokens")
+}
+
+/// Matrix quyền tùy chỉnh theo merchant (override mặc định trong @bta/shared).
+model MerchantRolePermission {
+  id         String          @id @default(cuid())
+  merchantId String
+  merchant   Merchant        @relation(fields: [merchantId], references: [id])
+  role       MerchantRole
+  permission String
+  grant      PermissionGrant
+
+  @@unique([merchantId, role, permission])
+  @@map("merchant_role_permissions")
+}
+
+/// Tài khoản app tài xế: SĐT + mật khẩu (D-009).
+model DriverAccount {
+  id                 String              @id @default(cuid())
+  merchantId         String
+  driverId           String              @unique
+  driver             Driver              @relation(fields: [driverId], references: [id])
+  passwordHash       String
+  status             DriverAccountStatus @default(MUST_CHANGE_PASSWORD)
+  mustChangePassword Boolean             @default(true)
+  lastLoginAt        DateTime?
+  deviceInfo         String?
+  fcmToken           String?
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+
+  refreshTokens DriverRefreshToken[]
+
+  @@index([merchantId])
+  @@map("driver_accounts")
+}
+
+model DriverRefreshToken {
+  id         String        @id @default(cuid())
+  accountId  String
+  account    DriverAccount @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  tokenHash  String        @unique
+  deviceInfo String?
+  expiresAt  DateTime
+  revokedAt  DateTime?
+  createdAt  DateTime      @default(now())
+
+  @@index([accountId])
+  @@map("driver_refresh_tokens")
+}
+
+/// Tài khoản Web Khách hàng (phase 3) — SĐT + OTP (D-013b), không mật khẩu, không có merchantId.
+model CustomerAccount {
+  id                String       @id @default(cuid())
+  email             String?      @unique
+  phone             String       @unique
+  fullName          String
+  companyName       String?
+  taxCode           String?
+  billingAddress    String?
+  contactTitle      String?
+  notificationPrefs Json?
+  status            ActiveStatus @default(ACTIVE)
+  lastLoginAt       DateTime?
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+
+  addresses     CustomerAddress[]
+  refreshTokens CustomerRefreshToken[]
+  bookings      Booking[]
+  customerLinks Customer[]
+
+  @@map("customer_accounts")
+}
+
+model CustomerAddress {
+  id              String          @id @default(cuid())
+  accountId       String
+  account         CustomerAccount @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  name            String
+  address         String
+  usage           LocationUsage   @default(BOTH)
+  lat             Float?
+  lng             Float?
+  contactName     String?
+  contactPhone    String?
+  note            String?
+  isDefaultPickup Boolean         @default(false)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@index([accountId])
+  @@map("customer_addresses")
+}
+
+model CustomerRefreshToken {
+  id        String          @id @default(cuid())
+  accountId String
+  account   CustomerAccount @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  tokenHash String          @unique
+  expiresAt DateTime
+  revokedAt DateTime?
+  createdAt DateTime        @default(now())
+
+  @@index([accountId])
+  @@map("customer_refresh_tokens")
+}
+
+enum OtpPurpose {
+  CUSTOMER_LOGIN
+}
+
+/// Mã OTP SMS (D-013b). Lưu hash, hết hạn 5 phút, tối đa 5 lần sai.
+model OtpCode {
+  id         String     @id @default(cuid())
+  phone      String
+  purpose    OtpPurpose
+  codeHash   String
+  expiresAt  DateTime
+  attempts   Int        @default(0)
+  consumedAt DateTime?
+  ip         String?
+  createdAt  DateTime   @default(now())
+
+  @@index([phone, purpose, createdAt])
+  @@map("otp_codes")
+}
+
+// ============================================================================
+// SYSTEM: numbering, catalog, idempotency
+// ============================================================================
+
+model NumberFormat {
+  id          String      @id @default(cuid())
+  merchantId  String
+  merchant    Merchant    @relation(fields: [merchantId], references: [id])
+  docType     DocType
+  prefix      String
+  separator   String      @default("-")
+  datePart    String      @default("YYYYMM")
+  digits      Int         @default(4)
+  resetPeriod ResetPeriod @default(MONTHLY)
+  updatedAt   DateTime    @updatedAt
+
+  @@unique([merchantId, docType])
+  @@map("number_formats")
+}
+
+model NumberSequence {
+  id           String   @id @default(cuid())
+  merchantId   String
+  merchant     Merchant @relation(fields: [merchantId], references: [id])
+  docType      DocType
+  period       String
+  currentValue Int      @default(0)
+  updatedAt    DateTime @updatedAt
+
+  @@unique([merchantId, docType, period])
+  @@map("number_sequences")
+}
+
+model CatalogItem {
+  id         String      @id @default(cuid())
+  merchantId String
+  merchant   Merchant    @relation(fields: [merchantId], references: [id])
+  type       CatalogType
+  code       String
+  name       String
+  appliesTo  String?
+  isDefault  Boolean     @default(false)
+  sortOrder  Int         @default(0)
+  active     Boolean     @default(true)
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+
+  @@unique([merchantId, type, code])
+  @@index([merchantId, type, active])
+  @@map("catalog_items")
+}
+
+model IdempotencyKey {
+  id         String    @id @default(cuid())
+  merchantId String?
+  actorType  ActorType
+  actorId    String
+  key        String
+  action     String
+  response   Json?
+  createdAt  DateTime  @default(now())
+
+  @@unique([actorType, actorId, key])
+  @@map("idempotency_keys")
+}
+
+// ============================================================================
+// MASTER DATA
+// ============================================================================
+
+model Customer {
+  id                String           @id @default(cuid())
+  merchantId        String
+  merchant          Merchant         @relation(fields: [merchantId], references: [id])
+  code              String
+  type              CustomerType     @default(COMPANY)
+  name              String
+  legalName         String?
+  taxCode           String?
+  phone             String?
+  email             String?
+  invoiceEmail      String?
+  billingAddress    String?
+  groupId           String?
+  primaryContact    Json?
+  creditLimit       BigInt?
+  defaultDebtDays   Int?
+  note              String?
+  status            ActiveStatus     @default(ACTIVE)
+  deactivateReason  String?
+  portalAccountId   String?
+  portalAccount     CustomerAccount? @relation(fields: [portalAccountId], references: [id])
+  shareOrderHistory Boolean          @default(true)
+  createdByUserId   String?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  locations      CustomerLocation[]
+  orders         Order[]
+  paymentIns     PaymentIn[]
+  debtStatements DebtStatement[]
+  bookings       Booking[]
+
+  @@unique([merchantId, code])
+  @@index([merchantId, status, name])
+  @@index([merchantId, phone])
+  @@map("customers")
+}
+
+model CustomerLocation {
+  id           String        @id @default(cuid())
+  merchantId   String
+  customerId   String
+  customer     Customer      @relation(fields: [customerId], references: [id])
+  name         String
+  usage        LocationUsage @default(BOTH)
+  address      String
+  province     String?
+  lat          Float?
+  lng          Float?
+  contactName  String?
+  contactPhone String?
+  note         String?
+  isDefault    Boolean       @default(false)
+  active       Boolean       @default(true)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  stops OrderStop[]
+
+  @@index([merchantId, customerId, active])
+  @@map("customer_locations")
+}
+
+model Driver {
+  id               String       @id @default(cuid())
+  merchantId       String
+  merchant         Merchant     @relation(fields: [merchantId], references: [id])
+  code             String
+  name             String
+  phone            String
+  dob              DateTime?    @db.Date
+  idNumber         String?
+  address          String?
+  emergencyContact String?
+  licenseClass     String?
+  licenseNumber    String?
+  licenseExpiresAt DateTime?    @db.Date
+  status           ActiveStatus @default(ACTIVE)
+  note             String?
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  account       DriverAccount?
+  salaryHistory DriverSalaryHistory[]
+  trips         Trip[]
+  expenses      Expense[]
+  paymentIns    PaymentIn[]
+  payrollLines  PayrollLine[]
+  tripLocations TripLocation[]
+  incidents     Incident[]
+
+  @@unique([merchantId, code])
+  @@unique([merchantId, phone])
+  @@index([merchantId, status])
+  @@map("drivers")
+}
+
+model DriverSalaryHistory {
+  id              String   @id @default(cuid())
+  merchantId      String
+  driverId        String
+  driver          Driver   @relation(fields: [driverId], references: [id])
+  amount          BigInt
+  effectiveFrom   DateTime @db.Date
+  reason          String?
+  createdByUserId String?
+  createdAt       DateTime @default(now())
+
+  @@index([merchantId, driverId, effectiveFrom])
+  @@map("driver_salary_histories")
+}
+
+model Vehicle {
+  id                    String        @id @default(cuid())
+  merchantId            String
+  merchant              Merchant      @relation(fields: [merchantId], references: [id])
+  code                  String
+  plate                 String
+  typeId                String?
+  capacityTons          Float?
+  brandModel            String?
+  year                  Int?
+  chassisNo             String?
+  engineNo              String?
+  boxSize               String?
+  fuelNorm              String?
+  registrationExpiresAt DateTime?     @db.Date
+  insuranceExpiresAt    DateTime?     @db.Date
+  status                VehicleStatus @default(ACTIVE)
+  note                  String?
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
+
+  trips     Trip[]
+  expenses  Expense[]
+  incidents Incident[]
+
+  @@unique([merchantId, code])
+  @@unique([merchantId, plate])
+  @@index([merchantId, status])
+  @@map("vehicles")
+}
+
+model Supplier {
+  id               String       @id @default(cuid())
+  merchantId       String
+  merchant         Merchant     @relation(fields: [merchantId], references: [id])
+  code             String
+  name             String
+  typeId           String?
+  taxCode          String?
+  address          String?
+  bankName         String?
+  bankAccountNo    String?
+  paymentTerms     String?
+  contacts         Json?
+  note             String?
+  status           ActiveStatus @default(ACTIVE)
+  deactivateReason String?
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  expenses           Expense[]
+  externalTransports ExternalTransportInfo[]
+
+  @@unique([merchantId, code])
+  @@index([merchantId, status, name])
+  @@map("suppliers")
+}
+
+// ============================================================================
+// ORDER / DISPATCH
+// ============================================================================
+
+model Order {
+  id                    String      @id @default(cuid())
+  merchantId            String
+  merchant              Merchant    @relation(fields: [merchantId], references: [id])
+  code                  String
+  customerId            String
+  customer              Customer    @relation(fields: [customerId], references: [id])
+  bookingId             String?     @unique
+  booking               Booking?    @relation(fields: [bookingId], references: [id])
+  orderDate             DateTime    @db.Date
+  freightAmount         BigInt      @default(0)
+  dueDate               DateTime?   @db.Date
+  status                OrderStatus @default(DRAFT)
+  requiredVehicleTypeId String?
+  requiredCapacityTons  Float?
+  routeSummary          String?
+  note                  String?
+  internalNote          String?
+  createdByUserId       String?
+  confirmedAt           DateTime?
+  startedAt             DateTime?
+  completedAt           DateTime?
+  cancelledAt           DateTime?
+  cancelReason          String?
+  createdAt             DateTime    @default(now())
+  updatedAt             DateTime    @updatedAt
+
+  stops              OrderStop[]
+  cargoLines         CargoLine[]
+  addons             OrderAddon[]
+  trips              Trip[]
+  expenses           Expense[]
+  allocations        PaymentAllocation[]
+  incidents          Incident[]
+  externalTransports ExternalTransportInfo[]
+  statementLines     DebtStatementLine[]
+
+  @@unique([merchantId, code])
+  @@index([merchantId, status, orderDate])
+  @@index([merchantId, customerId, orderDate])
+  @@index([merchantId, dueDate])
+  @@map("orders")
+}
+
+model OrderStop {
+  id             String            @id @default(cuid())
+  merchantId     String
+  orderId        String
+  order          Order             @relation(fields: [orderId], references: [id])
+  type           StopType
+  sequence       Int
+  locationId     String?
+  location       CustomerLocation? @relation(fields: [locationId], references: [id])
+  locationName   String?
+  address        String
+  province       String?
+  lat            Float?
+  lng            Float?
+  contactName    String?
+  contactPhone   String?
+  plannedAt      DateTime?
+  codExpected    BigInt?
+  codActual      BigInt?
+  codCollectedAt DateTime?
+  codNote        String?
+  status         StopStatus        @default(NOT_ARRIVED)
+  arrivedAt      DateTime?
+  completedAt    DateTime?
+  skipReason     String?
+  note           String?
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+
+  assignments    TripStopAssignment[]
+  pickupCargo    CargoLine[]          @relation("CargoPickupStop")
+  dropoffCargo   CargoLine[]          @relation("CargoDropoffStop")
+  codRemittances CodRemittanceItem[]
+  incidents      Incident[]
+
+  @@index([merchantId, orderId, sequence])
+  @@index([merchantId, status])
+  @@map("order_stops")
+}
+
+model CargoLine {
+  id              String          @id @default(cuid())
+  merchantId      String
+  orderId         String
+  order           Order           @relation(fields: [orderId], references: [id])
+  name            String
+  cargoTypeId     String?
+  weightKg        Float?
+  volumeM3        Float?
+  quantity        Float?
+  packagingUnitId String?
+  packagingUnit   String?
+  properties      CargoProperty[] @default([])
+  declaredValue   BigInt?
+  pickupStopId    String?
+  pickupStop      OrderStop?      @relation("CargoPickupStop", fields: [pickupStopId], references: [id])
+  dropoffStopId   String?
+  dropoffStop     OrderStop?      @relation("CargoDropoffStop", fields: [dropoffStopId], references: [id])
+  note            String?
+  sortOrder       Int             @default(0)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@index([merchantId, orderId])
+  @@map("cargo_lines")
+}
+
+model OrderAddon {
+  id         String   @id @default(cuid())
+  merchantId String
+  orderId    String
+  order      Order    @relation(fields: [orderId], references: [id])
+  serviceId  String?
+  name       String
+  amount     BigInt
+  note       String?
+  createdAt  DateTime @default(now())
+
+  @@index([merchantId, orderId])
+  @@map("order_addons")
+}
+
+model Trip {
+  id                        String      @id @default(cuid())
+  merchantId                String
+  merchant                  Merchant    @relation(fields: [merchantId], references: [id])
+  code                      String
+  orderId                   String
+  order                     Order       @relation(fields: [orderId], references: [id])
+  vehicleId                 String?
+  vehicle                   Vehicle?    @relation(fields: [vehicleId], references: [id])
+  driverId                  String?
+  driver                    Driver?     @relation(fields: [driverId], references: [id])
+  isExternal                Boolean     @default(false)
+  plannedStartAt            DateTime
+  plannedEndAt              DateTime?
+  actualStartAt             DateTime?
+  actualEndAt               DateTime?
+  status                    TripStatus  @default(SCHEDULED)
+  pausedReasonId            String?
+  pauseNote                 String?
+  previousStatusBeforePause TripStatus?
+  pausedAt                  DateTime?
+  resumedAt                 DateTime?
+  driverBonusAmount         BigInt      @default(0)
+  routeSummary              String?
+  note                      String?
+  cancelReason              String?
+  lastLat                   Float?
+  lastLng                   Float?
+  lastLocationAt            DateTime?
+  createdByUserId           String?
+  createdAt                 DateTime    @default(now())
+  updatedAt                 DateTime    @updatedAt
+
+  stopAssignments   TripStopAssignment[]
+  locations         TripLocation[]
+  expenses          Expense[]
+  paymentIns        PaymentIn[]
+  incidents         Incident[]
+  scheduleWarnings  ScheduleWarning[]          @relation("WarningTrip")
+  conflictsAgainst  ScheduleWarning[]          @relation("WarningConflictTrip")
+  externalTransport ExternalTransportInfo?
+  advanceReconcile  TripAdvanceReconciliation?
+  payrollItems      PayrollLineItem[]
+
+  @@unique([merchantId, code])
+  @@index([merchantId, status, plannedStartAt])
+  @@index([merchantId, driverId, plannedStartAt])
+  @@index([merchantId, vehicleId, plannedStartAt])
+  @@index([merchantId, orderId])
+  @@map("trips")
+}
+
+/// Chuyến nào phụ trách điểm dừng nào (đơn nhiều xe có thể chung điểm lấy).
+model TripStopAssignment {
+  id          String    @id @default(cuid())
+  merchantId  String
+  tripId      String
+  trip        Trip      @relation(fields: [tripId], references: [id])
+  stopId      String
+  stop        OrderStop @relation(fields: [stopId], references: [id])
+  sequence    Int       @default(0)
+  arrivedAt   DateTime?
+  completedAt DateTime?
+  createdAt   DateTime  @default(now())
+
+  @@unique([tripId, stopId])
+  @@index([merchantId, stopId])
+  @@map("trip_stop_assignments")
+}
+
+model ExternalTransportInfo {
+  id           String    @id @default(cuid())
+  merchantId   String
+  orderId      String
+  order        Order     @relation(fields: [orderId], references: [id])
+  tripId       String?   @unique
+  trip         Trip?     @relation(fields: [tripId], references: [id])
+  supplierId   String?
+  supplier     Supplier? @relation(fields: [supplierId], references: [id])
+  vehiclePlate String?
+  driverName   String?
+  driverPhone  String?
+  agreedAmount BigInt?
+  note         String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([merchantId, orderId])
+  @@index([merchantId, supplierId])
+  @@map("external_transport_infos")
+}
+
+model TripLocation {
+  id           String   @id @default(cuid())
+  merchantId   String
+  tripId       String
+  trip         Trip     @relation(fields: [tripId], references: [id])
+  driverId     String?
+  driver       Driver?  @relation(fields: [driverId], references: [id])
+  lat          Float
+  lng          Float
+  accuracy     Float?
+  speed        Float?
+  heading      Float?
+  batteryLevel Float?
+  recordedAt   DateTime
+  receivedAt   DateTime @default(now())
+
+  @@unique([tripId, recordedAt])
+  @@index([merchantId, tripId, recordedAt])
+  @@map("trip_locations")
+}
+
+model ScheduleWarning {
+  id                 String              @id @default(cuid())
+  merchantId         String
+  tripId             String
+  trip               Trip                @relation("WarningTrip", fields: [tripId], references: [id])
+  type               ScheduleWarningType
+  subject            ScheduleSubject
+  subjectId          String
+  conflictTripId     String?
+  conflictTrip       Trip?               @relation("WarningConflictTrip", fields: [conflictTripId], references: [id])
+  gapMinutes         Int
+  thresholdMinutes   Int
+  overriddenByUserId String?
+  overrideReason     String?
+  resolvedAt         DateTime?
+  createdAt          DateTime            @default(now())
+
+  @@index([merchantId, resolvedAt, createdAt])
+  @@index([merchantId, tripId])
+  @@map("schedule_warnings")
+}
+
+model Incident {
+  id             String           @id @default(cuid())
+  merchantId     String
+  merchant       Merchant         @relation(fields: [merchantId], references: [id])
+  code           String
+  typeId         String?
+  title          String
+  severity       IncidentSeverity @default(MEDIUM)
+  description    String?
+  orderId        String?
+  order          Order?           @relation(fields: [orderId], references: [id])
+  tripId         String?
+  trip           Trip?            @relation(fields: [tripId], references: [id])
+  stopId         String?
+  stop           OrderStop?       @relation(fields: [stopId], references: [id])
+  driverId       String?
+  driver         Driver?          @relation(fields: [driverId], references: [id])
+  vehicleId      String?
+  vehicle        Vehicle?         @relation(fields: [vehicleId], references: [id])
+  location       String?
+  reportedByType ActorType
+  reportedById   String?
+  reportedByName String?
+  assigneeUserId String?
+  assignee       MerchantUser?    @relation("IncidentAssignee", fields: [assigneeUserId], references: [id])
+  status         IncidentStatus   @default(OPEN)
+  resolvedNote   String?
+  resolvedAt     DateTime?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  @@unique([merchantId, code])
+  @@index([merchantId, status, severity, createdAt])
+  @@index([merchantId, tripId])
+  @@map("incidents")
+}
+
+// ============================================================================
+// FINANCE
+// ============================================================================
+
+model Expense {
+  id              String         @id @default(cuid())
+  merchantId      String
+  merchant        Merchant       @relation(fields: [merchantId], references: [id])
+  code            String
+  kind            ExpenseKind
+  categoryId      String?
+  amount          BigInt
+  expenseDate     DateTime       @db.Date
+  paidBy          ExpensePaidBy  @default(COMPANY)
+  reimbursable    Boolean        @default(false)
+  paidStatus      PaidStatus     @default(PAID)
+  paidAt          DateTime?
+  paidMethod      PaymentMethod?
+  supplierId      String?
+  supplier        Supplier?      @relation(fields: [supplierId], references: [id])
+  orderId         String?
+  order           Order?         @relation(fields: [orderId], references: [id])
+  tripId          String?
+  trip            Trip?          @relation(fields: [tripId], references: [id])
+  vehicleId       String?
+  vehicle         Vehicle?       @relation(fields: [vehicleId], references: [id])
+  driverId        String?
+  driver          Driver?        @relation(fields: [driverId], references: [id])
+  description     String?
+  note            String?
+  status          DocStatus      @default(ACTIVE)
+  cancelReason    String?
+  cancelledAt     DateTime?
+  createdByUserId String?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  payrollItems PayrollLineItem[]
+
+  @@unique([merchantId, code])
+  @@index([merchantId, expenseDate])
+  @@index([merchantId, kind, status])
+  @@index([merchantId, supplierId, paidStatus])
+  @@index([merchantId, driverId])
+  @@index([merchantId, orderId])
+  @@index([merchantId, tripId])
+  @@index([merchantId, vehicleId])
+  @@map("expenses")
+}
+
+/// Phiếu thu. Loại DRIVER_COD_REMITTANCE = thu hồi phải thu từ tài xế, KHÔNG phải doanh thu.
+model PaymentIn {
+  id              String        @id @default(cuid())
+  merchantId      String
+  merchant        Merchant      @relation(fields: [merchantId], references: [id])
+  code            String
+  type            PaymentInType
+  customerId      String?
+  customer        Customer?     @relation(fields: [customerId], references: [id])
+  driverId        String?
+  driver          Driver?       @relation(fields: [driverId], references: [id])
+  tripId          String?
+  trip            Trip?         @relation(fields: [tripId], references: [id])
+  payerName       String?
+  amount          BigInt
+  receivedAt      DateTime
+  method          PaymentMethod @default(BANK_TRANSFER)
+  bankAccount     String?
+  transferNote    String?
+  receivedBy      String?
+  note            String?
+  status          DocStatus     @default(ACTIVE)
+  cancelReason    String?
+  cancelledAt     DateTime?
+  createdByUserId String?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  allocations PaymentAllocation[]
+  codItems    CodRemittanceItem[]
+
+  @@unique([merchantId, code])
+  @@index([merchantId, receivedAt])
+  @@index([merchantId, customerId, status])
+  @@index([merchantId, driverId, type, status])
+  @@map("payment_ins")
+}
+
+model PaymentAllocation {
+  id              String    @id @default(cuid())
+  merchantId      String
+  paymentId       String
+  payment         PaymentIn @relation(fields: [paymentId], references: [id])
+  orderId         String
+  order           Order     @relation(fields: [orderId], references: [id])
+  amount          BigInt
+  createdByUserId String?
+  createdAt       DateTime  @default(now())
+
+  @@index([merchantId, orderId])
+  @@index([merchantId, paymentId])
+  @@map("payment_allocations")
+}
+
+/// Phiếu thu COD nộp lại gắn với các điểm dừng cụ thể (tùy chọn; không gắn thì tính FIFO).
+model CodRemittanceItem {
+  id         String    @id @default(cuid())
+  merchantId String
+  paymentId  String
+  payment    PaymentIn @relation(fields: [paymentId], references: [id])
+  stopId     String
+  stop       OrderStop @relation(fields: [stopId], references: [id])
+  amount     BigInt
+
+  @@index([merchantId, stopId])
+  @@map("cod_remittance_items")
+}
+
+model TripAdvanceReconciliation {
+  id               String            @id @default(cuid())
+  merchantId       String
+  tripId           String            @unique
+  trip             Trip              @relation(fields: [tripId], references: [id])
+  status           TripAdvanceStatus @default(OPEN)
+  resolution       String?
+  advanceAmount    BigInt            @default(0)
+  actualCost       BigInt            @default(0)
+  differenceAmount BigInt            @default(0)
+  resolvedByUserId String?
+  resolvedAt       DateTime?
+  reason           String?
+  note             String?
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+
+  @@index([merchantId, status])
+  @@map("trip_advance_reconciliations")
+}
+
+model DebtStatement {
+  id                 String              @id @default(cuid())
+  merchantId         String
+  merchant           Merchant            @relation(fields: [merchantId], references: [id])
+  code               String
+  customerId         String
+  customer           Customer            @relation(fields: [customerId], references: [id])
+  periodFrom         DateTime            @db.Date
+  periodTo           DateTime            @db.Date
+  scope              DebtStatementScope  @default(UNPAID_ONLY)
+  status             DebtStatementStatus @default(DRAFT)
+  lineCount          Int                 @default(0)
+  totalAmount        BigInt              @default(0)
+  paidAmount         BigInt              @default(0)
+  remainingAmount    BigInt              @default(0)
+  note               String?
+  pdfAttachmentId    String?
+  sharedWithCustomer Boolean             @default(false)
+  finalizedAt        DateTime?
+  finalizedByUserId  String?
+  sentAt             DateTime?
+  cancelledAt        DateTime?
+  cancelReason       String?
+  createdByUserId    String?
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+
+  lines DebtStatementLine[]
+
+  @@unique([merchantId, code])
+  @@index([merchantId, customerId, status])
+  @@map("debt_statements")
+}
+
+model DebtStatementLine {
+  id              String        @id @default(cuid())
+  merchantId      String
+  statementId     String
+  statement       DebtStatement @relation(fields: [statementId], references: [id])
+  orderId         String
+  order           Order         @relation(fields: [orderId], references: [id])
+  sequence        Int
+  orderDate       DateTime      @db.Date
+  orderCode       String
+  route           String?
+  totalAmount     BigInt
+  paidAmount      BigInt
+  remainingAmount BigInt
+  dueDate         DateTime?     @db.Date
+  overdueDays     Int           @default(0)
+
+  @@index([merchantId, statementId])
+  @@map("debt_statement_lines")
+}
+
+// ============================================================================
+// PAYROLL
+// ============================================================================
+
+model Payroll {
+  id                String        @id @default(cuid())
+  merchantId        String
+  merchant          Merchant      @relation(fields: [merchantId], references: [id])
+  code              String
+  periodFrom        DateTime      @db.Date
+  periodTo          DateTime      @db.Date
+  periodLabel       String
+  status            PayrollStatus @default(DRAFT)
+  note              String?
+  salaryTotal       BigInt        @default(0)
+  bonusTotal        BigInt        @default(0)
+  advanceTotal      BigInt        @default(0)
+  deductionTotal    BigInt        @default(0)
+  adjustmentTotal   BigInt        @default(0)
+  netTotal          BigInt        @default(0)
+  createdByUserId   String?
+  submittedAt       DateTime?
+  submittedByUserId String?
+  approvedAt        DateTime?
+  approvedByUserId  String?
+  approvalNote      String?
+  returnedAt        DateTime?
+  returnedByUserId  String?
+  returnReason      String?
+  paidAt            DateTime?
+  paidByUserId      String?
+  cancelledAt       DateTime?
+  cancelReason      String?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  lines PayrollLine[]
+
+  @@unique([merchantId, code])
+  @@index([merchantId, status, periodFrom])
+  @@map("payrolls")
+}
+
+model PayrollLine {
+  id                  String    @id @default(cuid())
+  merchantId          String
+  payrollId           String
+  payroll             Payroll   @relation(fields: [payrollId], references: [id])
+  driverId            String
+  driver              Driver    @relation(fields: [driverId], references: [id])
+  driverName          String
+  baseSalary          BigInt    @default(0)
+  salaryEffectiveFrom DateTime? @db.Date
+  bonusTotal          BigInt    @default(0)
+  advanceTotal        BigInt    @default(0)
+  deductionTotal      BigInt    @default(0)
+  adjustmentTotal     BigInt    @default(0)
+  netAmount           BigInt    @default(0)
+  anomalies           Json?
+  note                String?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  items PayrollLineItem[]
+
+  @@unique([payrollId, driverId])
+  @@index([merchantId, driverId])
+  @@map("payroll_lines")
+}
+
+model PayrollLineItem {
+  id              String          @id @default(cuid())
+  merchantId      String
+  lineId          String
+  line            PayrollLine     @relation(fields: [lineId], references: [id])
+  type            PayrollItemType
+  amount          BigInt
+  description     String
+  reasonId        String?
+  tripId          String?
+  trip            Trip?           @relation(fields: [tripId], references: [id])
+  expenseId       String?
+  expense         Expense?        @relation(fields: [expenseId], references: [id])
+  itemDate        DateTime?       @db.Date
+  note            String?
+  createdByUserId String?
+  createdAt       DateTime        @default(now())
+
+  @@index([merchantId, lineId])
+  @@index([expenseId])
+  @@map("payroll_line_items")
+}
+
+// ============================================================================
+// BOOKING (phase 3)
+// ============================================================================
+
+model Booking {
+  id               String          @id @default(cuid())
+  merchantId       String
+  merchant         Merchant        @relation(fields: [merchantId], references: [id])
+  code             String
+  accountId        String
+  account          CustomerAccount @relation(fields: [accountId], references: [id])
+  customerId       String?
+  customer         Customer?       @relation(fields: [customerId], references: [id])
+  status           BookingStatus   @default(SUBMITTED)
+  stops            Json
+  cargoName        String
+  weightTon        Float?
+  packages         Int?
+  vehicleTypeHint  String?
+  fragile          Boolean         @default(false)
+  loadingAtPickup  Boolean         @default(false)
+  loadingAtDrop    Boolean         @default(false)
+  pickupFrom       DateTime?
+  deliverBefore    DateTime?
+  flexibility      String?
+  note             String?
+  contactName      String
+  contactPhone     String
+  acceptedAt       DateTime?
+  acceptedByUserId String?
+  rejectReason     String?
+  cancelReason     String?
+  cancelledAt      DateTime?
+  convertedAt      DateTime?
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+
+  order Order?
+  notes BookingNote[]
+
+  @@unique([merchantId, code])
+  @@index([merchantId, status, createdAt])
+  @@index([accountId, createdAt])
+  @@map("bookings")
+}
+
+model BookingNote {
+  id         String    @id @default(cuid())
+  bookingId  String
+  booking    Booking   @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  authorType ActorType
+  authorId   String?
+  authorName String?
+  body       String
+  createdAt  DateTime  @default(now())
+
+  @@index([bookingId, createdAt])
+  @@map("booking_notes")
+}
+
+// ============================================================================
+// FILE / LOG / NOTIFICATION / IMPORT
+// ============================================================================
+
+model Attachment {
+  id                 String             @id @default(cuid())
+  merchantId         String?
+  merchant           Merchant?          @relation(fields: [merchantId], references: [id])
+  entityType         EntityType
+  entityId           String
+  category           AttachmentCategory @default(OTHER)
+  fileName           String
+  storageKey         String             @unique
+  mimeType           String
+  size               Int                @default(0)
+  checksum           String?
+  status             AttachmentStatus   @default(PENDING)
+  uploadedByType     ActorType
+  uploadedById       String?
+  uploadedByName     String?
+  capturedAt         DateTime?
+  lat                Float?
+  lng                Float?
+  note               String?
+  sharedWithCustomer Boolean            @default(false)
+  deletedAt          DateTime?
+  deleteReason       String?
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+
+  @@index([merchantId, entityType, entityId, status])
+  @@map("attachments")
+}
+
+/// Timeline nghiệp vụ + audit (before/after cho thao tác nhạy cảm).
+model ActivityLog {
+  id               String           @id @default(cuid())
+  merchantId       String?
+  merchant         Merchant?        @relation(fields: [merchantId], references: [id])
+  entityType       EntityType
+  entityId         String
+  parentEntityType EntityType?
+  parentEntityId   String?
+  category         ActivityCategory
+  action           String
+  summary          String
+  actorType        ActorType
+  actorId          String?
+  actorName        String?
+  reason           String?
+  before           Json?
+  after            Json?
+  sensitive        Boolean          @default(false)
+  clientRequestId  String?
+  ip               String?
+  userAgent        String?
+  metadata         Json?
+  createdAt        DateTime         @default(now())
+
+  @@index([merchantId, entityType, entityId, createdAt])
+  @@index([merchantId, parentEntityType, parentEntityId, createdAt])
+  @@index([merchantId, actorType, actorId, createdAt])
+  @@map("activity_logs")
+}
+
+model StatusHistory {
+  id         String     @id @default(cuid())
+  merchantId String?
+  merchant   Merchant?  @relation(fields: [merchantId], references: [id])
+  entityType EntityType
+  entityId   String
+  fromStatus String?
+  toStatus   String
+  reason     String?
+  note       String?
+  actorType  ActorType
+  actorId    String?
+  actorName  String?
+  changedAt  DateTime   @default(now())
+  metadata   Json?
+
+  @@index([merchantId, entityType, entityId, changedAt])
+  @@map("status_histories")
+}
+
+model Notification {
+  id            String           @id @default(cuid())
+  merchantId    String?
+  merchant      Merchant?        @relation(fields: [merchantId], references: [id])
+  recipientType RecipientType
+  recipientId   String
+  type          NotificationType
+  title         String
+  body          String?
+  entityType    EntityType?
+  entityId      String?
+  severity      String?
+  readAt        DateTime?
+  createdAt     DateTime         @default(now())
+
+  @@index([recipientType, recipientId, readAt, createdAt])
+  @@index([merchantId, createdAt])
+  @@map("notifications")
+}
+
+model ImportJob {
+  id              String           @id @default(cuid())
+  merchantId      String
+  entityType      ImportEntityType
+  fileName        String
+  mapping         Json?
+  status          ImportStatus     @default(PREVIEW)
+  totalRows       Int              @default(0)
+  validRows       Int              @default(0)
+  warningRows     Int              @default(0)
+  errorRows       Int              @default(0)
+  rows            Json
+  result          Json?
+  createdByUserId String?
+  committedAt     DateTime?
+  createdAt       DateTime         @default(now())
+
+  @@index([merchantId, createdAt])
+  @@map("import_jobs")
+}

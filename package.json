@@ -1,0 +1,32 @@
+{
+  "name": "@bta/source",
+  "version": "0.0.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build:shared": "npm run build -w @bta/shared",
+    "db:generate": "npm run generate -w @bta/db",
+    "db:migrate": "npm run migrate:dev -w @bta/db",
+    "db:reset": "npm run migrate:reset -w @bta/db",
+    "db:seed": "npm run seed -w @bta/db",
+    "dev:api": "npm run dev -w @bta/api",
+    "dev:web": "npm run dev -w @bta/web",
+    "dev:customer-web": "npm run dev -w @bta/customer-web",
+    "build": "nx run-many -t build",
+    "test": "nx run-many -t test",
+    "typecheck": "nx run-many -t typecheck",
+    "lint": "nx run-many -t lint",
+    "codegen": "npm run codegen -w @bta/web && npm run codegen -w @bta/customer-web"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.0",
+    "nx": "22.7.12",
+    "prettier": "^3.5.3",
+    "typescript": "~5.8.3",
+    "vitest": "^3.2.4"
+  }
+}

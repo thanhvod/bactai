@@ -20,7 +20,8 @@ Giao diện phải chuyên nghiệp, dễ dùng, không màu mè, không lòe lo
 - `doc/4-DESIGN/01-design-system.md`
 - `doc/4-DESIGN/02-web-merchant-ui.md`
 - `doc/4-DESIGN/03-driver-app-ui.md`
-- `doc/1-BRD/10-danh-sach-man-hinh.md`
+- `doc/2-PRD/01-danh-sach-man-hinh.md`
+- `doc/2-PRD/02-implementation-breakdown.md`
 - `doc/3-TECHNICAL/ARCHITECTURE.md`
 
 ## 3. Non-Negotiables
@@ -180,5 +181,4 @@ Deliverable đầu tiên nên là:
    - Trip detail.
    - Stop detail with POD/COD actions.
 
-Sau khi pattern ổn, mở rộng sang các màn hình còn lại trong `doc/1-BRD/10-danh-sach-man-hinh.md`.
-
+Sau khi pattern ổn, mở rộng sang các màn hình còn lại trong `doc/2-PRD/01-danh-sach-man-hinh.md` và chia task theo `doc/2-PRD/02-implementation-breakdown.md`.

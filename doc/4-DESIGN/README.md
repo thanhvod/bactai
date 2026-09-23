@@ -17,7 +17,8 @@ Design system này tổng hợp từ toàn bộ tài liệu hiện có:
 - `doc/1-BRD/07-data-model.md`
 - `doc/1-BRD/08-kien-truc.md`
 - `doc/1-BRD/09-bo-sung-chuc-nang.md`
-- `doc/1-BRD/10-danh-sach-man-hinh.md`
+- `doc/2-PRD/01-danh-sach-man-hinh.md`
+- `doc/2-PRD/02-implementation-breakdown.md`
 - `doc/3-TECHNICAL/ARCHITECTURE.md`
 
 ## 2. Cách đọc
@@ -39,4 +40,3 @@ BTA là phần mềm vận hành vận tải, không phải landing page hay app
 - Không màu mè, không gradient, không minh họa trang trí, không hero marketing.
 - Mềm trong vận hành: cảnh báo rõ, vẫn cho người có quyền override kèm lý do.
 - Có audit/timeline/chứng từ hiện diện trong trải nghiệm, vì đây là phần mềm có dữ liệu tiền và tranh chấp thực tế.
-

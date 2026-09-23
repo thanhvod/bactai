@@ -16,6 +16,7 @@
 | [07-api-contract-map.md](07-api-contract-map.md) | API contract map cấp cao: GraphQL operations, REST upload/GPS, error codes | Draft handoff |
 | [08-permission-matrix.md](08-permission-matrix.md) | Permission matrix theo role/action và sensitive action list | Draft handoff |
 | [09-parallel-execution-plan.md](09-parallel-execution-plan.md) | Parallel execution và ownership plan: schema owner, module paths, merge order, conflict mitigation | Draft handoff |
+| [10-orca-code-handoff.md](10-orca-code-handoff.md) | Handoff packet dành riêng cho ORCA Code: readiness, read order, first task prompt, guardrails, DoD | Draft handoff |
 
 ## Quy ước
 

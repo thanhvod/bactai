@@ -56,6 +56,7 @@ Trung tâm một chuyến: phân công xe/tài xế, điểm dừng được gia
 | Mở chi tiết điểm dừng | [WM-STOP-01](../wm/WM-STOP-01.md) Chi tiết điểm dừng | `/orders/:orderId/stops/:stopId (drawer trên chuyến/đơn)` | action |
 | Mở xe | WM-VEH-02 | | action |
 | Mở tài xế | WM-DRV-02 | | action |
+| Mở chuyến kế tiếp | [WM-TRIP-01](../wm/WM-TRIP-01.md) Chi tiết chuyến | `/trips/:tripId` | action |
 | Đổi xe/tài xế | [WM-TRIP-02](../wm/WM-TRIP-02.md) Tạo/sửa chuyến | `/orders/:orderId/trips/new · /trips/:tripId/edit` | action |
 | Mở bản đồ vị trí xe | [WM-DISPATCH-04](../wm/WM-DISPATCH-04.md) Theo dõi vị trí | `/dispatch/map` | action |
 | Mở chi tiết sự cố | [WM-INC-01](../wm/WM-INC-01.md) Chi tiết sự cố | `/dispatch/incidents/:incidentId` | action |
@@ -93,6 +94,7 @@ Trung tâm một chuyến: phân công xe/tài xế, điểm dừng được gia
 
 | Từ | Trigger |
 |---|---|
+| [WM-TRIP-01](../wm/WM-TRIP-01.md) Chi tiết chuyến | Mở chuyến kế tiếp |
 | [WM-TRIP-02](../wm/WM-TRIP-02.md) Tạo/sửa chuyến | Mở chuyến B |
 | [WM-TRIP-02](../wm/WM-TRIP-02.md) Tạo/sửa chuyến | Lưu chuyến (không cảnh báo) → chi tiết chuyến |
 | [WM-STOP-01](../wm/WM-STOP-01.md) Chi tiết điểm dừng | Mở chuyến |

@@ -496,11 +496,11 @@ def table(columns, rows, selected=None, footer=None, checkbox_col=False, compact
             f'<thead><tr>{"".join(th)}</tr></thead><tbody>{body}</tbody></table></div>{foot}</div>')
 
 
-def pagination(shown="1–10", total=128, per=20) -> str:
+def pagination(shown="1–10", total=128, per=20, pages=None) -> str:
     use("Pagination")
     return row(muted(f"Hiển thị {shown} trên {total}", 13), spacer(), muted(f"{per} / trang", 13),
                icon_btn("chevron-left", "Trang trước", variant="secondary", size="sm"),
-               text("1", 13, 600, extra=f"padding: 0 8px;"), muted("/ 7", 13),
+               text("1", 13, 600, extra=f"padding: 0 8px;"), muted(f"/ {pages or max(1, -(-total // per))}", 13),
                icon_btn("chevron-right", "Trang sau", variant="secondary", size="sm"), gap=8)
 
 

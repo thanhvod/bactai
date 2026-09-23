@@ -7,7 +7,7 @@
 | Route | `/dispatch/incidents/:incidentId` |
 | Pattern | `detail` |
 | Roles | admin, operation, accountant |
-| Kích thước mockup | 1440×1060 |
+| Kích thước mockup | 1440×1000 |
 | Mockup | [../../mockups/WM-INC-01.html](../../mockups/WM-INC-01.html) · canvas artboard `WM-INC-01.dc.html` |
 
 ## Mục đích

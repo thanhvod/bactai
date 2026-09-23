@@ -7,7 +7,7 @@
 | Route | `/orders/:orderId/trips/new · /trips/:tripId/edit` |
 | Pattern | `form` |
 | Roles | admin, operation |
-| Kích thước mockup | 1440×1320 |
+| Kích thước mockup | 1440×1460 |
 | Mockup | [../../mockups/WM-TRIP-02.html](../../mockups/WM-TRIP-02.html) · canvas artboard `WM-TRIP-02.dc.html` |
 
 ## Mục đích
@@ -40,9 +40,9 @@ Tạo chuyến từ đơn: chọn điểm dừng phụ trách (đơn nhiều xe)
 |---|---|---|---|
 | Mở đơn hàng | WM-ORD-02 | | action |
 | Mở chuyến B | [WM-TRIP-01](../wm/WM-TRIP-01.md) Chi tiết chuyến | `/trips/:tripId` | action |
-| Mở lịch xe/tài xế | [WM-DISPATCH-02](../wm/WM-DISPATCH-02.md) Lịch xe/tài xế | `/dispatch/calendar` | action |
 | Tiếp tục và ghi lý do → cảnh báo lịch | [WM-DISPATCH-03](../wm/WM-DISPATCH-03.md) Cảnh báo lịch | `/dispatch/conflicts` | action |
 | Xem lịch xe/tài xế | [WM-DISPATCH-02](../wm/WM-DISPATCH-02.md) Lịch xe/tài xế | `/dispatch/calendar` | action |
+| Mở lịch xe/tài xế | [WM-DISPATCH-02](../wm/WM-DISPATCH-02.md) Lịch xe/tài xế | `/dispatch/calendar` | action |
 | Hủy → quay lại đơn | WM-ORD-02 | | action |
 | Lưu chuyến (không cảnh báo) → chi tiết chuyến | [WM-TRIP-01](../wm/WM-TRIP-01.md) Chi tiết chuyến | `/trips/:tripId` | action |
 | Breadcrumb Điều phối | [WM-DISPATCH-01](../wm/WM-DISPATCH-01.md) Bảng điều phối | `/dispatch` | nav |
@@ -82,7 +82,7 @@ Tạo chuyến từ đơn: chọn điểm dừng phụ trách (đơn nhiều xe)
 
 ## Components (design system)
 
-`EntityPicker`, `FormField`, `TextField`, `Checkbox`, `StatusBadge`, `DataTable`, `Popover`, `MoneyInput`, `Textarea`, `Button`, `WarningPanel`, `PageHeader`, `Breadcrumb`, `AppShell`, `Sidebar`, `Logo`, `Topbar`, `QuickSearch`, `NotificationBell`, `IconButton`
+`EntityPicker`, `FormField`, `TextField`, `Checkbox`, `StatusBadge`, `DataTable`, `Popover`, `Button`, `WarningPanel`, `MoneyInput`, `Textarea`, `PageHeader`, `Breadcrumb`, `AppShell`, `Sidebar`, `Logo`, `Topbar`, `QuickSearch`, `NotificationBell`, `IconButton`
 
 ## API (GraphQL)
 

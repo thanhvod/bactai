@@ -80,7 +80,8 @@ def sorted_screens(platform):
     for s in items:
         if s.module not in mods:
             mods.append(s.module)
-    mods.sort(key=lambda m: order.index(m) if m in order else 100 + mods.index(m))
+    first = {m: i for i, m in enumerate(mods)}
+    mods.sort(key=lambda m: order.index(m) if m in order else 100 + first[m])
     by = {m: [s for s in items if s.module == m] for m in mods}
     return by
 

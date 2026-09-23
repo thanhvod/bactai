@@ -166,37 +166,38 @@ def trip_02():
     stops = _section(2, "Điểm dừng chuyến phụ trách", table(stop_cols, stop_rows, compact=True, selected=[0, 1]),
                      muted("Đã chọn 2/3 điểm", 12), "Đơn 1 xe thì mặc định gán tất cả điểm")
     drivers_pop = popover(col(
-        _drv_opt("Nguyễn Văn Tài", "DRV-A-001 · đang chạy CX-202609-0001 đến 14:00", True, warn="Gần trùng 1 giờ"),
+        _drv_opt("Nguyễn Văn Tài", "DRV-A-001 · chạy CX-202609-0001 đến 14:00", True, warn="Gần trùng"),
         _drv_opt("Trần Minh Lái", "DRV-A-002 · CX-202609-0003 13:00 – 18:00", False, warn="Trùng lịch"),
         _drv_opt("Lê Hoàng Phúc", "DRV-A-004 · Rảnh", False),
-        _drv_opt("Phạm Văn Dự", "DRV-A-003 · Ngừng hoạt động — không chọn được", False, disabled=True),
-        gap=0, extra="padding: 4px;"), width=420, extra="position: absolute; left: 0; top: 70px; z-index: 2;")
-    assign = _section(3, "Xe & tài xế", row(
-        field("Xe", _picker("51C-123.45 · Tải thùng 8 tấn", "VEH-A-001 · CX-202609-0001 đến 14:00", "truck"), True, width="50%"),
-        f'<div style="position: relative; width: 50%;">{field("Tài xế", _picker("Nguyễn Văn Tài", "DRV-A-001 · 0900 000 001", "id-card", open_=True), True)}{drivers_pop}</div>',
-        gap=12, align="flex-start"), right=a("Xem lịch xe/tài xế", "WM-DISPATCH-02", "Mở lịch xe/tài xế"),
-        sub="Tài xế không cố định xe — gán theo từng chuyến")
-    time_ = _section(4, "Thời gian dự kiến", row(
-        field("Bắt đầu", input_("23/09/2026 15:00", mono=True, suffix=icon("calendar", 16, T["text-muted"]))),
-        field("Kết thúc", input_("23/09/2026 19:00", mono=True, suffix=icon("calendar", 16, T["text-muted"]))),
-        field("Thời lượng", input_("4 giờ", disabled=True)), gap=12))
-    bonus = _section(5, "Thưởng tài xế & ghi chú", row(
-        field("Thưởng tài xế theo chuyến", money_input(300_000), hint="Tính vào bảng lương kỳ 09/2026", width="30%"),
-        field("Ghi chú cho tài xế", textarea("Giao thép cuộn tại cổng số 2, liên hệ anh Khang trước 30 phút", h=36), width="70%"),
-        gap=12, align="flex-start"))
+        _drv_opt("Phạm Văn Dự", "DRV-A-003 · không chọn được", False, disabled=True),
+        gap=0, extra="padding: 4px;"), width="100%")
     warn = warning_panel("Gần trùng lịch 1 giờ (ngưỡng 2 giờ)", [
         "Xe <b>51C-123.45</b> chạy CX-202609-0001 đến 14:00 — chuyến này bắt đầu 15:00, cách 1 giờ.",
         "Tài xế <b>Nguyễn Văn Tài</b> cùng chuyến CX-202609-0001, đang có sự cố kẹt xe — có thể trễ.",
         "Cảnh báo mềm: vẫn lưu được nếu có quyền override và ghi lý do."],
         row(btn("Tiếp tục và ghi lý do", "primary", "arrow-right", size="sm", to="WM-DISPATCH-03", trigger="Tiếp tục và ghi lý do → cảnh báo lịch"),
-            btn("Đổi xe/tài xế", "secondary", size="sm"), a("Xem lịch", "WM-DISPATCH-02", "Xem lịch xe/tài xế"), gap=8))
+            btn("Đổi xe/tài xế", "secondary", size="sm"), a("Xem lịch", "WM-DISPATCH-02", "Xem lịch xe/tài xế"), gap=8, wrap=True))
+    time_ = _section(3, "Thời gian dự kiến", row(
+        field("Bắt đầu", input_("23/09/2026 15:00", mono=True, suffix=icon("calendar", 16, T["text-muted"])), required=True, width="25%"),
+        field("Kết thúc", input_("23/09/2026 19:00", mono=True, suffix=icon("calendar", 16, T["text-muted"])), required=True, width="25%"),
+        field("Thời lượng", input_("4 giờ", disabled=True), width="15%"), spacer(), gap=12))
+    assign = _section(4, "Xe & tài xế", row(
+        col(field("Xe", _picker("51C-123.45 · Tải thùng 8 tấn", "VEH-A-001 · CX-202609-0001 đến 14:00", "truck"), True),
+            field("Tài xế", _picker("Nguyễn Văn Tài", "DRV-A-001 · 0900 000 001", "id-card", open_=True), True),
+            drivers_pop, gap=8, extra="width: 50%;"),
+        f'<div style="width: 50%;">{warn}</div>', gap=16, align="flex-start"),
+        right=a("Xem lịch xe/tài xế", "WM-DISPATCH-02", "Mở lịch xe/tài xế"), sub="Tài xế không cố định xe — gán theo từng chuyến. Xe/tài xế ngừng hoạt động không chọn được.")
+    bonus = _section(5, "Thưởng tài xế & ghi chú", row(
+        field("Thưởng tài xế theo chuyến", money_input(300_000), hint="Tính vào bảng lương kỳ 09/2026", width="30%"),
+        field("Ghi chú cho tài xế", textarea("Giao thép cuộn tại cổng số 2, liên hệ anh Khang trước 30 phút", h=36), width="70%"),
+        gap=12, align="flex-start"))
     content = col(
         page_header("Tạo chuyến", "Tách đơn nhiều xe: chọn điểm dừng, xe, tài xế và giờ dự kiến",
                     row(btn("Hủy", "secondary", to="WM-ORD-02", trigger="Hủy → quay lại đơn"),
                         btn("Lưu chuyến", "primary", "check", to="WM-TRIP-01", trigger="Lưu chuyến (không cảnh báo) → chi tiết chuyến"), gap=8),
                     crumbs=[("Điều phối", "WM-DISPATCH-01"), ("DH-202609-0002", "WM-ORD-02"), ("Tạo chuyến", None)]),
-        order, stops, assign, warn, time_, bonus, gap=14)
-    return wm_shell("dispatch", content, h=1320, child="WM-DISPATCH-01")
+        order, stops, time_, assign, bonus, gap=14)
+    return wm_shell("dispatch", content, h=1460, child="WM-DISPATCH-01")
 
 
 def _drv_opt(name, sub, sel=False, warn=None, disabled=False):
@@ -293,13 +294,13 @@ def dispatch_01():
     use("DispatchBoard")
     view = segmented([("Danh sách", "list"), ("Bảng", "kanban"), ("Lịch", "calendar-days")], 1, links=[None, None, "WM-DISPATCH-02"])
     content = col(
-        page_header("Bảng điều phối", "Theo dõi chuyến theo trạng thái; cảnh báo trùng/gần trùng lịch không chặn gán xe",
-                    row(view, btn("Cảnh báo lịch (1)", "secondary", "triangle-alert", to="WM-DISPATCH-03", trigger="Mở cảnh báo lịch"),
+        page_header("Bảng điều phối", "Chuyến theo trạng thái; cảnh báo lịch không chặn gán xe",
+                    row(f'<div style="white-space: nowrap; flex-shrink: 0;">{view}</div>', btn("Cảnh báo lịch (1)", "secondary", "triangle-alert", to="WM-DISPATCH-03", trigger="Mở cảnh báo lịch"),
                         btn("Tạo chuyến", "primary", "plus", to="WM-TRIP-02", trigger="Tạo chuyến"), gap=8)),
-        filter_bar("Tìm mã chuyến, mã đơn, biển số…", date="22/09 – 23/09/2026", selects=("Tài xế: Tất cả", "Xe: Tất cả", "Trạng thái: Tất cả"),
+        filter_bar("Tìm mã chuyến, mã đơn, biển số…", date="22/09 – 24/09/2026", selects=("Tài xế: Tất cả", "Xe: Tất cả", "Trạng thái: Tất cả"),
                    right=btn("Xóa lọc", "ghost", size="sm")),
         row(*[kpi(l, v, s, t, ic, to, tr) for l, v, s, t, ic, to, tr in [
-            ("Chuyến hôm nay", "5", "2 đang chạy", None, "route", None, None),
+            ("Chuyến trong kỳ", "6", "2 đang chạy", None, "route", None, None),
             ("Chưa gán xe", "1", "CX-202609-0004 · 24/09", "warning", "truck", "WM-TRIP-02", "Gán xe cho chuyến chưa gán"),
             ("Cảnh báo lịch", "1", "Gần trùng 1 giờ", "warning", "triangle-alert", "WM-DISPATCH-03", "Click KPI cảnh báo lịch"),
             ("Sự cố mở", "1", "Kẹt xe · CX-202609-0001", "danger", "incident", "WM-DISPATCH-05", "Click KPI sự cố"),
@@ -313,7 +314,7 @@ def dispatch_01():
 
 
 # ---------------------------------------------------------------- WM-DISPATCH-02 schedule
-PX_H = 36  # px per hour
+PX_H = 38  # px per hour
 
 
 def _block(code_, label, start, end, tone="accent", warn=False, to="WM-TRIP-01", hatched=False):
@@ -347,12 +348,12 @@ def _sched_row(label, sub, blocks, dim=False, now=13 + 40 / 60):
 
 def dispatch_02():
     use("ScheduleView")
-    axis = "".join(f'<div style="position: absolute; left: {h_ * PX_H}px; top: 8px; transform: translateX(-50%); font-size: 11px; color: {T["text-muted"]}; {NUM}">'
+    axis = "".join(f'<div style="position: absolute; left: {h_ * PX_H}px; top: 2px; line-height: 14px; transform: translateX(-50%); font-size: 11px; color: {T["text-muted"]}; {NUM}">'
                    f'{h_:02d}</div>' for h_ in range(0, 25, 2))
     axis_row = (f'<div style="display: flex; border-bottom: 1px solid {T["border"]}; background: {T["surface-muted"]};">'
                 f'<div style="width: 200px; flex-shrink: 0; padding: 8px 12px; box-sizing: border-box; border-right: 1px solid {T["border"]};">{muted("23/09/2026", 12)}</div>'
                 f'<div style="position: relative; width: {24 * PX_H}px; height: 32px; flex-shrink: 0;">{axis}'
-                f'<div style="position: absolute; left: {(13 + 40 / 60) * PX_H}px; top: 0; transform: translateX(-50%); font-size: 10px; font-weight: 700; color: {T["danger"]};">{NOW}</div></div></div>')
+                f'<div style="position: absolute; left: {(13 + 40 / 60) * PX_H}px; top: 17px; line-height: 14px; transform: translateX(-50%); font-size: 10px; font-weight: 700; color: {T["danger"]}; background: {T["surface-muted"]}; padding: 0 2px;">{NOW}</div></div></div>')
 
     def group(title):
         return (f'<div style="padding: 6px 12px; background: {T["surface-muted"]}; border-bottom: 1px solid {T["border"]}; font-size: 12px; font-weight: 600; '
@@ -374,10 +375,10 @@ def dispatch_02():
     ]
     sched = (f'<div style="background: {T["surface"]}; border: 1px solid {T["border"]}; border-radius: 8px; overflow: hidden;">'
              f'{axis_row}{"".join(rows)}</div>')
-    legend_ = row(*[row(f'<span style="width: 14px; height: 10px; border-radius: 2px; background: {TONES[t][0]}; border-left: 3px solid {TONES[t][1]};"></span>',
+    legend_ = row(*[row(f'<span style="display: inline-block; flex-shrink: 0; width: 16px; height: 10px; border-radius: 2px; background: {TONES[t][0]}; border-left: 3px solid {TONES[t][1]};"></span>',
                         muted(l, 12), gap=6) for l, t in [("Đã lên lịch", "neutral"), ("Đang lấy hàng", "info"), ("Đang vận chuyển", "accent"), ("Hoàn thành", "success")]],
-                  row(f'<span style="width: 14px; height: 10px; border-radius: 2px; outline: 2px dashed {T["warning"]};"></span>', muted("Trùng / gần trùng lịch", 12), gap=6),
-                  row(f'<span style="width: 2px; height: 12px; background: {T["danger"]};"></span>', muted("Hiện tại", 12), gap=6), gap=16)
+                  row(f'<span style="display: inline-block; flex-shrink: 0; width: 16px; height: 10px; border-radius: 2px; outline: 2px dashed {T["warning"]};"></span>', muted("Trùng / gần trùng lịch", 12), gap=6),
+                  row(f'<span style="display: inline-block; flex-shrink: 0; width: 2px; height: 12px; background: {T["danger"]};"></span>', muted("Hiện tại", 12), gap=6), gap=16)
     warn = warning_panel("1 cảnh báo gần trùng lịch hôm nay", [
         "51C-123.45 · Nguyễn Văn Tài: CX-202609-0001 kết thúc 14:00, CX-202609-0002 bắt đầu 15:00 — cách 1 giờ (ngưỡng 2 giờ)."],
         a("Xem cảnh báo lịch", "WM-DISPATCH-03", "Mở danh sách cảnh báo lịch"))
@@ -463,7 +464,13 @@ def dispatch_04():
         gap=0)
     side = panel("Vị trí gần nhất", col(locs, row(subtle("Tự làm mới mỗi 60 giây", 12), spacer(), btn("Làm mới", "ghost", "refresh-cw", size="sm"), gap=8,
                                                   extra="padding: 10px 14px;"), gap=0), badge("2 đang chạy", "accent"), body_pad=False,
-                 extra="width: 380px; flex-shrink: 0;")
+                 extra="")
+    idle = panel("Xe không có chuyến chạy", col(
+        row(icon("truck", 14, T["text-muted"]), a("51C-456.78", "WM-VEH-02", "Mở xe"), muted("Tải thùng 10 tấn", 12), spacer(), badge("Sẵn sàng", "success"), gap=6),
+        row(icon("truck", 14, T["text-muted"]), a("51H-111.22", "WM-VEH-02", "Mở xe"), muted("Xe lạnh 5 tấn", 12), spacer(), badge("Bảo dưỡng", "neutral"), gap=6),
+        subtle("Không theo dõi GPS khi xe không có chuyến đang chạy.", 12), gap=10))
+    gps_note = banner("App tài xế Nguyễn Văn Tài, Trần Minh Lái đã cấp quyền vị trí. Nếu tài xế tắt quyền, danh sách hiện cảnh báo.", "info")
+    side = col(side, idle, gps_note, gap=16, extra="width: 380px; flex-shrink: 0;")
     content = col(
         page_header("Theo dõi vị trí", "Vị trí gần nhất của xe có chuyến đang chạy, gửi từ app tài xế",
                     row(btn("Bảng điều phối", "secondary", "kanban", to="WM-DISPATCH-01", trigger="Mở bảng điều phối"), gap=8)),
@@ -497,7 +504,7 @@ def dispatch_05():
         row(kpi("Đang mở", "1", "Chưa gán người xử lý", "danger", "incident"), kpi("Đang xử lý", "1", "Lê Thu Vân", "warning", "loader-circle"),
             kpi("Đã đóng tháng 9", "2", "Thời gian xử lý TB 3,5 giờ", None, "circle-check"),
             kpi("Mức độ cao", "1", "Hư xe · đã đóng", None, "triangle-alert"), gap=12, extra="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));"),
-        filter_bar("Tìm mã sự cố, đơn, chuyến, tài xế…", ["Tất cả", "Mở", "Đang xử lý", "Đã đóng"], date="01/09 – 30/09/2026",
+        filter_bar("Tìm mã sự cố, đơn, chuyến…", ["Tất cả", "Mở", "Đang xử lý", "Đã đóng"], date="01/09 – 30/09/2026",
                    selects=("Mức độ: Tất cả", "Loại: Tất cả", "Người xử lý: Tất cả")),
         table(cols, rows, selected=0, footer=pagination("1–4", 4)),
         gap=16)
@@ -516,7 +523,7 @@ def inc_01():
             btn("Gán người xử lý", "secondary", "user-plus"),
             btn("Đóng sự cố", "primary", "check", to="WM-SHELL-08", trigger="Đóng sự cố (nhập ghi chú)"), gap=8), align="flex-start")
     desc = panel("Mô tả", col(
-        dl([("Loại sự cố", "Kẹt xe"), ("Mức độ", _sev("Trung bình")), ("Vị trí báo", "QL1A, TP. Tân An, Long An"), ("Ảnh hưởng", "Dự kiến trễ 60–90 phút")], cols=4),
+        dl([("Loại sự cố", "Kẹt xe"), ("Mức độ", _sev("Trung bình")), ("Vị trí báo", "QL1A, Tân An"), ("Ảnh hưởng", "Dự kiến trễ 60–90 phút")], cols=4),
         f'<div style="font-size: 14px; line-height: 22px; color: {T["text"]};">Tai nạn giữa 2 xe con trên QL1A hướng về TP.HCM, CSGT phân luồng. '
         f'Xe đứng yên khoảng 40 phút. Đã báo chị Hạnh (Kho Bình Dương) có thể giao trễ.</div>', gap=12))
     photos = panel("Ảnh & chứng từ", col(
@@ -543,14 +550,14 @@ def inc_01():
         row(avatar("?", 28, "warning"), col(text("Chưa gán", 13, 600, T["warning"]), muted("Gợi ý: Lê Thu Vân (Operation, ca sáng)", 12), gap=0), gap=10),
         select("Chọn người xử lý"), gap=10))
     tl = panel("Timeline", timeline([
-        ("11:30", "Lê Thu Vân", "Gọi tài xế: xe đã qua điểm kẹt lúc 11:25", None, "info"),
+        ("11:30", "Trần Hải", "Ghi chú: gọi tài xế, xe đã qua điểm kẹt lúc 11:25", None, "info"),
         ("10:45", "Hệ thống", "Gửi thông báo sự cố cho Operation"),
         ("10:42", "Nguyễn Văn Tài", "Báo sự cố <b>Kẹt xe</b> · mức Trung bình · 2 ảnh", None, "danger")]),
         a("Xem tất cả", "WM-SHELL-07", "Mở Timeline"))
     right = col(related, handler, tl, gap=16, extra="flex: 1; min-width: 0;")
     content = col(breadcrumb([("Điều phối", "WM-DISPATCH-01"), ("Sự cố", "WM-DISPATCH-05"), ("SC-202609-0004", None)]), head,
                   row(left, right, gap=16, align="flex-start"), gap=16)
-    return wm_shell("dispatch", content, h=1060, child="WM-DISPATCH-05")
+    return wm_shell("dispatch", content, h=1000, child="WM-DISPATCH-05")
 
 
 # ---------------------------------------------------------------- register
@@ -571,7 +578,7 @@ register(
                   "Tạm dừng lưu previous status để resume. Hủy chuyến/đổi ngược mở SensitiveActionModal (WM-SHELL-08).",
                   "Tạm ứng chuyến không tính vào lãi/lỗ đến khi đối soát (WM-ADV-01). COD tài xế thu không phải doanh thu.",
                   "Accountant chỉ xem; nút cập nhật trạng thái/sửa ẩn theo quyền."]),
-    Screen(id="WM-TRIP-02", name="Tạo/sửa chuyến", route="/orders/:orderId/trips/new · /trips/:tripId/edit", render=trip_02, pattern="form", h=1320,
+    Screen(id="WM-TRIP-02", name="Tạo/sửa chuyến", route="/orders/:orderId/trips/new · /trips/:tripId/edit", render=trip_02, pattern="form", h=1460,
            **{**C, "roles": ["admin", "operation"]},
            purpose="Tạo chuyến từ đơn: chọn điểm dừng phụ trách (đơn nhiều xe), xe, tài xế, giờ dự kiến, thưởng tài xế; kiểm tra trùng/gần trùng lịch mềm.",
            api=["order(id){stops, trips}", "vehicles(filter: {status: ACTIVE})", "drivers(filter: {status: ACTIVE})", "checkTripOverlap(input)",
@@ -636,7 +643,7 @@ register(
            actions=[("Tạo sự cố", "incident.manage"), ("Gán người xử lý", "incident.manage"), ("Đóng sự cố", "incident.manage — ghi chú bắt buộc; Accountant ⚠️")],
            states={"empty": "EmptyState 'Chưa có sự cố'", "loading": "DataTable skeleton"},
            notes=["Mã sự cố SC-YYYYMM-NNNN theo cấu hình mã tự động (WM-SET-02)."]),
-    Screen(id="WM-INC-01", name="Chi tiết sự cố", route="/dispatch/incidents/:incidentId", render=inc_01, pattern="detail", h=1060, **C,
+    Screen(id="WM-INC-01", name="Chi tiết sự cố", route="/dispatch/incidents/:incidentId", render=inc_01, pattern="detail", h=1000, **C,
            purpose="Loại, mức độ, mô tả, ảnh, đơn/chuyến liên quan, người xử lý, trạng thái, timeline; cập nhật xử lý và đóng.",
            api=["incident(id)", "updateIncident(id, input)", "assignIncident(id, userId)", "closeIncident(id, note)", "createAttachment(input)"],
            data=["code", "type", "severity", "title", "description", "location", "attachments[]", "order", "trip", "driver", "vehicle", "assignee", "status", "activity[]"],

@@ -21,4 +21,4 @@ flowchart LR
 | 2 | System | API | `` | Chi tiết phiếu chi |
 | 3 | Operation | API | `` | Đối soát tạm ứng chuyến |
 | 4 | System | API | `` | Lãi/lỗ đơn cập nhật |
-| 5 | Admin | API | `` | Báo cáo lãi/lỗ theo đơn |
+| 5 | Admin | [WM-RPT-03](../screens/wm/WM-RPT-03.md) Lãi/lỗ theo đơn | `/reports/profit?view=orders` | Báo cáo lãi/lỗ theo đơn |

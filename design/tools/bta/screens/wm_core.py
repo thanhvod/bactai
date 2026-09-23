@@ -39,7 +39,7 @@ def _auth_page(card, w=1440, h=960, below="", card_w=440):
 def _signed_in_as(email="haitran.bta@gmail.com", name="Trần Hải"):
     return row(avatar("TH", 32, "accent"), col(text(name, 13, 600), subtle(email, 12), gap=0), spacer(),
                a("Đăng xuất", "WM-AUTH-01", "Đăng xuất", 13), gap=10,
-               extra=f"padding: 10px 12px; border-radius: 6px; background: {T['surface-muted']};")
+               extra=f"padding: 10px 12px; border-radius: 6px; border: 1px solid {T['border']};")
 
 
 def _menu_items(items):
@@ -89,18 +89,18 @@ def auth_01():
         col(text("Sau khi đăng nhập", 13, 600),
             row(icon("building-2", 14, T["text-muted"]), muted("Thuộc 1 nhà xe → vào", 13), a("Dashboard", "WM-DASH-01", "Sau đăng nhập: 1 merchant"), gap=6),
             row(icon("layers", 14, T["text-muted"]), muted("Thuộc nhiều nhà xe →", 13), a("Chọn nhà xe", "WM-AUTH-03", "Sau đăng nhập: nhiều merchant"), gap=6),
-            row(icon("user-x", 14, T["text-muted"]), muted("Chưa thuộc nhà xe nào →", 13), a("Chờ mời / tạo nhà xe", "WM-AUTH-04", "Sau đăng nhập: chưa có merchant"), gap=6),
+            row(icon("mail", 14, T["text-muted"]), muted("Chưa thuộc nhà xe nào →", 13), a("Chờ mời / tạo nhà xe", "WM-AUTH-04", "Sau đăng nhập: chưa có merchant"), gap=6),
             gap=6),
         gap=16)
     loading = col(subtle("Trạng thái: đang xác thực", 12),
                   f'<div style="padding: 16px; background: {T["surface"]}; border: 1px solid {T["border"]}; border-radius: 8px; display: flex; flex-direction: column; gap: 8px;">'
-                  + btn("Đang xác thực với Google…", "secondary", "loader", size="md", full=True, disabled=True)
+                  + btn("Đang xác thực với Google…", "secondary", "loader-circle", size="md", full=True, disabled=True)
                   + subtle("Không đóng cửa sổ đăng nhập Google.", 12) + '</div>', gap=6, extra="width: 320px;")
     error = col(subtle("Trạng thái: lỗi", 12),
                 f'<div style="padding: 16px; background: {T["surface"]}; border: 1px solid {T["border"]}; border-radius: 8px; display: flex; flex-direction: column; gap: 8px;">'
                 + row(icon("circle-alert", 16, T["danger"]), text("Không xác thực được tài khoản Google", 13, 600, T["danger"]), gap=6, align="flex-start")
                 + muted("Phiên đã hết hạn hoặc bị từ chối. Thử lại; nếu vẫn lỗi, liên hệ quản trị nhà xe.", 12)
-                + btn("Thử lại", "secondary", "refresh-cw", size="sm") + '</div>', gap=6, extra="width: 320px;")
+                + row(btn("Thử lại", "secondary", "refresh-cw", size="sm")) + '</div>', gap=6, extra="width: 320px;")
     below = row(loading, error, gap=16, align="flex-start")
     return _auth_page(card, below=below)
 
@@ -109,13 +109,13 @@ def auth_02():
     card = col(
         col(h("lg", "Tạo nhà xe"), muted("Lần đầu dùng BTA: nhập thông tin nhà xe. Bạn sẽ là Admin của nhà xe này.", 14), gap=4),
         _signed_in_as(),
-        row(field("Tên nhà xe", input_("Vận tải Hải Phát"), True, hint="Hiển thị trên sidebar và chứng từ in"),
-            field("Mã nhà xe", input_("Tự sinh sau khi tạo", disabled=True)), gap=12, align="flex-start"),
+        row(field("Tên nhà xe", input_("Vận tải Hải Phát"), True, hint="Hiển thị trên sidebar và chứng từ in", width="60%"),
+            field("Mã nhà xe", input_("Tự sinh sau khi tạo", disabled=True), width="40%"), gap=12, align="flex-start"),
         row(field("Tên doanh nghiệp (pháp lý)", input_("Công ty TNHH Vận tải Hải Phát"), width="62%"),
-            field("Mã số thuế", input_("0316 452 789", mono=True), hint="Không bắt buộc"), gap=12, align="flex-start"),
+            field("Mã số thuế", input_("0316 452 789", mono=True), hint="Không bắt buộc", width="38%"), gap=12, align="flex-start"),
         field("Địa chỉ", input_("Số 45 Quốc lộ 1A, P. Bình Hưng Hòa B, Q. Bình Tân, TP.HCM"), True),
-        row(field("Người liên hệ", input_("Trần Hải"), True), field("Số điện thoại", input_("0908 123 456", mono=True), True),
-            field("Email liên hệ", input_("haitran.bta@gmail.com")), gap=12, align="flex-start"),
+        row(field("Người liên hệ", input_("Trần Hải"), True, width="30%"), field("Số điện thoại", input_("0908 123 456", mono=True), True, width="30%"),
+            field("Email liên hệ", input_("haitran.bta@gmail.com"), width="40%"), gap=12, align="flex-start"),
         banner("Danh mục mặc định được tạo sẵn: loại chi phí, dịch vụ thêm, loại hàng, lý do tạm dừng, loại chứng từ. Sửa sau trong Cài đặt.", "info"),
         row(btn("Hủy và đăng xuất", "ghost", to="WM-AUTH-01", trigger="Hủy → logout"), spacer(),
             btn("Tạo nhà xe", "primary", "check", to="WM-DASH-01", trigger="Tạo merchant → Dashboard"), gap=8),
@@ -127,7 +127,7 @@ def auth_03():
     items = [
         ("BD", "primary", "BTA Demo Transport", "M-DEMO-A", "Admin", "Lần cuối: 23/09/2026 08:12", True, None),
         ("HB", "accent", "Vận tải Hòa Bình Logistics", "M-HBL-02", "Kế toán", "Lần cuối: 19/09/2026 17:40", False, None),
-        ("TN", "neutral", "Chành xe Tây Ninh", "M-CTN-07", "Operation", "Tạm khóa bởi admin nhà xe", False, "Tạm khóa"),
+        ("TN", "neutral", "Chành xe Tây Ninh", "M-CTN-07", "Operation", "Admin nhà xe đã khóa", False, "Tạm khóa"),
     ]
     rows = []
     for ini, tone, name, mcode, role, last, cur, lock in items:
@@ -153,14 +153,14 @@ def auth_03():
 
 def auth_04():
     card = col(
-        row(f'<span style="display: inline-flex; padding: 10px; border-radius: 8px; background: {T["warning-soft"]};">{icon("user-x", 22, T["warning"])}</span>',
+        row(f'<span style="display: inline-flex; padding: 10px; border-radius: 8px; background: {T["warning-soft"]};">{icon("mail", 22, T["warning"])}</span>',
             col(h("lg", "Tài khoản chưa thuộc nhà xe nào"), muted("Chưa có lời mời nào gửi tới email này.", 14), gap=2), gap=12),
         _signed_in_as(),
-        panel(None, col(text("Để được vào nhà xe", 13, 600),
+        col(text("Để được vào nhà xe", 13, 600),
                         f'<ol style="margin: 0; padding-left: 18px; font-size: 13px; line-height: 22px; color: {T["text"]};">'
                         f'<li>Nhờ Admin nhà xe mời email <b>haitran.bta@gmail.com</b> trong Cài đặt → Nhân viên.</li>'
-                        f'<li>Mở email mời hoặc bấm “Kiểm tra lại lời mời” bên dưới.</li></ol>', gap=6), pad=14,
-              extra=f"background: {T['surface-muted']};"),
+                        f'<li>Mở email mời hoặc bấm “Kiểm tra lại lời mời” bên dưới.</li></ol>', gap=6,
+            extra=f"padding: 12px 14px; border-radius: 6px; background: {T['surface-muted']};"),
         row(btn("Kiểm tra lại lời mời", "secondary", "refresh-cw", to="WM-AUTH-03", trigger="Đã có lời mời → chọn merchant"),
             spacer(), btn("Tạo nhà xe mới", "primary", "plus", to="WM-AUTH-02", trigger="Tạo merchant"), gap=8),
         divider(),
@@ -215,7 +215,14 @@ def _dash01_content():
     ]
     todo = panel("Đơn/chuyến cần xử lý", table([("Mã", "left"), ("Khách · Tuyến", "left"), ("Trạng thái", "left"), ("", "right")], todo_rows, compact=True),
                  a("Xem tất cả đơn", "WM-ORD-01"), body_pad=False)
-    left = col(text("Vận hành hôm nay", 15, 600), trips, todo, gap=12, extra="flex: 3; min-width: 0;")
+    fleet_rows = [
+        [col(a(v["plate"], "WM-VEH-02", "Mở xe", 13, 600), muted(f'{v["type"]} · {v["cap"]}', 12), gap=0),
+         badge(v["status"], {"Đang chạy": "accent", "Bảo dưỡng": "warning", "Sẵn sàng": "success"}[v["status"]]),
+         muted(next((f'{t[4]} · {t[0]}' for t in D.TRIPS if t[3] == v["plate"] and t[6] not in ("Hoàn thành", "Đã lên lịch")), "—"), 12)]
+        for v in D.VEHICLES]
+    fleet = panel("Xe hôm nay", table([("Xe", "left"), ("Trạng thái", "left"), ("Tài xế · Chuyến đang chạy", "left")], fleet_rows, compact=True),
+                  a("Dashboard vận hành", "WM-DASH-02", "Mở dashboard vận hành"), body_pad=False, sub="2 đang chạy · 1 sẵn sàng · 1 bảo dưỡng · tài xế rảnh: Lê Hoàng Phúc")
+    left = col(text("Vận hành hôm nay", 15, 600), trips, todo, fleet, gap=12, extra="flex: 3; min-width: 0;")
 
     sched = warning_panel("Cảnh báo lịch (1)", ["<b>CX-202609-0002</b> gần trùng lịch 1 giờ với CX-202609-0001 · 51C-123.45 · Nguyễn Văn Tài"],
                           a("Xem cảnh báo lịch", "WM-DISPATCH-03"))
@@ -255,8 +262,9 @@ def dash_02():
                            btn("Bảng điều phối", "primary", "route", to="WM-DISPATCH-01", trigger="Mở bảng điều phối"), gap=8))
     strip = summary_strip([("Đã lên lịch", "2"), ("Đang đến điểm lấy", "0"), ("Đang lấy hàng", "1", "info"), ("Đang vận chuyển", "1", "accent"),
                            ("Tạm dừng", "0"), ("Đang trả hàng", "0"), ("Hoàn thành (7 ngày)", "2", "success"), ("Có cảnh báo", "3", "warning")])
-    trips_tbl = table([("Mã chuyến · Tuyến", "left"), ("Đơn", "left"), ("Xe · Tài xế", "left"), ("Kế hoạch", "left"), ("Trạng thái · Cảnh báo", "left")],
-                      [[r[0], code(t[1], to="WM-ORD-02", trigger="Mở đơn của chuyến"), r[1], r[2], r[3]]
+    trips_tbl = table([("Mã chuyến · Đơn", "left"), ("Xe · Tài xế", "left"), ("Kế hoạch · Tuyến", "left"), ("Trạng thái · Cảnh báo", "left")],
+                      [[col(code(t[0], to="WM-TRIP-01", trigger="Mở chuyến"), code(t[1], 12, to="WM-ORD-02", trigger="Mở đơn của chuyến"), gap=0),
+                        r[1], col(num(t[5], 12), muted(t[2], 12), gap=0), r[3]]
                        for t, r in zip(D.TRIPS, _trip_rows(D.TRIPS))], compact=True)
     trips = panel("Chuyến theo trạng thái", col(
         filter_bar("Tìm mã chuyến, xe, tài xế…", ["Tất cả 6", "Đang chạy 2", "Sắp chạy 2", "Hoàn thành 2", "Có cảnh báo 3"], date="21/09 – 24/09/2026"),
@@ -337,13 +345,14 @@ def dash_03():
         total_row=["Tổng", money(135_200_000), money(27_000_000)]),
         a("Báo cáo", "WM-RPT-06", "Mở báo cáo công nợ khách"), body_pad=False)
     sup = [s for s in D.SUPPLIERS if s["debt"]]
-    t_sup = panel("Công nợ nhà cung cấp", table([("Nhà cung cấp", "left"), ("Phải trả", "right")], [
+    t_sup = panel("Công nợ NCC", table([("Nhà cung cấp", "left"), ("Phải trả", "right")], [
         [col(a(s["name"], "WM-SUP-02", "Mở nhà cung cấp", 13, 600), muted(s["type"], 12), gap=0), num(money(s["debt"]), weight=600)] for s in sup],
         compact=True, total_row=["Tổng", money(10_500_000)]),
         a("Xem tất cả", "WM-DEBT-02", "Mở công nợ NCC"), body_pad=False)
-    t_cod = panel("COD tài xế chưa nộp", table([("Tài xế", "left"), ("Đã thu", "right"), ("Đã nộp", "right"), ("Đang giữ", "right")], [
-        [col(a("Trần Minh Lái", "WM-DRV-06", "Mở COD tài xế", 13, 600), badge("Vượt ngưỡng", "warning"), gap=2, extra="align-items: flex-start;"),
-         num(money(7_500_000)), num(money(2_000_000), color=T["success"]), num(money(5_500_000), weight=600, color=T["warning"])]], compact=True),
+    t_cod = panel("COD tài xế chưa nộp", table([("Tài xế", "left"), ("Đang giữ", "right")], [
+        [col(a("Trần Minh Lái", "WM-DRV-06", "Mở COD tài xế", 13, 600), badge("Vượt ngưỡng · 2 ngày", "warning"), gap=2, extra="align-items: flex-start;"),
+         col(num(money(5_500_000), weight=600, color=T["warning"]), subtle("Đã thu 7.500.000 đ", 11), subtle("Đã nộp 2.000.000 đ", 11), gap=0, extra="align-items: flex-end;")]],
+        compact=True, total_row=["Tổng", money(5_500_000)]),
         a("Báo cáo COD", "WM-RPT-07", "Mở báo cáo COD tài xế"), body_pad=False, sub="Nộp lại tạo phiếu thu loại Tài xế nộp COD")
     bottom = row(col(t_cus, extra="flex: 5; min-width: 0;"), col(t_sup, extra="flex: 3; min-width: 0;"), col(t_cod, extra="flex: 4; min-width: 0;"),
                  gap=16, align="flex-start")
@@ -360,14 +369,14 @@ def shell_01():
                                   _pill("Quá hạn"), spacer(), btn("Khoảng ngày", "secondary", "calendar", size="sm"), btn("Bộ lọc nâng cao", "secondary", "sliders-horizontal", size="sm"), gap=8))
     lines = "".join(row(sk("120px"), sk("220px"), sk("90px"), spacer(), sk("110px"), gap=24,
                         extra=f"padding: 12px 0; border-bottom: 1px solid {T['border']};") for _ in range(7))
-    main = _dashed("Nội dung chính · table / detail / dashboard", col(row(sk("100%", 20), gap=0), lines, gap=0), extra="flex-grow: 1;")
+    main = _dashed("Nội dung chính · table / detail / dashboard", col(row(sk("100%", 20), gap=0), lines, gap=0), extra="flex-grow: 1; align-self: stretch;")
     notes = panel("Quy ước khung", col(
-        row(icon("panel-left", 16, T["text-muted"]), muted("Sidebar 260px: nhóm module, mục đang mở màu teal; badge cảnh báo danger/warning theo mức.", 13), gap=8, align="flex-start"),
+        row(icon("layout-dashboard", 16, T["text-muted"]), muted("Sidebar 260px: nhóm module, mục đang mở màu teal; badge cảnh báo danger/warning theo mức.", 13), gap=8, align="flex-start"),
         row(icon("search", 16, T["text-muted"]), muted("Tìm nhanh luôn hiện ở topbar, phím tắt Ctrl K →", 13), a("Tìm kiếm nhanh", "WM-SHELL-03", "Mở tìm kiếm nhanh"), gap=6, align="flex-start"),
         row(icon("bell", 16, T["text-muted"]), muted("Chuông: số chưa đọc →", 13), a("Trung tâm thông báo", "WM-SHELL-02", "Mở thông báo"), gap=6, align="flex-start"),
         row(icon("user", 16, T["text-muted"]), muted("Menu tài khoản: đổi nhà xe, hồ sơ, đăng xuất (đang mở).", 13), gap=8, align="flex-start"),
         gap=8), pad=14)
-    content = col(hdr, tool, row(main, col(notes, extra="width: 340px; flex-shrink: 0;"), gap=16, align="stretch", extra="flex-grow: 1;"), gap=16,
+    content = col(hdr, tool, row(col(notes, extra="width: 340px; flex-shrink: 0;"), main, gap=16, align="flex-start", extra="flex-grow: 1;"), gap=16,
                   extra="height: 100%;")
 
     head = row(avatar("TH", 36, "accent"), col(text("Trần Hải", 14, 600), subtle("admin@bta-demo.test", 12), gap=0), gap=10,
@@ -376,7 +385,7 @@ def shell_01():
               row(avatar("BD", 28, "primary"), col(text("BTA Demo Transport", 13, 600), subtle("M-DEMO-A · Admin", 11), gap=0), spacer(),
                   icon("check", 16, T["primary"]), gap=8), gap=4, extra="padding: 0 14px 10px;")
     items = _menu_items([
-        ("Đổi nhà xe", "arrow-left-right", "WM-AUTH-03", False, badge("3", "neutral")),
+        ("Đổi nhà xe", "arrow-down-up", "WM-AUTH-03", False, badge("3", "neutral")),
         "-",
         ("Hồ sơ nhà xe", "building-2", "WM-ORG-01"),
         ("Tài khoản của tôi", "user", "WM-USER-02"),
@@ -417,7 +426,7 @@ def shell_02():
         _notif("package", "neutral", "Đơn mới chờ xác nhận", "DH-202609-0012 · Bao bì Hưng Lợi · Bình Dương → Q. Tân Phú.",
                "Đơn hàng · 22/09 15:10", "WM-ORD-02", "Thông báo đơn mới → chi tiết đơn", unread=False),
     ]
-    head = row(h("sm", "Thông báo"), badge("4 chưa đọc", "accent"), spacer(), btn("Đánh dấu đã đọc", "link", "check-check", size="sm"),
+    head = row(h("sm", "Thông báo"), badge("4 chưa đọc", "accent"), spacer(), btn("Đánh dấu đã đọc", "link", "list-checks", size="sm"),
                icon_btn("x", "Đóng", to="WM-DASH-01", trigger="Đóng thông báo"), gap=8, extra="padding: 12px 16px 8px;")
     seg = f'<div style="padding: 0 16px 10px; border-bottom: 1px solid {T["border"]};">{segmented(["Tất cả 6", "Chưa đọc 4", "Tiền", "Vận hành"], 0)}</div>'
     foot = row(a("Cài đặt ngưỡng cảnh báo", "WM-SET-01", "Cài đặt ngưỡng cảnh báo"), spacer(), subtle("Lưu 30 ngày", 12), gap=8,
@@ -537,7 +546,9 @@ def shell_05():
     lines = [("DH-202608-0009", "28/08/2026", "Cần Thơ → Bình Dương", 20_000_000, 5_000_000, "13/09/2026"),
              ("DH-202609-0009", "06/09/2026", "Cần Thơ → Q. Bình Tân", 15_000_000, 15_000_000, "20/09/2026"),
              ("DH-202609-0001", "20/09/2026", "Cần Thơ → Bình Dương", 12_500_000, 0, "08/10/2026")]
-    trs = [[num(c, 11), num(d, 11), text(r, 11), num(money(t), 11), num(money(p), 11), num(money(t - p), 11, 600), num(du, 11)] for c, d, r, t, p, du in lines]
+    trs = [[col(num(c, 11, 500), subtle(f"{d} · {r}", 10), gap=0), num(money(t), 11), num(money(p), 11),
+            col(num(money(t - p), 11, 600), subtle(f"hạn {du}", 10), gap=0, extra="align-items: flex-end;")]
+           for c, d, r, t, p, du in lines]
     sheet = (f'<div style="width: 620px; height: 860px; background: #FFFFFF; box-shadow: {SH_DIALOG}; padding: 40px 36px; box-sizing: border-box; '
              f'display: flex; flex-direction: column; gap: 14px; font-size: 12px;">'
              + row(col(logo(True, 24), subtle("BTA Demo Transport · Số 45 QL1A, Bình Tân, TP.HCM · 0908 123 456", 10), gap=4), spacer(),
@@ -545,8 +556,8 @@ def shell_05():
              + divider()
              + dl([("Khách hàng", "Công ty Gạo Miền Tây"), ("Mã khách", "CUS-A-001"), ("Địa chỉ", "KCN Trà Nóc 1, Bình Thủy, Cần Thơ"),
                    ("Ngày lập", "23/09/2026 · Phan Ngọc Mai")], cols=2, gap=6)
-             + table([("Mã đơn", "left"), ("Ngày", "left"), ("Tuyến", "left"), ("Tổng thu", "right"), ("Đã thu", "right"), ("Còn nợ", "right"), ("Hạn TT", "left")],
-                     trs, compact=True, total_row=["Tổng", "", "", money(47_500_000), money(20_000_000), money(27_500_000), ""])
+             + table([("Đơn · Ngày · Tuyến", "left"), ("Tổng thu", "right"), ("Đã thu", "right"), ("Còn nợ · Hạn", "right")],
+                     trs, compact=True, total_row=["Tổng", money(47_500_000), money(20_000_000), money(27_500_000)])
              + col(row(muted("Trong đó quá hạn", 12), spacer(), num(money(15_000_000), 12, 600, T["danger"])),
                    row(muted("Số dư trả trước", 12), spacer(), num(money(0), 12)),
                    row(text("Số tiền cần thanh toán", 13, 700), spacer(), num(money(27_500_000), 15, 700)), gap=4)
@@ -574,7 +585,7 @@ def shell_05():
                                   btn("In", "primary", "printer"), gap=8),
                               crumbs=[("Thu chi & Công nợ", "WM-FIN-01"), ("Bảng kê công nợ", "WM-DEBT-03"), ("BK-202609-0001", "WM-DEBT-04"), ("Xuất / in", None)]),
                   row(side, preview, gap=16, align="flex-start"), gap=16)
-    return wm_shell("finance", content, h=1040, child="WM-DEBT-03")
+    return wm_shell("finance", content, h=1120, child="WM-DEBT-03")
 
 
 # ================================================================ SHELL-06 Attachment viewer (drawer over order)
@@ -595,8 +606,8 @@ def shell_06():
               f'<div style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%);">{icon_btn("chevron-left", "Chứng từ trước", variant="secondary")}</div>'
               f'<div style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);">{icon_btn("chevron-right", "Chứng từ sau", variant="secondary")}</div>'
               f'</div>')
-    tools = row(subtle("1 / 3", 12), spacer(), icon_btn("zoom-out", "Thu nhỏ", size="sm"), text("100%", 12, 500, extra=NUM), icon_btn("zoom-in", "Phóng to", size="sm"),
-                icon_btn("rotate-cw", "Xoay", size="sm"), icon_btn("maximize-2", "Toàn màn hình", size="sm"), gap=4)
+    tools = row(subtle("1 / 3", 12), spacer(), icon_btn("minus", "Thu nhỏ", size="sm"), text("100%", 12, 500, extra=NUM), icon_btn("plus", "Phóng to", size="sm"),
+                icon_btn("rotate-ccw", "Xoay", size="sm"), icon_btn("external-link", "Toàn màn hình", size="sm"), gap=4)
     meta = dl([("Loại chứng từ", badge("POD lấy hàng", "info")), ("Gắn với", row(code("DH-202609-0001"), muted("·"), a("Điểm lấy Kho Cần Thơ", "WM-STOP-01", "Mở điểm dừng"), gap=6)),
                ("Chuyến", code("CX-202609-0001", to="WM-TRIP-01", trigger="Mở chuyến")), ("Tải lên bởi", "Nguyễn Văn Tài · App tài xế"),
                ("Thời điểm chụp", num("23/09/2026 07:08", 14)), ("Thời điểm tải lên", num("23/09/2026 07:10", 14)),
@@ -730,7 +741,7 @@ register(
                    "all_valid": "Banner success, bỏ qua bước lọc lỗi", "commit_error": "Banner danger, giữ session để thử lại"},
            notes=["Lỗi = chặn dòng (SĐT/MST sai, thiếu trường bắt buộc, trùng MST/biển số); cảnh báo = vẫn nhập (tên gần giống, trường trống dùng mặc định).",
                   "Import tenant-safe; audit log ghi số dòng nhập."]),
-    Screen(id="WM-SHELL-05", name="Export/print preview", route="(page) …/export · …/print", render=shell_05, pattern="page", h=1040, **S,
+    Screen(id="WM-SHELL-05", name="Export/print preview", route="(page) …/export · …/print", render=shell_05, pattern="page", h=1120, **S,
            purpose="Xem trước PDF/Excel, chọn mẫu, tải hoặc in: bảng kê, bảng lương, phiếu giao hàng/điều xe, chi phí chuyến, COD.",
            api=["exportFile(input: {template, entityId, format, options})", "debtStatement(id){pdfSnapshotUrl}"],
            data=["template", "format", "paperSize", "options", "previewUrl"],

@@ -39,9 +39,9 @@ Tìm/lọc đơn, theo dõi trạng thái và tiền; điểm vào tạo đơn v
 | Trigger | Đích | Route đích | Loại |
 |---|---|---|---|
 | Click mã đơn → chi tiết | [WM-ORD-02](../wm/WM-ORD-02.md) Chi tiết đơn hàng | `/orders/:orderId` | action |
-| Xuất Excel | WM-SHELL-05 | | action |
+| Xuất Excel | [WM-SHELL-05](../wm/WM-SHELL-05.md) Export/print preview | `(page) …/export · …/print` | action |
 | Tạo đơn | [WM-ORD-03](../wm/WM-ORD-03.md) Tạo/sửa đơn | `/orders/new · /orders/:orderId/edit` | action |
-| Sidebar: Dashboard | WM-DASH-01 | | nav |
+| Sidebar: Dashboard | [WM-DASH-01](../wm/WM-DASH-01.md) Dashboard tổng quan | `/` | nav |
 | Sidebar: Đơn hàng | [WM-ORD-01](../wm/WM-ORD-01.md) Danh sách đơn hàng | `/orders` | nav |
 | Sidebar: Điều phối | WM-DISPATCH-01 | | nav |
 | Sidebar: Khách hàng | WM-CUS-01 | | nav |
@@ -52,15 +52,21 @@ Tìm/lọc đơn, theo dõi trạng thái và tiền; điểm vào tạo đơn v
 | Sidebar: Lương | WM-PAYROLL-01 | | nav |
 | Sidebar: Báo cáo | WM-RPT-01 | | nav |
 | Sidebar: Cài đặt | WM-ORG-01 | | nav |
-| Merchant switcher | WM-AUTH-03 | | nav |
-| Quick search (Ctrl K) | WM-SHELL-03 | | nav |
-| Chuông thông báo | WM-SHELL-02 | | nav |
+| Merchant switcher | [WM-AUTH-03](../wm/WM-AUTH-03.md) Chọn merchant | `/select-merchant` | nav |
+| Quick search (Ctrl K) | [WM-SHELL-03](../wm/WM-SHELL-03.md) Tìm kiếm nhanh | `(dialog) Ctrl K` | nav |
+| Chuông thông báo | [WM-SHELL-02](../wm/WM-SHELL-02.md) Trung tâm thông báo | `(popover) — từ chuông topbar` | nav |
 
 ## Điều hướng đến (incoming)
 
 | Từ | Trigger |
 |---|---|
 | [WM-ORD-03](../wm/WM-ORD-03.md) Tạo/sửa đơn | Hủy tạo đơn |
+| [WM-SHELL-02](../wm/WM-SHELL-02.md) Trung tâm thông báo | KPI Đơn cần xử lý → đơn lọc sẵn |
+| [WM-SHELL-02](../wm/WM-SHELL-02.md) Trung tâm thông báo | Xem tất cả đơn |
+| [WM-SHELL-03](../wm/WM-SHELL-03.md) Tìm kiếm nhanh | KPI Đơn cần xử lý → đơn lọc sẵn |
+| [WM-SHELL-03](../wm/WM-SHELL-03.md) Tìm kiếm nhanh | Xem tất cả đơn |
+| [WM-DASH-01](../wm/WM-DASH-01.md) Dashboard tổng quan | KPI Đơn cần xử lý → đơn lọc sẵn |
+| [WM-DASH-01](../wm/WM-DASH-01.md) Dashboard tổng quan | Xem tất cả đơn |
 
 ## Components (design system)
 

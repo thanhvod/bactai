@@ -33,7 +33,7 @@ Sửa giá cước và dịch vụ thêm; đơn đã xác nhận phải qua lý 
 | Mở phiếu chi | WM-EXP-02 | | action |
 | Tạo phiếu chi gắn đơn | WM-EXP-03 | | action |
 | Đóng | [WM-ORD-07](../wm/WM-ORD-07.md) Tài chính đơn (tab) | `/orders/:orderId?tab=finance` | action |
-| Mở Timeline drawer | WM-SHELL-07 | | action |
+| Mở Timeline drawer | [WM-SHELL-07](../wm/WM-SHELL-07.md) Timeline drawer | `(drawer) ?timeline=1` | action |
 | In/chia sẻ đơn | [WM-ORD-09](../wm/WM-ORD-09.md) In/chia sẻ đơn | `/orders/:orderId/print` | action |
 | Sửa đơn | [WM-ORD-03](../wm/WM-ORD-03.md) Tạo/sửa đơn | `/orders/new · /orders/:orderId/edit` | action |
 | Tạo chuyến từ đơn | WM-TRIP-02 | | action |
@@ -43,7 +43,7 @@ Sửa giá cước và dịch vụ thêm; đơn đã xác nhận phải qua lý 
 | Tab Điểm dừng | [WM-ORD-04](../wm/WM-ORD-04.md) Điểm lấy/trả (tab) | `/orders/:orderId?tab=stops` | action |
 | Tab Hàng hóa | [WM-ORD-05](../wm/WM-ORD-05.md) Hàng hóa (tab) | `/orders/:orderId?tab=cargo` | action |
 | Breadcrumb Đơn hàng | [WM-ORD-01](../wm/WM-ORD-01.md) Danh sách đơn hàng | `/orders` | nav |
-| Sidebar: Dashboard | WM-DASH-01 | | nav |
+| Sidebar: Dashboard | [WM-DASH-01](../wm/WM-DASH-01.md) Dashboard tổng quan | `/` | nav |
 | Sidebar: Đơn hàng | [WM-ORD-01](../wm/WM-ORD-01.md) Danh sách đơn hàng | `/orders` | nav |
 | Sidebar: Điều phối | WM-DISPATCH-01 | | nav |
 | Sidebar: Khách hàng | WM-CUS-01 | | nav |
@@ -54,9 +54,9 @@ Sửa giá cước và dịch vụ thêm; đơn đã xác nhận phải qua lý 
 | Sidebar: Lương | WM-PAYROLL-01 | | nav |
 | Sidebar: Báo cáo | WM-RPT-01 | | nav |
 | Sidebar: Cài đặt | WM-ORG-01 | | nav |
-| Merchant switcher | WM-AUTH-03 | | nav |
-| Quick search (Ctrl K) | WM-SHELL-03 | | nav |
-| Chuông thông báo | WM-SHELL-02 | | nav |
+| Merchant switcher | [WM-AUTH-03](../wm/WM-AUTH-03.md) Chọn merchant | `/select-merchant` | nav |
+| Quick search (Ctrl K) | [WM-SHELL-03](../wm/WM-SHELL-03.md) Tìm kiếm nhanh | `(dialog) Ctrl K` | nav |
+| Chuông thông báo | [WM-SHELL-02](../wm/WM-SHELL-02.md) Trung tâm thông báo | `(popover) — từ chuông topbar` | nav |
 
 ## Điều hướng đến (incoming)
 
@@ -65,6 +65,8 @@ Sửa giá cước và dịch vụ thêm; đơn đã xác nhận phải qua lý 
 | [WM-ORD-06](../wm/WM-ORD-06.md) Add-on & giá bán (drawer) | Mở drawer giá cước/add-on |
 | [WM-ORD-07](../wm/WM-ORD-07.md) Tài chính đơn (tab) | Mở drawer giá cước/add-on |
 | [WM-ORD-08](../wm/WM-ORD-08.md) Hủy/sửa nhạy cảm đơn | Mở drawer giá cước/add-on |
+| [WM-SHELL-07](../wm/WM-SHELL-07.md) Timeline drawer | Mở drawer giá cước/add-on |
+| [WM-SHELL-08](../wm/WM-SHELL-08.md) Sensitive action modal | Mở drawer giá cước/add-on |
 
 ## Components (design system)
 

@@ -6,19 +6,28 @@ Sinh tự động bởi `python3 design/tools/build.py`. Không sửa tay.
 
 Stack: React + Vite + Tailwind + shadcn/Radix (apps/web)
 
-### Điều phối
+### Lương
 
 | ID | Màn hình | Route | Pattern | Đi tới |
 |---|---|---|---|---|
-| [WM-TRIP-01](screens/wm/WM-TRIP-01.md) | Chi tiết chuyến | `/trips/:tripId` | detail | WM-ADV-01, WM-COD-01, WM-CUS-02, WM-DISPATCH-04, WM-DISPATCH-05, WM-DRV-02, WM-EXP-02, WM-EXP-03, WM-INC-01, WM-ORD-02, WM-SHELL-05, WM-SHELL-06, WM-SHELL-07, WM-SHELL-08, WM-STOP-01, WM-TRIP-02, WM-VEH-02 |
-| [WM-TRIP-02](screens/wm/WM-TRIP-02.md) | Tạo/sửa chuyến | `/orders/:orderId/trips/new · /trips/:tripId/edit` | form | WM-DISPATCH-02, WM-DISPATCH-03, WM-ORD-02, WM-TRIP-01 |
-| [WM-STOP-01](screens/wm/WM-STOP-01.md) | Chi tiết điểm dừng | `/orders/:orderId/stops/:stopId (drawer trên chuyến/đơn)` | drawer | WM-CUS-02, WM-DRV-02, WM-ORD-02, WM-SHELL-05, WM-SHELL-06, WM-SHELL-07, WM-SHELL-08, WM-STOP-01, WM-TRIP-01, WM-TRIP-02, WM-VEH-02 |
-| [WM-DISPATCH-01](screens/wm/WM-DISPATCH-01.md) | Bảng điều phối | `/dispatch` | board | WM-DISPATCH-02, WM-DISPATCH-03, WM-DISPATCH-04, WM-DISPATCH-05, WM-INC-01, WM-ORD-02, WM-TRIP-01, WM-TRIP-02 |
-| [WM-DISPATCH-02](screens/wm/WM-DISPATCH-02.md) | Lịch xe/tài xế | `/dispatch/calendar` | board | WM-DISPATCH-01, WM-DISPATCH-03, WM-TRIP-01, WM-TRIP-02 |
-| [WM-DISPATCH-03](screens/wm/WM-DISPATCH-03.md) | Cảnh báo lịch | `/dispatch/conflicts` | list | WM-DISPATCH-02, WM-SET-01, WM-SHELL-08, WM-TRIP-01, WM-TRIP-02 |
-| [WM-DISPATCH-04](screens/wm/WM-DISPATCH-04.md) | Theo dõi vị trí | `/dispatch/map` | page | WM-DISPATCH-01, WM-TRIP-01 |
-| [WM-DISPATCH-05](screens/wm/WM-DISPATCH-05.md) | Sự cố vận hành | `/dispatch/incidents` | list | WM-INC-01, WM-ORD-02, WM-SHELL-05, WM-TRIP-01 |
-| [WM-INC-01](screens/wm/WM-INC-01.md) | Chi tiết sự cố | `/dispatch/incidents/:incidentId` | detail | WM-DRV-02, WM-ORD-02, WM-SHELL-06, WM-SHELL-07, WM-SHELL-08, WM-TRIP-01, WM-VEH-02 |
+| [WM-PAYROLL-01](screens/wm/WM-PAYROLL-01.md) | Danh sách bảng lương | `/payroll` | list | WM-PAYROLL-02, WM-PAYROLL-03, WM-PAYROLL-05, WM-RPT-08, WM-SET-01, WM-SHELL-05 |
+| [WM-PAYROLL-02](screens/wm/WM-PAYROLL-02.md) | Chi tiết bảng lương | `/payroll/:payrollId` | detail | WM-CAT-01, WM-COD-01, WM-DRV-04, WM-EXP-02, WM-PAYROLL-04, WM-PAYROLL-05, WM-SHELL-05, WM-SHELL-07, WM-SHELL-08, WM-TRIP-01 |
+| [WM-PAYROLL-03](screens/wm/WM-PAYROLL-03.md) | Tạo bảng lương | `/payroll/new` | form | WM-ADV-01, WM-CAT-01, WM-DRV-02, WM-DRV-04, WM-EXP-02, WM-PAYROLL-01, WM-PAYROLL-02, WM-SET-01, WM-TRIP-01 |
+| [WM-PAYROLL-04](screens/wm/WM-PAYROLL-04.md) | Chi tiết dòng lương tài xế | `/payroll/:payrollId/lines/:lineId` | detail | WM-ADV-01, WM-DRV-02, WM-DRV-04, WM-DRV-05, WM-EXP-02, WM-ORD-02, WM-PAYROLL-02, WM-SHELL-05, WM-TRIP-01 |
+| [WM-PAYROLL-05](screens/wm/WM-PAYROLL-05.md) | Duyệt bảng lương | `/payroll/:payrollId/approve` | dialog | WM-CAT-01, WM-COD-01, WM-DRV-04, WM-EXP-02, WM-PAYROLL-02, WM-PAYROLL-04, WM-PAYROLL-05, WM-SHELL-05, WM-SHELL-07, WM-SHELL-08, WM-TRIP-01 |
+
+### Báo cáo
+
+| ID | Màn hình | Route | Pattern | Đi tới |
+|---|---|---|---|---|
+| [WM-RPT-01](screens/wm/WM-RPT-01.md) | Trung tâm báo cáo | `/reports` | dashboard | WM-DASH-03, WM-RPT-02, WM-RPT-03, WM-RPT-04, WM-RPT-05, WM-RPT-06, WM-RPT-07, WM-RPT-08 |
+| [WM-RPT-02](screens/wm/WM-RPT-02.md) | Doanh thu - chi phí - lãi/lỗ | `/reports/profit` | report | WM-CUS-02, WM-RPT-03, WM-SHELL-05 |
+| [WM-RPT-03](screens/wm/WM-RPT-03.md) | Lãi/lỗ theo đơn | `/reports/profit?view=orders` | report | WM-ORD-02, WM-SHELL-05 |
+| [WM-RPT-04](screens/wm/WM-RPT-04.md) | Hiệu suất xe | `/reports/vehicles` | report | WM-SHELL-05, WM-VEH-02 |
+| [WM-RPT-05](screens/wm/WM-RPT-05.md) | Hiệu suất tài xế | `/reports/drivers` | report | WM-DRV-02, WM-DRV-06, WM-INC-01, WM-SHELL-05 |
+| [WM-RPT-06](screens/wm/WM-RPT-06.md) | Công nợ khách | `/reports/customer-debt` | report | WM-CUS-05, WM-DEBT-01, WM-DEBT-03, WM-SHELL-05 |
+| [WM-RPT-07](screens/wm/WM-RPT-07.md) | COD tài xế | `/reports/cod` | report | WM-COD-01, WM-DRV-06, WM-ORD-02, WM-PAY-02, WM-PAY-03, WM-SHELL-05 |
+| [WM-RPT-08](screens/wm/WM-RPT-08.md) | Báo cáo bảng lương | `/reports/payroll` | report | WM-DRV-02, WM-PAYROLL-02, WM-SHELL-05 |
 
 ## Flows
 

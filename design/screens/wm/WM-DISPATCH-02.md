@@ -62,8 +62,8 @@ ScheduleView: dòng là xe hoặc tài xế, trục 00–24, khối là chuyến
 
 | Từ | Trigger |
 |---|---|
-| [WM-TRIP-02](../wm/WM-TRIP-02.md) Tạo/sửa chuyến | Mở lịch xe/tài xế |
 | [WM-TRIP-02](../wm/WM-TRIP-02.md) Tạo/sửa chuyến | Xem lịch xe/tài xế |
+| [WM-TRIP-02](../wm/WM-TRIP-02.md) Tạo/sửa chuyến | Mở lịch xe/tài xế |
 | [WM-DISPATCH-01](../wm/WM-DISPATCH-01.md) Bảng điều phối | Chuyển sang Lịch |
 | [WM-DISPATCH-01](../wm/WM-DISPATCH-01.md) Bảng điều phối | Mở lịch xe/tài xế |
 | [WM-DISPATCH-03](../wm/WM-DISPATCH-03.md) Cảnh báo lịch | Mở lịch xe/tài xế |

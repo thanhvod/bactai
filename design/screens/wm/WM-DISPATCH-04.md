@@ -40,6 +40,7 @@ Bản đồ + LocationList vị trí gần nhất của xe có chuyến đang ch
 | Mở chuyến từ danh sách vị trí | [WM-TRIP-01](../wm/WM-TRIP-01.md) Chi tiết chuyến | `/trips/:tripId` | action |
 | Mở tab GPS của chuyến | [WM-TRIP-01](../wm/WM-TRIP-01.md) Chi tiết chuyến | `/trips/:tripId` | action |
 | Mở chuyến chưa chạy | [WM-TRIP-01](../wm/WM-TRIP-01.md) Chi tiết chuyến | `/trips/:tripId` | action |
+| Mở xe | WM-VEH-02 | | action |
 | Mở bảng điều phối | [WM-DISPATCH-01](../wm/WM-DISPATCH-01.md) Bảng điều phối | `/dispatch` | action |
 | Sidebar: Dashboard | WM-DASH-01 | | nav |
 | Sidebar: Đơn hàng | WM-ORD-01 | | nav |
@@ -70,7 +71,7 @@ Bản đồ + LocationList vị trí gần nhất của xe có chuyến đang ch
 
 ## Components (design system)
 
-`MapView`, `LocationList`, `StatusBadge`, `Button`, `PageHeader`, `FilterBar`, `TextField`, `FilterChip`, `AppShell`, `Sidebar`, `Logo`, `Topbar`, `QuickSearch`, `NotificationBell`, `IconButton`
+`MapView`, `LocationList`, `StatusBadge`, `Button`, `Banner`, `PageHeader`, `FilterBar`, `TextField`, `FilterChip`, `AppShell`, `Sidebar`, `Logo`, `Topbar`, `QuickSearch`, `NotificationBell`, `IconButton`
 
 ## API (GraphQL)
 

@@ -47,8 +47,8 @@ Trung tâm xử lý một đơn: trạng thái, tiền, điểm dừng, chuyến
 | Mở bảng điều phối | WM-DISPATCH-01 | | action |
 | Mở Công ty Gạo Miền Tây | WM-CUS-02 | | action |
 | Xem sự cố | WM-INC-01 | | action |
-| Mở Timeline | WM-SHELL-07 | | action |
-| Mở Timeline drawer | WM-SHELL-07 | | action |
+| Mở Timeline | [WM-SHELL-07](../wm/WM-SHELL-07.md) Timeline drawer | `(drawer) ?timeline=1` | action |
+| Mở Timeline drawer | [WM-SHELL-07](../wm/WM-SHELL-07.md) Timeline drawer | `(drawer) ?timeline=1` | action |
 | In/chia sẻ đơn | [WM-ORD-09](../wm/WM-ORD-09.md) In/chia sẻ đơn | `/orders/:orderId/print` | action |
 | Sửa đơn | [WM-ORD-03](../wm/WM-ORD-03.md) Tạo/sửa đơn | `/orders/new · /orders/:orderId/edit` | action |
 | Tạo chuyến từ đơn | WM-TRIP-02 | | action |
@@ -58,7 +58,7 @@ Trung tâm xử lý một đơn: trạng thái, tiền, điểm dừng, chuyến
 | Tab Hàng hóa | [WM-ORD-05](../wm/WM-ORD-05.md) Hàng hóa (tab) | `/orders/:orderId?tab=cargo` | action |
 | Tab Tài chính | [WM-ORD-07](../wm/WM-ORD-07.md) Tài chính đơn (tab) | `/orders/:orderId?tab=finance` | action |
 | Breadcrumb Đơn hàng | [WM-ORD-01](../wm/WM-ORD-01.md) Danh sách đơn hàng | `/orders` | nav |
-| Sidebar: Dashboard | WM-DASH-01 | | nav |
+| Sidebar: Dashboard | [WM-DASH-01](../wm/WM-DASH-01.md) Dashboard tổng quan | `/` | nav |
 | Sidebar: Đơn hàng | [WM-ORD-01](../wm/WM-ORD-01.md) Danh sách đơn hàng | `/orders` | nav |
 | Sidebar: Điều phối | WM-DISPATCH-01 | | nav |
 | Sidebar: Khách hàng | WM-CUS-01 | | nav |
@@ -69,9 +69,9 @@ Trung tâm xử lý một đơn: trạng thái, tiền, điểm dừng, chuyến
 | Sidebar: Lương | WM-PAYROLL-01 | | nav |
 | Sidebar: Báo cáo | WM-RPT-01 | | nav |
 | Sidebar: Cài đặt | WM-ORG-01 | | nav |
-| Merchant switcher | WM-AUTH-03 | | nav |
-| Quick search (Ctrl K) | WM-SHELL-03 | | nav |
-| Chuông thông báo | WM-SHELL-02 | | nav |
+| Merchant switcher | [WM-AUTH-03](../wm/WM-AUTH-03.md) Chọn merchant | `/select-merchant` | nav |
+| Quick search (Ctrl K) | [WM-SHELL-03](../wm/WM-SHELL-03.md) Tìm kiếm nhanh | `(dialog) Ctrl K` | nav |
+| Chuông thông báo | [WM-SHELL-02](../wm/WM-SHELL-02.md) Trung tâm thông báo | `(popover) — từ chuông topbar` | nav |
 
 ## Điều hướng đến (incoming)
 
@@ -86,6 +86,22 @@ Trung tâm xử lý một đơn: trạng thái, tiền, điểm dừng, chuyến
 | [WM-ORD-08](../wm/WM-ORD-08.md) Hủy/sửa nhạy cảm đơn | Xác nhận sửa giá |
 | [WM-ORD-08](../wm/WM-ORD-08.md) Hủy/sửa nhạy cảm đơn | Tab Tổng quan |
 | [WM-ORD-09](../wm/WM-ORD-09.md) In/chia sẻ đơn | Quay lại chi tiết đơn |
+| [WM-SHELL-02](../wm/WM-SHELL-02.md) Trung tâm thông báo | Thông báo đơn mới → chi tiết đơn |
+| [WM-SHELL-02](../wm/WM-SHELL-02.md) Trung tâm thông báo | Mở đơn cần xử lý |
+| [WM-SHELL-02](../wm/WM-SHELL-02.md) Trung tâm thông báo | Xác nhận đơn |
+| [WM-SHELL-02](../wm/WM-SHELL-02.md) Trung tâm thông báo | Mở đơn quá hạn |
+| [WM-SHELL-03](../wm/WM-SHELL-03.md) Tìm kiếm nhanh | Kết quả đơn → chi tiết đơn |
+| [WM-SHELL-03](../wm/WM-SHELL-03.md) Tìm kiếm nhanh | Mở đơn cần xử lý |
+| [WM-SHELL-03](../wm/WM-SHELL-03.md) Tìm kiếm nhanh | Xác nhận đơn |
+| [WM-SHELL-03](../wm/WM-SHELL-03.md) Tìm kiếm nhanh | Mở đơn quá hạn |
+| [WM-SHELL-06](../wm/WM-SHELL-06.md) Attachment viewer | Đóng |
+| [WM-SHELL-06](../wm/WM-SHELL-06.md) Attachment viewer | Tab Tổng quan |
+| [WM-SHELL-07](../wm/WM-SHELL-07.md) Timeline drawer | Tab Tổng quan |
+| [WM-SHELL-08](../wm/WM-SHELL-08.md) Sensitive action modal | Tab Tổng quan |
+| [WM-DASH-01](../wm/WM-DASH-01.md) Dashboard tổng quan | Mở đơn cần xử lý |
+| [WM-DASH-01](../wm/WM-DASH-01.md) Dashboard tổng quan | Xác nhận đơn |
+| [WM-DASH-01](../wm/WM-DASH-01.md) Dashboard tổng quan | Mở đơn quá hạn |
+| [WM-DASH-02](../wm/WM-DASH-02.md) Dashboard vận hành | Mở đơn của chuyến |
 
 ## Components (design system)
 

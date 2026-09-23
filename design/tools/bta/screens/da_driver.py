@@ -483,7 +483,7 @@ def cod_01():
 # ---------------------------------------------------------------- DA-INC-01 Incident report
 def inc_01():
     sev = row(*[_chip(s, s == "Trung bình") for s in ["Thấp", "Trung bình", "Cao"]], gap=8,
-              extra="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));")
+              extra="display: grid; grid-template-columns: 1fr 1.5fr 1fr;")
     body = col(
         _field("Loại sự cố", select("Kẹt xe / đường bị chặn", h=48, fs=16), True),
         _field("Mức độ", sev, True),
@@ -600,11 +600,11 @@ def noti_01():
         return (f'<a href="{href(to)}" style="display: block; padding: 12px 14px; text-decoration: none; border-bottom: 1px solid {T["border"]}; '
                 f'background: {T["accent-soft"] if unread else T["surface"]};">{inner}</a>')
     lst = (f'<div style="border: 1px solid {T["border"]}; border-radius: 8px; overflow: hidden;">'
-           + n("truck", "primary", "Chuyến mới: CX-202609-0002", "Long An → Quận 7 · 15:00 hôm nay", "09:20", "DA-TRIP-01", "Mở chuyến mới được giao", True)
            + n("camera", "warning", "Yêu cầu bổ sung POD", "Điều phối cần ảnh phiếu giao tại Kho Bình Dương", "13:20", "DA-STOP-02", "Mở điểm dừng cần xử lý", True)
            + n("hand-coins", "warning", "Nhắc COD", "Thu 12.500.000 đ tại Kho Bình Dương, nộp trong 2 ngày", "12:00", "DA-MONEY-01", "Mở khoản COD", True)
            + n("clock", "info", "Thay đổi chuyến " + TRIP, "Giờ trả dự kiến đổi 13:00 → 13:30", "11:05", "DA-TRIP-01", "Mở chuyến thay đổi")
            + n("triangle-alert", "neutral", "Điều phối đã nhận sự cố Kẹt xe", "Lê Thu Vân: cứ chạy tiếp, đã báo khách", "10:50", "DA-TRIP-01", "Mở chuyến có sự cố")
+           + n("truck", "primary", "Chuyến mới: CX-202609-0002", "Long An → Quận 7 · 15:00 hôm nay", "09:20", "DA-TRIP-01", "Mở chuyến mới được giao", True)
            + '</div>')
     body = col(_seg(["Tất cả", "Chưa đọc (3)"], 0), row(text("Hôm nay", 15, 600), gap=0), lst, gap=12)
     header = mobile_header("Thông báo", right=btn("Đọc hết", "link", "check", size="lg"))

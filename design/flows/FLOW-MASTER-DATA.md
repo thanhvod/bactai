@@ -31,6 +31,6 @@ flowchart LR
 | 4 | User | API | `` | Thêm địa chỉ/liên hệ |
 | 5 | User | API | `` | Tạo tài xế + tài khoản app |
 | 6 | User | API | `` | Thêm mốc lương cố định |
-| 7 | User | [WM-VEH-03](../screens/wm/WM-VEH-03.md) Form xe | `/vehicles/new · /vehicles/:vehicleId/edit` | Tạo xe (biển số duy nhất) |
-| 8 | User | [WM-SUP-03](../screens/wm/WM-SUP-03.md) Form NCC | `/suppliers/new · /suppliers/:supplierId/edit` | Tạo NCC |
+| 7 | User | API | `` | Tạo xe (biển số duy nhất) |
+| 8 | User | API | `` | Tạo NCC |
 | 9 | User | API | `` | Hoặc import Excel |

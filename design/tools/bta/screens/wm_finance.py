@@ -601,13 +601,14 @@ def debt_03():
     rows = []
     for c, cus, period, n, tot, paid, stt, meta in STATEMENTS:
         dim = stt == "Đã hủy"
-        rows.append([code(c, to="WM-DEBT-04", trigger="Click mã bảng kê → chi tiết"), text(cus, 13, 500, T["text-muted"] if dim else None),
-                     num(period), num(str(n), color=T["text-muted"]), num(money(tot), color=T["text-muted"] if dim else None),
+        rows.append([code(c, to="WM-DEBT-04", trigger="Click mã bảng kê → chi tiết"),
+                     col(text(cus, 13, 500, T["text-muted"] if dim else None), subtle("Kỳ " + period, 11), gap=0),
+                     num(str(n), color=T["text-muted"]), num(money(tot), color=T["text-muted"] if dim else None),
                      num(money(paid), color=T["text-muted"]), num(money(tot - paid), weight=600, color=T["text-muted"] if dim else None),
-                     status(stt, "fin"), subtle(meta, 12),
+                     col(status(stt, "fin"), subtle(meta, 11), gap=2, extra="align-items: flex-start;"),
                      icon_btn("download", "Tải PDF", to="WM-SHELL-05", trigger="Tải PDF bảng kê") if stt in ("Đã chốt", "Đã gửi") else row_menu()])
-    cols = [("Mã bảng kê", "left", "140px"), ("Khách hàng", "left"), ("Kỳ", "left"), ("Số đơn", "right"), ("Tổng tiền", "right"),
-            ("Đã thu", "right"), ("Còn lại (snapshot)", "right"), ("Trạng thái", "left"), ("Chốt/gửi", "left"), ("", "right", "44px")]
+    cols = [("Mã bảng kê", "left", "150px"), ("Khách hàng · Kỳ", "left"), ("Số đơn", "right"), ("Tổng tiền", "right"),
+            ("Đã thu", "right"), ("Còn lại (snapshot)", "right"), ("Trạng thái · Chốt/gửi", "left"), ("", "right", "44px")]
     create = panel("Tạo bảng kê", row(
         field("Khách hàng", _picker("Kho Thép An Phát", "CUS-A-002 · Còn nợ 35.000.000 đ"), True, width="34%"),
         field("Từ ngày", date_input("01/09/2026"), True, width="16%"), field("Đến ngày", date_input("30/09/2026"), True, width="16%"),
@@ -623,7 +624,7 @@ def debt_03():
         table(cols, rows, footer=pagination("1–5", 5)),
         row(icon("lock", 14, T["text-muted"]), subtle("Bảng kê đã chốt không thay đổi khi đơn/phiếu thu thay đổi sau đó. Hủy bảng kê đã chốt cần lý do.", 12), gap=6),
         gap=16)
-    return wm_shell("finance", content, h=860, child="WM-DEBT-03")
+    return wm_shell("finance", content, h=960, child="WM-DEBT-03")
 
 
 # ---------------------------------------------------------------- WM-DEBT-04 Chi tiết bảng kê
@@ -884,7 +885,7 @@ register(
            actions=[("Trả NCC (đánh dấu phiếu chi đã trả)", "expense.markPaid — admin/kế toán"), ("Tạo phiếu chi", "expense.create")],
            states={"loading": "Skeleton", "empty": "EmptyState 'Không còn công nợ NCC'", "forbidden": "Operation xem hạn chế (⚠️)"},
            notes=["Khoản chi không gắn NCC không vào công nợ NCC.", "Tuổi nợ tính từ ngày chi."]),
-    Screen(id="WM-DEBT-03", name="Danh sách bảng kê công nợ", route="/finance/debt-statements", render=debt_03, pattern="list", h=860, roles=RA, **C,
+    Screen(id="WM-DEBT-03", name="Danh sách bảng kê công nợ", route="/finance/debt-statements", render=debt_03, pattern="list", h=960, roles=RA, **C,
            purpose="Danh sách bảng kê theo khách/kỳ với tổng nợ snapshot và trạng thái Nháp/Đã chốt/Đã gửi/Đã hủy; tạo bảng kê.",
            api=["debtStatements(filter)", "createDebtStatement(input: {customerId, from, to, scope})"],
            data=["code", "customer", "period", "lineCount", "totalAmount", "paidAmount", "remainingAmount", "status", "finalizedAt", "sentAt"],

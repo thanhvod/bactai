@@ -24,7 +24,7 @@ flowchart LR
 | 1 | Operation | API | `` | Bấm Tạo đơn |
 | 2 | Operation | API | `` | Chọn khách, điểm lấy/trả từ sổ địa chỉ, hàng, giá cước, add-on, hạn TT |
 | 3 | System | API | `` | Tạo mã DH, mở chi tiết đơn |
-| 4 | Operation | [WM-TRIP-02](../screens/wm/WM-TRIP-02.md) Tạo/sửa chuyến | `/orders/:orderId/trips/new · /trips/:tripId/edit` | Tạo chuyến: chọn xe, tài xế, giờ; mặc định gán mọi điểm |
-| 5 | System | [WM-DISPATCH-03](../screens/wm/WM-DISPATCH-03.md) Cảnh báo lịch | `/dispatch/conflicts` | Cảnh báo trùng/gần trùng lịch (mềm) → override kèm lý do |
-| 6 | System | [WM-DISPATCH-01](../screens/wm/WM-DISPATCH-01.md) Bảng điều phối | `/dispatch` | Chuyến xuất hiện trên bảng điều phối |
-| 7 | Driver | API | `` | Tài xế thấy chuyến được giao |
+| 4 | Operation | API | `` | Tạo chuyến: chọn xe, tài xế, giờ; mặc định gán mọi điểm |
+| 5 | System | API | `` | Cảnh báo trùng/gần trùng lịch (mềm) → override kèm lý do |
+| 6 | System | API | `` | Chuyến xuất hiện trên bảng điều phối |
+| 7 | Driver | [DA-HOME-01](../screens/da/DA-HOME-01.md) Trang chủ công việc | `DriverHomeRoute` | Tài xế thấy chuyến được giao |

@@ -2,39 +2,60 @@
 
 Sinh tự động bởi `python3 design/tools/build.py`. Không sửa tay.
 
-## Web Merchant (phase 1)
+## App Tài xế (phase 1)
 
-Stack: React + Vite + Tailwind + shadcn/Radix (apps/web)
+Stack: Flutter + Bloc/Cubit (apps/driver-app)
 
-### Điều phối
-
-| ID | Màn hình | Route | Pattern | Đi tới |
-|---|---|---|---|---|
-| [WM-TRIP-01](screens/wm/WM-TRIP-01.md) | Chi tiết chuyến | `/trips/:tripId` | detail | WM-ADV-01, WM-COD-01, WM-CUS-02, WM-DISPATCH-04, WM-DISPATCH-05, WM-DRV-02, WM-EXP-02, WM-EXP-03, WM-INC-01, WM-ORD-02, WM-SHELL-05, WM-SHELL-06, WM-SHELL-07, WM-SHELL-08, WM-STOP-01, WM-TRIP-01, WM-TRIP-02, WM-VEH-02 |
-| [WM-TRIP-02](screens/wm/WM-TRIP-02.md) | Tạo/sửa chuyến | `/orders/:orderId/trips/new · /trips/:tripId/edit` | form | WM-DISPATCH-02, WM-DISPATCH-03, WM-ORD-02, WM-TRIP-01 |
-| [WM-STOP-01](screens/wm/WM-STOP-01.md) | Chi tiết điểm dừng | `/orders/:orderId/stops/:stopId (drawer trên chuyến/đơn)` | drawer | WM-CUS-02, WM-DRV-02, WM-ORD-02, WM-SHELL-05, WM-SHELL-06, WM-SHELL-07, WM-SHELL-08, WM-STOP-01, WM-TRIP-01, WM-TRIP-02, WM-VEH-02 |
-| [WM-DISPATCH-01](screens/wm/WM-DISPATCH-01.md) | Bảng điều phối | `/dispatch` | board | WM-DISPATCH-02, WM-DISPATCH-03, WM-DISPATCH-04, WM-DISPATCH-05, WM-INC-01, WM-ORD-02, WM-TRIP-01, WM-TRIP-02 |
-| [WM-DISPATCH-02](screens/wm/WM-DISPATCH-02.md) | Lịch xe/tài xế | `/dispatch/calendar` | board | WM-DISPATCH-01, WM-DISPATCH-03, WM-TRIP-01, WM-TRIP-02 |
-| [WM-DISPATCH-03](screens/wm/WM-DISPATCH-03.md) | Cảnh báo lịch | `/dispatch/conflicts` | list | WM-DISPATCH-02, WM-SET-01, WM-SHELL-08, WM-TRIP-01, WM-TRIP-02 |
-| [WM-DISPATCH-04](screens/wm/WM-DISPATCH-04.md) | Theo dõi vị trí | `/dispatch/map` | page | WM-DISPATCH-01, WM-TRIP-01, WM-VEH-02 |
-| [WM-DISPATCH-05](screens/wm/WM-DISPATCH-05.md) | Sự cố vận hành | `/dispatch/incidents` | list | WM-INC-01, WM-ORD-02, WM-SHELL-05, WM-TRIP-01 |
-| [WM-INC-01](screens/wm/WM-INC-01.md) | Chi tiết sự cố | `/dispatch/incidents/:incidentId` | detail | WM-DRV-02, WM-ORD-02, WM-SHELL-06, WM-SHELL-07, WM-SHELL-08, WM-TRIP-01, WM-VEH-02 |
-
-### Xe
+### Đăng nhập
 
 | ID | Màn hình | Route | Pattern | Đi tới |
 |---|---|---|---|---|
-| [WM-VEH-01](screens/wm/WM-VEH-01.md) | Danh sách xe | `/vehicles` | list | WM-EXP-01, WM-SHELL-04, WM-SHELL-05, WM-TRIP-01, WM-VEH-02, WM-VEH-03 |
-| [WM-VEH-02](screens/wm/WM-VEH-02.md) | Chi tiết xe | `/vehicles/:vehicleId` | detail | WM-DISPATCH-02, WM-DRV-02, WM-EXP-02, WM-EXP-03, WM-SHELL-06, WM-SHELL-07, WM-SHELL-08, WM-SUP-02, WM-TRIP-01, WM-VEH-03 |
-| [WM-VEH-03](screens/wm/WM-VEH-03.md) | Form xe | `/vehicles/new · /vehicles/:vehicleId/edit` | drawer | WM-EXP-01, WM-SHELL-04, WM-SHELL-05, WM-TRIP-01, WM-VEH-01, WM-VEH-02, WM-VEH-03 |
+| [DA-AUTH-01](screens/da/DA-AUTH-01.md) | Splash/kiểm tra phiên | `DriverSplashRoute` | auth | DA-AUTH-02, DA-HOME-01 |
+| [DA-AUTH-02](screens/da/DA-AUTH-02.md) | Đăng nhập tài xế | `DriverLoginRoute` | auth | DA-AUTH-03, DA-HOME-01 |
+| [DA-AUTH-03](screens/da/DA-AUTH-03.md) | Quên mật khẩu | `DriverForgotPasswordRoute` | auth | DA-AUTH-02 |
 
-### Nhà cung cấp
+### Hôm nay & lịch chuyến
 
 | ID | Màn hình | Route | Pattern | Đi tới |
 |---|---|---|---|---|
-| [WM-SUP-01](screens/wm/WM-SUP-01.md) | Danh sách NCC | `/suppliers` | list | WM-DEBT-02, WM-EXP-01, WM-SHELL-05, WM-SUP-02, WM-SUP-03 |
-| [WM-SUP-02](screens/wm/WM-SUP-02.md) | Chi tiết NCC | `/suppliers/:supplierId` | detail | WM-DEBT-02, WM-EXP-01, WM-EXP-02, WM-EXP-03, WM-ORD-02, WM-SHELL-07, WM-SHELL-08, WM-SUP-03 |
-| [WM-SUP-03](screens/wm/WM-SUP-03.md) | Form NCC | `/suppliers/new · /suppliers/:supplierId/edit` | drawer | WM-DEBT-02, WM-EXP-01, WM-SHELL-05, WM-SUP-01, WM-SUP-02, WM-SUP-03 |
+| [DA-HOME-01](screens/da/DA-HOME-01.md) | Trang chủ công việc | `DriverHomeRoute` | mobile | DA-JOB-01, DA-MONEY-01, DA-PROFILE-01, DA-SYNC-01, DA-TRIP-01 |
+| [DA-JOB-01](screens/da/DA-JOB-01.md) | Danh sách chuyến | `DriverJobListRoute` | list | DA-JOB-02, DA-TRIP-01 |
+| [DA-JOB-02](screens/da/DA-JOB-02.md) | Lịch chuyến | `DriverJobCalendarRoute` | mobile | DA-JOB-01, DA-TRIP-01 |
+| [DA-NOTI-01](screens/da/DA-NOTI-01.md) | Thông báo | `DriverNotificationsRoute` | list | DA-MONEY-01, DA-STOP-02, DA-TRIP-01 |
+
+### Chuyến & điểm dừng
+
+| ID | Màn hình | Route | Pattern | Đi tới |
+|---|---|---|---|---|
+| [DA-TRIP-01](screens/da/DA-TRIP-01.md) | Chi tiết chuyến | `DriverTripDetailRoute(tripId)` | detail | DA-ATT-01, DA-COD-01, DA-GPS-01, DA-INC-01, DA-STATUS-01, DA-STATUS-02, DA-STOP-01, DA-STOP-02 |
+| [DA-STOP-01](screens/da/DA-STOP-01.md) | Danh sách điểm dừng | `DriverStopListRoute(tripId)` | list | DA-STOP-02 |
+| [DA-STOP-02](screens/da/DA-STOP-02.md) | Chi tiết điểm dừng | `DriverStopDetailRoute(stopId)` | detail | DA-COD-01, DA-INC-01, DA-POD-01, DA-TRIP-01 |
+
+### Trạng thái · POD · COD · Sự cố
+
+| ID | Màn hình | Route | Pattern | Đi tới |
+|---|---|---|---|---|
+| [DA-STATUS-01](screens/da/DA-STATUS-01.md) | Cập nhật trạng thái chuyến | `DriverStatusUpdateRoute(tripId)` | dialog | DA-ATT-01, DA-COD-01, DA-GPS-01, DA-INC-01, DA-STATUS-01, DA-STATUS-02, DA-STOP-01, DA-STOP-02, DA-TRIP-01 |
+| [DA-STATUS-02](screens/da/DA-STATUS-02.md) | Tạm dừng chuyến | `DriverPauseTripRoute(tripId)` | dialog | DA-ATT-01, DA-COD-01, DA-GPS-01, DA-INC-01, DA-STATUS-01, DA-STATUS-02, DA-STOP-01, DA-STOP-02, DA-TRIP-01 |
+| [DA-POD-01](screens/da/DA-POD-01.md) | Chụp POD | `DriverPodCaptureRoute(stopId)` | mobile | DA-STOP-02 |
+| [DA-COD-01](screens/da/DA-COD-01.md) | Nhập COD thực thu | `DriverCodInputRoute(stopId)` | form | DA-STOP-02 |
+| [DA-INC-01](screens/da/DA-INC-01.md) | Báo sự cố | `DriverIncidentReportRoute(tripId)` | form | DA-ATT-01, DA-STATUS-02, DA-TRIP-01 |
+| [DA-ATT-01](screens/da/DA-ATT-01.md) | Upload chứng từ | `DriverAttachmentUploadRoute(entity)` | form | DA-TRIP-01 |
+
+### Đồng bộ & GPS
+
+| ID | Màn hình | Route | Pattern | Đi tới |
+|---|---|---|---|---|
+| [DA-GPS-01](screens/da/DA-GPS-01.md) | Theo dõi vị trí nền | `DriverGpsPermissionRoute` | mobile | DA-SYNC-01, DA-TRIP-01 |
+| [DA-SYNC-01](screens/da/DA-SYNC-01.md) | Đồng bộ offline | `DriverSyncRoute` | list | DA-COD-01, DA-GPS-01, DA-INC-01, DA-POD-01, DA-TRIP-01 |
+
+### Tài khoản & tiền
+
+| ID | Màn hình | Route | Pattern | Đi tới |
+|---|---|---|---|---|
+| [DA-MONEY-01](screens/da/DA-MONEY-01.md) | Thưởng & khoản ứng của tôi | `DriverMoneyRoute` | mobile | DA-HIST-01, DA-TRIP-01 |
+| [DA-HIST-01](screens/da/DA-HIST-01.md) | Lịch sử chuyến | `DriverHistoryRoute` | list | DA-TRIP-01 |
+| [DA-PROFILE-01](screens/da/DA-PROFILE-01.md) | Hồ sơ cá nhân | `DriverProfileRoute` | mobile | DA-AUTH-02, DA-GPS-01, DA-HIST-01, DA-MONEY-01, DA-SYNC-01 |
 
 ## Flows
 

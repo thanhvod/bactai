@@ -34,11 +34,11 @@ Chuyến mới, thay đổi chuyến, yêu cầu xử lý, cảnh báo COD; mở
 
 | Trigger | Đích | Route đích | Loại |
 |---|---|---|---|
-| Mở chuyến mới được giao | [DA-TRIP-01](../da/DA-TRIP-01.md) Chi tiết chuyến | `DriverTripDetailRoute(tripId)` | action |
 | Mở điểm dừng cần xử lý | [DA-STOP-02](../da/DA-STOP-02.md) Chi tiết điểm dừng | `DriverStopDetailRoute(stopId)` | action |
 | Mở khoản COD | [DA-MONEY-01](../da/DA-MONEY-01.md) Thưởng & khoản ứng của tôi | `DriverMoneyRoute` | action |
 | Mở chuyến thay đổi | [DA-TRIP-01](../da/DA-TRIP-01.md) Chi tiết chuyến | `DriverTripDetailRoute(tripId)` | action |
 | Mở chuyến có sự cố | [DA-TRIP-01](../da/DA-TRIP-01.md) Chi tiết chuyến | `DriverTripDetailRoute(tripId)` | action |
+| Mở chuyến mới được giao | [DA-TRIP-01](../da/DA-TRIP-01.md) Chi tiết chuyến | `DriverTripDetailRoute(tripId)` | action |
 | Bottom nav: Hôm nay | [DA-HOME-01](../da/DA-HOME-01.md) Trang chủ công việc | `DriverHomeRoute` | nav |
 | Bottom nav: Chuyến | [DA-JOB-01](../da/DA-JOB-01.md) Danh sách chuyến | `DriverJobListRoute` | nav |
 | Bottom nav: Thông báo | [DA-NOTI-01](../da/DA-NOTI-01.md) Thông báo | `DriverNotificationsRoute` | nav |

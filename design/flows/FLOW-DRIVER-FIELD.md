@@ -27,13 +27,13 @@ flowchart LR
 
 | # | Actor | Màn hình | Route | Hành động |
 |---:|---|---|---|---|
-| 1 | Driver | API | `` | Mở chuyến đang chạy |
-| 2 | Driver | API | `` | Xem điểm, hàng, ghi chú, COD |
-| 3 | Driver | API | `` | Cập nhật: Đang đến điểm lấy |
-| 4 | Driver | API | `` | Đã đến / hoàn thành điểm lấy |
-| 5 | Driver | API | `` | Đang vận chuyển → Đang trả hàng |
-| 6 | Driver | API | `` | Nhập COD thực thu |
-| 7 | Driver | API | `` | Chụp POD |
-| 8 | Driver | API | `` | Hoàn thành điểm trả |
-| 9 | Driver | API | `` | Offline: hàng đợi, thử lại |
-| 10 | Operation | [WM-TRIP-01](../screens/wm/WM-TRIP-01.md) Chi tiết chuyến | `/trips/:tripId` | Thấy trạng thái, POD, COD |
+| 1 | Driver | [DA-HOME-01](../screens/da/DA-HOME-01.md) Trang chủ công việc | `DriverHomeRoute` | Mở chuyến đang chạy |
+| 2 | Driver | [DA-TRIP-01](../screens/da/DA-TRIP-01.md) Chi tiết chuyến | `DriverTripDetailRoute(tripId)` | Xem điểm, hàng, ghi chú, COD |
+| 3 | Driver | [DA-STATUS-01](../screens/da/DA-STATUS-01.md) Cập nhật trạng thái chuyến | `DriverStatusUpdateRoute(tripId)` | Cập nhật: Đang đến điểm lấy |
+| 4 | Driver | [DA-STOP-02](../screens/da/DA-STOP-02.md) Chi tiết điểm dừng | `DriverStopDetailRoute(stopId)` | Đã đến / hoàn thành điểm lấy |
+| 5 | Driver | [DA-STATUS-01](../screens/da/DA-STATUS-01.md) Cập nhật trạng thái chuyến | `DriverStatusUpdateRoute(tripId)` | Đang vận chuyển → Đang trả hàng |
+| 6 | Driver | [DA-COD-01](../screens/da/DA-COD-01.md) Nhập COD thực thu | `DriverCodInputRoute(stopId)` | Nhập COD thực thu |
+| 7 | Driver | [DA-POD-01](../screens/da/DA-POD-01.md) Chụp POD | `DriverPodCaptureRoute(stopId)` | Chụp POD |
+| 8 | Driver | [DA-STOP-02](../screens/da/DA-STOP-02.md) Chi tiết điểm dừng | `DriverStopDetailRoute(stopId)` | Hoàn thành điểm trả |
+| 9 | Driver | [DA-SYNC-01](../screens/da/DA-SYNC-01.md) Đồng bộ offline | `DriverSyncRoute` | Offline: hàng đợi, thử lại |
+| 10 | Operation | API | `` | Thấy trạng thái, POD, COD |

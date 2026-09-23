@@ -77,9 +77,9 @@ Xem chuyến: điểm lấy/trả, hàng, ghi chú, COD, chứng từ, sự cố
 | [DA-ATT-01](../da/DA-ATT-01.md) Upload chứng từ | Lưu chứng từ → về chuyến |
 | [DA-GPS-01](../da/DA-GPS-01.md) Theo dõi vị trí nền | Mở chuyến đang chạy |
 | [DA-SYNC-01](../da/DA-SYNC-01.md) Đồng bộ offline | Mở chuyến của mục trạng thái |
-| [DA-NOTI-01](../da/DA-NOTI-01.md) Thông báo | Mở chuyến mới được giao |
 | [DA-NOTI-01](../da/DA-NOTI-01.md) Thông báo | Mở chuyến thay đổi |
 | [DA-NOTI-01](../da/DA-NOTI-01.md) Thông báo | Mở chuyến có sự cố |
+| [DA-NOTI-01](../da/DA-NOTI-01.md) Thông báo | Mở chuyến mới được giao |
 | [DA-MONEY-01](../da/DA-MONEY-01.md) Thưởng & khoản ứng của tôi | Mở chuyến có thưởng |
 | [DA-HIST-01](../da/DA-HIST-01.md) Lịch sử chuyến | Mở chuyến CX-202609-0009 (chỉ xem) |
 | [DA-HIST-01](../da/DA-HIST-01.md) Lịch sử chuyến | Mở chuyến CX-202609-0008 (chỉ xem) |

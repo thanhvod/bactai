@@ -30,4 +30,4 @@ flowchart LR
 | 5 | Admin | API | `` | Giám đốc duyệt / trả về |
 | 6 | Admin | API | `` | Hoặc duyệt trên App Merchant |
 | 7 | Accountant | API | `` | Xuất bảng lương |
-| 8 | Driver | API | `` | Tài xế xem thưởng/ứng |
+| 8 | Driver | [DA-MONEY-01](../screens/da/DA-MONEY-01.md) Thưởng & khoản ứng của tôi | `DriverMoneyRoute` | Tài xế xem thưởng/ứng |

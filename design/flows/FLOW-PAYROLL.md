@@ -23,11 +23,11 @@ flowchart LR
 
 | # | Actor | Màn hình | Route | Hành động |
 |---:|---|---|---|---|
-| 1 | Operation | API | `` | Chọn kỳ lương → sinh dòng lương |
-| 2 | Operation | API | `` | Kiểm tra bảng lương |
-| 3 | Operation | API | `` | Thêm giảm trừ (có lý do) |
-| 4 | Operation | API | `` | Gửi duyệt |
-| 5 | Admin | API | `` | Giám đốc duyệt / trả về |
-| 6 | Admin | API | `` | Hoặc duyệt trên App Merchant |
-| 7 | Accountant | API | `` | Xuất bảng lương |
-| 8 | Driver | API | `` | Tài xế xem thưởng/ứng |
+| 1 | Operation | [WM-PAYROLL-03](../screens/wm/WM-PAYROLL-03.md) Tạo bảng lương | `/payroll/new` | Chọn kỳ lương → sinh dòng lương |
+| 2 | Operation | [WM-PAYROLL-02](../screens/wm/WM-PAYROLL-02.md) Chi tiết bảng lương | `/payroll/:payrollId` | Kiểm tra bảng lương |
+| 3 | Operation | [WM-PAYROLL-04](../screens/wm/WM-PAYROLL-04.md) Chi tiết dòng lương tài xế | `/payroll/:payrollId/lines/:lineId` | Thêm giảm trừ (có lý do) |
+| 4 | Operation | [WM-PAYROLL-02](../screens/wm/WM-PAYROLL-02.md) Chi tiết bảng lương | `/payroll/:payrollId` | Gửi duyệt |
+| 5 | Admin | [WM-PAYROLL-05](../screens/wm/WM-PAYROLL-05.md) Duyệt bảng lương | `/payroll/:payrollId/approve` | Giám đốc duyệt / trả về |
+| 6 | Admin | [MA-PAYROLL-01](../screens/ma/MA-PAYROLL-01.md) Duyệt bảng lương | `MerchantPayrollApprovalRoute` | Hoặc duyệt trên App Merchant |
+| 7 | Accountant | [WM-SHELL-05](../screens/wm/WM-SHELL-05.md) Export/print preview | `(page) …/export · …/print` | Xuất bảng lương |
+| 8 | Driver | [DA-MONEY-01](../screens/da/DA-MONEY-01.md) Thưởng & khoản ứng của tôi | `DriverMoneyRoute` | Tài xế xem thưởng/ứng |

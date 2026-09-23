@@ -20,5 +20,5 @@ flowchart LR
 | 1 | Operation | [WM-EXP-03](../screens/wm/WM-EXP-03.md) Tạo phiếu chi | `/finance/expenses/new` | Tạo phiếu chi, gắn đơn/chuyến/xe/NCC/tài xế |
 | 2 | System | [WM-EXP-02](../screens/wm/WM-EXP-02.md) Chi tiết phiếu chi | `/finance/expenses/:expenseId` | Chi tiết phiếu chi |
 | 3 | Operation | [WM-ADV-01](../screens/wm/WM-ADV-01.md) Tạm ứng chuyến & đối soát | `/finance/trip-advances` | Đối soát tạm ứng chuyến |
-| 4 | System | API | `` | Lãi/lỗ đơn cập nhật |
-| 5 | Admin | API | `` | Báo cáo lãi/lỗ theo đơn |
+| 4 | System | [WM-ORD-07](../screens/wm/WM-ORD-07.md) Tài chính đơn (tab) | `/orders/:orderId?tab=finance` | Lãi/lỗ đơn cập nhật |
+| 5 | Admin | [WM-RPT-03](../screens/wm/WM-RPT-03.md) Lãi/lỗ theo đơn | `/reports/profit?view=orders` | Báo cáo lãi/lỗ theo đơn |

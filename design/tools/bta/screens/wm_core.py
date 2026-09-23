@@ -552,7 +552,7 @@ def shell_05():
     sheet = (f'<div style="width: 620px; height: 860px; background: #FFFFFF; box-shadow: {SH_DIALOG}; padding: 40px 36px; box-sizing: border-box; '
              f'display: flex; flex-direction: column; gap: 14px; font-size: 12px;">'
              + row(col(logo(True, 24), subtle("BTA Demo Transport · Số 45 QL1A, Bình Tân, TP.HCM · 0908 123 456", 10), gap=4), spacer(),
-                   col(text("BẢNG KÊ CÔNG NỢ", 15, 700), num("BK-202609-0001", 11), subtle("Kỳ 01/09 – 30/09/2026", 10), gap=0, extra="align-items: flex-end;"), align="flex-start")
+                   col(text("BẢNG KÊ CÔNG NỢ", 15, 700), num("CN-202609-0001", 11), subtle("Kỳ 01/09 – 30/09/2026", 10), gap=0, extra="align-items: flex-end;"), align="flex-start")
              + divider()
              + dl([("Khách hàng", "Công ty Gạo Miền Tây"), ("Mã khách", "CUS-A-001"), ("Địa chỉ", "KCN Trà Nóc 1, Bình Thủy, Cần Thơ"),
                    ("Ngày lập", "23/09/2026 · Phan Ngọc Mai")], cols=2, gap=6)
@@ -561,14 +561,14 @@ def shell_05():
              + col(row(muted("Trong đó quá hạn", 12), spacer(), num(money(15_000_000), 12, 600, T["danger"])),
                    row(muted("Số dư trả trước", 12), spacer(), num(money(0), 12)),
                    row(text("Số tiền cần thanh toán", 13, 700), spacer(), num(money(27_500_000), 15, 700)), gap=4)
-             + subtle("Chuyển khoản: Vietcombank · 0071 000 123 456 · CÔNG TY TNHH BTA DEMO TRANSPORT. Nội dung: BK-202609-0001.", 10)
+             + subtle("Chuyển khoản: Vietcombank · 0071 000 123 456 · CÔNG TY TNHH BTA DEMO TRANSPORT. Nội dung: CN-202609-0001.", 10)
              + spacer()
              + grid([col(text("Bên lập bảng kê", 12, 600), subtle("(ký, ghi rõ họ tên)", 10), gap=0, extra="align-items: center; height: 80px;"),
                      col(text("Xác nhận của khách hàng", 12, 600), subtle("(ký, ghi rõ họ tên)", 10), gap=0, extra="align-items: center; height: 80px;")], 2)
              + '</div>')
     side = panel("Mẫu xuất", col(
         text("Loại tài liệu", 13, 600),
-        radio("Bảng kê công nợ", True, "BK-202609-0001 · đã chốt"), radio("Bảng lương", False, "BL-202609-0001"), radio("Phiếu giao hàng / điều xe"),
+        radio("Bảng kê công nợ", True, "CN-202609-0001 · đã chốt"), radio("Bảng lương", False, "BL-202609-0001"), radio("Phiếu giao hàng / điều xe"),
         radio("Bảng chi phí chuyến"), radio("COD tài xế đang giữ"),
         divider(),
         field("Định dạng", segmented(["PDF", "Excel"], 0)),
@@ -583,7 +583,7 @@ def shell_05():
                               row(btn("Quay lại bảng kê", "secondary", "arrow-left", to="WM-DEBT-04", trigger="Quay lại chi tiết bảng kê"),
                                   btn("Tải Excel", "secondary", "file-spreadsheet"), btn("Tải PDF", "secondary", "download"),
                                   btn("In", "primary", "printer"), gap=8),
-                              crumbs=[("Thu chi & Công nợ", "WM-FIN-01"), ("Bảng kê công nợ", "WM-DEBT-03"), ("BK-202609-0001", "WM-DEBT-04"), ("Xuất / in", None)]),
+                              crumbs=[("Thu chi & Công nợ", "WM-FIN-01"), ("Bảng kê công nợ", "WM-DEBT-03"), ("CN-202609-0001", "WM-DEBT-04"), ("Xuất / in", None)]),
                   row(side, preview, gap=16, align="flex-start"), gap=16)
     return wm_shell("finance", content, h=1120, child="WM-DEBT-03")
 

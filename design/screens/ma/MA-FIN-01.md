@@ -43,7 +43,7 @@ Cảnh báo tiền: nợ khách quá hạn, COD tài xế đang giữ, bảng l�
 | Mở khách Vật liệu Xây dựng Phú Mỹ | [MA-CUS-02](../ma/MA-CUS-02.md) Chi tiết khách | `MerchantCustomerDetailRoute(customerId)` | action |
 | Mở danh sách khách hàng | [MA-CUS-01](../ma/MA-CUS-01.md) Khách hàng | `MerchantCustomerListRoute` | action |
 | Mở bảng lương chờ duyệt | [MA-PAYROLL-01](../ma/MA-PAYROLL-01.md) Duyệt bảng lương | `MerchantPayrollApprovalRoute` | action |
-| Mở sổ thu chi trên Web Merchant | WM-FIN-01 | | action |
+| Mở sổ thu chi trên Web Merchant | [WM-FIN-01](../wm/WM-FIN-01.md) Sổ thu chi | `/finance` | action |
 | Bottom nav: Tổng quan | [MA-HOME-01](../ma/MA-HOME-01.md) Tổng quan mobile | `MerchantHomeRoute` | nav |
 | Bottom nav: Đơn/Chuyến | [MA-ORD-01](../ma/MA-ORD-01.md) Danh sách đơn | `MerchantOrderListRoute` | nav |
 | Bottom nav: Tài chính | [MA-FIN-01](../ma/MA-FIN-01.md) Tài chính nhanh | `MerchantFinanceRoute` | nav |

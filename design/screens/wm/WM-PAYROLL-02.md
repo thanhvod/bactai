@@ -40,39 +40,46 @@ Kiểm tra từng dòng lương tài xế (snapshot), cảnh báo dữ liệu; g
 
 | Trigger | Đích | Route đích | Loại |
 |---|---|---|---|
-| Mở Timeline drawer | WM-SHELL-07 | | action |
-| Xuất bảng lương / phiếu lương | WM-SHELL-05 | | action |
-| Trả về (sensitive, lý do bắt buộc) | WM-SHELL-08 | | action |
+| Mở Timeline drawer | [WM-SHELL-07](../wm/WM-SHELL-07.md) Timeline drawer | `(drawer) ?timeline=1` | action |
+| Xuất bảng lương / phiếu lương | [WM-SHELL-05](../wm/WM-SHELL-05.md) Export/print preview | `(page) …/export · …/print` | action |
+| Trả về (sensitive, lý do bắt buộc) | [WM-SHELL-08](../wm/WM-SHELL-08.md) Sensitive action modal | `(modal)` | action |
 | Duyệt bảng lương | [WM-PAYROLL-05](../wm/WM-PAYROLL-05.md) Duyệt bảng lương | `/payroll/:payrollId/approve` | action |
-| Tab Timeline | WM-SHELL-07 | | action |
+| Tab Timeline | [WM-SHELL-07](../wm/WM-SHELL-07.md) Timeline drawer | `(drawer) ?timeline=1` | action |
 | Click dòng → chi tiết dòng lương | [WM-PAYROLL-04](../wm/WM-PAYROLL-04.md) Chi tiết dòng lương tài xế | `/payroll/:payrollId/lines/:lineId` | action |
 | Mở chi tiết dòng lương | [WM-PAYROLL-04](../wm/WM-PAYROLL-04.md) Chi tiết dòng lương tài xế | `/payroll/:payrollId/lines/:lineId` | action |
-| Mở COD tài xế đang giữ | WM-COD-01 | | action |
-| Mở chuyến đang chạy | WM-TRIP-01 | | action |
-| Mở lịch sử lương cố định | WM-DRV-04 | | action |
-| Mở phiếu chi ứng lương | WM-EXP-02 | | action |
-| Mở danh mục lý do giảm trừ | WM-CAT-01 | | action |
-| Mở Timeline | WM-SHELL-07 | | action |
+| Mở COD tài xế đang giữ | [WM-COD-01](../wm/WM-COD-01.md) COD tài xế đang giữ | `/finance/cod` | action |
+| Mở chuyến đang chạy | [WM-TRIP-01](../wm/WM-TRIP-01.md) Chi tiết chuyến | `/trips/:tripId` | action |
+| Mở lịch sử lương cố định | [WM-DRV-04](../wm/WM-DRV-04.md) Lịch sử lương cố định | `/drivers/:driverId/salary-history (tab Lương/ứng)` | action |
+| Mở phiếu chi ứng lương | [WM-EXP-02](../wm/WM-EXP-02.md) Chi tiết phiếu chi | `/finance/expenses/:expenseId` | action |
+| Mở danh mục lý do giảm trừ | [WM-CAT-01](../wm/WM-CAT-01.md) Danh mục dùng chung | `/settings/catalogs` | action |
+| Mở Timeline | [WM-SHELL-07](../wm/WM-SHELL-07.md) Timeline drawer | `(drawer) ?timeline=1` | action |
 | Breadcrumb Lương | [WM-PAYROLL-01](../wm/WM-PAYROLL-01.md) Danh sách bảng lương | `/payroll` | nav |
-| Sidebar: Dashboard | WM-DASH-01 | | nav |
-| Sidebar: Đơn hàng | WM-ORD-01 | | nav |
-| Sidebar: Điều phối | WM-DISPATCH-01 | | nav |
-| Sidebar: Khách hàng | WM-CUS-01 | | nav |
-| Sidebar: Tài xế | WM-DRV-01 | | nav |
-| Sidebar: Xe | WM-VEH-01 | | nav |
-| Sidebar: Nhà cung cấp | WM-SUP-01 | | nav |
-| Sidebar: Thu chi & Công nợ | WM-FIN-01 | | nav |
+| Sidebar: Dashboard | [WM-DASH-01](../wm/WM-DASH-01.md) Dashboard tổng quan | `/` | nav |
+| Sidebar: Đơn hàng | [WM-ORD-01](../wm/WM-ORD-01.md) Danh sách đơn hàng | `/orders` | nav |
+| Sidebar: Điều phối | [WM-DISPATCH-01](../wm/WM-DISPATCH-01.md) Bảng điều phối | `/dispatch` | nav |
+| Sidebar: Khách hàng | [WM-CUS-01](../wm/WM-CUS-01.md) Danh sách khách hàng | `/customers` | nav |
+| Sidebar: Tài xế | [WM-DRV-01](../wm/WM-DRV-01.md) Danh sách tài xế | `/drivers` | nav |
+| Sidebar: Xe | [WM-VEH-01](../wm/WM-VEH-01.md) Danh sách xe | `/vehicles` | nav |
+| Sidebar: Nhà cung cấp | [WM-SUP-01](../wm/WM-SUP-01.md) Danh sách NCC | `/suppliers` | nav |
+| Sidebar: Thu chi & Công nợ | [WM-FIN-01](../wm/WM-FIN-01.md) Sổ thu chi | `/finance` | nav |
 | Sidebar: Lương | [WM-PAYROLL-01](../wm/WM-PAYROLL-01.md) Danh sách bảng lương | `/payroll` | nav |
 | Sidebar: Báo cáo | [WM-RPT-01](../wm/WM-RPT-01.md) Trung tâm báo cáo | `/reports` | nav |
-| Sidebar: Cài đặt | WM-ORG-01 | | nav |
-| Merchant switcher | WM-AUTH-03 | | nav |
-| Quick search (Ctrl K) | WM-SHELL-03 | | nav |
-| Chuông thông báo | WM-SHELL-02 | | nav |
+| Sidebar: Cài đặt | [WM-ORG-01](../wm/WM-ORG-01.md) Hồ sơ nhà xe | `/settings/company` | nav |
+| Merchant switcher | [WM-AUTH-03](../wm/WM-AUTH-03.md) Chọn merchant | `/select-merchant` | nav |
+| Quick search (Ctrl K) | [WM-SHELL-03](../wm/WM-SHELL-03.md) Tìm kiếm nhanh | `(dialog) Ctrl K` | nav |
+| Chuông thông báo | [WM-SHELL-02](../wm/WM-SHELL-02.md) Trung tâm thông báo | `(popover) — từ chuông topbar` | nav |
 
 ## Điều hướng đến (incoming)
 
 | Từ | Trigger |
 |---|---|
+| [MA-PAYROLL-01](../ma/MA-PAYROLL-01.md) Duyệt bảng lương | Mở chi tiết bảng lương trên Web Merchant |
+| [WM-SHELL-02](../wm/WM-SHELL-02.md) Trung tâm thông báo | Thông báo bảng lương chờ duyệt → bảng lương |
+| [WM-SHELL-02](../wm/WM-SHELL-02.md) Trung tâm thông báo | Mở bảng lương |
+| [WM-SHELL-03](../wm/WM-SHELL-03.md) Tìm kiếm nhanh | Mở bảng lương |
+| [WM-DASH-01](../wm/WM-DASH-01.md) Dashboard tổng quan | Mở bảng lương |
+| [WM-DRV-02](../wm/WM-DRV-02.md) Chi tiết tài xế | Mở bảng lương |
+| [WM-DRV-04](../wm/WM-DRV-04.md) Lịch sử lương cố định | Mở bảng lương |
 | [WM-PAYROLL-01](../wm/WM-PAYROLL-01.md) Danh sách bảng lương | Click mã bảng lương → chi tiết |
 | [WM-PAYROLL-01](../wm/WM-PAYROLL-01.md) Danh sách bảng lương | KPI Chờ duyệt → bảng lương |
 | [WM-PAYROLL-03](../wm/WM-PAYROLL-03.md) Tạo bảng lương | Tạo → chi tiết bảng lương |

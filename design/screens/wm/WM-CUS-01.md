@@ -46,33 +46,37 @@ Tìm/lọc khách, theo dõi công nợ, số dư, hạn mức và cảnh báo; 
 |---|---|---|---|
 | Click tên khách → chi tiết | [WM-CUS-02](../wm/WM-CUS-02.md) Chi tiết khách hàng | `/customers/:customerId` | action |
 | Xem chi tiết | [WM-CUS-02](../wm/WM-CUS-02.md) Chi tiết khách hàng | `/customers/:customerId` | action |
-| Tạo đơn | WM-ORD-03 | | action |
-| Ghi nhận thanh toán | WM-PAY-03 | | action |
+| Tạo đơn | [WM-ORD-03](../wm/WM-ORD-03.md) Tạo/sửa đơn | `/orders/new · /orders/:orderId/edit` | action |
+| Ghi nhận thanh toán | [WM-PAY-03](../wm/WM-PAY-03.md) Tạo phiếu thu | `/finance/payments/new` | action |
 | Sửa | [WM-CUS-03](../wm/WM-CUS-03.md) Form khách hàng | `/customers/new · /customers/:customerId/edit` | action |
-| Ngừng hoạt động | WM-SHELL-08 | | action |
-| Click KPI Tổng còn nợ → công nợ khách | WM-DEBT-01 | | action |
-| Click KPI Quá hạn → công nợ khách | WM-DEBT-01 | | action |
-| Import khách hàng từ Excel | WM-SHELL-04 | | action |
-| Xuất danh sách khách | WM-SHELL-05 | | action |
+| Ngừng hoạt động | [WM-SHELL-08](../wm/WM-SHELL-08.md) Sensitive action modal | `(modal)` | action |
+| Click KPI Tổng còn nợ → công nợ khách | [WM-DEBT-01](../wm/WM-DEBT-01.md) Công nợ khách tổng hợp | `/finance/customer-debt` | action |
+| Click KPI Quá hạn → công nợ khách | [WM-DEBT-01](../wm/WM-DEBT-01.md) Công nợ khách tổng hợp | `/finance/customer-debt` | action |
+| Import khách hàng từ Excel | [WM-SHELL-04](../wm/WM-SHELL-04.md) Import wizard | `(dialog) từ danh sách khách/xe/tài xế` | action |
+| Xuất danh sách khách | [WM-SHELL-05](../wm/WM-SHELL-05.md) Export/print preview | `(page) …/export · …/print` | action |
 | Tạo khách hàng | [WM-CUS-03](../wm/WM-CUS-03.md) Form khách hàng | `/customers/new · /customers/:customerId/edit` | action |
-| Sidebar: Dashboard | WM-DASH-01 | | nav |
-| Sidebar: Đơn hàng | WM-ORD-01 | | nav |
-| Sidebar: Điều phối | WM-DISPATCH-01 | | nav |
+| Sidebar: Dashboard | [WM-DASH-01](../wm/WM-DASH-01.md) Dashboard tổng quan | `/` | nav |
+| Sidebar: Đơn hàng | [WM-ORD-01](../wm/WM-ORD-01.md) Danh sách đơn hàng | `/orders` | nav |
+| Sidebar: Điều phối | [WM-DISPATCH-01](../wm/WM-DISPATCH-01.md) Bảng điều phối | `/dispatch` | nav |
 | Sidebar: Khách hàng | [WM-CUS-01](../wm/WM-CUS-01.md) Danh sách khách hàng | `/customers` | nav |
 | Sidebar: Tài xế | [WM-DRV-01](../wm/WM-DRV-01.md) Danh sách tài xế | `/drivers` | nav |
-| Sidebar: Xe | WM-VEH-01 | | nav |
-| Sidebar: Nhà cung cấp | WM-SUP-01 | | nav |
-| Sidebar: Thu chi & Công nợ | WM-FIN-01 | | nav |
-| Sidebar: Lương | WM-PAYROLL-01 | | nav |
-| Sidebar: Báo cáo | WM-RPT-01 | | nav |
-| Sidebar: Cài đặt | WM-ORG-01 | | nav |
-| Merchant switcher | WM-AUTH-03 | | nav |
-| Quick search (Ctrl K) | WM-SHELL-03 | | nav |
-| Chuông thông báo | WM-SHELL-02 | | nav |
+| Sidebar: Xe | [WM-VEH-01](../wm/WM-VEH-01.md) Danh sách xe | `/vehicles` | nav |
+| Sidebar: Nhà cung cấp | [WM-SUP-01](../wm/WM-SUP-01.md) Danh sách NCC | `/suppliers` | nav |
+| Sidebar: Thu chi & Công nợ | [WM-FIN-01](../wm/WM-FIN-01.md) Sổ thu chi | `/finance` | nav |
+| Sidebar: Lương | [WM-PAYROLL-01](../wm/WM-PAYROLL-01.md) Danh sách bảng lương | `/payroll` | nav |
+| Sidebar: Báo cáo | [WM-RPT-01](../wm/WM-RPT-01.md) Trung tâm báo cáo | `/reports` | nav |
+| Sidebar: Cài đặt | [WM-ORG-01](../wm/WM-ORG-01.md) Hồ sơ nhà xe | `/settings/company` | nav |
+| Merchant switcher | [WM-AUTH-03](../wm/WM-AUTH-03.md) Chọn merchant | `/select-merchant` | nav |
+| Quick search (Ctrl K) | [WM-SHELL-03](../wm/WM-SHELL-03.md) Tìm kiếm nhanh | `(dialog) Ctrl K` | nav |
+| Chuông thông báo | [WM-SHELL-02](../wm/WM-SHELL-02.md) Trung tâm thông báo | `(popover) — từ chuông topbar` | nav |
 
 ## Điều hướng đến (incoming)
 
-- Chỉ vào qua điều hướng chính (sidebar / bottom nav) hoặc deep link.
+| Từ | Trigger |
+|---|---|
+| [WM-SHELL-04](../wm/WM-SHELL-04.md) Import wizard | Hủy import |
+| [WM-SHELL-04](../wm/WM-SHELL-04.md) Import wizard | Xác nhận import 45 dòng → danh sách khách |
+| [WM-SHELL-04](../wm/WM-SHELL-04.md) Import wizard | Đóng |
 
 ## Components (design system)
 

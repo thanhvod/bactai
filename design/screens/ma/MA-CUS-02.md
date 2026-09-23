@@ -40,7 +40,7 @@ Công nợ, đơn gần đây, địa chỉ, số dư; gọi khách và tạo đ
 | Trigger | Đích | Route đích | Loại |
 |---|---|---|---|
 | Quay lại | [MA-CUS-01](../ma/MA-CUS-01.md) Khách hàng | `MerchantCustomerListRoute` | back |
-| Mở công nợ khách trên Web Merchant | WM-CUS-05 | | action |
+| Mở công nợ khách trên Web Merchant | [WM-CUS-05](../wm/WM-CUS-05.md) Công nợ khách | `/customers/:customerId?tab=debt` | action |
 | Mở đơn DH-202609-0001 | [MA-ORD-02](../ma/MA-ORD-02.md) Chi tiết đơn | `MerchantOrderDetailRoute(orderId)` | action |
 | Mở đơn DH-202609-0009 | [MA-ORD-02](../ma/MA-ORD-02.md) Chi tiết đơn | `MerchantOrderDetailRoute(orderId)` | action |
 | Mở đơn DH-202608-0009 | [MA-ORD-02](../ma/MA-ORD-02.md) Chi tiết đơn | `MerchantOrderDetailRoute(orderId)` | action |

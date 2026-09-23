@@ -43,7 +43,7 @@ Xem nhanh một đơn: tổng quan, điểm dừng, chuyến, tài chính tóm t
 | Mở khách hàng | [MA-CUS-02](../ma/MA-CUS-02.md) Chi tiết khách | `MerchantCustomerDetailRoute(customerId)` | action |
 | Mở chuyến CX-202609-0001 | [MA-TRIP-02](../ma/MA-TRIP-02.md) Chi tiết chuyến | `MerchantTripDetailRoute(tripId)` | action |
 | Mở tài chính nhanh | [MA-FIN-01](../ma/MA-FIN-01.md) Tài chính nhanh | `MerchantFinanceRoute` | action |
-| Mở đơn trên Web Merchant | WM-ORD-02 | | action |
+| Mở đơn trên Web Merchant | [WM-ORD-02](../wm/WM-ORD-02.md) Chi tiết đơn hàng | `/orders/:orderId` | action |
 | Xem chuyến của đơn | [MA-TRIP-02](../ma/MA-TRIP-02.md) Chi tiết chuyến | `MerchantTripDetailRoute(tripId)` | action |
 
 ## Điều hướng đến (incoming)

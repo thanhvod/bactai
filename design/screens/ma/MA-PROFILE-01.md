@@ -34,7 +34,7 @@ Hồ sơ, nhà xe đang dùng, đổi nhà xe, thông báo đẩy, đăng xuất
 | Trigger | Đích | Route đích | Loại |
 |---|---|---|---|
 | Mở thông báo | [MA-NOTI-01](../ma/MA-NOTI-01.md) Thông báo | `MerchantNotificationsRoute` | action |
-| Mở Web Merchant | WM-DASH-01 | | action |
+| Mở Web Merchant | [WM-DASH-01](../wm/WM-DASH-01.md) Dashboard tổng quan | `/` | action |
 | Đăng xuất | [MA-AUTH-01](../ma/MA-AUTH-01.md) Đăng nhập | `MerchantLoginRoute` | action |
 | Bottom nav: Tổng quan | [MA-HOME-01](../ma/MA-HOME-01.md) Tổng quan mobile | `MerchantHomeRoute` | nav |
 | Bottom nav: Đơn/Chuyến | [MA-ORD-01](../ma/MA-ORD-01.md) Danh sách đơn | `MerchantOrderListRoute` | nav |

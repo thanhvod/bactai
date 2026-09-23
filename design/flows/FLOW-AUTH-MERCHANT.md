@@ -21,10 +21,10 @@ flowchart LR
 
 | # | Actor | Màn hình | Route | Hành động |
 |---:|---|---|---|---|
-| 1 | User | API | `` | Bấm Đăng nhập bằng Google |
+| 1 | User | [WM-AUTH-01](../screens/wm/WM-AUTH-01.md) Đăng nhập Google | `/login` | Bấm Đăng nhập bằng Google |
 | 2 | System | API | `` | Firebase ID token → verify, tra membership |
-| 3 | System | API | `` | 4a. Đúng 1 merchant → vào Dashboard |
-| 4 | System | API | `` | 4b. Nhiều merchant → chọn nhà xe |
-| 5 | System | API | `` | 4c. Chưa thuộc merchant → chờ mời / tạo mới |
-| 6 | User | API | `` | Nhập thông tin doanh nghiệp → tạo merchant, seed danh mục |
-| 7 | System | API | `` | Mở Dashboard |
+| 3 | System | [WM-DASH-01](../screens/wm/WM-DASH-01.md) Dashboard tổng quan | `/` | 4a. Đúng 1 merchant → vào Dashboard |
+| 4 | System | [WM-AUTH-03](../screens/wm/WM-AUTH-03.md) Chọn merchant | `/select-merchant` | 4b. Nhiều merchant → chọn nhà xe |
+| 5 | System | [WM-AUTH-04](../screens/wm/WM-AUTH-04.md) Không có quyền / chờ mời | `/access-pending` | 4c. Chưa thuộc merchant → chờ mời / tạo mới |
+| 6 | User | [WM-AUTH-02](../screens/wm/WM-AUTH-02.md) Tạo/hoàn tất merchant | `/onboarding/merchant` | Nhập thông tin doanh nghiệp → tạo merchant, seed danh mục |
+| 7 | System | [WM-DASH-01](../screens/wm/WM-DASH-01.md) Dashboard tổng quan | `/` | Mở Dashboard |

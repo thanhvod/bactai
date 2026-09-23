@@ -31,7 +31,7 @@ Gói thiết kế đầy đủ cho **4 platform** của BTA, dựng trên **desi
 ## Canvas thiết kế
 
 Toàn bộ màn hình cũng có trên canvas Design (claude.ai): trang **Tổng quan & flows**, **Web Merchant**, **App Tài xế**, **App Merchant**,
-**Web Khách hàng**. Mỗi artboard mang mã màn hình (`WM-ORD-02 · Chi tiết đơn hàng`), bấm **Play** để đi theo link giữa các màn.
+**Web Khách hàng** (https://claude.ai/artifact/PsNe4jXKS59JQbNhR97n49). File canvas sinh lại bằng `python3 design/tools/build.py --canvas <DIR>`. Mỗi artboard mang mã màn hình (`WM-ORD-02 · Chi tiết đơn hàng`), bấm **Play** để đi theo link giữa các màn.
 
 ## Sinh lại
 

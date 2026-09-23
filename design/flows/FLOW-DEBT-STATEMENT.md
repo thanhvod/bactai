@@ -23,5 +23,5 @@ flowchart LR
 | 2 | Accountant | [WM-DEBT-03](../screens/wm/WM-DEBT-03.md) Danh sách bảng kê công nợ | `/finance/debt-statements` | Tạo bảng kê |
 | 3 | System | [WM-DEBT-04](../screens/wm/WM-DEBT-04.md) Chi tiết bảng kê công nợ | `/finance/debt-statements/:statementId` | Xem trước dòng bảng kê |
 | 4 | Accountant | [WM-DEBT-04](../screens/wm/WM-DEBT-04.md) Chi tiết bảng kê công nợ | `/finance/debt-statements/:statementId` | Chốt → snapshot + PDF |
-| 5 | Accountant | API | `` | Tải/chia sẻ PDF |
-| 6 | Customer | API | `` | Khách tải bảng kê đã gửi (phase 3) |
+| 5 | Accountant | [WM-SHELL-05](../screens/wm/WM-SHELL-05.md) Export/print preview | `(page) …/export · …/print` | Tải/chia sẻ PDF |
+| 6 | Customer | [CW-DEBT-01](../screens/cw/CW-DEBT-01.md) Bảng kê/công nợ của tôi | `/debt-statements` | Khách tải bảng kê đã gửi (phase 3) |

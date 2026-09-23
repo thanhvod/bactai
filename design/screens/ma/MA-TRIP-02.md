@@ -41,7 +41,7 @@ Xe, tài xế, điểm dừng, trạng thái, POD/COD, sự cố; gọi tài x�
 | Quay lại | [MA-TRIP-01](../ma/MA-TRIP-01.md) Danh sách chuyến | `MerchantTripListRoute` | back |
 | Xem xe trên bản đồ | [MA-MAP-01](../ma/MA-MAP-01.md) Theo dõi xe | `MerchantMapRoute` | action |
 | Mở đơn của chuyến | [MA-ORD-02](../ma/MA-ORD-02.md) Chi tiết đơn | `MerchantOrderDetailRoute(orderId)` | action |
-| Mở sự cố trên Web Merchant | WM-INC-01 | | action |
+| Mở sự cố trên Web Merchant | [WM-INC-01](../wm/WM-INC-01.md) Chi tiết sự cố | `/dispatch/incidents/:incidentId` | action |
 
 ## Điều hướng đến (incoming)
 

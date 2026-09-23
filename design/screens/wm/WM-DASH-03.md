@@ -38,36 +38,36 @@ Tổng hợp cho giám đốc/kế toán: doanh thu tạm tính, chi phí, lãi/
 | Trigger | Đích | Route đích | Loại |
 |---|---|---|---|
 | Xuất báo cáo | [WM-SHELL-05](../wm/WM-SHELL-05.md) Export/print preview | `(page) …/export · …/print` | action |
-| Mở báo cáo lãi/lỗ | WM-RPT-02 | | action |
-| KPI Doanh thu → báo cáo | WM-RPT-02 | | action |
-| KPI Chi phí → phiếu chi | WM-EXP-01 | | action |
-| KPI Lãi/lỗ → lãi/lỗ theo đơn | WM-RPT-03 | | action |
-| KPI Công nợ khách | WM-DEBT-01 | | action |
-| KPI Công nợ NCC | WM-DEBT-02 | | action |
-| KPI COD chưa nộp | WM-COD-01 | | action |
-| Mở sổ thu chi | WM-FIN-01 | | action |
-| Mở báo cáo doanh thu - chi phí | WM-RPT-02 | | action |
-| Mở lãi/lỗ theo đơn | WM-RPT-03 | | action |
-| Mở công nợ khách | WM-CUS-05 | | action |
-| Mở báo cáo công nợ khách | WM-RPT-06 | | action |
-| Mở nhà cung cấp | WM-SUP-02 | | action |
-| Mở công nợ NCC | WM-DEBT-02 | | action |
-| Mở COD tài xế | WM-DRV-06 | | action |
-| Mở báo cáo COD tài xế | WM-RPT-07 | | action |
+| Mở báo cáo lãi/lỗ | [WM-RPT-02](../wm/WM-RPT-02.md) Doanh thu - chi phí - lãi/lỗ | `/reports/profit` | action |
+| KPI Doanh thu → báo cáo | [WM-RPT-02](../wm/WM-RPT-02.md) Doanh thu - chi phí - lãi/lỗ | `/reports/profit` | action |
+| KPI Chi phí → phiếu chi | [WM-EXP-01](../wm/WM-EXP-01.md) Danh sách phiếu chi | `/finance/expenses` | action |
+| KPI Lãi/lỗ → lãi/lỗ theo đơn | [WM-RPT-03](../wm/WM-RPT-03.md) Lãi/lỗ theo đơn | `/reports/profit?view=orders` | action |
+| KPI Công nợ khách | [WM-DEBT-01](../wm/WM-DEBT-01.md) Công nợ khách tổng hợp | `/finance/customer-debt` | action |
+| KPI Công nợ NCC | [WM-DEBT-02](../wm/WM-DEBT-02.md) Công nợ NCC | `/finance/supplier-debt` | action |
+| KPI COD chưa nộp | [WM-COD-01](../wm/WM-COD-01.md) COD tài xế đang giữ | `/finance/cod` | action |
+| Mở sổ thu chi | [WM-FIN-01](../wm/WM-FIN-01.md) Sổ thu chi | `/finance` | action |
+| Mở báo cáo doanh thu - chi phí | [WM-RPT-02](../wm/WM-RPT-02.md) Doanh thu - chi phí - lãi/lỗ | `/reports/profit` | action |
+| Mở lãi/lỗ theo đơn | [WM-RPT-03](../wm/WM-RPT-03.md) Lãi/lỗ theo đơn | `/reports/profit?view=orders` | action |
+| Mở công nợ khách | [WM-CUS-05](../wm/WM-CUS-05.md) Công nợ khách | `/customers/:customerId?tab=debt` | action |
+| Mở báo cáo công nợ khách | [WM-RPT-06](../wm/WM-RPT-06.md) Công nợ khách | `/reports/customer-debt` | action |
+| Mở nhà cung cấp | [WM-SUP-02](../wm/WM-SUP-02.md) Chi tiết NCC | `/suppliers/:supplierId` | action |
+| Mở công nợ NCC | [WM-DEBT-02](../wm/WM-DEBT-02.md) Công nợ NCC | `/finance/supplier-debt` | action |
+| Mở COD tài xế | [WM-DRV-06](../wm/WM-DRV-06.md) COD tài xế đang giữ | `/drivers/:driverId?tab=ledger&view=cod` | action |
+| Mở báo cáo COD tài xế | [WM-RPT-07](../wm/WM-RPT-07.md) COD tài xế | `/reports/cod` | action |
 | Sidebar: Dashboard | [WM-DASH-01](../wm/WM-DASH-01.md) Dashboard tổng quan | `/` | nav |
 | Sidebar: Tổng quan | [WM-DASH-01](../wm/WM-DASH-01.md) Dashboard tổng quan | `/` | nav |
 | Sidebar: Vận hành | [WM-DASH-02](../wm/WM-DASH-02.md) Dashboard vận hành | `/dashboard/operations` | nav |
 | Sidebar: Tài chính | [WM-DASH-03](../wm/WM-DASH-03.md) Dashboard tài chính | `/dashboard/finance` | nav |
 | Sidebar: Đơn hàng | [WM-ORD-01](../wm/WM-ORD-01.md) Danh sách đơn hàng | `/orders` | nav |
-| Sidebar: Điều phối | WM-DISPATCH-01 | | nav |
-| Sidebar: Khách hàng | WM-CUS-01 | | nav |
-| Sidebar: Tài xế | WM-DRV-01 | | nav |
-| Sidebar: Xe | WM-VEH-01 | | nav |
-| Sidebar: Nhà cung cấp | WM-SUP-01 | | nav |
-| Sidebar: Thu chi & Công nợ | WM-FIN-01 | | nav |
-| Sidebar: Lương | WM-PAYROLL-01 | | nav |
-| Sidebar: Báo cáo | WM-RPT-01 | | nav |
-| Sidebar: Cài đặt | WM-ORG-01 | | nav |
+| Sidebar: Điều phối | [WM-DISPATCH-01](../wm/WM-DISPATCH-01.md) Bảng điều phối | `/dispatch` | nav |
+| Sidebar: Khách hàng | [WM-CUS-01](../wm/WM-CUS-01.md) Danh sách khách hàng | `/customers` | nav |
+| Sidebar: Tài xế | [WM-DRV-01](../wm/WM-DRV-01.md) Danh sách tài xế | `/drivers` | nav |
+| Sidebar: Xe | [WM-VEH-01](../wm/WM-VEH-01.md) Danh sách xe | `/vehicles` | nav |
+| Sidebar: Nhà cung cấp | [WM-SUP-01](../wm/WM-SUP-01.md) Danh sách NCC | `/suppliers` | nav |
+| Sidebar: Thu chi & Công nợ | [WM-FIN-01](../wm/WM-FIN-01.md) Sổ thu chi | `/finance` | nav |
+| Sidebar: Lương | [WM-PAYROLL-01](../wm/WM-PAYROLL-01.md) Danh sách bảng lương | `/payroll` | nav |
+| Sidebar: Báo cáo | [WM-RPT-01](../wm/WM-RPT-01.md) Trung tâm báo cáo | `/reports` | nav |
+| Sidebar: Cài đặt | [WM-ORG-01](../wm/WM-ORG-01.md) Hồ sơ nhà xe | `/settings/company` | nav |
 | Merchant switcher | [WM-AUTH-03](../wm/WM-AUTH-03.md) Chọn merchant | `/select-merchant` | nav |
 | Quick search (Ctrl K) | [WM-SHELL-03](../wm/WM-SHELL-03.md) Tìm kiếm nhanh | `(dialog) Ctrl K` | nav |
 | Chuông thông báo | [WM-SHELL-02](../wm/WM-SHELL-02.md) Trung tâm thông báo | `(popover) — từ chuông topbar` | nav |
@@ -79,6 +79,7 @@ Tổng hợp cho giám đốc/kế toán: doanh thu tạm tính, chi phí, lãi/
 | [WM-SHELL-02](../wm/WM-SHELL-02.md) Trung tâm thông báo | Chuyển sang Tháng này |
 | [WM-SHELL-03](../wm/WM-SHELL-03.md) Tìm kiếm nhanh | Chuyển sang Tháng này |
 | [WM-DASH-01](../wm/WM-DASH-01.md) Dashboard tổng quan | Chuyển sang Tháng này |
+| [WM-RPT-01](../wm/WM-RPT-01.md) Trung tâm báo cáo | Mở dashboard tài chính |
 
 ## Components (design system)
 

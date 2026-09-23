@@ -50,7 +50,7 @@ Tài liệu cho Claude Code / Orca. Mỗi task UI nên trích dẫn **screen ID*
 ## 5. Định dạng
 
 Tiền số nguyên VND `1.250.000 đ`, căn phải, `tabular-nums`. Mã: `DH-202609-0001` (đơn), `CX-` (chuyến), `PT-` (phiếu thu), `PC-` (phiếu chi),
-`BL-` (bảng lương), `BK-` (bảng kê). Ngày giờ `23/09/2026 14:30`. Tiếng Việt, viết hoa đầu câu, nút là động từ, không emoji.
+`BL-` (bảng lương), `CN-` (bảng kê công nợ), `BK-` (booking khách hàng). Ngày giờ `23/09/2026 14:30`. Tiếng Việt, viết hoa đầu câu, nút là động từ, không emoji.
 
 ## 6. Trạng thái UI bắt buộc
 

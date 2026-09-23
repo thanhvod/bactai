@@ -22,7 +22,7 @@ design/tools/
    (`trigger` label = what the user clicks). Every link target must be an existing screen ID. Link every outgoing relation listed in the
    "Liên kết" column of 01-danh-sach-man-hinh.md plus the obvious ones (breadcrumb, back, cancel, save → detail).
 3. **Design system BTA only**: colors from `T[...]`, status badges via `status(label, "order"|"trip"|"fin")` or `badge(label, tone)`.
-   Money via `money(int)` + `num()` (tabular, right aligned in tables). Codes: `DH-202609-0001`, `CX-…`, `PT-…`, `PC-…`, `BL-…`, `BK-…`.
+   Money via `money(int)` + `num()` (tabular, right aligned in tables). Codes: `DH-202609-0001`, `CX-…`, `PT-…`, `PC-…`, `BL-…`, `CN-…` (bảng kê), `BK-…` (booking).
    Dates `23/09/2026 14:30`. Vietnamese copy, sentence case, no emoji, no marketing copy, no gradients, radius ≤ 8px, no card-in-card.
 4. **Patterns**: list = `page_header` → `filter_bar` → `table` → `pagination`; detail = `breadcrumb` → `banner`? → entity header + `summary_strip`
    → `tabs` (Tổng quan · nghiệp vụ · Tài chính · Chứng từ · Timeline); form = page or `drawer` with numbered sections; sensitive actions =

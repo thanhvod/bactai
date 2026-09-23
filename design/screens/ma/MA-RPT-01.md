@@ -37,7 +37,7 @@ Doanh thu, chi phí, lãi/lỗ, tiền đã thu, công nợ theo kỳ; xem sâu 
 
 | Trigger | Đích | Route đích | Loại |
 |---|---|---|---|
-| Mở trung tâm báo cáo trên Web Merchant | WM-RPT-01 | | action |
+| Mở trung tâm báo cáo trên Web Merchant | [WM-RPT-01](../wm/WM-RPT-01.md) Trung tâm báo cáo | `/reports` | action |
 | Bottom nav: Tổng quan | [MA-HOME-01](../ma/MA-HOME-01.md) Tổng quan mobile | `MerchantHomeRoute` | nav |
 | Bottom nav: Đơn/Chuyến | [MA-ORD-01](../ma/MA-ORD-01.md) Danh sách đơn | `MerchantOrderListRoute` | nav |
 | Bottom nav: Tài chính | [MA-FIN-01](../ma/MA-FIN-01.md) Tài chính nhanh | `MerchantFinanceRoute` | nav |

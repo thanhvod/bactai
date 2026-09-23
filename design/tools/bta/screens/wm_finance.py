@@ -229,7 +229,7 @@ def pay_02():
     strip = summary_strip([("Số tiền phiếu", money(3_000_000)), ("Đã phân bổ", money(0)), ("Chưa phân bổ", money(3_000_000), "info"),
                            ("Số dư khách hiện tại", money(3_000_000), "info"), ("Tác động doanh thu", "Không")])
     info = panel("Thông tin phiếu thu", dl([
-        ("Loại thu", "Khách trả"), ("Người nộp", "Bao bì Hưng Lợi (CUS-A-003)"),
+        ("Loại thu", "Khách trả"), ("Người nộp", "Bao bì Hưng Lợi"),
         ("Số tiền", num(money(3_000_000), 14, 600)), ("Ngày thu", num("18/09/2026")),
         ("Hình thức", "Chuyển khoản"), ("Tài khoản nhận", num("Vietcombank ···· 6789")),
         ("Nội dung chuyển khoản", "HUNG LOI TT CUOC T9"), ("Ghi chú", "Khách trả trước cho đơn tháng 9")], cols=4))
@@ -272,14 +272,14 @@ def pay_03():
         sub="Loại Khách trả: chọn khách hàng. Loại Tài xế nộp COD: chọn tài xế.")
     cod_rows = []
     for o, cus, trip, stop, at, days, actual, remitted, held in COD_ITEMS:
-        cod_rows.append([col(code(o, to="WM-ORD-07", trigger="Mở tài chính đơn"), subtle(cus, 11), gap=0),
+        cod_rows.append([col(code(o, to="WM-ORD-07", trigger="Mở tài chính đơn"), subtle(cus.replace("Nông sản ", ""), 11), gap=0),
                          col(code(trip, to="WM-TRIP-01", trigger="Mở chuyến"), a(stop, "WM-STOP-01", "Mở điểm dừng", 11, 400), gap=0),
                          col(num(at[:5] + " " + at[-5:], 12), badge(f"Giữ {days} ngày", "danger" if days > 2 else "warning"), gap=2),
-                         col(num(money(actual)), subtle(f"đã nộp {money(remitted)}", 11), gap=0, extra="align-items: flex-end;"),
-                         num(money(held), weight=600), money_input(held, "120px", h=32, fs=13)])
+                         col(num(money(actual)), subtle(f"đã nộp {money(remitted)}", 11) if remitted else "", gap=0, extra="align-items: flex-end;"),
+                         num(money(held), weight=600), money_input(held, "112px", h=32, fs=13)])
     cod = _section(3, "Khoản COD được nộp", col(
-        table([("Đơn · Khách", "left"), ("Chuyến · Điểm trả", "left"), ("Thu lúc · Giữ", "left"), ("COD thực thu", "right"),
-               ("Còn giữ", "right"), ("Nộp lần này", "right", "130px")], cod_rows, selected=[0, 1], checkbox_col=True, compact=False,
+        table([("Đơn · Khách", "left"), ("Chuyến · Điểm", "left"), ("Thu lúc", "left"), ("COD thu", "right"),
+               ("Còn giữ", "right"), ("Nộp lần này", "right")], cod_rows, selected=[0, 1], checkbox_col=True, compact=False,
               total_row=["2 khoản", "", "", money(7_500_000), money(5_500_000), money(5_500_000)]),
         subtle("Nộp một phần được — phần còn lại tiếp tục tính COD đang giữ và tuổi giữ tiền.", 12), gap=8),
         right=a("Chọn thêm từ COD đang giữ", "WM-COD-01", "Mở danh sách COD tài xế đang giữ"))
@@ -332,7 +332,7 @@ def pay_04():
          money_input(3_000_000, "150px", h=32, fs=13), num(money(1_800_000), weight=600)],
         [col(code("DH-202609-0003", to="WM-ORD-02", trigger="Mở đơn nháp"), subtle("Bình Dương → Q.12", 11), gap=0),
          status("Nháp"), col(num("12/09/2026"), subtle("Chưa có hạn", 11), gap=0), num(money(3_600_000), color=T["text-muted"]),
-         muted("—"), muted("—"), input_("", "Đơn nháp — không nhận", "150px", disabled=True, h=32, fs=12), muted("—")],
+         muted("—"), muted("—"), input_("", "Đơn nháp", "150px", disabled=True, h=32, fs=12), muted("—")],
         [col(code("DH-202608-0021", to="WM-ORD-07", trigger="Mở tài chính đơn"), subtle("Bình Dương → Q.12", 11), gap=0),
          status("Hoàn thành"), col(num("24/08/2026"), subtle("Hạn 31/08/2026", 11), gap=0), num(money(3_200_000), color=T["text-muted"]),
          num(money(3_200_000), color=T["success"]), row(badge("Đã đủ tiền", "success"), gap=0, justify="flex-end"),
@@ -589,11 +589,11 @@ def debt_02():
 
 # ---------------------------------------------------------------- WM-DEBT-03 Danh sách bảng kê
 STATEMENTS = [
-    ("BK-202609-0005", "Nông sản Đồng Tháp Xanh", "01/09 – 15/09/2026", 1, 8_200_000, 0, "Đã hủy", "Hủy 18/09 · Sai kỳ, tạo lại"),
-    ("BK-202609-0004", "Kho Thép An Phát", "01/09 – 30/09/2026", 1, 35_000_000, 0, "Nháp", "Tạo 23/09 · Phan Ngọc Mai"),
-    ("BK-202609-0003", "Công ty Gạo Miền Tây", "01/08 – 22/09/2026", 3, 47_500_000, 20_000_000, "Đã chốt", "Chốt 22/09 16:20 · Phan Ngọc Mai"),
-    ("BK-202609-0002", "Vật liệu Xây dựng Phú Mỹ", "01/09 – 15/09/2026", 2, 18_500_000, 6_500_000, "Đã gửi", "Gửi 16/09 · Zalo"),
-    ("BK-202609-0001", "Công ty Gạo Miền Tây", "01/08 – 31/08/2026", 2, 35_000_000, 15_000_000, "Đã gửi", "Gửi 02/09 · Email"),
+    ("CN-202609-0005", "Nông sản Đồng Tháp Xanh", "01/09 – 15/09/2026", 1, 8_200_000, 0, "Đã hủy", "Hủy 18/09 · Sai kỳ, tạo lại"),
+    ("CN-202609-0004", "Kho Thép An Phát", "01/09 – 30/09/2026", 1, 35_000_000, 0, "Nháp", "Tạo 23/09 · Phan Ngọc Mai"),
+    ("CN-202609-0003", "Công ty Gạo Miền Tây", "01/08 – 22/09/2026", 3, 47_500_000, 20_000_000, "Đã chốt", "Chốt 22/09 16:20 · Phan Ngọc Mai"),
+    ("CN-202609-0002", "Vật liệu Xây dựng Phú Mỹ", "01/09 – 15/09/2026", 2, 18_500_000, 6_500_000, "Đã gửi", "Gửi 16/09 · Zalo"),
+    ("CN-202609-0001", "Công ty Gạo Miền Tây", "01/08 – 31/08/2026", 2, 35_000_000, 15_000_000, "Đã gửi", "Gửi 02/09 · Email"),
 ]
 
 
@@ -633,7 +633,7 @@ def debt_04():
                   btn("Hủy bảng kê", "danger-outline", "x", to="WM-SHELL-08", trigger="Hủy bảng kê đã chốt (sensitive, cần lý do)"),
                   btn("Đánh dấu đã gửi", "secondary", "send"),
                   btn("Tải PDF", "primary", "download", to="WM-SHELL-05", trigger="Tải PDF bảng kê"), gap=8)
-    header = _entity_header([ROOT, ("Bảng kê công nợ", "WM-DEBT-03"), ("BK-202609-0003", None)], "BK-202609-0003",
+    header = _entity_header([ROOT, ("Bảng kê công nợ", "WM-DEBT-03"), ("CN-202609-0003", None)], "CN-202609-0003",
                             [status("Đã chốt", "fin")],
                             row(a("Công ty Gạo Miền Tây", "WM-CUS-05", "Mở công nợ khách", 14), muted("·"), text("Kỳ 01/08/2026 – 22/09/2026", 14), gap=8),
                             "Tạo 22/09/2026 16:05 · Chốt 22/09/2026 16:20 bởi Phan Ngọc Mai · Chưa gửi", actions)
@@ -662,7 +662,7 @@ def debt_04():
         muted("Cần số liệu mới: tạo bảng kê kỳ mới.", 12), gap=10))
     info = panel("Thông tin", dl([("Khách hàng", "Công ty Gạo Miền Tây"), ("Kỳ", num("01/08 – 22/09/2026")),
                                   ("Người chốt", "Phan Ngọc Mai"), ("Trạng thái gửi", "Chưa gửi")], cols=2))
-    pdf = panel("File PDF", attachment_list([("BK-202609-0003.pdf", "Bảng kê", "1 trang · tạo lúc chốt 22/09 16:20", "file-text")], to="WM-SHELL-06"))
+    pdf = panel("File PDF", attachment_list([("CN-202609-0003.pdf", "Bảng kê", "1 trang · tạo lúc chốt 22/09 16:20", "file-text")], to="WM-SHELL-06"))
     audit = panel("Timeline", timeline([("22/09/2026 16:20", "Phan Ngọc Mai", "Chốt bảng kê · lưu snapshot 3 dòng · tạo PDF", None, "primary"),
                                         ("22/09/2026 16:05", "Phan Ngọc Mai", "Tạo nháp kỳ 01/08 – 22/09/2026", None, "neutral")]))
     content = col(header, lock, strip, tbl,

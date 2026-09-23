@@ -400,7 +400,7 @@ NUMBERING = [  # label, prefix, next, issued this month, used at (screen, label)
     ("Phiếu thu", "PT", "PT-202609-0006", 5, ("WM-PAY-01", "Phiếu thu")),
     ("Phiếu chi", "PC", "PC-202609-0007", 6, ("WM-EXP-01", "Phiếu chi")),
     ("Bảng lương", "BL", "BL-202609-0002", 1, ("WM-PAYROLL-01", "Bảng lương")),
-    ("Bảng kê công nợ", "BK", "BK-202609-0003", 2, ("WM-DEBT-03", "Bảng kê")),
+    ("Bảng kê công nợ", "CN", "CN-202609-0003", 2, ("WM-DEBT-03", "Bảng kê")),
 ]
 
 
@@ -570,7 +570,7 @@ register(
            states={"validation": "Tiền tố 2–4 chữ in hoa, không trùng loại khác", "error": "Banner danger nếu lưu lỗi"},
            notes=["number_sequences theo merchant + docType + period; transaction/lock chống trùng (FDN-006).",
                   "Không cho sửa/lùi counter. Mã đã cấp không đổi, không tái sử dụng.",
-                  "Bảng kê dùng tiền tố BK theo design system (BRD 09 gợi ý CN-; chốt BK- trên UI)."]),
+                  "Bảng kê công nợ dùng tiền tố CN- theo BRD 09 §2.1 (BK- dành cho booking Web Khách hàng)."]),
     Screen(id="WM-CAT-01", name="Danh mục dùng chung", route="/settings/catalogs", render=cat_01, pattern="list",
            roles=["admin", "operation", "accountant"], **C,
            purpose="CRUD danh mục theo merchant: loại chi phí, dịch vụ thêm, loại hàng, lý do tạm dừng, lý do giảm trừ, loại chứng từ, loại sự cố.",

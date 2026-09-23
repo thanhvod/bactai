@@ -36,33 +36,33 @@ Các mốc lương cố định theo ngày hiệu lực, người sửa, lý do;
 
 | Trigger | Đích | Route đích | Loại |
 |---|---|---|---|
-| Mở bảng lương | WM-PAYROLL-02 | | action |
-| Mở dòng lương tài xế | WM-PAYROLL-04 | | action |
-| Mở danh sách bảng lương | WM-PAYROLL-01 | | action |
-| Mở phiếu chi tạm ứng | WM-EXP-02 | | action |
-| Mở tạm ứng chuyến & đối soát | WM-ADV-01 | | action |
-| Mở Timeline drawer | WM-SHELL-07 | | action |
+| Mở bảng lương | [WM-PAYROLL-02](../wm/WM-PAYROLL-02.md) Chi tiết bảng lương | `/payroll/:payrollId` | action |
+| Mở dòng lương tài xế | [WM-PAYROLL-04](../wm/WM-PAYROLL-04.md) Chi tiết dòng lương tài xế | `/payroll/:payrollId/lines/:lineId` | action |
+| Mở danh sách bảng lương | [WM-PAYROLL-01](../wm/WM-PAYROLL-01.md) Danh sách bảng lương | `/payroll` | action |
+| Mở phiếu chi tạm ứng | [WM-EXP-02](../wm/WM-EXP-02.md) Chi tiết phiếu chi | `/finance/expenses/:expenseId` | action |
+| Mở tạm ứng chuyến & đối soát | [WM-ADV-01](../wm/WM-ADV-01.md) Tạm ứng chuyến & đối soát | `/finance/trip-advances` | action |
+| Mở Timeline drawer | [WM-SHELL-07](../wm/WM-SHELL-07.md) Timeline drawer | `(drawer) ?timeline=1` | action |
 | Sửa tài xế | [WM-DRV-03](../wm/WM-DRV-03.md) Form tài xế | `/drivers/new · /drivers/:driverId/edit` | action |
-| Tạo phiếu chi hoàn ứng cho tài xế | WM-EXP-03 | | action |
-| Menu: Ngừng hoạt động tài xế (sensitive) | WM-SHELL-08 | | action |
-| Mở chuyến hiện tại | WM-TRIP-01 | | action |
+| Tạo phiếu chi hoàn ứng cho tài xế | [WM-EXP-03](../wm/WM-EXP-03.md) Tạo phiếu chi | `/finance/expenses/new` | action |
+| Menu: Ngừng hoạt động tài xế (sensitive) | [WM-SHELL-08](../wm/WM-SHELL-08.md) Sensitive action modal | `(modal)` | action |
+| Mở chuyến hiện tại | [WM-TRIP-01](../wm/WM-TRIP-01.md) Chi tiết chuyến | `/trips/:tripId` | action |
 | Tab Tổng quan | [WM-DRV-02](../wm/WM-DRV-02.md) Chi tiết tài xế | `/drivers/:driverId` | action |
 | Tab Công nợ | [WM-DRV-05](../wm/WM-DRV-05.md) Sổ công nợ tài xế | `/drivers/:driverId?tab=ledger` | action |
 | Breadcrumb Tài xế | [WM-DRV-01](../wm/WM-DRV-01.md) Danh sách tài xế | `/drivers` | nav |
-| Sidebar: Dashboard | WM-DASH-01 | | nav |
-| Sidebar: Đơn hàng | WM-ORD-01 | | nav |
-| Sidebar: Điều phối | WM-DISPATCH-01 | | nav |
+| Sidebar: Dashboard | [WM-DASH-01](../wm/WM-DASH-01.md) Dashboard tổng quan | `/` | nav |
+| Sidebar: Đơn hàng | [WM-ORD-01](../wm/WM-ORD-01.md) Danh sách đơn hàng | `/orders` | nav |
+| Sidebar: Điều phối | [WM-DISPATCH-01](../wm/WM-DISPATCH-01.md) Bảng điều phối | `/dispatch` | nav |
 | Sidebar: Khách hàng | [WM-CUS-01](../wm/WM-CUS-01.md) Danh sách khách hàng | `/customers` | nav |
 | Sidebar: Tài xế | [WM-DRV-01](../wm/WM-DRV-01.md) Danh sách tài xế | `/drivers` | nav |
-| Sidebar: Xe | WM-VEH-01 | | nav |
-| Sidebar: Nhà cung cấp | WM-SUP-01 | | nav |
-| Sidebar: Thu chi & Công nợ | WM-FIN-01 | | nav |
-| Sidebar: Lương | WM-PAYROLL-01 | | nav |
-| Sidebar: Báo cáo | WM-RPT-01 | | nav |
-| Sidebar: Cài đặt | WM-ORG-01 | | nav |
-| Merchant switcher | WM-AUTH-03 | | nav |
-| Quick search (Ctrl K) | WM-SHELL-03 | | nav |
-| Chuông thông báo | WM-SHELL-02 | | nav |
+| Sidebar: Xe | [WM-VEH-01](../wm/WM-VEH-01.md) Danh sách xe | `/vehicles` | nav |
+| Sidebar: Nhà cung cấp | [WM-SUP-01](../wm/WM-SUP-01.md) Danh sách NCC | `/suppliers` | nav |
+| Sidebar: Thu chi & Công nợ | [WM-FIN-01](../wm/WM-FIN-01.md) Sổ thu chi | `/finance` | nav |
+| Sidebar: Lương | [WM-PAYROLL-01](../wm/WM-PAYROLL-01.md) Danh sách bảng lương | `/payroll` | nav |
+| Sidebar: Báo cáo | [WM-RPT-01](../wm/WM-RPT-01.md) Trung tâm báo cáo | `/reports` | nav |
+| Sidebar: Cài đặt | [WM-ORG-01](../wm/WM-ORG-01.md) Hồ sơ nhà xe | `/settings/company` | nav |
+| Merchant switcher | [WM-AUTH-03](../wm/WM-AUTH-03.md) Chọn merchant | `/select-merchant` | nav |
+| Quick search (Ctrl K) | [WM-SHELL-03](../wm/WM-SHELL-03.md) Tìm kiếm nhanh | `(dialog) Ctrl K` | nav |
+| Chuông thông báo | [WM-SHELL-02](../wm/WM-SHELL-02.md) Trung tâm thông báo | `(popover) — từ chuông topbar` | nav |
 
 ## Điều hướng đến (incoming)
 
@@ -73,6 +73,10 @@ Các mốc lương cố định theo ngày hiệu lực, người sửa, lý do;
 | [WM-DRV-03](../wm/WM-DRV-03.md) Form tài xế | Mở lịch sử lương cố định |
 | [WM-DRV-05](../wm/WM-DRV-05.md) Sổ công nợ tài xế | Tab Lương/ứng |
 | [WM-DRV-06](../wm/WM-DRV-06.md) COD tài xế đang giữ | Tab Lương/ứng |
+| [WM-PAYROLL-02](../wm/WM-PAYROLL-02.md) Chi tiết bảng lương | Mở lịch sử lương cố định |
+| [WM-PAYROLL-03](../wm/WM-PAYROLL-03.md) Tạo bảng lương | Mở lịch sử lương cố định |
+| [WM-PAYROLL-04](../wm/WM-PAYROLL-04.md) Chi tiết dòng lương tài xế | Mở lịch sử lương cố định |
+| [WM-PAYROLL-05](../wm/WM-PAYROLL-05.md) Duyệt bảng lương | Mở lịch sử lương cố định |
 
 ## Components (design system)
 

@@ -159,13 +159,13 @@ def cus_02():
             btn("Tạo bảng kê", "secondary", "file-text", size="sm", to="WM-DEBT-03", trigger="Tạo bảng kê công nợ"), gap=8),
         gap=10))
     stmts = panel("Bảng kê gần nhất", col(
-        row(code("BK-202609-0002", to="WM-DEBT-04", trigger="Mở bảng kê"), status("Đã gửi", "fin"), spacer(), num(money(27_500_000), 13, 600), gap=8),
+        row(code("CN-202609-0002", to="WM-DEBT-04", trigger="Mở bảng kê"), status("Đã gửi", "fin"), spacer(), num(money(27_500_000), 13, 600), gap=8),
         subtle("Kỳ 01/08 – 15/09/2026 · gửi 16/09/2026 qua email", 12),
-        row(code("BK-202608-0003", to="WM-DEBT-04", trigger="Mở bảng kê"), status("Đã chốt", "fin"), spacer(), num(money(31_200_000), 13, 600), gap=8),
+        row(code("CN-202608-0003", to="WM-DEBT-04", trigger="Mở bảng kê"), status("Đã chốt", "fin"), spacer(), num(money(31_200_000), 13, 600), gap=8),
         subtle("Kỳ 01/07 – 31/07/2026", 12), gap=4),
         a("Tất cả bảng kê", "WM-DEBT-03", "Mở danh sách bảng kê"))
     act = panel("Hoạt động gần đây", timeline([
-        ("16/09 15:40", "Phan Ngọc Mai", "Gửi bảng kê <b>BK-202609-0002</b>", None, "accent"),
+        ("16/09 15:40", "Phan Ngọc Mai", "Gửi bảng kê <b>CN-202609-0002</b>", None, "accent"),
         ("15/09 10:05", "Phan Ngọc Mai", "Phân bổ 5.000.000 đ từ PT-202609-0001 vào DH-202608-0009", None, "success"),
         ("01/09 08:30", "Trần Hải", "Hạn mức nợ 80.000.000 đ → 100.000.000 đ", "Khách tăng sản lượng vụ thu hoạch", "warning")]),
         a("Xem tất cả", "WM-SHELL-07", "Mở Timeline"))
@@ -274,7 +274,7 @@ def cus_05():
     open_rows = [
         [col(code("DH-202608-0009", to="WM-ORD-02", trigger="Mở đơn còn nợ"), muted("29/08/2026 · Cần Thơ → Bình Dương", 12), gap=0),
          num(money(20_000_000)), num(money(5_000_000), color=T["success"]), num(money(15_000_000), weight=600, color=T["danger"]),
-         due(10, "13/09/2026"), code("BK-202609-0002", to="WM-DEBT-04", trigger="Mở bảng kê")],
+         due(10, "13/09/2026"), code("CN-202609-0002", to="WM-DEBT-04", trigger="Mở bảng kê")],
         [col(code("DH-202609-0001", to="WM-ORD-02", trigger="Mở đơn còn nợ"), muted("20/09/2026 · Cần Thơ → Bình Dương", 12), gap=0),
          num(money(12_500_000)), num(money(0), color=T["text-muted"]), num(money(12_500_000), weight=600, color=T["warning"]),
          due(0, "08/10/2026"), muted("Chưa lên bảng kê")],
@@ -294,7 +294,7 @@ def cus_05():
          col(row(code("DH-202608-0009", to="WM-ORD-02", trigger="Mở đơn được phân bổ"), num(money(5_000_000), 12), gap=6), gap=0),
          num(money(0), color=T["text-muted"]), status("Đã phân bổ", "fin"), muted("Phan Ngọc Mai")],
         [num("28/08/2026"), code("PT-202608-0018", to="WM-PAY-02", trigger="Mở phiếu thu"), muted("Chuyển khoản · VCB"), num(money(31_200_000)),
-         col(row(code("BK-202608-0003", to="WM-DEBT-04", trigger="Mở bảng kê"), subtle("4 đơn trong bảng kê", 12), gap=6), gap=0),
+         col(row(code("CN-202608-0003", to="WM-DEBT-04", trigger="Mở bảng kê"), subtle("4 đơn trong bảng kê", 12), gap=6), gap=0),
          num(money(0), color=T["text-muted"]), status("Đã phân bổ", "fin"), muted("Phan Ngọc Mai")],
     ]
     history = panel("Lịch sử thanh toán & phân bổ", table(
@@ -304,7 +304,7 @@ def cus_05():
         sub="Phiếu thu khách trả → phân bổ thủ công vào từng đơn; phần chưa phân bổ thành số dư khách")
     body = col(actions,
                warning_panel("Khách có công nợ quá hạn", ["DH-202608-0009 quá hạn 10 ngày (hạn 13/09/2026) · còn nợ 15.000.000 đ",
-                                                           "Đã gửi bảng kê BK-202609-0002 ngày 16/09/2026, chưa nhận thanh toán"], tone="danger"),
+                                                           "Đã gửi bảng kê CN-202609-0002 ngày 16/09/2026, chưa nhận thanh toán"], tone="danger"),
                top, history, gap=16)
     return customer_detail("Công nợ", body, 1120)
 

@@ -36,7 +36,7 @@ Giám đốc xem bảng lương chờ duyệt (tổng tiền + thực lãnh từ
 | Trigger | Đích | Route đích | Loại |
 |---|---|---|---|
 | Quay lại | [MA-HOME-01](../ma/MA-HOME-01.md) Tổng quan mobile | `MerchantHomeRoute` | back |
-| Mở chi tiết bảng lương trên Web Merchant | WM-PAYROLL-02 | | action |
+| Mở chi tiết bảng lương trên Web Merchant | [WM-PAYROLL-02](../wm/WM-PAYROLL-02.md) Chi tiết bảng lương | `/payroll/:payrollId` | action |
 
 ## Điều hướng đến (incoming)
 

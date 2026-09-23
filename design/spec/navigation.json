@@ -1,0 +1,1885 @@
+{
+  "kinds": {
+    "action": "nút/link thao tác trong màn",
+    "nav": "sidebar/topbar/bottom nav",
+    "back": "quay lại",
+    "flow": "bước trong flow",
+    "index": "bản đồ"
+  },
+  "edges": [
+    {
+      "from": "WM-ORD-01",
+      "to": "WM-ORD-02",
+      "trigger": "Click mã đơn → chi tiết",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-01",
+      "to": "WM-SHELL-05",
+      "trigger": "Xuất Excel",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-01",
+      "to": "WM-ORD-03",
+      "trigger": "Tạo đơn",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-01",
+      "to": "WM-DASH-01",
+      "trigger": "Sidebar: Dashboard",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-01",
+      "to": "WM-ORD-01",
+      "trigger": "Sidebar: Đơn hàng",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-01",
+      "to": "WM-DISPATCH-01",
+      "trigger": "Sidebar: Điều phối",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-01",
+      "to": "WM-CUS-01",
+      "trigger": "Sidebar: Khách hàng",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-01",
+      "to": "WM-DRV-01",
+      "trigger": "Sidebar: Tài xế",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-01",
+      "to": "WM-VEH-01",
+      "trigger": "Sidebar: Xe",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-01",
+      "to": "WM-SUP-01",
+      "trigger": "Sidebar: Nhà cung cấp",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-01",
+      "to": "WM-FIN-01",
+      "trigger": "Sidebar: Thu chi & Công nợ",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-01",
+      "to": "WM-PAYROLL-01",
+      "trigger": "Sidebar: Lương",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-01",
+      "to": "WM-RPT-01",
+      "trigger": "Sidebar: Báo cáo",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-01",
+      "to": "WM-ORG-01",
+      "trigger": "Sidebar: Cài đặt",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-01",
+      "to": "WM-AUTH-03",
+      "trigger": "Merchant switcher",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-01",
+      "to": "WM-SHELL-03",
+      "trigger": "Quick search (Ctrl K)",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-01",
+      "to": "WM-SHELL-02",
+      "trigger": "Chuông thông báo",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-02",
+      "to": "WM-TRIP-01",
+      "trigger": "Mở chuyến",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-02",
+      "to": "WM-DRV-02",
+      "trigger": "Mở tài xế",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-02",
+      "to": "WM-ORD-04",
+      "trigger": "Quản lý điểm dừng",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-02",
+      "to": "WM-DISPATCH-01",
+      "trigger": "Mở bảng điều phối",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-02",
+      "to": "WM-CUS-02",
+      "trigger": "Mở Công ty Gạo Miền Tây",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-02",
+      "to": "WM-INC-01",
+      "trigger": "Xem sự cố",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-02",
+      "to": "WM-SHELL-07",
+      "trigger": "Mở Timeline",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-02",
+      "to": "WM-SHELL-07",
+      "trigger": "Mở Timeline drawer",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-02",
+      "to": "WM-ORD-09",
+      "trigger": "In/chia sẻ đơn",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-02",
+      "to": "WM-ORD-03",
+      "trigger": "Sửa đơn",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-02",
+      "to": "WM-TRIP-02",
+      "trigger": "Tạo chuyến từ đơn",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-02",
+      "to": "WM-ORD-08",
+      "trigger": "Menu: Hủy đơn / sửa giá (sensitive)",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-02",
+      "to": "WM-CUS-02",
+      "trigger": "Mở khách hàng",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-02",
+      "to": "WM-ORD-01",
+      "trigger": "Breadcrumb Đơn hàng",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-02",
+      "to": "WM-ORD-04",
+      "trigger": "Tab Điểm dừng",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-02",
+      "to": "WM-ORD-05",
+      "trigger": "Tab Hàng hóa",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-02",
+      "to": "WM-ORD-07",
+      "trigger": "Tab Tài chính",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-02",
+      "to": "WM-DASH-01",
+      "trigger": "Sidebar: Dashboard",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-02",
+      "to": "WM-ORD-01",
+      "trigger": "Sidebar: Đơn hàng",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-02",
+      "to": "WM-DISPATCH-01",
+      "trigger": "Sidebar: Điều phối",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-02",
+      "to": "WM-CUS-01",
+      "trigger": "Sidebar: Khách hàng",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-02",
+      "to": "WM-DRV-01",
+      "trigger": "Sidebar: Tài xế",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-02",
+      "to": "WM-VEH-01",
+      "trigger": "Sidebar: Xe",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-02",
+      "to": "WM-SUP-01",
+      "trigger": "Sidebar: Nhà cung cấp",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-02",
+      "to": "WM-FIN-01",
+      "trigger": "Sidebar: Thu chi & Công nợ",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-02",
+      "to": "WM-PAYROLL-01",
+      "trigger": "Sidebar: Lương",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-02",
+      "to": "WM-RPT-01",
+      "trigger": "Sidebar: Báo cáo",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-02",
+      "to": "WM-ORG-01",
+      "trigger": "Sidebar: Cài đặt",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-02",
+      "to": "WM-AUTH-03",
+      "trigger": "Merchant switcher",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-02",
+      "to": "WM-SHELL-03",
+      "trigger": "Quick search (Ctrl K)",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-02",
+      "to": "WM-SHELL-02",
+      "trigger": "Chuông thông báo",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-03",
+      "to": "WM-CUS-05",
+      "trigger": "Xem công nợ khách",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-03",
+      "to": "WM-CUS-04",
+      "trigger": "Mở sổ địa chỉ khách",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-03",
+      "to": "WM-ORD-01",
+      "trigger": "Hủy tạo đơn",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-03",
+      "to": "WM-ORD-02",
+      "trigger": "Lưu đơn → chi tiết đơn",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-03",
+      "to": "WM-ORD-01",
+      "trigger": "Breadcrumb Đơn hàng",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-03",
+      "to": "WM-DASH-01",
+      "trigger": "Sidebar: Dashboard",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-03",
+      "to": "WM-ORD-01",
+      "trigger": "Sidebar: Đơn hàng",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-03",
+      "to": "WM-DISPATCH-01",
+      "trigger": "Sidebar: Điều phối",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-03",
+      "to": "WM-CUS-01",
+      "trigger": "Sidebar: Khách hàng",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-03",
+      "to": "WM-DRV-01",
+      "trigger": "Sidebar: Tài xế",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-03",
+      "to": "WM-VEH-01",
+      "trigger": "Sidebar: Xe",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-03",
+      "to": "WM-SUP-01",
+      "trigger": "Sidebar: Nhà cung cấp",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-03",
+      "to": "WM-FIN-01",
+      "trigger": "Sidebar: Thu chi & Công nợ",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-03",
+      "to": "WM-PAYROLL-01",
+      "trigger": "Sidebar: Lương",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-03",
+      "to": "WM-RPT-01",
+      "trigger": "Sidebar: Báo cáo",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-03",
+      "to": "WM-ORG-01",
+      "trigger": "Sidebar: Cài đặt",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-03",
+      "to": "WM-AUTH-03",
+      "trigger": "Merchant switcher",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-03",
+      "to": "WM-SHELL-03",
+      "trigger": "Quick search (Ctrl K)",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-03",
+      "to": "WM-SHELL-02",
+      "trigger": "Chuông thông báo",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-04",
+      "to": "WM-STOP-01",
+      "trigger": "Mở chi tiết điểm dừng",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-04",
+      "to": "WM-SHELL-07",
+      "trigger": "Mở Timeline drawer",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-04",
+      "to": "WM-ORD-09",
+      "trigger": "In/chia sẻ đơn",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-04",
+      "to": "WM-ORD-03",
+      "trigger": "Sửa đơn",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-04",
+      "to": "WM-TRIP-02",
+      "trigger": "Tạo chuyến từ đơn",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-04",
+      "to": "WM-ORD-08",
+      "trigger": "Menu: Hủy đơn / sửa giá (sensitive)",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-04",
+      "to": "WM-CUS-02",
+      "trigger": "Mở khách hàng",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-04",
+      "to": "WM-ORD-01",
+      "trigger": "Breadcrumb Đơn hàng",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-04",
+      "to": "WM-ORD-02",
+      "trigger": "Tab Tổng quan",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-04",
+      "to": "WM-ORD-05",
+      "trigger": "Tab Hàng hóa",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-04",
+      "to": "WM-ORD-07",
+      "trigger": "Tab Tài chính",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-04",
+      "to": "WM-DASH-01",
+      "trigger": "Sidebar: Dashboard",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-04",
+      "to": "WM-ORD-01",
+      "trigger": "Sidebar: Đơn hàng",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-04",
+      "to": "WM-DISPATCH-01",
+      "trigger": "Sidebar: Điều phối",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-04",
+      "to": "WM-CUS-01",
+      "trigger": "Sidebar: Khách hàng",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-04",
+      "to": "WM-DRV-01",
+      "trigger": "Sidebar: Tài xế",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-04",
+      "to": "WM-VEH-01",
+      "trigger": "Sidebar: Xe",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-04",
+      "to": "WM-SUP-01",
+      "trigger": "Sidebar: Nhà cung cấp",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-04",
+      "to": "WM-FIN-01",
+      "trigger": "Sidebar: Thu chi & Công nợ",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-04",
+      "to": "WM-PAYROLL-01",
+      "trigger": "Sidebar: Lương",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-04",
+      "to": "WM-RPT-01",
+      "trigger": "Sidebar: Báo cáo",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-04",
+      "to": "WM-ORG-01",
+      "trigger": "Sidebar: Cài đặt",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-04",
+      "to": "WM-AUTH-03",
+      "trigger": "Merchant switcher",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-04",
+      "to": "WM-SHELL-03",
+      "trigger": "Quick search (Ctrl K)",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-04",
+      "to": "WM-SHELL-02",
+      "trigger": "Chuông thông báo",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-05",
+      "to": "WM-SHELL-07",
+      "trigger": "Mở Timeline drawer",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-05",
+      "to": "WM-ORD-09",
+      "trigger": "In/chia sẻ đơn",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-05",
+      "to": "WM-ORD-03",
+      "trigger": "Sửa đơn",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-05",
+      "to": "WM-TRIP-02",
+      "trigger": "Tạo chuyến từ đơn",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-05",
+      "to": "WM-ORD-08",
+      "trigger": "Menu: Hủy đơn / sửa giá (sensitive)",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-05",
+      "to": "WM-CUS-02",
+      "trigger": "Mở khách hàng",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-05",
+      "to": "WM-ORD-01",
+      "trigger": "Breadcrumb Đơn hàng",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-05",
+      "to": "WM-ORD-02",
+      "trigger": "Tab Tổng quan",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-05",
+      "to": "WM-ORD-04",
+      "trigger": "Tab Điểm dừng",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-05",
+      "to": "WM-ORD-07",
+      "trigger": "Tab Tài chính",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-05",
+      "to": "WM-DASH-01",
+      "trigger": "Sidebar: Dashboard",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-05",
+      "to": "WM-ORD-01",
+      "trigger": "Sidebar: Đơn hàng",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-05",
+      "to": "WM-DISPATCH-01",
+      "trigger": "Sidebar: Điều phối",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-05",
+      "to": "WM-CUS-01",
+      "trigger": "Sidebar: Khách hàng",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-05",
+      "to": "WM-DRV-01",
+      "trigger": "Sidebar: Tài xế",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-05",
+      "to": "WM-VEH-01",
+      "trigger": "Sidebar: Xe",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-05",
+      "to": "WM-SUP-01",
+      "trigger": "Sidebar: Nhà cung cấp",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-05",
+      "to": "WM-FIN-01",
+      "trigger": "Sidebar: Thu chi & Công nợ",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-05",
+      "to": "WM-PAYROLL-01",
+      "trigger": "Sidebar: Lương",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-05",
+      "to": "WM-RPT-01",
+      "trigger": "Sidebar: Báo cáo",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-05",
+      "to": "WM-ORG-01",
+      "trigger": "Sidebar: Cài đặt",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-05",
+      "to": "WM-AUTH-03",
+      "trigger": "Merchant switcher",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-05",
+      "to": "WM-SHELL-03",
+      "trigger": "Quick search (Ctrl K)",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-05",
+      "to": "WM-SHELL-02",
+      "trigger": "Chuông thông báo",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-06",
+      "to": "WM-ORD-07",
+      "trigger": "Đóng drawer",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-06",
+      "to": "WM-ORD-08",
+      "trigger": "Lưu → nhập lý do (sensitive)",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-06",
+      "to": "WM-ORD-06",
+      "trigger": "Mở drawer giá cước/add-on",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-06",
+      "to": "WM-PAY-03",
+      "trigger": "Tạo phiếu thu",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-06",
+      "to": "WM-PAY-04",
+      "trigger": "Phân bổ từ phiếu có sẵn",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-06",
+      "to": "WM-EXP-02",
+      "trigger": "Mở phiếu chi",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-06",
+      "to": "WM-EXP-03",
+      "trigger": "Tạo phiếu chi gắn đơn",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-06",
+      "to": "WM-ORD-07",
+      "trigger": "Đóng",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-06",
+      "to": "WM-SHELL-07",
+      "trigger": "Mở Timeline drawer",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-06",
+      "to": "WM-ORD-09",
+      "trigger": "In/chia sẻ đơn",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-06",
+      "to": "WM-ORD-03",
+      "trigger": "Sửa đơn",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-06",
+      "to": "WM-TRIP-02",
+      "trigger": "Tạo chuyến từ đơn",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-06",
+      "to": "WM-ORD-08",
+      "trigger": "Menu: Hủy đơn / sửa giá (sensitive)",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-06",
+      "to": "WM-CUS-02",
+      "trigger": "Mở khách hàng",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-06",
+      "to": "WM-ORD-01",
+      "trigger": "Breadcrumb Đơn hàng",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-06",
+      "to": "WM-ORD-02",
+      "trigger": "Tab Tổng quan",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-06",
+      "to": "WM-ORD-04",
+      "trigger": "Tab Điểm dừng",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-06",
+      "to": "WM-ORD-05",
+      "trigger": "Tab Hàng hóa",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-06",
+      "to": "WM-DASH-01",
+      "trigger": "Sidebar: Dashboard",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-06",
+      "to": "WM-ORD-01",
+      "trigger": "Sidebar: Đơn hàng",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-06",
+      "to": "WM-DISPATCH-01",
+      "trigger": "Sidebar: Điều phối",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-06",
+      "to": "WM-CUS-01",
+      "trigger": "Sidebar: Khách hàng",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-06",
+      "to": "WM-DRV-01",
+      "trigger": "Sidebar: Tài xế",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-06",
+      "to": "WM-VEH-01",
+      "trigger": "Sidebar: Xe",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-06",
+      "to": "WM-SUP-01",
+      "trigger": "Sidebar: Nhà cung cấp",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-06",
+      "to": "WM-FIN-01",
+      "trigger": "Sidebar: Thu chi & Công nợ",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-06",
+      "to": "WM-PAYROLL-01",
+      "trigger": "Sidebar: Lương",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-06",
+      "to": "WM-RPT-01",
+      "trigger": "Sidebar: Báo cáo",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-06",
+      "to": "WM-ORG-01",
+      "trigger": "Sidebar: Cài đặt",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-06",
+      "to": "WM-AUTH-03",
+      "trigger": "Merchant switcher",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-06",
+      "to": "WM-SHELL-03",
+      "trigger": "Quick search (Ctrl K)",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-06",
+      "to": "WM-SHELL-02",
+      "trigger": "Chuông thông báo",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-07",
+      "to": "WM-ORD-06",
+      "trigger": "Mở drawer giá cước/add-on",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-07",
+      "to": "WM-PAY-03",
+      "trigger": "Tạo phiếu thu",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-07",
+      "to": "WM-PAY-04",
+      "trigger": "Phân bổ từ phiếu có sẵn",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-07",
+      "to": "WM-EXP-02",
+      "trigger": "Mở phiếu chi",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-07",
+      "to": "WM-EXP-03",
+      "trigger": "Tạo phiếu chi gắn đơn",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-07",
+      "to": "WM-SHELL-07",
+      "trigger": "Mở Timeline drawer",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-07",
+      "to": "WM-ORD-09",
+      "trigger": "In/chia sẻ đơn",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-07",
+      "to": "WM-ORD-03",
+      "trigger": "Sửa đơn",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-07",
+      "to": "WM-TRIP-02",
+      "trigger": "Tạo chuyến từ đơn",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-07",
+      "to": "WM-ORD-08",
+      "trigger": "Menu: Hủy đơn / sửa giá (sensitive)",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-07",
+      "to": "WM-CUS-02",
+      "trigger": "Mở khách hàng",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-07",
+      "to": "WM-ORD-01",
+      "trigger": "Breadcrumb Đơn hàng",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-07",
+      "to": "WM-ORD-02",
+      "trigger": "Tab Tổng quan",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-07",
+      "to": "WM-ORD-04",
+      "trigger": "Tab Điểm dừng",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-07",
+      "to": "WM-ORD-05",
+      "trigger": "Tab Hàng hóa",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-07",
+      "to": "WM-DASH-01",
+      "trigger": "Sidebar: Dashboard",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-07",
+      "to": "WM-ORD-01",
+      "trigger": "Sidebar: Đơn hàng",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-07",
+      "to": "WM-DISPATCH-01",
+      "trigger": "Sidebar: Điều phối",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-07",
+      "to": "WM-CUS-01",
+      "trigger": "Sidebar: Khách hàng",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-07",
+      "to": "WM-DRV-01",
+      "trigger": "Sidebar: Tài xế",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-07",
+      "to": "WM-VEH-01",
+      "trigger": "Sidebar: Xe",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-07",
+      "to": "WM-SUP-01",
+      "trigger": "Sidebar: Nhà cung cấp",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-07",
+      "to": "WM-FIN-01",
+      "trigger": "Sidebar: Thu chi & Công nợ",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-07",
+      "to": "WM-PAYROLL-01",
+      "trigger": "Sidebar: Lương",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-07",
+      "to": "WM-RPT-01",
+      "trigger": "Sidebar: Báo cáo",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-07",
+      "to": "WM-ORG-01",
+      "trigger": "Sidebar: Cài đặt",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-07",
+      "to": "WM-AUTH-03",
+      "trigger": "Merchant switcher",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-07",
+      "to": "WM-SHELL-03",
+      "trigger": "Quick search (Ctrl K)",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-07",
+      "to": "WM-SHELL-02",
+      "trigger": "Chuông thông báo",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-08",
+      "to": "WM-ORD-07",
+      "trigger": "Quay lại",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-08",
+      "to": "WM-ORD-02",
+      "trigger": "Xác nhận sửa giá",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-08",
+      "to": "WM-ORD-07",
+      "trigger": "Đóng",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-08",
+      "to": "WM-ORD-06",
+      "trigger": "Mở drawer giá cước/add-on",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-08",
+      "to": "WM-PAY-03",
+      "trigger": "Tạo phiếu thu",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-08",
+      "to": "WM-PAY-04",
+      "trigger": "Phân bổ từ phiếu có sẵn",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-08",
+      "to": "WM-EXP-02",
+      "trigger": "Mở phiếu chi",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-08",
+      "to": "WM-EXP-03",
+      "trigger": "Tạo phiếu chi gắn đơn",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-08",
+      "to": "WM-SHELL-07",
+      "trigger": "Mở Timeline drawer",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-08",
+      "to": "WM-ORD-09",
+      "trigger": "In/chia sẻ đơn",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-08",
+      "to": "WM-ORD-03",
+      "trigger": "Sửa đơn",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-08",
+      "to": "WM-TRIP-02",
+      "trigger": "Tạo chuyến từ đơn",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-08",
+      "to": "WM-ORD-08",
+      "trigger": "Menu: Hủy đơn / sửa giá (sensitive)",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-08",
+      "to": "WM-CUS-02",
+      "trigger": "Mở khách hàng",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-08",
+      "to": "WM-ORD-01",
+      "trigger": "Breadcrumb Đơn hàng",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-08",
+      "to": "WM-ORD-02",
+      "trigger": "Tab Tổng quan",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-08",
+      "to": "WM-ORD-04",
+      "trigger": "Tab Điểm dừng",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-08",
+      "to": "WM-ORD-05",
+      "trigger": "Tab Hàng hóa",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-08",
+      "to": "WM-DASH-01",
+      "trigger": "Sidebar: Dashboard",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-08",
+      "to": "WM-ORD-01",
+      "trigger": "Sidebar: Đơn hàng",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-08",
+      "to": "WM-DISPATCH-01",
+      "trigger": "Sidebar: Điều phối",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-08",
+      "to": "WM-CUS-01",
+      "trigger": "Sidebar: Khách hàng",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-08",
+      "to": "WM-DRV-01",
+      "trigger": "Sidebar: Tài xế",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-08",
+      "to": "WM-VEH-01",
+      "trigger": "Sidebar: Xe",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-08",
+      "to": "WM-SUP-01",
+      "trigger": "Sidebar: Nhà cung cấp",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-08",
+      "to": "WM-FIN-01",
+      "trigger": "Sidebar: Thu chi & Công nợ",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-08",
+      "to": "WM-PAYROLL-01",
+      "trigger": "Sidebar: Lương",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-08",
+      "to": "WM-RPT-01",
+      "trigger": "Sidebar: Báo cáo",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-08",
+      "to": "WM-ORG-01",
+      "trigger": "Sidebar: Cài đặt",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-08",
+      "to": "WM-AUTH-03",
+      "trigger": "Merchant switcher",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-08",
+      "to": "WM-SHELL-03",
+      "trigger": "Quick search (Ctrl K)",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-08",
+      "to": "WM-SHELL-02",
+      "trigger": "Chuông thông báo",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-09",
+      "to": "WM-ORD-02",
+      "trigger": "Quay lại chi tiết đơn",
+      "kind": "action"
+    },
+    {
+      "from": "WM-ORD-09",
+      "to": "WM-ORD-01",
+      "trigger": "Breadcrumb Đơn hàng",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-09",
+      "to": "WM-ORD-02",
+      "trigger": "Breadcrumb DH-202609-0001",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-09",
+      "to": "WM-DASH-01",
+      "trigger": "Sidebar: Dashboard",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-09",
+      "to": "WM-ORD-01",
+      "trigger": "Sidebar: Đơn hàng",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-09",
+      "to": "WM-DISPATCH-01",
+      "trigger": "Sidebar: Điều phối",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-09",
+      "to": "WM-CUS-01",
+      "trigger": "Sidebar: Khách hàng",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-09",
+      "to": "WM-DRV-01",
+      "trigger": "Sidebar: Tài xế",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-09",
+      "to": "WM-VEH-01",
+      "trigger": "Sidebar: Xe",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-09",
+      "to": "WM-SUP-01",
+      "trigger": "Sidebar: Nhà cung cấp",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-09",
+      "to": "WM-FIN-01",
+      "trigger": "Sidebar: Thu chi & Công nợ",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-09",
+      "to": "WM-PAYROLL-01",
+      "trigger": "Sidebar: Lương",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-09",
+      "to": "WM-RPT-01",
+      "trigger": "Sidebar: Báo cáo",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-09",
+      "to": "WM-ORG-01",
+      "trigger": "Sidebar: Cài đặt",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-09",
+      "to": "WM-AUTH-03",
+      "trigger": "Merchant switcher",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-09",
+      "to": "WM-SHELL-03",
+      "trigger": "Quick search (Ctrl K)",
+      "kind": "nav"
+    },
+    {
+      "from": "WM-ORD-09",
+      "to": "WM-SHELL-02",
+      "trigger": "Chuông thông báo",
+      "kind": "nav"
+    }
+  ],
+  "flows": [
+    {
+      "id": "FLOW-AUTH-MERCHANT",
+      "name": "Đăng nhập & onboarding merchant",
+      "source": "06-ui-flow-specs §2",
+      "steps": [
+        {
+          "actor": "User",
+          "screen": "WM-AUTH-01",
+          "action": "Bấm Đăng nhập bằng Google"
+        },
+        {
+          "actor": "System",
+          "screen": null,
+          "action": "Firebase ID token → verify, tra membership"
+        },
+        {
+          "actor": "System",
+          "screen": "WM-DASH-01",
+          "action": "4a. Đúng 1 merchant → vào Dashboard"
+        },
+        {
+          "actor": "System",
+          "screen": "WM-AUTH-03",
+          "action": "4b. Nhiều merchant → chọn nhà xe"
+        },
+        {
+          "actor": "System",
+          "screen": "WM-AUTH-04",
+          "action": "4c. Chưa thuộc merchant → chờ mời / tạo mới"
+        },
+        {
+          "actor": "User",
+          "screen": "WM-AUTH-02",
+          "action": "Nhập thông tin doanh nghiệp → tạo merchant, seed danh mục"
+        },
+        {
+          "actor": "System",
+          "screen": "WM-DASH-01",
+          "action": "Mở Dashboard"
+        }
+      ]
+    },
+    {
+      "id": "FLOW-MASTER-DATA",
+      "name": "CRUD dữ liệu nền (khách, tài xế, xe, NCC)",
+      "source": "06-ui-flow-specs §3",
+      "steps": [
+        {
+          "actor": "User",
+          "screen": "WM-CUS-01",
+          "action": "Tìm/lọc, bấm Tạo"
+        },
+        {
+          "actor": "User",
+          "screen": "WM-CUS-03",
+          "action": "Nhập field bắt buộc, lưu"
+        },
+        {
+          "actor": "System",
+          "screen": "WM-CUS-02",
+          "action": "Mở chi tiết vừa tạo"
+        },
+        {
+          "actor": "User",
+          "screen": "WM-CUS-04",
+          "action": "Thêm địa chỉ/liên hệ"
+        },
+        {
+          "actor": "User",
+          "screen": "WM-DRV-03",
+          "action": "Tạo tài xế + tài khoản app"
+        },
+        {
+          "actor": "User",
+          "screen": "WM-DRV-04",
+          "action": "Thêm mốc lương cố định"
+        },
+        {
+          "actor": "User",
+          "screen": "WM-VEH-03",
+          "action": "Tạo xe (biển số duy nhất)"
+        },
+        {
+          "actor": "User",
+          "screen": "WM-SUP-03",
+          "action": "Tạo NCC"
+        },
+        {
+          "actor": "User",
+          "screen": "WM-SHELL-04",
+          "action": "Hoặc import Excel"
+        }
+      ]
+    },
+    {
+      "id": "FLOW-ORDER-ONE-TRUCK",
+      "name": "Tạo đơn 1 xe nhanh → điều phối → tài xế",
+      "source": "06-ui-flow-specs §4, 01 §7.1",
+      "steps": [
+        {
+          "actor": "Operation",
+          "screen": "WM-ORD-01",
+          "action": "Bấm Tạo đơn"
+        },
+        {
+          "actor": "Operation",
+          "screen": "WM-ORD-03",
+          "action": "Chọn khách, điểm lấy/trả từ sổ địa chỉ, hàng, giá cước, add-on, hạn TT"
+        },
+        {
+          "actor": "System",
+          "screen": "WM-ORD-02",
+          "action": "Tạo mã DH, mở chi tiết đơn"
+        },
+        {
+          "actor": "Operation",
+          "screen": "WM-TRIP-02",
+          "action": "Tạo chuyến: chọn xe, tài xế, giờ; mặc định gán mọi điểm"
+        },
+        {
+          "actor": "System",
+          "screen": "WM-DISPATCH-03",
+          "action": "Cảnh báo trùng/gần trùng lịch (mềm) → override kèm lý do"
+        },
+        {
+          "actor": "System",
+          "screen": "WM-DISPATCH-01",
+          "action": "Chuyến xuất hiện trên bảng điều phối"
+        },
+        {
+          "actor": "Driver",
+          "screen": "DA-HOME-01",
+          "action": "Tài xế thấy chuyến được giao"
+        }
+      ]
+    },
+    {
+      "id": "FLOW-ORDER-MULTI-TRUCK",
+      "name": "Đơn nhiều xe",
+      "source": "06-ui-flow-specs §5",
+      "steps": [
+        {
+          "actor": "Operation",
+          "screen": "WM-ORD-03",
+          "action": "Tạo đơn với toàn bộ điểm, hàng, giá cước tổng"
+        },
+        {
+          "actor": "Operation",
+          "screen": "WM-ORD-02",
+          "action": "Mở tab Chuyến"
+        },
+        {
+          "actor": "Operation",
+          "screen": "WM-TRIP-02",
+          "action": "Tạo chuyến A: chọn tập điểm"
+        },
+        {
+          "actor": "Operation",
+          "screen": "WM-TRIP-02",
+          "action": "Tạo chuyến B: điểm còn lại"
+        },
+        {
+          "actor": "System",
+          "screen": "WM-ORD-04",
+          "action": "Tab Điểm dừng cho thấy điểm nào thuộc chuyến nào"
+        },
+        {
+          "actor": "Operation",
+          "screen": "WM-DISPATCH-02",
+          "action": "Kiểm tra lịch xe/tài xế"
+        }
+      ]
+    },
+    {
+      "id": "FLOW-DRIVER-FIELD",
+      "name": "Tài xế: trạng thái, POD, COD (có offline)",
+      "source": "06-ui-flow-specs §6",
+      "steps": [
+        {
+          "actor": "Driver",
+          "screen": "DA-HOME-01",
+          "action": "Mở chuyến đang chạy"
+        },
+        {
+          "actor": "Driver",
+          "screen": "DA-TRIP-01",
+          "action": "Xem điểm, hàng, ghi chú, COD"
+        },
+        {
+          "actor": "Driver",
+          "screen": "DA-STATUS-01",
+          "action": "Cập nhật: Đang đến điểm lấy"
+        },
+        {
+          "actor": "Driver",
+          "screen": "DA-STOP-02",
+          "action": "Đã đến / hoàn thành điểm lấy"
+        },
+        {
+          "actor": "Driver",
+          "screen": "DA-STATUS-01",
+          "action": "Đang vận chuyển → Đang trả hàng"
+        },
+        {
+          "actor": "Driver",
+          "screen": "DA-COD-01",
+          "action": "Nhập COD thực thu"
+        },
+        {
+          "actor": "Driver",
+          "screen": "DA-POD-01",
+          "action": "Chụp POD"
+        },
+        {
+          "actor": "Driver",
+          "screen": "DA-STOP-02",
+          "action": "Hoàn thành điểm trả"
+        },
+        {
+          "actor": "Driver",
+          "screen": "DA-SYNC-01",
+          "action": "Offline: hàng đợi, thử lại"
+        },
+        {
+          "actor": "Operation",
+          "screen": "WM-TRIP-01",
+          "action": "Thấy trạng thái, POD, COD"
+        }
+      ]
+    },
+    {
+      "id": "FLOW-PAUSE-INCIDENT",
+      "name": "Tạm dừng chuyến & báo sự cố",
+      "source": "03-driver-app-ui §10, 01 §3.9",
+      "steps": [
+        {
+          "actor": "Driver",
+          "screen": "DA-TRIP-01",
+          "action": "Mở chuyến"
+        },
+        {
+          "actor": "Driver",
+          "screen": "DA-STATUS-02",
+          "action": "Tạm dừng: chọn lý do (giờ cấm tải, nghỉ đêm…)"
+        },
+        {
+          "actor": "Driver",
+          "screen": "DA-INC-01",
+          "action": "Báo sự cố: loại, mức độ, mô tả, ảnh (lưu offline được)"
+        },
+        {
+          "actor": "Operation",
+          "screen": "WM-DISPATCH-05",
+          "action": "Sự cố xuất hiện trong danh sách"
+        },
+        {
+          "actor": "Operation",
+          "screen": "WM-INC-01",
+          "action": "Gán người xử lý, cập nhật, đóng sự cố"
+        }
+      ]
+    },
+    {
+      "id": "FLOW-PAYMENT-ALLOCATION",
+      "name": "Khách thanh toán & phân bổ",
+      "source": "06-ui-flow-specs §7, 01 §7.2",
+      "steps": [
+        {
+          "actor": "Accountant",
+          "screen": "WM-DEBT-01",
+          "action": "Mở công nợ khách"
+        },
+        {
+          "actor": "Accountant",
+          "screen": "WM-CUS-05",
+          "action": "Hoặc từ tab công nợ khách"
+        },
+        {
+          "actor": "Accountant",
+          "screen": "WM-PAY-03",
+          "action": "Tạo phiếu thu loại Khách trả"
+        },
+        {
+          "actor": "System",
+          "screen": "WM-PAY-02",
+          "action": "Phiếu thu hiện số chưa phân bổ"
+        },
+        {
+          "actor": "Accountant",
+          "screen": "WM-PAY-04",
+          "action": "Phân bổ vào các đơn còn nợ; dư → số dư khách"
+        },
+        {
+          "actor": "System",
+          "screen": "WM-CUS-05",
+          "action": "Cập nhật công nợ và số dư"
+        }
+      ]
+    },
+    {
+      "id": "FLOW-COD-REMITTANCE",
+      "name": "COD tài xế: thu tại điểm → nộp lại",
+      "source": "06-ui-flow-specs §8, 01 §7.3",
+      "steps": [
+        {
+          "actor": "Driver",
+          "screen": "DA-COD-01",
+          "action": "Nhập COD thực thu tại điểm trả"
+        },
+        {
+          "actor": "System",
+          "screen": "WM-COD-01",
+          "action": "COD đang giữ hiện theo tài xế"
+        },
+        {
+          "actor": "Accountant",
+          "screen": "WM-COD-01",
+          "action": "Chọn khoản COD cần nộp"
+        },
+        {
+          "actor": "Accountant",
+          "screen": "WM-PAY-03",
+          "action": "Tạo phiếu thu loại Tài xế nộp COD (không phải doanh thu)"
+        },
+        {
+          "actor": "System",
+          "screen": "WM-DRV-05",
+          "action": "Sổ công nợ tài xế cập nhật"
+        }
+      ]
+    },
+    {
+      "id": "FLOW-EXPENSE-PROFIT",
+      "name": "Chi phí, tạm ứng & lãi/lỗ đơn",
+      "source": "01 §7.4",
+      "steps": [
+        {
+          "actor": "Operation",
+          "screen": "WM-EXP-03",
+          "action": "Tạo phiếu chi, gắn đơn/chuyến/xe/NCC/tài xế"
+        },
+        {
+          "actor": "System",
+          "screen": "WM-EXP-02",
+          "action": "Chi tiết phiếu chi"
+        },
+        {
+          "actor": "Operation",
+          "screen": "WM-ADV-01",
+          "action": "Đối soát tạm ứng chuyến"
+        },
+        {
+          "actor": "System",
+          "screen": "WM-ORD-07",
+          "action": "Lãi/lỗ đơn cập nhật"
+        },
+        {
+          "actor": "Admin",
+          "screen": "WM-RPT-03",
+          "action": "Báo cáo lãi/lỗ theo đơn"
+        }
+      ]
+    },
+    {
+      "id": "FLOW-DEBT-STATEMENT",
+      "name": "Chốt bảng kê công nợ",
+      "source": "06-ui-flow-specs §9",
+      "steps": [
+        {
+          "actor": "Accountant",
+          "screen": "WM-DEBT-01",
+          "action": "Lọc khách/kỳ"
+        },
+        {
+          "actor": "Accountant",
+          "screen": "WM-DEBT-03",
+          "action": "Tạo bảng kê"
+        },
+        {
+          "actor": "System",
+          "screen": "WM-DEBT-04",
+          "action": "Xem trước dòng bảng kê"
+        },
+        {
+          "actor": "Accountant",
+          "screen": "WM-DEBT-04",
+          "action": "Chốt → snapshot + PDF"
+        },
+        {
+          "actor": "Accountant",
+          "screen": "WM-SHELL-05",
+          "action": "Tải/chia sẻ PDF"
+        },
+        {
+          "actor": "Customer",
+          "screen": "CW-DEBT-01",
+          "action": "Khách tải bảng kê đã gửi (phase 3)"
+        }
+      ]
+    },
+    {
+      "id": "FLOW-PAYROLL",
+      "name": "Tạo & duyệt bảng lương",
+      "source": "06-ui-flow-specs §10, 01 §7.5",
+      "steps": [
+        {
+          "actor": "Operation",
+          "screen": "WM-PAYROLL-03",
+          "action": "Chọn kỳ lương → sinh dòng lương"
+        },
+        {
+          "actor": "Operation",
+          "screen": "WM-PAYROLL-02",
+          "action": "Kiểm tra bảng lương"
+        },
+        {
+          "actor": "Operation",
+          "screen": "WM-PAYROLL-04",
+          "action": "Thêm giảm trừ (có lý do)"
+        },
+        {
+          "actor": "Operation",
+          "screen": "WM-PAYROLL-02",
+          "action": "Gửi duyệt"
+        },
+        {
+          "actor": "Admin",
+          "screen": "WM-PAYROLL-05",
+          "action": "Giám đốc duyệt / trả về"
+        },
+        {
+          "actor": "Admin",
+          "screen": "MA-PAYROLL-01",
+          "action": "Hoặc duyệt trên App Merchant"
+        },
+        {
+          "actor": "Accountant",
+          "screen": "WM-SHELL-05",
+          "action": "Xuất bảng lương"
+        },
+        {
+          "actor": "Driver",
+          "screen": "DA-MONEY-01",
+          "action": "Tài xế xem thưởng/ứng"
+        }
+      ]
+    },
+    {
+      "id": "FLOW-BOOKING-CUSTOMER",
+      "name": "Booking khách hàng → đơn (phase 3)",
+      "source": "06-ui-flow-specs §11, 01 §7.6",
+      "steps": [
+        {
+          "actor": "Customer",
+          "screen": "CW-HOME-01",
+          "action": "Tìm nhà xe"
+        },
+        {
+          "actor": "Customer",
+          "screen": "CW-MER-01",
+          "action": "Xem hồ sơ nhà xe"
+        },
+        {
+          "actor": "Customer",
+          "screen": "CW-BOOK-01",
+          "action": "Gửi yêu cầu vận chuyển"
+        },
+        {
+          "actor": "System",
+          "screen": "CW-BOOK-03",
+          "action": "Booking chờ tiếp nhận"
+        },
+        {
+          "actor": "Operation",
+          "screen": "WM-ORD-03",
+          "action": "Tiếp nhận, chỉnh giá/điểm/hàng → tạo đơn"
+        },
+        {
+          "actor": "Customer",
+          "screen": "CW-ORD-02",
+          "action": "Khách theo dõi đơn đã tạo"
+        }
+      ]
+    },
+    {
+      "id": "FLOW-MERCHANT-MOBILE",
+      "name": "App Merchant: theo dõi & duyệt nhanh (phase 2)",
+      "source": "01 §5",
+      "steps": [
+        {
+          "actor": "Admin",
+          "screen": "MA-HOME-01",
+          "action": "Mở tổng quan mobile"
+        },
+        {
+          "actor": "Admin",
+          "screen": "MA-TRIP-02",
+          "action": "Xem chuyến, gọi tài xế"
+        },
+        {
+          "actor": "Admin",
+          "screen": "MA-COD-01",
+          "action": "Xem COD tài xế đang giữ"
+        },
+        {
+          "actor": "Admin",
+          "screen": "MA-PAYROLL-01",
+          "action": "Duyệt bảng lương"
+        },
+        {
+          "actor": "Operation",
+          "screen": "MA-ORD-03",
+          "action": "Tạo nhanh đơn, chi tiết chỉnh trên web"
+        }
+      ]
+    }
+  ]
+}

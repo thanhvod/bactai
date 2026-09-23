@@ -1,0 +1,613 @@
+[
+  {
+    "id": "WM-ORD-01",
+    "name": "Danh sách đơn hàng",
+    "platform": "wm",
+    "platformName": "Web Merchant",
+    "phase": 1,
+    "module": "Đơn hàng",
+    "route": "/orders",
+    "pattern": "list",
+    "purpose": "Tìm/lọc đơn, theo dõi trạng thái và tiền; điểm vào tạo đơn và chi tiết đơn.",
+    "roles": [
+      "admin",
+      "operation",
+      "accountant"
+    ],
+    "api": [
+      "orders(filter, sort, first, after)"
+    ],
+    "data": [
+      "code",
+      "customer.name",
+      "routeSummary",
+      "status",
+      "totalAmount",
+      "paidAmount",
+      "remainingAmount",
+      "dueDate",
+      "warnings[]"
+    ],
+    "actions": [
+      {
+        "label": "Tạo đơn",
+        "guard": "order.create"
+      },
+      {
+        "label": "Xuất Excel",
+        "guard": "order.view"
+      },
+      {
+        "label": "Bulk: in phiếu / xuất",
+        "guard": "order.view"
+      }
+    ],
+    "states": {
+      "loading": "DataTable loading (skeleton rows)",
+      "empty": "EmptyState 'Chưa có đơn hàng' + nút 'Tạo đơn đầu tiên'",
+      "error": "Banner danger 'Không tải được danh sách đơn' + Thử lại"
+    },
+    "notes": [
+      "Quick filter chips map sang filter.status/warning; filter nâng cao mở Drawer.",
+      "Cột tiền căn phải, tabular-nums.",
+      "Row click hoặc click mã → /orders/:orderId."
+    ],
+    "overlayOf": null,
+    "components": [
+      "StatusBadge",
+      "Menu",
+      "IconButton",
+      "Button",
+      "PageHeader",
+      "FilterBar",
+      "TextField",
+      "FilterChip",
+      "Pagination",
+      "DataTable",
+      "Checkbox",
+      "AppShell",
+      "Sidebar",
+      "Logo",
+      "Topbar",
+      "QuickSearch",
+      "NotificationBell"
+    ],
+    "size": {
+      "w": 1440,
+      "h": 960
+    },
+    "mockup": "design/mockups/WM-ORD-01.html",
+    "spec": "design/screens/wm/WM-ORD-01.md"
+  },
+  {
+    "id": "WM-ORD-02",
+    "name": "Chi tiết đơn hàng",
+    "platform": "wm",
+    "platformName": "Web Merchant",
+    "phase": 1,
+    "module": "Đơn hàng",
+    "route": "/orders/:orderId",
+    "pattern": "detail",
+    "purpose": "Trung tâm xử lý một đơn: trạng thái, tiền, điểm dừng, chuyến, sự cố, chứng từ, timeline.",
+    "roles": [
+      "admin",
+      "operation",
+      "accountant"
+    ],
+    "api": [
+      "order(id)",
+      "activityLogs(entityType: ORDER, entityId)"
+    ],
+    "data": [
+      "code",
+      "status",
+      "customer",
+      "stops[]",
+      "cargoLines[]",
+      "addons[]",
+      "trips[]",
+      "financeSummary",
+      "incidents[]",
+      "attachments[]"
+    ],
+    "actions": [
+      {
+        "label": "Tạo chuyến",
+        "guard": "trip.create"
+      },
+      {
+        "label": "Sửa",
+        "guard": "order.update"
+      },
+      {
+        "label": "In phiếu",
+        "guard": "order.view"
+      },
+      {
+        "label": "Hủy đơn",
+        "guard": "order.cancel — sensitive"
+      },
+      {
+        "label": "Timeline",
+        "guard": "order.view"
+      }
+    ],
+    "states": {
+      "loading": "Skeleton header + tabs",
+      "error": "Không tìm thấy đơn / không có quyền → EmptyState + quay lại danh sách"
+    },
+    "notes": [
+      "Tabs dùng ?tab= (overview|stops|cargo|trips|finance|incidents|attachments|timeline).",
+      "Primary next action đổi theo trạng thái: Nháp→Xác nhận; Đã xác nhận→Tạo chuyến; Hoàn thành→Ghi nhận thanh toán."
+    ],
+    "overlayOf": null,
+    "components": [
+      "StatusBadge",
+      "DataTable",
+      "DescriptionList",
+      "PartnerCard",
+      "Timeline",
+      "EntityHeader",
+      "Button",
+      "IconButton",
+      "SummaryStrip",
+      "Breadcrumb",
+      "Tabs",
+      "AppShell",
+      "Sidebar",
+      "Logo",
+      "Topbar",
+      "QuickSearch",
+      "NotificationBell"
+    ],
+    "size": {
+      "w": 1440,
+      "h": 1140
+    },
+    "mockup": "design/mockups/WM-ORD-02.html",
+    "spec": "design/screens/wm/WM-ORD-02.md"
+  },
+  {
+    "id": "WM-ORD-03",
+    "name": "Tạo/sửa đơn",
+    "platform": "wm",
+    "platformName": "Web Merchant",
+    "phase": 1,
+    "module": "Đơn hàng",
+    "route": "/orders/new · /orders/:orderId/edit",
+    "pattern": "form",
+    "purpose": "Tạo đơn nhanh 1 xe (không wizard): khách → điểm lấy/trả → hàng → giá cước/add-on → hạn thanh toán.",
+    "roles": [
+      "admin",
+      "operation",
+      "accountant"
+    ],
+    "api": [
+      "customers",
+      "customerLocations(customerId)",
+      "catalogItems(type: ADDON|CARGO_TYPE)",
+      "createOrder(input)",
+      "updateOrder(id, input)"
+    ],
+    "data": [
+      "customerId",
+      "stops[{type, locationSnapshot, contact, codExpected, plannedAt}]",
+      "cargoLines[]",
+      "freightAmount",
+      "addons[]",
+      "dueDate",
+      "status",
+      "note"
+    ],
+    "actions": [
+      {
+        "label": "Lưu nháp",
+        "guard": "order.create"
+      },
+      {
+        "label": "Lưu & tạo chuyến",
+        "guard": "order.create → WM-TRIP-02"
+      }
+    ],
+    "states": {
+      "validation": "Lỗi inline danger dưới field; khách vượt hạn mức = WarningPanel (không chặn)"
+    },
+    "notes": [
+      "react-hook-form + zod; MoneyInput số nguyên VND.",
+      "Sửa giá đơn đã xác nhận → mở SensitiveActionModal (WM-ORD-08)."
+    ],
+    "overlayOf": null,
+    "components": [
+      "EntityPicker",
+      "FormField",
+      "TextField",
+      "WarningPanel",
+      "StatusBadge",
+      "MoneyInput",
+      "IconButton",
+      "Button",
+      "Select",
+      "DateField",
+      "RadioGroup",
+      "Textarea",
+      "PageHeader",
+      "Breadcrumb",
+      "AppShell",
+      "Sidebar",
+      "Logo",
+      "Topbar",
+      "QuickSearch",
+      "NotificationBell"
+    ],
+    "size": {
+      "w": 1440,
+      "h": 1320
+    },
+    "mockup": "design/mockups/WM-ORD-03.html",
+    "spec": "design/screens/wm/WM-ORD-03.md"
+  },
+  {
+    "id": "WM-ORD-04",
+    "name": "Điểm lấy/trả (tab)",
+    "platform": "wm",
+    "platformName": "Web Merchant",
+    "phase": 1,
+    "module": "Đơn hàng",
+    "route": "/orders/:orderId?tab=stops",
+    "pattern": "detail",
+    "purpose": "Danh sách stop theo thứ tự, COD dự kiến/thực thu, POD, trạng thái; thêm/sắp xếp stop.",
+    "roles": [
+      "admin",
+      "operation",
+      "accountant"
+    ],
+    "api": [
+      "order(id){stops}",
+      "createOrderStop",
+      "reorderOrderStops",
+      "updateStopStatus"
+    ],
+    "data": [
+      "sequence",
+      "type",
+      "location",
+      "contact",
+      "tripCode",
+      "codExpected",
+      "codActual",
+      "podCount",
+      "actualAt",
+      "status"
+    ],
+    "actions": [
+      {
+        "label": "Thêm điểm lấy/trả",
+        "guard": "order.update"
+      },
+      {
+        "label": "Kéo sắp xếp",
+        "guard": "order.update"
+      },
+      {
+        "label": "Hoàn thành/bỏ qua",
+        "guard": "trip.status.update"
+      }
+    ],
+    "states": {},
+    "notes": [],
+    "overlayOf": null,
+    "components": [
+      "StatusBadge",
+      "Menu",
+      "IconButton",
+      "Button",
+      "DataTable",
+      "EntityHeader",
+      "SummaryStrip",
+      "Breadcrumb",
+      "Tabs",
+      "AppShell",
+      "Sidebar",
+      "Logo",
+      "Topbar",
+      "QuickSearch",
+      "NotificationBell"
+    ],
+    "size": {
+      "w": 1440,
+      "h": 900
+    },
+    "mockup": "design/mockups/WM-ORD-04.html",
+    "spec": "design/screens/wm/WM-ORD-04.md"
+  },
+  {
+    "id": "WM-ORD-05",
+    "name": "Hàng hóa (tab)",
+    "platform": "wm",
+    "platformName": "Web Merchant",
+    "phase": 1,
+    "module": "Đơn hàng",
+    "route": "/orders/:orderId?tab=cargo",
+    "pattern": "detail",
+    "purpose": "Cargo lines linh hoạt, chỉ bắt buộc tên hàng.",
+    "roles": [
+      "admin",
+      "operation",
+      "accountant"
+    ],
+    "api": [
+      "order(id){cargoLines}",
+      "upsertCargoLine",
+      "deleteCargoLine"
+    ],
+    "data": [
+      "name",
+      "type",
+      "weightKg",
+      "volumeM3",
+      "packages",
+      "properties",
+      "note",
+      "photos[]"
+    ],
+    "actions": [],
+    "states": {},
+    "notes": [],
+    "overlayOf": null,
+    "components": [
+      "StatusBadge",
+      "Menu",
+      "IconButton",
+      "Button",
+      "DataTable",
+      "EntityHeader",
+      "SummaryStrip",
+      "Breadcrumb",
+      "Tabs",
+      "AppShell",
+      "Sidebar",
+      "Logo",
+      "Topbar",
+      "QuickSearch",
+      "NotificationBell"
+    ],
+    "size": {
+      "w": 1440,
+      "h": 860
+    },
+    "mockup": "design/mockups/WM-ORD-05.html",
+    "spec": "design/screens/wm/WM-ORD-05.md"
+  },
+  {
+    "id": "WM-ORD-06",
+    "name": "Add-on & giá bán (drawer)",
+    "platform": "wm",
+    "platformName": "Web Merchant",
+    "phase": 1,
+    "module": "Đơn hàng",
+    "route": "/orders/:orderId?tab=finance (drawer)",
+    "pattern": "drawer",
+    "purpose": "Sửa giá cước và dịch vụ thêm; đơn đã xác nhận phải qua lý do.",
+    "roles": [
+      "admin",
+      "operation",
+      "accountant"
+    ],
+    "api": [
+      "updateOrderPricing(id, input, reason)"
+    ],
+    "data": [],
+    "actions": [
+      {
+        "label": "Lưu thay đổi giá",
+        "guard": "order.price.update — sensitive"
+      }
+    ],
+    "states": {},
+    "notes": [],
+    "overlayOf": "WM-ORD-07",
+    "components": [
+      "Banner",
+      "MoneyInput",
+      "FormField",
+      "Select",
+      "IconButton",
+      "Button",
+      "DataTable",
+      "AuditDiff",
+      "EmptyState",
+      "StatusBadge",
+      "Drawer",
+      "EntityHeader",
+      "SummaryStrip",
+      "Breadcrumb",
+      "Tabs",
+      "AppShell",
+      "Sidebar",
+      "Logo",
+      "Topbar",
+      "QuickSearch",
+      "NotificationBell"
+    ],
+    "size": {
+      "w": 1440,
+      "h": 1040
+    },
+    "mockup": "design/mockups/WM-ORD-06.html",
+    "spec": "design/screens/wm/WM-ORD-06.md"
+  },
+  {
+    "id": "WM-ORD-07",
+    "name": "Tài chính đơn (tab)",
+    "platform": "wm",
+    "platformName": "Web Merchant",
+    "phase": 1,
+    "module": "Đơn hàng",
+    "route": "/orders/:orderId?tab=finance",
+    "pattern": "detail",
+    "purpose": "Tách 4 khối: doanh thu, dòng tiền đã phân bổ, chi phí, lãi/lỗ tạm tính. Không gộp.",
+    "roles": [
+      "admin",
+      "operation",
+      "accountant"
+    ],
+    "api": [
+      "order(id){financeSummary, allocations, expenses}"
+    ],
+    "data": [],
+    "actions": [
+      {
+        "label": "Ghi nhận thanh toán",
+        "guard": "payment.create"
+      },
+      {
+        "label": "Phân bổ",
+        "guard": "payment.allocate"
+      },
+      {
+        "label": "Thêm chi phí",
+        "guard": "expense.create"
+      }
+    ],
+    "states": {},
+    "notes": [
+      "Doanh thu ≠ phiếu thu. COD tài xế nộp không phải doanh thu."
+    ],
+    "overlayOf": null,
+    "components": [
+      "DataTable",
+      "Button",
+      "EmptyState",
+      "StatusBadge",
+      "EntityHeader",
+      "IconButton",
+      "SummaryStrip",
+      "Breadcrumb",
+      "Tabs",
+      "AppShell",
+      "Sidebar",
+      "Logo",
+      "Topbar",
+      "QuickSearch",
+      "NotificationBell"
+    ],
+    "size": {
+      "w": 1440,
+      "h": 1040
+    },
+    "mockup": "design/mockups/WM-ORD-07.html",
+    "spec": "design/screens/wm/WM-ORD-07.md"
+  },
+  {
+    "id": "WM-ORD-08",
+    "name": "Hủy/sửa nhạy cảm đơn",
+    "platform": "wm",
+    "platformName": "Web Merchant",
+    "phase": 1,
+    "module": "Đơn hàng",
+    "route": "(modal)",
+    "pattern": "dialog",
+    "purpose": "SensitiveActionModal cho sửa giá sau xác nhận, hủy đơn, sửa đơn hoàn thành, đổi trạng thái ngược.",
+    "roles": [
+      "admin",
+      "operation",
+      "accountant"
+    ],
+    "api": [
+      "updateOrderPricing(reason)",
+      "cancelOrder(id, reason)",
+      "reverseOrderStatus(id, reason)"
+    ],
+    "data": [],
+    "actions": [
+      {
+        "label": "Xác nhận",
+        "guard": "order.price.update | order.cancel | order.completed.update"
+      }
+    ],
+    "states": {},
+    "notes": [
+      "Lý do bắt buộc (min 5 ký tự), ghi audit_log với before/after."
+    ],
+    "overlayOf": "WM-ORD-07",
+    "components": [
+      "AuditDiff",
+      "StatusBadge",
+      "DescriptionList",
+      "SensitiveActionModal",
+      "Banner",
+      "Textarea",
+      "FormField",
+      "Button",
+      "Dialog",
+      "IconButton",
+      "DataTable",
+      "EmptyState",
+      "EntityHeader",
+      "SummaryStrip",
+      "Breadcrumb",
+      "Tabs",
+      "AppShell",
+      "Sidebar",
+      "Logo",
+      "Topbar",
+      "QuickSearch",
+      "NotificationBell"
+    ],
+    "size": {
+      "w": 1440,
+      "h": 1040
+    },
+    "mockup": "design/mockups/WM-ORD-08.html",
+    "spec": "design/screens/wm/WM-ORD-08.md"
+  },
+  {
+    "id": "WM-ORD-09",
+    "name": "In/chia sẻ đơn",
+    "platform": "wm",
+    "platformName": "Web Merchant",
+    "phase": 1,
+    "module": "Đơn hàng",
+    "route": "/orders/:orderId/print",
+    "pattern": "page",
+    "purpose": "Preview PDF: phiếu giao hàng, phiếu điều xe, bảng chi phí chuyến.",
+    "roles": [
+      "admin",
+      "operation",
+      "accountant"
+    ],
+    "api": [
+      "renderOrderDocument(orderId, template)"
+    ],
+    "data": [],
+    "actions": [],
+    "states": {},
+    "notes": [],
+    "overlayOf": null,
+    "components": [
+      "PrintSheet",
+      "Logo",
+      "DescriptionList",
+      "DataTable",
+      "RadioGroup",
+      "Select",
+      "FormField",
+      "Checkbox",
+      "Button",
+      "PageHeader",
+      "Breadcrumb",
+      "AppShell",
+      "Sidebar",
+      "Topbar",
+      "QuickSearch",
+      "NotificationBell",
+      "IconButton"
+    ],
+    "size": {
+      "w": 1440,
+      "h": 1040
+    },
+    "mockup": "design/mockups/WM-ORD-09.html",
+    "spec": "design/screens/wm/WM-ORD-09.md"
+  }
+]

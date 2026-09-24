@@ -1,5 +1,7 @@
 import 'package:bta_flutter_ui/bta_flutter_ui.dart';
 import 'package:flutter/material.dart';
+
+import '../../core/push/merchant_push.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/app_scope.dart';
@@ -37,6 +39,7 @@ class HomePage extends StatelessWidget {
           ? FloatingActionButton.extended(onPressed: () => context.go(MerchantRoutes.pOrderNew), icon: const Icon(Icons.add), label: const Text('Tạo nhanh đơn'))
           : null,
       body: AsyncView<HomeData>(
+        refreshOn: merchantPushTick,
         load: () async {
           final r = await Future.wait([scope.repository.dashboard(), scope.repository.unreadNotificationCount()]);
           return HomeData(r[0] as DashboardData, r[1] as int);

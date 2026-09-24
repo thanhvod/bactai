@@ -13,11 +13,18 @@ function chromium(): string | undefined {
   if (process.env.CHROMIUM_PATH) return process.env.CHROMIUM_PATH;
   const base = path.join(os.homedir(), 'Library/Caches/ms-playwright');
   if (!fs.existsSync(base)) return undefined;
-  for (const d of fs.readdirSync(base).filter((x) => x.startsWith('chromium-')).sort().reverse()) {
-    const mac = path.join(base, d, 'chrome-mac-arm64', 'Google Chrome for Testing.app', 'Contents', 'MacOS', 'Google Chrome for Testing');
-    if (fs.existsSync(mac)) return mac;
+  // Ưu tiên Chrome for Testing đầy đủ, sau đó headless shell (cache có thể bị bản Playwright khác thay đổi).
+  const candidates: string[] = [];
+  for (const d of fs.readdirSync(base).sort().reverse()) {
+    if (d.startsWith('chromium-')) {
+      candidates.push(path.join(base, d, 'chrome-mac-arm64', 'Google Chrome for Testing.app', 'Contents', 'MacOS', 'Google Chrome for Testing'));
+      candidates.push(path.join(base, d, 'chrome-mac', 'Chromium.app', 'Contents', 'MacOS', 'Chromium'));
+    }
   }
-  return undefined;
+  for (const d of fs.readdirSync(base).sort().reverse()) {
+    if (d.startsWith('chromium_headless_shell-')) candidates.push(path.join(base, d, 'chrome-headless-shell-mac-arm64', 'chrome-headless-shell'));
+  }
+  return candidates.find((c) => fs.existsSync(c));
 }
 
 export default defineConfig({
@@ -44,7 +51,7 @@ export default defineConfig({
       port: 2021,
       reuseExistingServer: false,
       timeout: 60_000,
-      env: { PORT: '2021', DATABASE_URL: E2E_DB, AUTH_DEV_BYPASS: 'true', API_PUBLIC_URL: 'http://localhost:2021', STORAGE_LOCAL_DIR: '/tmp/bta-e2e-storage' },
+      env: { PORT: '2021', DATABASE_URL: E2E_DB, AUTH_DEV_BYPASS: 'true', API_PUBLIC_URL: 'http://localhost:2021', STORAGE_LOCAL_DIR: '/tmp/bta-e2e-storage', SCHEDULER_ENABLED: 'false' },
     },
     {
       command: 'npx vite --port 2022 --strictPort',

@@ -49,6 +49,8 @@ const schema = z.object({
   SMS_DRIVER: z.enum(['log', 'sns']).default('log'),
   AWS_REGION: z.string().default('ap-southeast-1'),
   SNS_SENDER_ID: z.string().optional(),
+  /** D-017: service account Firebase (JSON / base64 / đường dẫn file) để gửi FCM */
+  FIREBASE_SERVICE_ACCOUNT: z.string().optional(),
 });
 
 export type Env = z.infer<typeof schema>;

@@ -51,7 +51,7 @@ describe('Prisma enums khớp @bta/shared', () => {
   }
   it('mọi model nghiệp vụ có merchantId', () => {
     const exempt = new Set([
-      'UserAccount', 'UserRefreshToken', 'OtpCode', 'CustomerAccount', 'CustomerAddress', 'CustomerRefreshToken',
+      'UserAccount', 'UserRefreshToken', 'OtpCode', 'DeviceToken', 'CustomerAccount', 'CustomerAddress', 'CustomerRefreshToken',
       'DriverRefreshToken', 'BookingNote', 'Merchant',
     ]);
     const missing = Prisma.dmmf.datamodel.models

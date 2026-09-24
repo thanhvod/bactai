@@ -1,6 +1,8 @@
 import 'package:bta_flutter_ui/bta_flutter_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/push/driver_push.dart';
+
 import '../../domain/jobs_repository.dart';
 import '../../domain/models.dart';
 
@@ -27,8 +29,21 @@ class JobsState {
 }
 
 class JobsCubit extends Cubit<JobsState> {
-  JobsCubit(this._repo, {JobBucket bucket = JobBucket.today}) : super(JobsState(bucket: bucket));
+  JobsCubit(this._repo, {JobBucket bucket = JobBucket.today}) : super(JobsState(bucket: bucket)) {
+    jobsRefreshBus.addListener(_onRefresh);
+  }
   final JobsRepository _repo;
+
+  /// Push chuyến mới/thay đổi (D-017) → tải lại danh sách đang mở.
+  void _onRefresh() {
+    if (!isClosed) load();
+  }
+
+  @override
+  Future<void> close() {
+    jobsRefreshBus.removeListener(_onRefresh);
+    return super.close();
+  }
 
   Future<void> load([JobBucket? bucket]) async {
     final b = bucket ?? state.bucket;

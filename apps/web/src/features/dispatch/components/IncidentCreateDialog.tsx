@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useMutation, useQuery } from '@apollo/client/react';
 import { Button, Dialog, FormField, Input, Select, Textarea, toast } from '@bta/shadcn';
+import { PendingAttachments, uploadPendingFiles, type PendingFile } from '@/features/shared/PendingAttachments';
 import { INCIDENT_SEVERITY } from '@bta/shared';
 import { apolloErrorMessage } from '@/lib/apollo';
 import { CatalogOptionsQuery } from '@/features/shared/graphql';
@@ -33,6 +34,8 @@ export function IncidentCreateDialog({
   const [trip, setTrip] = React.useState(tripId ?? '');
   const [assignee, setAssignee] = React.useState('');
   const [err, setErr] = React.useState<string | null>(null);
+  const [files, setFiles] = React.useState<PendingFile[]>([]);
+  const [uploadingFiles, setUploadingFiles] = React.useState(false);
 
   React.useEffect(() => {
     if (open) {
@@ -59,6 +62,13 @@ export function IncidentCreateDialog({
         },
       });
       toast.success(`Đã tạo sự cố ${r.data?.createIncident.code ?? ''}`);
+      if (files.length) {
+        setUploadingFiles(true);
+        const { failed } = await uploadPendingFiles(files, { entityType: 'INCIDENT', entityId: r.data!.createIncident.id, category: 'INCIDENT_PHOTO' }, setFiles);
+        setUploadingFiles(false);
+        if (failed) toast.warning(`Tạo sự cố xong nhưng ${failed} file tải lên lỗi — thử lại ở phần chứng từ của sự cố`);
+      }
+      setFiles([]);
       onOpenChange(false);
       setTitle('');
       setDescription('');
@@ -81,7 +91,7 @@ export function IncidentCreateDialog({
           <Button variant="ghost" onClick={() => onOpenChange(false)}>
             Hủy
           </Button>
-          <Button loading={loading} onClick={() => void submit()}>
+          <Button loading={loading || uploadingFiles} onClick={() => void submit()}>
             Tạo sự cố
           </Button>
         </>
@@ -116,6 +126,9 @@ export function IncidentCreateDialog({
         </FormField>
         <FormField label="Mô tả" className="md:col-span-2">
           <Textarea rows={3} value={description} onChange={(e) => setDescription(e.target.value)} />
+        </FormField>
+        <FormField label="Ảnh / chứng từ sự cố" className="md:col-span-2">
+          <PendingAttachments files={files} onChange={setFiles} disabled={uploadingFiles} label="Ảnh hiện trường, biên bản (tải lên khi tạo sự cố)" />
         </FormField>
       </div>
     </Dialog>

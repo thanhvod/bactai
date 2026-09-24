@@ -651,6 +651,19 @@ export type CustomerProfileInput = {
   taxCode?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type CustomerTotalsView = {
+  __typename?: 'CustomerTotalsView';
+  activeCount: Scalars['Int']['output'];
+  creditBalance: Scalars['Money']['output'];
+  creditCustomers: Scalars['Int']['output'];
+  customerCount: Scalars['Int']['output'];
+  overLimitCustomers: Scalars['Int']['output'];
+  overdueAmount: Scalars['Money']['output'];
+  overdueCustomers: Scalars['Int']['output'];
+  receivable: Scalars['Money']['output'];
+  remaining: Scalars['Money']['output'];
+};
+
 export type CustomerView = {
   __typename?: 'CustomerView';
   billingAddress?: Maybe<Scalars['String']['output']>;
@@ -1874,6 +1887,7 @@ export type Mutation = {
   markPayrollPaid: PayrollView;
   reconcileTripAdvance: TripAdvanceView;
   refreshDebtStatement: DebtStatementView;
+  registerPushToken: Scalars['Boolean']['output'];
   rejectBooking: BookingView;
   removeOrderStop: OrderView;
   removePayrollItem: PayrollLineView;
@@ -1893,6 +1907,7 @@ export type Mutation = {
   submitPayroll: PayrollView;
   unallocatePayment: PaymentView;
   unlockMerchantUser: MerchantUserView;
+  unregisterPushToken: Scalars['Boolean']['output'];
   updateBooking: BookingView;
   updateCatalogItem: CatalogItemView;
   updateCustomer: CustomerView;
@@ -2309,6 +2324,11 @@ export type MutationRefreshDebtStatementArgs = {
 };
 
 
+export type MutationRegisterPushTokenArgs = {
+  input: RegisterPushTokenInput;
+};
+
+
 export type MutationRejectBookingArgs = {
   id: Scalars['ID']['input'];
   reason: Scalars['String']['input'];
@@ -2409,6 +2429,11 @@ export type MutationUnallocatePaymentArgs = {
 
 export type MutationUnlockMerchantUserArgs = {
   id: Scalars['ID']['input'];
+};
+
+
+export type MutationUnregisterPushTokenArgs = {
+  token: Scalars['String']['input'];
 };
 
 
@@ -3329,6 +3354,7 @@ export type Query = {
   customerDebt: CustomerDebtResult;
   customerLocations: Array<CustomerLocationView>;
   customerMe: CustomerMe;
+  customerTotals: CustomerTotalsView;
   customers: CustomerConnection;
   dashboardSummary: DashboardSummary;
   debtStatement: DebtStatementView;
@@ -3480,6 +3506,11 @@ export type QueryCustomerDebtArgs = {
 export type QueryCustomerLocationsArgs = {
   customerId: Scalars['ID']['input'];
   includeInactive?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type QueryCustomerTotalsArgs = {
+  filter?: InputMaybe<CustomerFilter>;
 };
 
 
@@ -3899,6 +3930,12 @@ export type RefView = {
   code?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   name?: Maybe<Scalars['String']['output']>;
+};
+
+export type RegisterPushTokenInput = {
+  deviceInfo?: InputMaybe<Scalars['String']['input']>;
+  platform: Scalars['String']['input'];
+  token: Scalars['String']['input'];
 };
 
 export type RenderDocumentInput = {
@@ -4702,6 +4739,13 @@ export type DeleteCustomerLocationMutationVariables = Exact<{
 
 
 export type DeleteCustomerLocationMutation = { __typename?: 'Mutation', deleteCustomerLocation: boolean };
+
+export type CustomerTotalsQueryVariables = Exact<{
+  filter?: InputMaybe<CustomerFilter>;
+}>;
+
+
+export type CustomerTotalsQuery = { __typename?: 'Query', customerTotals: { __typename?: 'CustomerTotalsView', customerCount: number, activeCount: number, receivable: number, remaining: number, overdueAmount: number, overdueCustomers: number, overLimitCustomers: number, creditBalance: number, creditCustomers: number } };
 
 export type DashSummaryQueryVariables = Exact<{
   date?: InputMaybe<Scalars['String']['input']>;
@@ -6093,6 +6137,7 @@ export const CustomerLocationsDocument = {"kind":"Document","definitions":[{"kin
 export const CreateCustomerLocationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateCustomerLocation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"customerId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CustomerLocationInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createCustomerLocation"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"customerId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"customerId"}}},{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CustomerLocationFields"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CustomerLocationFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"CustomerLocationView"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"customerId"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"province"}},{"kind":"Field","name":{"kind":"Name","value":"lat"}},{"kind":"Field","name":{"kind":"Name","value":"lng"}},{"kind":"Field","name":{"kind":"Name","value":"contactName"}},{"kind":"Field","name":{"kind":"Name","value":"contactPhone"}},{"kind":"Field","name":{"kind":"Name","value":"note"}},{"kind":"Field","name":{"kind":"Name","value":"isDefault"}},{"kind":"Field","name":{"kind":"Name","value":"active"}},{"kind":"Field","name":{"kind":"Name","value":"usedInOrders"}}]}}]} as unknown as DocumentNode<CreateCustomerLocationMutation, CreateCustomerLocationMutationVariables>;
 export const UpdateCustomerLocationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateCustomerLocation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CustomerLocationInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateCustomerLocation"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CustomerLocationFields"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CustomerLocationFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"CustomerLocationView"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"customerId"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"usage"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"province"}},{"kind":"Field","name":{"kind":"Name","value":"lat"}},{"kind":"Field","name":{"kind":"Name","value":"lng"}},{"kind":"Field","name":{"kind":"Name","value":"contactName"}},{"kind":"Field","name":{"kind":"Name","value":"contactPhone"}},{"kind":"Field","name":{"kind":"Name","value":"note"}},{"kind":"Field","name":{"kind":"Name","value":"isDefault"}},{"kind":"Field","name":{"kind":"Name","value":"active"}},{"kind":"Field","name":{"kind":"Name","value":"usedInOrders"}}]}}]} as unknown as DocumentNode<UpdateCustomerLocationMutation, UpdateCustomerLocationMutationVariables>;
 export const DeleteCustomerLocationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteCustomerLocation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"reason"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteCustomerLocation"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"reason"},"value":{"kind":"Variable","name":{"kind":"Name","value":"reason"}}}]}]}}]} as unknown as DocumentNode<DeleteCustomerLocationMutation, DeleteCustomerLocationMutationVariables>;
+export const CustomerTotalsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"CustomerTotals"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filter"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"CustomerFilter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"customerTotals"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"customerCount"}},{"kind":"Field","name":{"kind":"Name","value":"activeCount"}},{"kind":"Field","name":{"kind":"Name","value":"receivable"}},{"kind":"Field","name":{"kind":"Name","value":"remaining"}},{"kind":"Field","name":{"kind":"Name","value":"overdueAmount"}},{"kind":"Field","name":{"kind":"Name","value":"overdueCustomers"}},{"kind":"Field","name":{"kind":"Name","value":"overLimitCustomers"}},{"kind":"Field","name":{"kind":"Name","value":"creditBalance"}},{"kind":"Field","name":{"kind":"Name","value":"creditCustomers"}}]}}]}}]} as unknown as DocumentNode<CustomerTotalsQuery, CustomerTotalsQueryVariables>;
 export const DashSummaryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"DashSummary"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"date"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dashboardSummary"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"date"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"runningTrips"}},{"kind":"Field","name":{"kind":"Name","value":"todayTrips"}},{"kind":"Field","name":{"kind":"Name","value":"newOrdersToday"}},{"kind":"Field","name":{"kind":"Name","value":"ordersNeedAction"}},{"kind":"Field","name":{"kind":"Name","value":"unassignedOrders"}},{"kind":"Field","name":{"kind":"Name","value":"openIncidents"}},{"kind":"Field","name":{"kind":"Name","value":"payrollPending"}},{"kind":"Field","name":{"kind":"Name","value":"scheduleWarnings"}},{"kind":"Field","name":{"kind":"Name","value":"codOverThreshold"}},{"kind":"Field","name":{"kind":"Name","value":"overdueDebt"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"count"}}]}},{"kind":"Field","name":{"kind":"Name","value":"codHeld"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"count"}}]}},{"kind":"Field","name":{"kind":"Name","value":"revenueMonth"}},{"kind":"Field","name":{"kind":"Name","value":"costMonth"}},{"kind":"Field","name":{"kind":"Name","value":"profitMonth"}},{"kind":"Field","name":{"kind":"Name","value":"cashInMonth"}},{"kind":"Field","name":{"kind":"Name","value":"receivable"}},{"kind":"Field","name":{"kind":"Name","value":"supplierPayable"}},{"kind":"Field","name":{"kind":"Name","value":"tripCountsByStatus"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"count"}}]}},{"kind":"Field","name":{"kind":"Name","value":"todayTripList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"orderId"}},{"kind":"Field","name":{"kind":"Name","value":"orderCode"}},{"kind":"Field","name":{"kind":"Name","value":"routeSummary"}},{"kind":"Field","name":{"kind":"Name","value":"driverName"}},{"kind":"Field","name":{"kind":"Name","value":"vehiclePlate"}},{"kind":"Field","name":{"kind":"Name","value":"plannedStartAt"}},{"kind":"Field","name":{"kind":"Name","value":"plannedEndAt"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"hasWarning"}},{"kind":"Field","name":{"kind":"Name","value":"openIncident"}}]}},{"kind":"Field","name":{"kind":"Name","value":"overdueOrders"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"orderId"}},{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"customerId"}},{"kind":"Field","name":{"kind":"Name","value":"customerName"}},{"kind":"Field","name":{"kind":"Name","value":"remaining"}},{"kind":"Field","name":{"kind":"Name","value":"dueDate"}},{"kind":"Field","name":{"kind":"Name","value":"overdueDays"}}]}},{"kind":"Field","name":{"kind":"Name","value":"codHolders"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"driverId"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}},{"kind":"Field","name":{"kind":"Name","value":"codHeld"}},{"kind":"Field","name":{"kind":"Name","value":"daysHeld"}},{"kind":"Field","name":{"kind":"Name","value":"overThreshold"}}]}}]}}]}}]} as unknown as DocumentNode<DashSummaryQuery, DashSummaryQueryVariables>;
 export const DashProfitMonthlyDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"DashProfitMonthly"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filter"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ReportFilter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"reportProfit"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rows"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"revenue"}},{"kind":"Field","name":{"kind":"Name","value":"cost"}},{"kind":"Field","name":{"kind":"Name","value":"profit"}}]}},{"kind":"Field","name":{"kind":"Name","value":"totals"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"revenue"}},{"kind":"Field","name":{"kind":"Name","value":"cost"}},{"kind":"Field","name":{"kind":"Name","value":"profit"}},{"kind":"Field","name":{"kind":"Name","value":"margin"}}]}}]}}]}}]} as unknown as DocumentNode<DashProfitMonthlyQuery, DashProfitMonthlyQueryVariables>;
 export const DashFinanceExtrasDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"DashFinanceExtras"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"reportCustomerDebt"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"overdueOnly"},"value":{"kind":"BooleanValue","value":false}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"totalDebt"}},{"kind":"Field","name":{"kind":"Name","value":"totalOverdue"}},{"kind":"Field","name":{"kind":"Name","value":"totalCredit"}},{"kind":"Field","name":{"kind":"Name","value":"aging"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"current"}},{"kind":"Field","name":{"kind":"Name","value":"d1_15"}},{"kind":"Field","name":{"kind":"Name","value":"d16_30"}},{"kind":"Field","name":{"kind":"Name","value":"d31_60"}},{"kind":"Field","name":{"kind":"Name","value":"d60p"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"reportCodHeld"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"totalHeld"}},{"kind":"Field","name":{"kind":"Name","value":"overThresholdCount"}}]}}]}}]} as unknown as DocumentNode<DashFinanceExtrasQuery, DashFinanceExtrasQueryVariables>;

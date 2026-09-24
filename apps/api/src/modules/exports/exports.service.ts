@@ -115,6 +115,8 @@ export class ExportsService {
             ...(f.dateFrom || f.dateTo ? { orderDate: { gte: r.fromDb, lte: r.toDb } } : {}),
             ...(f.status ? { status: { in: [].concat(f.status) } } : {}),
             ...(f.customerId ? { customerId: f.customerId } : {}),
+            // Xuất đúng các dòng đang chọn trên danh sách (bỏ qua bộ lọc khác khi có ids)
+            ...(Array.isArray(f.ids) && f.ids.length ? { id: { in: f.ids.map(String) } } : {}),
             ...(f.search ? { OR: [{ code: { contains: f.search, mode: 'insensitive' } }, { customer: { name: { contains: f.search, mode: 'insensitive' } } }] } : {}),
           },
           include: { customer: { select: { name: true, code: true } }, addons: { select: { amount: true } }, _count: { select: { trips: true } } },

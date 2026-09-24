@@ -1,7 +1,7 @@
 # OPERATIONS — Vận hành, backup, triển khai
 
 > Ngày lập: 2026-09-23 · Phạm vi: HARD-004 (backup/restore, index, dữ liệu vận hành) + checklist go-live.
-> Production chạy trên **AWS** (D-015).
+> Production chạy trên **AWS** (D-015), chủ dự án tự setup, không dùng Docker (D-018).
 
 ## 1. Thành phần chạy production
 
@@ -28,6 +28,7 @@ Biến môi trường: `apps/api/.env.example`. Secret (`DRIVER_JWT_SECRET`, `CU
 | Secrets Manager / SSM Parameter Store | JWT/OTP/storage secret, DATABASE_URL | Không để secret trong image. |
 | CloudWatch | Log API (`x-request-id`), alarm `/health` | |
 | ACM + Route 53 | HTTPS, domain | |
+| Firebase Cloud Messaging (ngoài AWS) | Push App Tài xế / App Merchant (D-017) | API cần `FIREBASE_SERVICE_ACCOUNT` (service account project `bac-tai-app`, lưu Secrets Manager). iOS: upload APNs key lên Firebase. |
 
 IAM role của API: `s3:PutObject/GetObject/HeadObject` trên bucket chứng từ, `sns:Publish` (SMS). Không cấp quyền rộng hơn.
 
@@ -62,7 +63,7 @@ Index composite theo `merchantId` + cột lọc chính đã khai trong `packages
 
 - [ ] AWS (D-015): RDS, S3 chứng từ + CORS, CloudFront web, SNS SMS (thoát sandbox, Sender ID), domain + HTTPS (ACM).
 - [ ] `AUTH_DEV_BYPASS=false`, secret production, `API_PUBLIC_URL` đúng domain.
-- [ ] Firebase: thêm domain web production vào Authorized domains (Web Merchant Google login).
+- [ ] Firebase: thêm domain web production vào Authorized domains (Web Merchant Google login); tạo service account cho FCM (`FIREBASE_SERVICE_ACCOUNT`); thêm app Android/iOS vào project để lấy app id cho `--dart-define`; upload APNs key.
 - [ ] Chromium cài trên server (xuất PDF bảng kê).
 - [ ] Secret production: `USER_JWT_SECRET`, `OTP_SECRET` (cùng các secret khác).
 - [ ] Backup tự động chạy + diễn tập restore lần đầu.

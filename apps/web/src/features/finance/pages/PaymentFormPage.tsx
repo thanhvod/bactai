@@ -3,7 +3,6 @@ import { useMutation, useQuery } from '@apollo/client/react';
 import { useNavigate, useSearchParams } from 'react-router';
 import { Save } from 'lucide-react';
 import {
-  Banner,
   Button,
   Checkbox,
   DataTable,
@@ -29,6 +28,7 @@ import { PATHS, paths } from '@/app/routes';
 import type { DriverCodItemFieldsFragment } from '@/gql/graphql';
 import { apolloErrorMessage } from '@/lib/apollo';
 import { Panel } from '@/features/master-data/helpers';
+import { PendingAttachments, uploadPendingFiles, warnUploadFailures, type PendingFile } from '@/features/shared/PendingAttachments';
 import { PAYMENT_METHOD, nowInputDateTime, options, sum, useCustomerPicker, useMasterPickers } from '../components/common';
 import { CreatePaymentMutation, DriverCodHeldQuery } from '../graphql/finance';
 
@@ -57,6 +57,8 @@ function PaymentForm() {
   const { hasPermission, account } = useAuth();
   const initialType = params.get('type') ?? 'CUSTOMER_PAYMENT';
   const [type, setType] = React.useState(initialType);
+  const [files, setFiles] = React.useState<PendingFile[]>([]);
+  const [uploadingFiles, setUploadingFiles] = React.useState(false);
   const [customerId, setCustomerId] = React.useState<string | null>(params.get('customerId'));
   const [driverId, setDriverId] = React.useState<string | null>(params.get('driverId'));
   const [payerName, setPayerName] = React.useState('');
@@ -123,7 +125,14 @@ function PaymentForm() {
       const res = await create({ variables: { input: { ...input, clientRequestId: crypto.randomUUID() } } });
       const p = res.data!.createPaymentIn;
       toast.success(`Đã tạo phiếu thu ${p.code}`);
+      if (files.length) {
+        setUploadingFiles(true);
+        const { failed } = await uploadPendingFiles(files, { entityType: 'PAYMENT_IN', entityId: p.id, category: 'PAYMENT_PROOF' }, setFiles);
+        setUploadingFiles(false);
+        warnUploadFailures(failed);
+      }
       if (andNew) {
+        setFiles([]);
         setAmount(null);
         setNote('');
         setTransferNote('');
@@ -170,8 +179,8 @@ function PaymentForm() {
         actions={
           <>
             <Button variant="ghost" onClick={() => navigate(-1)}>Hủy</Button>
-            <Button variant="secondary" loading={saving} onClick={() => void submit(true)}>Lưu & tạo tiếp</Button>
-            <Button loading={saving} onClick={() => void submit(false)}>
+            <Button variant="secondary" loading={saving || uploadingFiles} onClick={() => void submit(true)}>Lưu & tạo tiếp</Button>
+            <Button loading={saving || uploadingFiles} onClick={() => void submit(false)}>
               <Save /> Lưu phiếu thu
             </Button>
           </>
@@ -263,7 +272,9 @@ function PaymentForm() {
               <p className="text-body-sm text-text-muted">Ghi nhận tiền vào sổ thu chi.</p>
             )}
           </Panel>
-          <Banner tone="info" message="Chứng từ (ảnh chuyển khoản, biên nhận) tải lên ở màn chi tiết sau khi lưu phiếu." />
+          <Panel title="Chứng từ">
+            <PendingAttachments files={files} onChange={setFiles} disabled={uploadingFiles} label="Ảnh chuyển khoản, biên nhận (tải lên khi lưu phiếu)" />
+          </Panel>
         </div>
       </div>
     </div>

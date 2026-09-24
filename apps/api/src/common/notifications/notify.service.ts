@@ -3,6 +3,7 @@ import type { EntityType, NotificationType, Permission, RecipientType } from '@b
 import { currentMerchantId } from '../context/request-context';
 import { PermissionService } from '../auth/permission.service';
 import { PrismaService, type DbClient } from '../prisma/prisma.service';
+import { PushService } from '../push/push.service';
 
 export interface NotifyInput {
   type: NotificationType;
@@ -16,7 +17,11 @@ export interface NotifyInput {
 /** Notification nội bộ lưu DB, web/app polling (ARCHITECTURE §20). */
 @Injectable()
 export class NotifyService {
-  constructor(private readonly prisma: PrismaService, private readonly permissions: PermissionService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly permissions: PermissionService,
+    private readonly push: PushService,
+  ) {}
 
   async toRecipients(recipients: { type: RecipientType; id: string }[], input: NotifyInput, tx?: DbClient, merchantId = currentMerchantId()) {
     if (!recipients.length) return;
@@ -41,6 +46,11 @@ export class NotifyService {
         severity: input.severity ?? null,
       }));
     await db.notification.createMany({ data });
+    // D-017: push FCM (chạy nền; nếu đang trong transaction thì vẫn gửi — notification đã ghi cùng tx)
+    this.push.dispatch(
+      data.map((d) => ({ type: d.recipientType as RecipientType, id: d.recipientId })),
+      { type: input.type, title: input.title, body: input.body, entityType: input.entityType, entityId: input.entityId, merchantId },
+    );
   }
 
   async toDriver(driverId: string, input: NotifyInput, tx?: DbClient) {

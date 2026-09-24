@@ -99,9 +99,10 @@ function OrderList() {
   const [exportFile, { loading: exporting }] = useMutation(ExportFileMutation);
   const rows = data?.orders.nodes ?? [];
 
-  const doExport = async () => {
+  /** Có ids → xuất đúng các đơn đang chọn; không → xuất theo bộ lọc hiện tại. */
+  const doExport = async (ids?: string[]) => {
     try {
-      const r = await exportFile({ variables: { input: { template: 'ORDERS', filter } } });
+      const r = await exportFile({ variables: { input: { template: 'ORDERS', filter: ids?.length ? { ids } : filter } } });
       const url = r.data?.exportFile.url;
       if (url) window.open(url, '_blank');
       toast.success(`Đã xuất ${r.data?.exportFile.rowCount ?? 0} đơn`);
@@ -214,6 +215,9 @@ function OrderList() {
                     <Printer /> In phiếu
                   </Button>
                 ) : null}
+                <Button size="sm" variant="secondary" loading={exporting} onClick={() => void doExport([...sel])}>
+                  <Download /> Xuất Excel ({sel.size})
+                </Button>
               </>
             )}
             onRowClick={(r) => navigate(paths.order(r.id))}

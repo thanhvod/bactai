@@ -148,3 +148,16 @@ export class CreditLimitCheckView {
   @Field(() => [String]) warnings: string[];
   @Field(() => GraphQLJSON, { nullable: true }) details?: unknown;
 }
+
+@ObjectType()
+export class CustomerTotalsView {
+  @Field(() => Int) customerCount: number;
+  @Field(() => Int) activeCount: number;
+  @Field(() => MoneyScalar) receivable: number;
+  @Field(() => MoneyScalar) remaining: number;
+  @Field(() => MoneyScalar) overdueAmount: number;
+  @Field(() => Int) overdueCustomers: number;
+  @Field(() => Int) overLimitCustomers: number;
+  @Field(() => MoneyScalar) creditBalance: number;
+  @Field(() => Int) creditCustomers: number;
+}

@@ -22,6 +22,7 @@ export class SchedulerService implements OnApplicationBootstrap, OnApplicationSh
     if (env().NODE_ENV === 'test' || process.env.SCHEDULER_ENABLED === 'false') return;
     this.every(30 * MINUTE, 'alerts', () => this.runAlerts());
     this.every(24 * 60 * MINUTE, 'gps-cleanup', () => this.cleanupGps());
+    this.every(24 * 60 * MINUTE, 'housekeeping', () => this.housekeeping());
     this.logger.log('Scheduler bật: cảnh báo 30 phút/lần, dọn GPS mỗi ngày');
   }
 
@@ -63,5 +64,22 @@ export class SchedulerService implements OnApplicationBootstrap, OnApplicationSh
     }
     if (deleted) this.logger.log(`Dọn ${deleted} điểm GPS quá hạn lưu trữ`);
     return { deleted };
+  }
+
+  /** Dọn dữ liệu phụ: thông báo đã đọc > 180 ngày, khóa chống ghi trùng > 30 ngày, OTP > 7 ngày, phiên hết hạn. */
+  async housekeeping() {
+    const day = 86_400_000;
+    const now = Date.now();
+    const [n, i, o, r1, r2, r3] = await Promise.all([
+      this.prisma.raw.notification.deleteMany({ where: { readAt: { lt: new Date(now - 180 * day) } } }),
+      this.prisma.raw.idempotencyKey.deleteMany({ where: { createdAt: { lt: new Date(now - 30 * day) } } }),
+      this.prisma.raw.otpCode.deleteMany({ where: { createdAt: { lt: new Date(now - 7 * day) } } }),
+      this.prisma.raw.driverRefreshToken.deleteMany({ where: { expiresAt: { lt: new Date(now) } } }),
+      this.prisma.raw.userRefreshToken.deleteMany({ where: { expiresAt: { lt: new Date(now) } } }),
+      this.prisma.raw.customerRefreshToken.deleteMany({ where: { expiresAt: { lt: new Date(now) } } }),
+    ]);
+    const res = { notifications: n.count, idempotencyKeys: i.count, otpCodes: o.count, expiredSessions: r1.count + r2.count + r3.count };
+    this.logger.log(`Housekeeping: ${JSON.stringify(res)}`);
+    return res;
   }
 }

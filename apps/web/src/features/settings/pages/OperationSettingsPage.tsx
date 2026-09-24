@@ -4,6 +4,7 @@ import { useBlocker } from 'react-router';
 import { Banner, Button, Dialog, DetailSkeleton, ErrorState, FormField, FormSection, Input, MoneyInput, PageHeader, RadioGroup, Switch, toast } from '@bta/shadcn';
 import { formatVnd } from '@bta/shared';
 import { useAuth } from '@/app/auth/AuthProvider';
+import { RequirePermission } from '@/app/auth/guards';
 import { PATHS } from '@/app/routes';
 import { apolloErrorMessage } from '@/lib/apollo';
 import { MerchantSettingsQuery, UpdateMerchantSettingsMutation } from '../graphql/settings';
@@ -28,8 +29,16 @@ const SWITCHES = [
   ['warnOverdue', 'Cảnh báo khi khách có đơn quá hạn'],
 ] as const;
 
-/** WM-SET-01 — Cài đặt vận hành. Switch áp dụng ngay; các ô số lưu bằng save bar. Non-admin: read-only. */
+/** WM-SET-01 — Cài đặt vận hành (chỉ admin theo spec). Switch áp dụng ngay; các ô số lưu bằng save bar. */
 export default function OperationSettingsPage() {
+  return (
+    <RequirePermission permission="settings.manage">
+      <OperationSettings />
+    </RequirePermission>
+  );
+}
+
+function OperationSettings() {
   const { hasPermission } = useAuth();
   const canEdit = hasPermission('settings.manage');
   const { data, loading, error, refetch } = useQuery(MerchantSettingsQuery);

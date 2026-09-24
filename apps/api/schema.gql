@@ -598,6 +598,18 @@ input CustomerProfileInput {
   taxCode: String
 }
 
+type CustomerTotalsView {
+  activeCount: Int!
+  creditBalance: Money!
+  creditCustomers: Int!
+  customerCount: Int!
+  overLimitCustomers: Int!
+  overdueAmount: Money!
+  overdueCustomers: Int!
+  receivable: Money!
+  remaining: Money!
+}
+
 type CustomerView {
   billingAddress: String
   code: String!
@@ -1771,6 +1783,7 @@ type Mutation {
   markPayrollPaid(id: ID!, paidAt: DateTime): PayrollView!
   reconcileTripAdvance(input: ReconcileTripAdvanceInput!): TripAdvanceView!
   refreshDebtStatement(id: ID!): DebtStatementView!
+  registerPushToken(input: RegisterPushTokenInput!): Boolean!
   rejectBooking(id: ID!, reason: String!): BookingView!
   removeOrderStop(id: ID!, reason: String): OrderView!
   removePayrollItem(id: ID!, reason: String!): PayrollLineView!
@@ -1790,6 +1803,7 @@ type Mutation {
   submitPayroll(id: ID!): PayrollView!
   unallocatePayment(allocationId: ID!, reason: String!): PaymentView!
   unlockMerchantUser(id: ID!): MerchantUserView!
+  unregisterPushToken(token: String!): Boolean!
   updateBooking(id: ID!, input: BookingInput!): BookingView!
   updateCatalogItem(id: ID!, input: CatalogItemInput!): CatalogItemView!
   updateCustomer(id: ID!, input: CustomerInput!): CustomerView!
@@ -2515,6 +2529,7 @@ type Query {
   customerDebt(filter: CustomerDebtFilter): CustomerDebtResult!
   customerLocations(customerId: ID!, includeInactive: Boolean): [CustomerLocationView!]!
   customerMe: CustomerMe!
+  customerTotals(filter: CustomerFilter): CustomerTotalsView!
   customers(after: String, filter: CustomerFilter, first: Int = 20): CustomerConnection!
   dashboardSummary(date: String): DashboardSummary!
   debtStatement(id: ID!): DebtStatementView!
@@ -2641,6 +2656,12 @@ type RefView {
   code: String
   id: ID!
   name: String
+}
+
+input RegisterPushTokenInput {
+  deviceInfo: String
+  platform: String!
+  token: String!
 }
 
 input RenderDocumentInput {

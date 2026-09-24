@@ -20,6 +20,10 @@ abstract class DriverApi {
   Future<int> markNotificationRead(String id);
   Future<int> markAllNotificationsRead();
   Future<int> unreadNotificationCount();
+
+  /// D-017 push FCM
+  Future<void> registerPushToken(String token, String platform);
+  Future<void> unregisterPushToken(String token);
 }
 
 const _stopFields = '''
@@ -135,4 +139,16 @@ class GraphqlDriverApi implements DriverApi {
 
   @override
   Future<int> unreadNotificationCount() async => ((await _gql.query('query { unreadNotificationCount }'))['unreadNotificationCount'] as num).toInt();
+
+  @override
+  Future<void> registerPushToken(String token, String platform) async {
+    await _gql.mutate(r'mutation($i: RegisterPushTokenInput!) { registerPushToken(input: $i) }', variables: {
+      'i': {'token': token, 'platform': platform},
+    });
+  }
+
+  @override
+  Future<void> unregisterPushToken(String token) async {
+    await _gql.mutate(r'mutation($t: String!) { unregisterPushToken(token: $t) }', variables: {'t': token});
+  }
 }

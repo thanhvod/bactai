@@ -81,6 +81,26 @@ export class CustomersService {
     return toConnection(await this.decorate(rows), total, skip, take);
   }
 
+  /** KPI danh sách khách (WM-CUS-01) tính trên toàn bộ khách của nhà xe — không phụ thuộc phân trang. */
+  async totals(filter: CustomerFilter = {}) {
+    const where: any = {};
+    if (filter.status) where.status = filter.status;
+    if (filter.groupId) where.groupId = filter.groupId;
+    const rows = await this.prisma.db.customer.findMany({ where, select: { id: true, status: true } });
+    const debts = [...(await this.finance.customerDebtSummaries(rows.map((r) => r.id))).values()];
+    return {
+      customerCount: rows.length,
+      activeCount: rows.filter((r) => r.status === 'ACTIVE').length,
+      receivable: debts.reduce((s, d) => s + d.receivable, 0),
+      remaining: debts.reduce((s, d) => s + Math.max(d.remaining, 0), 0),
+      overdueAmount: debts.reduce((s, d) => s + d.overdueAmount, 0),
+      overdueCustomers: debts.filter((d) => d.overdueOrders > 0).length,
+      overLimitCustomers: debts.filter((d) => d.overLimit).length,
+      creditBalance: debts.reduce((s, d) => s + d.creditBalance, 0),
+      creditCustomers: debts.filter((d) => d.creditBalance > 0).length,
+    };
+  }
+
   async get(id: string) {
     const c = await this.prisma.db.customer.findFirst({ where: { id } });
     if (!c) throw notFound('khách hàng');

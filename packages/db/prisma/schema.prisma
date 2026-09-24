@@ -518,7 +518,6 @@ model DriverAccount {
   mustChangePassword Boolean             @default(true)
   lastLoginAt        DateTime?
   deviceInfo         String?
-  fcmToken           String?
   createdAt          DateTime            @default(now())
   updatedAt          DateTime            @updatedAt
 
@@ -597,6 +596,35 @@ model CustomerRefreshToken {
 
   @@index([accountId])
   @@map("customer_refresh_tokens")
+}
+
+enum DevicePlatform {
+  ANDROID
+  IOS
+  WEB
+}
+
+enum DeviceApp {
+  DRIVER
+  MERCHANT
+}
+
+/// Token FCM theo thiết bị (D-017). Tài xế: driverId; nhân viên: userAccountId (push theo mọi membership của tài khoản).
+model DeviceToken {
+  id            String         @id @default(cuid())
+  token         String         @unique
+  app           DeviceApp
+  platform      DevicePlatform
+  driverId      String?
+  userAccountId String?
+  merchantId    String?
+  deviceInfo    String?
+  lastSeenAt    DateTime       @default(now())
+  createdAt     DateTime       @default(now())
+
+  @@index([driverId])
+  @@index([userAccountId])
+  @@map("device_tokens")
 }
 
 enum OtpPurpose {

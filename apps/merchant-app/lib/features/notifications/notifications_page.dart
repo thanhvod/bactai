@@ -1,5 +1,7 @@
 import 'package:bta_flutter_ui/bta_flutter_ui.dart';
 import 'package:flutter/material.dart';
+
+import '../../core/push/merchant_push.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/app_scope.dart';
@@ -63,6 +65,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
         Expanded(
           child: AsyncView<PageResult<NotificationItem>>(
             key: _key,
+            refreshOn: merchantPushTick,
             load: () => repo.notifications(unreadOnly: _unreadOnly),
             isEmpty: (p) => p.items.isEmpty,
             emptyMessage: 'Không có thông báo',

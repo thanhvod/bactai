@@ -28,6 +28,9 @@ class AuthController extends ChangeNotifier implements TokenProvider {
   String? error;
   Future<String?>? _refreshing;
 
+  /// Chạy trước khi xóa phiên khi đăng xuất (hủy FCM token trên API, D-017).
+  Future<void> Function()? beforeLogout;
+
   Set<String> get permissions => me?.current?.permissions ?? const {};
   bool can(String permission) => permissions.contains(permission);
   String? get role => me?.current?.role;
@@ -196,6 +199,9 @@ class AuthController extends ChangeNotifier implements TokenProvider {
   }
 
   Future<void> logout() async {
+    try {
+      await beforeLogout?.call();
+    } catch (_) {/* push lỗi không chặn đăng xuất */}
     final rt = _refresh;
     if (rt != null) {
       try {

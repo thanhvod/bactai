@@ -28,3 +28,25 @@ describe('Scheduler (HARD-001)', () => {
     expect(await p.tripLocation.count({ where: { tripId: trip.id } })).toBe(before - 1);
   });
 });
+
+describe('Housekeeping', () => {
+  it('xóa thông báo đã đọc quá 180 ngày, giữ thông báo mới', async () => {
+    const { SchedulerService } = await import('../modules/scheduler/scheduler.service');
+    const s = (await testApp()).get(SchedulerService);
+    const p = await prisma();
+    const old = await p.notification.create({ data: { recipientType: 'USER', recipientId: 'x', type: 'SYSTEM', title: 'cũ', readAt: new Date(Date.now() - 200 * 86_400_000) } });
+    const fresh = await p.notification.create({ data: { recipientType: 'USER', recipientId: 'x', type: 'SYSTEM', title: 'mới', readAt: new Date() } });
+    const r = await s.housekeeping();
+    expect(r.notifications).toBeGreaterThanOrEqual(1);
+    expect(await p.notification.count({ where: { id: old.id } })).toBe(0);
+    expect(await p.notification.count({ where: { id: fresh.id } })).toBe(1);
+  });
+});
+
+describe('customerTotals', () => {
+  it('tổng KPI khách khớp seed (còn nợ 70tr, 1 khách quá hạn, 1 khách có số dư)', async () => {
+    const { gqlOk, USERS } = await import('./helpers');
+    const d = await gqlOk(USERS.operation, `{ customerTotals { customerCount remaining overdueAmount overdueCustomers creditCustomers creditBalance } }`);
+    expect(d.customerTotals).toMatchObject({ remaining: 70_000_000, overdueAmount: 15_000_000, overdueCustomers: 1, creditCustomers: 1, creditBalance: 3_000_000 });
+  });
+});

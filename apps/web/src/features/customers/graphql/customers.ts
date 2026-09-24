@@ -182,3 +182,20 @@ export const DeleteCustomerLocationMutation = graphql(`
     deleteCustomerLocation(id: $id, reason: $reason)
   }
 `);
+
+/** KPI WM-CUS-01 — tổng hợp phía API trên toàn bộ khách (không phụ thuộc phân trang). */
+export const CustomerTotalsQuery = graphql(`
+  query CustomerTotals($filter: CustomerFilter) {
+    customerTotals(filter: $filter) {
+      customerCount
+      activeCount
+      receivable
+      remaining
+      overdueAmount
+      overdueCustomers
+      overLimitCustomers
+      creditBalance
+      creditCustomers
+    }
+  }
+`);

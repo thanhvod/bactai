@@ -29,7 +29,7 @@ import { apolloErrorMessage } from '@/lib/apollo';
 import type { CustomerListFieldsFragment } from '@/gql/graphql';
 import { CustomerFormDrawer } from '../components/CustomerFormDrawer';
 import { CreditUsage } from '../components/CreditUsage';
-import { CustomersQuery, DeactivateCustomerMutation } from '../graphql/customers';
+import { CustomerTotalsQuery, CustomersQuery, DeactivateCustomerMutation } from '../graphql/customers';
 
 const DEBT_CHIPS = [
   { key: 'HAS_DEBT', label: 'Còn nợ' },
@@ -59,8 +59,8 @@ export function CustomerList({ createOpen = false }: { createOpen?: boolean }) {
   React.useEffect(() => setCursors([null]), [debounced, debt, inactive, pageSize]);
   const filter = { search: debounced || null, debtStatus: debt || null, status: inactive ? 'INACTIVE' : null };
   const { data, loading, error, refetch } = useQuery(CustomersQuery, { variables: { filter, first: pageSize, after: cursors[cursors.length - 1] } });
-  // KPI tổng hợp: tải toàn bộ khách đang hoạt động (merchant nhỏ). TODO(API): thay bằng aggregate khi có customerDebt summary.
-  const kpi = useQuery(CustomersQuery, { variables: { filter: { status: 'ACTIVE' }, first: 200 }, fetchPolicy: 'cache-and-network' });
+  // KPI tổng hợp tính ở API trên toàn bộ khách (customerTotals) — không phụ thuộc trang đang xem.
+  const kpi = useQuery(CustomerTotalsQuery, { variables: { filter: { status: 'ACTIVE' } }, fetchPolicy: 'cache-and-network' });
   const [deactivate] = useMutation(DeactivateCustomerMutation);
   const [toDeactivate, setToDeactivate] = React.useState<CustomerListFieldsFragment | null>(null);
 
@@ -71,15 +71,15 @@ export function CustomerList({ createOpen = false }: { createOpen?: boolean }) {
     setParams(next);
   };
   const rows = data?.customers.nodes ?? [];
-  const all = kpi.data?.customers.nodes ?? [];
+  const t = kpi.data?.customerTotals;
   const totals = {
-    active: kpi.data?.customers.totalCount ?? 0,
-    remaining: all.reduce((s, c) => s + c.debtSummary.remaining, 0),
-    debtors: all.filter((c) => c.debtSummary.remaining > 0).length,
-    overdue: all.reduce((s, c) => s + c.debtSummary.overdueAmount, 0),
-    overdueCustomers: all.filter((c) => c.debtSummary.overdueOrders > 0).length,
-    credit: all.reduce((s, c) => s + c.creditBalance, 0),
-    creditCustomers: all.filter((c) => c.creditBalance > 0).length,
+    active: t?.activeCount ?? 0,
+    remaining: t?.remaining ?? 0,
+    overLimit: t?.overLimitCustomers ?? 0,
+    overdue: t?.overdueAmount ?? 0,
+    overdueCustomers: t?.overdueCustomers ?? 0,
+    credit: t?.creditBalance ?? 0,
+    creditCustomers: t?.creditCustomers ?? 0,
   };
   const filtered = !!(debounced || debt || inactive);
 
@@ -122,7 +122,7 @@ export function CustomerList({ createOpen = false }: { createOpen?: boolean }) {
       />
       <div className="grid grid-cols-2 gap-3 xl:grid-cols-4">
         <KpiCard label="Khách đang hoạt động" value={totals.active} loading={kpi.loading && !kpi.data} />
-        <KpiCard label="Tổng còn nợ" value={formatVnd(totals.remaining)} sub={`${totals.debtors} khách còn nợ`} to={PATHS.customerDebt} tone="warning" loading={kpi.loading && !kpi.data} />
+        <KpiCard label="Tổng còn nợ" value={formatVnd(totals.remaining)} sub={totals.overLimit ? `${totals.overLimit} khách vượt hạn mức` : 'Tất cả khách trong hạn mức'} to={PATHS.customerDebt} tone="warning" loading={kpi.loading && !kpi.data} />
         <KpiCard label="Quá hạn" value={formatVnd(totals.overdue)} sub={`${totals.overdueCustomers} khách · cần thu hồi`} to={`${PATHS.customerDebt}?overdue=1`} tone="danger" loading={kpi.loading && !kpi.data} />
         <KpiCard label="Số dư chưa phân bổ" value={formatVnd(totals.credit)} sub={`${totals.creditCustomers} khách có tiền dư`} tone="info" loading={kpi.loading && !kpi.data} />
       </div>

@@ -10,6 +10,7 @@ import {
   CustomerInput,
   CustomerLocationInput,
   CustomerLocationView,
+  CustomerTotalsView,
   CustomerView,
 } from './customers.types';
 
@@ -21,6 +22,12 @@ export class CustomersResolver {
   @RequirePermission('customer.view')
   customers(@Args('filter', { nullable: true }) filter: CustomerFilter, @Args() page: PageArgs) {
     return this.svc.list(filter, page);
+  }
+
+  @Query(() => CustomerTotalsView)
+  @RequirePermission('customer.view')
+  customerTotals(@Args('filter', { nullable: true }) filter?: CustomerFilter) {
+    return this.svc.totals(filter);
   }
 
   @Query(() => CustomerView)

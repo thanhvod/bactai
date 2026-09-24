@@ -21,8 +21,11 @@ class AuthState {
 }
 
 class AuthCubit extends Cubit<AuthState> {
-  AuthCubit(this._repo) : super(const AuthState());
+  AuthCubit(this._repo, {this.beforeLogout}) : super(const AuthState());
   final AuthRepository _repo;
+
+  /// Chạy trước khi xóa phiên (hủy FCM token trên API — cần token còn hiệu lực).
+  final Future<void> Function()? beforeLogout;
 
   Future<void> restore() async {
     final s = await _repo.restore();
@@ -52,6 +55,9 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> logout() async {
     emit(state.copyWith(busy: true));
     try {
+      try {
+        await beforeLogout?.call();
+      } catch (_) {/* push lỗi không chặn đăng xuất */}
       await _repo.logout();
     } finally {
       emit(const AuthState(status: AuthStatus.unauthenticated));

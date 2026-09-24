@@ -5,7 +5,7 @@ import '../core/api/merchant_graphql_client.dart';
 
 /// Tải dữ liệu 1 lần + kéo để làm mới; đủ trạng thái loading / error / empty (design/IMPLEMENTATION-GUIDE §6).
 class AsyncView<T> extends StatefulWidget {
-  const AsyncView({super.key, required this.load, required this.builder, this.isEmpty, this.emptyMessage = 'Chưa có dữ liệu', this.emptyIcon = Icons.inbox_outlined, this.skeletonCount = 4});
+  const AsyncView({super.key, required this.load, required this.builder, this.isEmpty, this.emptyMessage = 'Chưa có dữ liệu', this.emptyIcon = Icons.inbox_outlined, this.skeletonCount = 4, this.refreshOn});
 
   final Future<T> Function() load;
   final Widget Function(BuildContext context, T data, Future<void> Function() reload) builder;
@@ -13,6 +13,9 @@ class AsyncView<T> extends StatefulWidget {
   final String emptyMessage;
   final IconData emptyIcon;
   final int skeletonCount;
+
+  /// Tải lại khi listenable báo (vd. push tới lúc app mở).
+  final Listenable? refreshOn;
 
   @override
   State<AsyncView<T>> createState() => AsyncViewState<T>();
@@ -26,7 +29,27 @@ class AsyncViewState<T> extends State<AsyncView<T>> {
   @override
   void initState() {
     super.initState();
+    widget.refreshOn?.addListener(_onRefresh);
     reload();
+  }
+
+  void _onRefresh() {
+    if (mounted) reload();
+  }
+
+  @override
+  void didUpdateWidget(covariant AsyncView<T> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.refreshOn != widget.refreshOn) {
+      oldWidget.refreshOn?.removeListener(_onRefresh);
+      widget.refreshOn?.addListener(_onRefresh);
+    }
+  }
+
+  @override
+  void dispose() {
+    widget.refreshOn?.removeListener(_onRefresh);
+    super.dispose();
   }
 
   Future<void> reload() async {

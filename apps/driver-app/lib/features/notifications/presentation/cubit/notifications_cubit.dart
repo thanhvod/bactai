@@ -21,7 +21,7 @@ class NotificationsState {
       );
 }
 
-/// DA-NOTI-01: polling 30s khi app mở (chưa có push FCM phase 1).
+/// DA-NOTI-01: polling 30s khi app mở + làm mới ngay khi có push FCM (D-017).
 class NotificationsCubit extends Cubit<NotificationsState> {
   NotificationsCubit(this._repo, {this.interval = const Duration(seconds: 30)}) : super(const NotificationsState());
   final NotificationsRepository _repo;

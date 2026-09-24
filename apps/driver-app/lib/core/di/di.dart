@@ -19,6 +19,8 @@ import '../gps/device_setup.dart';
 import '../gps/location_source.dart';
 import '../gps/tracking_store.dart';
 import '../media/photo_picker.dart';
+import '../push/driver_push.dart';
+import 'package:flutter/foundation.dart';
 
 final getIt = GetIt.instance;
 
@@ -45,7 +47,17 @@ Future<void> setupDi() async {
   final field = FieldRepository(api: api, jobs: jobs, queue: sync, upload: uploadApi, gps: gpsApi);
   sync.replayHandler = field.replay;
 
+  // D-017: thiếu --dart-define Firebase (hoặc chạy test/mock) → push tắt êm.
+  final messaging = useMockData ? null : await FirebasePushMessaging.create(FirebasePushConfig.fromEnvironment(), channelName: 'Thông báo chuyến');
+  final push = PushManager(
+    messaging: messaging,
+    registrar: DriverPushRegistrar(api),
+    store: SecurePushTokenStore(key: 'bta.driver.pushToken'),
+    platform: pushPlatformName(defaultTargetPlatform),
+  );
+
   getIt
+    ..registerSingleton<PushManager>(push)
     ..registerSingleton<ApiConfig>(config)
     ..registerSingleton<SessionStore>(session)
     ..registerSingleton<DriverAuthApi>(authApi)
@@ -62,5 +74,5 @@ Future<void> setupDi() async {
     ..registerLazySingleton<NotificationsCubit>(() => NotificationsCubit(getIt<NotificationsRepository>()))
     ..registerLazySingleton<GpsCubit>(() => GpsCubit(GeolocatorLocationSource(), createBackgroundGpsController(PrefsTrackingStore()), PermissionHandlerDeviceSetup()))
     ..registerSingleton<AuthRepository>(AuthRepository(authApi: authApi, session: session))
-    ..registerLazySingleton<AuthCubit>(() => AuthCubit(getIt<AuthRepository>()));
+    ..registerLazySingleton<AuthCubit>(() => AuthCubit(getIt<AuthRepository>(), beforeLogout: push.onLogout));
 }

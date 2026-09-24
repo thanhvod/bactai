@@ -18,7 +18,7 @@
 | P8 App Merchant (MA-*) | dùng API chung | — | ✅ đủ MA-* | flutter test |
 | P9 Web Khách hàng + Booking (CW-*) | ✅ auth khách, khám phá, booking, đơn/bảng kê của khách | ✅ `apps/customer-web` + màn "Yêu cầu từ khách" ở Web Merchant | — | portal.e2e |
 
-Số test (lần chạy cuối, 2026-09-23): API e2e 92, shared 9, db 37, web 17, customer-web 11, Playwright 5, Flutter: flutter-ui 7, flutter-core 2, driver-app 31, merchant-app 23. Build: API, web, customer-web, APK debug, iOS debug (no codesign) OK.
+Số test (lần chạy cuối, 2026-09-24): API e2e 99, shared 9, db 37, web 17, customer-web 11, Playwright 12, Flutter: flutter-ui 7, flutter-core 9, driver-app 36, merchant-app 28. Build: API, web, customer-web, APK debug OK.
 
 ## 2. Giả định/đề xuất do đội code tự quyết — cần chủ dự án xác nhận
 
@@ -39,9 +39,7 @@ Số test (lần chạy cuối, 2026-09-23): API e2e 92, shared 9, db 37, web 17
 
 - **GPS nền (D-016):** Android foreground service chạy cả khi vuốt tắt app; iOS khi app bị tắt hẳn chỉ cập nhật theo thay đổi vị trí đáng kể (~500m) — giới hạn của iOS.
 - **App Merchant (D-014):** đăng nhập SĐT + mật khẩu; OTP làm sau.
-- **Push notification:** phase 1 dùng polling trong app/web (ARCHITECTURE §20); FCM để sau.
+- **Push notification (D-017):** FCM cho App Tài xế + App Merchant; Web Merchant/Web Khách hàng vẫn polling. Cần cấu hình Firebase (service account, app id, APNs) mới gửi thật.
 - **SMS OTP (AWS SNS):** dev in mã ra log; production cần thoát SNS sandbox + đăng ký Sender ID.
-- **Chứng từ phiếu chi/phiếu thu** upload sau khi tạo phiếu (không upload trong form tạo).
-- **Xuất Excel đơn hàng** theo bộ lọc, chưa theo các dòng đang chọn.
-- **Mobile:** các thao tác ghi (đổi trạng thái, COD, duyệt lương...) đã test với API giả + e2e API; chưa chạy thử trên thiết bị thật.
+- **Mobile:** các thao tác ghi đã test với API giả + e2e API; kiểm thử thiết bị thật do chủ dự án tự làm (D-018).
 - Production AWS (D-015) — xem `OPERATIONS.md` §1b và checklist go-live.

@@ -11,3 +11,8 @@ export 'src/upload_api.dart';
 export 'src/gps_api.dart';
 export 'src/offline_queue.dart';
 export 'src/connectivity_watcher.dart';
+export 'src/push/push_config.dart';
+export 'src/push/push_target.dart';
+export 'src/push/push_manager.dart';
+export 'src/push/firebase_push_messaging.dart';
+export 'src/push/secure_push_token_store.dart';

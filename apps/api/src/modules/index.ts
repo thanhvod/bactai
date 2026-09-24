@@ -8,6 +8,7 @@ import { BookingsModule } from './bookings/bookings.module';
 import { CatalogsModule } from './catalogs/catalogs.module';
 import { CustomerPortalModule } from './customer-portal/customer-portal.module';
 import { CustomersModule } from './customers/customers.module';
+import { DevicesModule } from './devices/devices.module';
 import { DriverAppModule } from './driver-app/driver-app.module';
 import { DriversModule } from './drivers/drivers.module';
 import { FinanceModule } from './finance/finance.module';
@@ -57,4 +58,5 @@ export const DOMAIN_MODULES = [
   ExportsModule,
   ImportsModule,
   SchedulerModule,
+  DevicesModule,
 ];

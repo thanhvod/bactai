@@ -163,3 +163,13 @@ describe('Export / Import Excel (EXP-001, IMP-001)', () => {
     expect(errorCode(await gql(USERS.accountant, `mutation($i: StartImportInput!) { startImport(input: $i) { id } }`, { i: { entityType: 'DRIVER', fileName: 'x.xlsx', fileBase64: b64 } }))).toBe('FORBIDDEN');
   });
 });
+
+describe('Export theo dòng chọn', () => {
+  it('ORDERS với filter.ids chỉ xuất đúng các đơn đã chọn', async () => {
+    const { gqlOk, USERS, prisma } = await import('./helpers');
+    const p = await prisma();
+    const two = await p.order.findMany({ where: { merchant: { code: 'M-DEMO-A' } }, take: 2, select: { id: true } });
+    const d = await gqlOk(USERS.operation, `mutation($i: ExportFileInput!) { exportFile(input: $i) { rowCount } }`, { i: { template: 'ORDERS', filter: { ids: two.map((o) => o.id) } } });
+    expect(d.exportFile.rowCount).toBe(2);
+  });
+});

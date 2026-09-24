@@ -108,3 +108,12 @@
 
 - **A2 (trùng lịch):** lưu chuyến trùng/gần trùng lịch **bắt buộc nhập lý do** — giữ như đã làm.
 - **A6 (bảng lương):** thưởng lấy từ chuyến hoàn thành trong kỳ; lương cố định theo mốc hiệu lực ngày cuối kỳ — **đúng**.
+
+## D-017 — Push notification qua FCM *(2026-09-24)*
+
+- **Quyết định:** làm luôn push notification bằng **Firebase Cloud Messaging** cho App Tài xế và App Merchant (không chờ sau phase 1). Notification vẫn lưu DB như cũ (hộp thư trong app/web); push là kênh báo thêm.
+- **Hệ quả kỹ thuật:** bảng `device_tokens` (tài xế / tài khoản nhân viên, nhiều máy); API gửi qua `firebase-admin` bằng service account project `bac-tai-app` (biến `FIREBASE_SERVICE_ACCOUNT`), thiếu cấu hình thì tự bỏ qua push. App cấu hình Firebase qua `--dart-define`; iOS cần APNs key upload lên Firebase + capability Push Notifications. Web Merchant giữ polling.
+
+## D-018 — Triển khai AWS không dùng Docker; test thiết bị do chủ dự án tự làm *(2026-09-24)*
+
+- **Quyết định:** production AWS (D-015) chủ dự án tự setup, **không cần Dockerfile/IaC**. Kiểm thử trên thiết bị thật (GPS nền, push, POD) chủ dự án tự làm.

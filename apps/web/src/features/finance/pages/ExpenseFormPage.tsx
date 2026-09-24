@@ -2,7 +2,8 @@ import * as React from 'react';
 import { useMutation } from '@apollo/client/react';
 import { useNavigate, useSearchParams } from 'react-router';
 import { Save } from 'lucide-react';
-import { Banner, Button, PageHeader, toast } from '@bta/shadcn';
+import { Button, PageHeader, toast } from '@bta/shadcn';
+import { PendingAttachments, uploadPendingFiles, warnUploadFailures, type PendingFile } from '@/features/shared/PendingAttachments';
 import { EXPENSE_KIND, type ExpenseKind } from '@bta/shared';
 import { RequirePermission } from '@/app/auth/guards';
 import { PATHS, paths } from '@/app/routes';
@@ -42,7 +43,10 @@ function ExpenseForm() {
   const [params] = useSearchParams();
   const [state, setState] = React.useState<ExpenseFormState>(() => initialState(params));
   const [errors, setErrors] = React.useState<Record<string, string>>({});
-  const [create, { loading }] = useMutation(CreateExpenseMutation);
+  const [create, { loading: creating }] = useMutation(CreateExpenseMutation);
+  const [files, setFiles] = React.useState<PendingFile[]>([]);
+  const [uploadingFiles, setUploadingFiles] = React.useState(false);
+  const loading = creating || uploadingFiles;
 
   async function submit(andNew: boolean) {
     const e = validateExpense(state);
@@ -52,7 +56,16 @@ function ExpenseForm() {
       const res = await create({ variables: { input: toExpenseInput(state) } });
       const x = res.data!.createExpense;
       toast.success(`Đã tạo phiếu chi ${x.code}`);
-      if (andNew) setState({ ...emptyExpense(state.kind), expenseDate: state.expenseDate });
+      if (files.length) {
+        setUploadingFiles(true);
+        const { failed } = await uploadPendingFiles(files, { entityType: 'EXPENSE', entityId: x.id, category: 'EXPENSE_RECEIPT' }, setFiles);
+        setUploadingFiles(false);
+        warnUploadFailures(failed);
+      }
+      if (andNew) {
+        setState({ ...emptyExpense(state.kind), expenseDate: state.expenseDate });
+        setFiles([]);
+      }
       else navigate(paths.expense(x.id));
     } catch (err) {
       toast.error(apolloErrorMessage(err));
@@ -88,7 +101,9 @@ function ExpenseForm() {
               {state.paidStatus === 'UNPAID' ? <li>Cộng vào công nợ phải trả nhà cung cấp.</li> : null}
             </ul>
           </Panel>
-          <Banner tone="info" message="Chứng từ (hóa đơn, biên lai) tải lên ở màn chi tiết sau khi lưu phiếu." />
+          <Panel title="Chứng từ">
+            <PendingAttachments files={files} onChange={setFiles} disabled={uploadingFiles} label="Hóa đơn, biên lai (tải lên khi lưu phiếu)" />
+          </Panel>
         </div>
       </div>
     </div>

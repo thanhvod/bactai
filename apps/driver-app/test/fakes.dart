@@ -92,6 +92,10 @@ class FakeDriverApi implements DriverApi {
   Future<int> markAllNotificationsRead() => _do('markAll', {}, () => 0);
   @override
   Future<int> unreadNotificationCount() => _do('unread', {}, () => 0);
+  @override
+  Future<void> registerPushToken(String token, String platform) => _do('registerPushToken', {'token': token, 'platform': platform}, () {});
+  @override
+  Future<void> unregisterPushToken(String token) => _do('unregisterPushToken', {'token': token}, () {});
 }
 
 class FakeQueue implements ActionQueue {

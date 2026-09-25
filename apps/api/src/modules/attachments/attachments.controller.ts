@@ -63,7 +63,16 @@ export class AttachmentsController {
     if (!buf) throw notFound('file');
     const [disp, fileName] = v.extra.split('|');
     const ext = (fileName.split('.').pop() ?? '').toLowerCase();
-    const type = { jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp', pdf: 'application/pdf', xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', csv: 'text/csv' }[ext] ?? 'application/octet-stream';
+    const contentTypes: Record<string, string> = {
+      jpg: 'image/jpeg',
+      jpeg: 'image/jpeg',
+      png: 'image/png',
+      webp: 'image/webp',
+      pdf: 'application/pdf',
+      xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      csv: 'text/csv',
+    };
+    const type = contentTypes[ext] ?? 'application/octet-stream';
     res.setHeader('Content-Type', type);
     res.setHeader('Content-Disposition', `${disp}; filename*=UTF-8''${encodeURIComponent(fileName)}`);
     res.setHeader('Cache-Control', 'private, max-age=300');
